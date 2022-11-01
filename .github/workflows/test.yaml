@@ -1,4 +1,4 @@
-name: Javascript SDK CI
+name: Test
 
 on: [push]
 
