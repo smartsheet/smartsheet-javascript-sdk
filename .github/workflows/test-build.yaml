@@ -1,4 +1,4 @@
-name: Test
+name: Test Build
 
 on: [push]
 
@@ -27,9 +27,9 @@ jobs:
         run: |
           smartsheet-sdk-tests/travis_scripts/install_wiremock.sh
           smartsheet-sdk-tests/travis_scripts/start_wiremock.sh
+      - name: Run tests
+        run: |
+          npm test
       - name: Run coverage
-        run: npm run coverage
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm run coverage
