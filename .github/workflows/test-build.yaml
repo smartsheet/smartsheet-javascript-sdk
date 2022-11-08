@@ -33,4 +33,3 @@ jobs:
       - name: Run coverage
         run: |
           npm run coverage
-          npm run report-coverage
