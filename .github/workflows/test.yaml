@@ -1,4 +1,4 @@
-name: Javascript SDK CI
+name: Test
 
 on: [push]
 
@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Clone smartsheet/smartsheet-sdk-tests PRIVATE repository
         uses: GuillaumeFalourd/clone-github-repo-action@v2
         with:
