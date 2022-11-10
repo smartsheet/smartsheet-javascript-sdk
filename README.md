@@ -1,15 +1,15 @@
 # Smartsheet SDK for JavaScript
 ![Build Status](https://github.com/smartsheet/smartsheet-javascript-sdk/actions/workflows/build-publish.yaml/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/smartsheet-platform/smartsheet-javascript-sdk/badge.svg?branch=master)](https://coveralls.io/github/smartsheet-platform/smartsheet-javascript-sdk?branch=master) [![npm version](https://badge.fury.io/js/smartsheet.svg)](https://badge.fury.io/js/smartsheet)
 
-This is a client SDK to simplify connecting to the [Smartsheet API](https://smartsheet.redoc.ly/) from Node.js applications.
+This is a client SDK for connecting to the [Smartsheet API](https://smartsheet.redoc.ly/) from Node.js applications.
 
 ## System Requirements
 
-The SDK supports Node.js versions 7.x or later.
+The SDK supports Node.js versions 12.x or later.
 
 ## Installation
 
-To install this SDK, simply run the following command in a terminal window:
+To install this SDK run the following command in a terminal window:
 
 ```bash
 npm install smartsheet
@@ -61,19 +61,6 @@ smartsheet.sheets.listSheets(options)
   .catch(function(error) {
     console.log(error);
   });
-```
-
-Although the example above is using promises and the API documentation samples use promises, you can also access the APIs in this SDK by using callbacks.
-
-```javascript
-// List all sheets using callbacks
-smartsheet.sheets.listSheets({}, function(error, data) {
-  if (error) {
-    console.log(error);
-  } else {
-    console.log(data);
-  }
-});
 ```
 
  See the [node-read-write-sheet](https://github.com/smartsheet-samples/node-read-write-sheet) project for a code example that shows how to call methods to read and write to a sheet using this SDK.
