@@ -5,7 +5,7 @@ This is a client SDK for connecting to the [Smartsheet API](https://smartsheet.r
 
 ## System Requirements
 
-The SDK supports Node.js versions 12.x or later.
+The SDK is compatible with [actively supported](https://github.com/nodejs/release#release-schedule) Node.js versions 14.x or later.
 
 ## Installation
 
