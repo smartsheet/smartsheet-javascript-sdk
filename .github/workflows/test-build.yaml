@@ -3,6 +3,21 @@ name: Test Build
 on: [push]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js  
+        uses: actions/setup-node@v3
+        with:
+          node-version: 15
+      - name: Install dependencies
+        run: npm ci
+      - name: Run jshint
+        run: npm jshint
+
+
   mock-api-test:
     runs-on: ubuntu-latest
     strategy:
