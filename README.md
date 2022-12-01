@@ -71,10 +71,3 @@ smartsheet.sheets.listSheets(options)
 
 ## Advanced Topics
 For details about more advanced features, see [Advanced Topics](ADVANCED.md).
-
-## Contributing
-
-If you would like to contribute a change to the SDK, please fork a branch and then submit a pull request.
-[More info here.](https://help.github.com/articles/using-pull-requests)
-
-## Acknowledgements
