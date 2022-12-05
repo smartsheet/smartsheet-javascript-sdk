@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [3.0.0]
+## [3.0.0] - 2022-12-05
 ### Updated
 - Migrated SDK to new project 
 - Update supported versions to 14, 16 and 18
