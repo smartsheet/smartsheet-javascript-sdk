@@ -5,8 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
 
+## [3.0.0] - 2022-12-05
+### Updated
+- Migrated SDK to new project 
+- Update supported versions to 14, 16 and 18
+### Added
+- Add Github Actions pipeline
+### Fixed
+- Updated code to adhere to jshint linting
 ## [2.126.0] - 2021-05-07
 ### Updated
 - Bump lodash from 4.17.19 to 4.17.21
