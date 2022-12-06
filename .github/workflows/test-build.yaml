@@ -42,9 +42,21 @@ jobs:
         run: |
           smartsheet-sdk-tests/travis_scripts/install_wiremock.sh
           smartsheet-sdk-tests/travis_scripts/start_wiremock.sh
-      - name: Run coverage
+      - name: Run coverage on Node ${{ matrix.node-version }}
         run: npm run coverage
-      - name: Update Coverage
+      - name: Coveralls Parallel
         uses: coverallsapp/github-action@master
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.github_token }}
+          flag-name: run-${{ matrix.node-version }}
+          parallel: true
+
+  finish:
+    needs: coverage
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.github_token }}
+        parallel-finished: true
