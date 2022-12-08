@@ -23,7 +23,7 @@
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/smartsheet/smartsheet-javascript-sdk/issues",
-    "email": "api@smartsheet.com"
+    "email": "sdk@smartsheet.com"
   },
   "browser": {
     "request": "browser-request"
