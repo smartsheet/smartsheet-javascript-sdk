@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "github:smartsheet-platform/smartsheet-javascript-sdk"
+    "url": "github:smartsheet/smartsheet-javascript-sdk"
   },
   "keywords": [
     "Smartsheet",
@@ -22,8 +22,8 @@
   "author": "Smartsheet",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/smartsheet-platform/smartsheet-javascript-sdk/issues",
-    "email": "api@smartsheet.com"
+    "url": "https://github.com/smartsheet/smartsheet-javascript-sdk/issues",
+    "email": "sdk@smartsheet.com"
   },
   "browser": {
     "request": "browser-request"

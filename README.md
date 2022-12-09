@@ -1,5 +1,5 @@
 # Smartsheet SDK for JavaScript
-![Build Status](https://github.com/smartsheet/smartsheet-javascript-sdk/actions/workflows/test-build.yaml/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/smartsheet/smartsheet-javascript-sdk/badge.svg?branch=main)](https://coveralls.io/github/smartsheet/smartsheet-javascript-sdk?branch=mainline) [![npm version](https://badge.fury.io/js/smartsheet.svg)](https://badge.fury.io/js/smartsheet)
+![Build Status](https://github.com/smartsheet/smartsheet-javascript-sdk/actions/workflows/test-build.yaml/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/smartsheet/smartsheet-javascript-sdk/badge.svg?branch=mainline)](https://coveralls.io/github/smartsheet/smartsheet-javascript-sdk?branch=mainline) [![npm version](https://badge.fury.io/js/smartsheet.svg)](https://badge.fury.io/js/smartsheet)
 
 This is a client SDK for connecting to the [Smartsheet API](https://smartsheet.redoc.ly/) from Node.js applications.
 
