@@ -66,8 +66,18 @@ smartsheet.sheets.listSheets(options)
  See the [node-read-write-sheet](https://github.com/smartsheet-samples/node-read-write-sheet) project for a code example that shows how to call methods to read and write to a sheet using this SDK.
 ## Documentation
 
-- The Smartsheet API documentation with corresponding SDK example code can be found [here](https://smartsheet.redoc.ly/).
-- For an example of using the Javascript SDK see the sample project [here](https://github.com/smartsheet-samples/node-read-write-sheet).
+* The Smartsheet API documentation with corresponding SDK example code can be found [here](https://smartsheet.redoc.ly/).
+* For an example of using the Javascript SDK see the sample project [here](https://github.com/smartsheet-samples/node-read-write-sheet).
 
 ## Advanced Topics
 For details about more advanced features, see [Advanced Topics](ADVANCED.md).
+
+## Acknowledgements
+
+We would like to thank the following people for their contributions to this project:
+
+* Cameron Bowie - [cameronbowie](https://github.com/cameronbowie)
+* Nathan Armstrong - [armstnp](https://github.com/armstnp)
+* Emily Koh - [emilykoh](https://github.com/emilykoh)
+* Steve Weil - [seweil](https://github.com/seweil)
+* Kim Brandl - [kbrandl](https://github.com/kbrandl)
