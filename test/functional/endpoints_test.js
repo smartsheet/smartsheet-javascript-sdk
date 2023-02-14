@@ -284,6 +284,8 @@ describe('Method Unit Tests', function () {
                 { name: 'addUserAndSendEmail', stub: 'post', options: {}, expectedRequest: {url: "users/", queryParameters:{sendEmail:true}}},
                 { name: 'updateUser', stub: 'put', options: {}, expectedRequest: {url: "users/"}},
                 { name: 'removeUser', stub: 'delete', options: {}, expectedRequest: {url: "users/"}},
+                { name: 'deactivateUser', stub: 'post', options: {userId: 123}, expectedRequest: {url: "users/123/deactivate"}},
+                { name: 'reactivateUser', stub: 'post', options: {userId: 123}, expectedRequest: {url: "users/123/reactivate"}},
                 // alternate emails
                 { name: 'addAlternateEmail', stub: 'post', options: {userId: 123}, expectedRequest: {url: "users/123/alternateemails/"}},
                 { name: 'getAlternateEmail', stub: 'get', options: {userId: 123, alternateEmailId: 234}, expectedRequest: {url: "users/123/alternateemails/234"}},

@@ -366,7 +366,7 @@ describe('Client Unit Tests', function() {
   describe('#users', function () {
     it('should have user object', function () {
       smartsheet.should.have.property('users');
-      Object.keys(smartsheet.users).should.be.length(13);
+      Object.keys(smartsheet.users).should.be.length(15);
     });
 
     it('should have get methods', function () {
@@ -382,6 +382,8 @@ describe('Client Unit Tests', function() {
       smartsheet.users.should.have.property('addUserAndSendEmail');
       smartsheet.users.should.have.property('addAlternateEmail');
       smartsheet.users.should.have.property('addProfileImage');
+      smartsheet.users.should.have.property('deactivateUser');
+      smartsheet.users.should.have.property('reactivateUser');
     });
 
     it('should have update methods', function () {
