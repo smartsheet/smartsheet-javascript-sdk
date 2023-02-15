@@ -4,6 +4,7 @@
   "description": "Smartsheet JavaScript client SDK",
   "main": "index.js",
   "scripts": {
+    "lint": "jshint -c .jshintrc lib/",
     "test": "mocha \"test/**/*_test.js\"",
     "test-functional": "mocha \"test/functional/**/*_test.js\"",
     "test-mock-api": "mocha \"test/mock-api/**/*_test.js\"",
@@ -42,6 +43,7 @@
     "gulp-jshint": "^2.1.0",
     "gulp-mocha": "^6.0.0",
     "istanbul": "^0.4.5",
+    "jshint": "^2.13.6",
     "jshint-stylish": "^1.0.1",
     "mocha": "^5.2.0",
     "mock": "^0.1.1",
