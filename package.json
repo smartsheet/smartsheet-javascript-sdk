@@ -8,8 +8,7 @@
     "test": "mocha \"test/**/*_test.js\"",
     "test-functional": "mocha \"test/functional/**/*_test.js\"",
     "test-mock-api": "mocha \"test/mock-api/**/*_test.js\"",
-    "coverage": "nyc mocha \"test/**/*_test.js\"",
-    "report-coverage": "nyc --reporter=text-lcov mocha \"test/**/*_test.js\" | coveralls"
+    "coverage": "nyc --reporter=text --reporter=lcov mocha \"test/**/*_test.js\""
   },
   "repository": {
     "type": "git",
