@@ -72,6 +72,9 @@ smartsheet.sheets.listSheets(options)
 ## Advanced Topics
 For details about more advanced features, see [Advanced Topics](ADVANCED.md).
 
+## Developer Agreement
+Review the [Developer Program Agreement](https://www.smartsheet.com/legal/developer-program-agreement).
+
 ## Acknowledgements
 
 We would like to thank the following people for their contributions to this project:
