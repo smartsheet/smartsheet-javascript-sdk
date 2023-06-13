@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+## [3.1.2] - 2023-06-13
+### Fixed
+- Added missing euBaseURI constant for smartsheet.eu 
 ## [3.1.1] - 2023-06-07
 ### Added
 - Developer program agreement note to README
