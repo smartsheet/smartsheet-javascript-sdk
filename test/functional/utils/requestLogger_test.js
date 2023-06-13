@@ -1,4 +1,3 @@
-var should = require('should');
 var sinon = require('sinon');
 const { smartSheetURIs } = require('../../..');
 var createRequestLogger = require('../../../lib/utils/requestLogger').create;
@@ -59,7 +58,8 @@ describe('#RequestLogger', function () {
     describe('#logRequest', function () {
         [
             smartSheetURIs.defaultBaseURI,
-            smartSheetURIs.govBaseURI
+            smartSheetURIs.govBaseURI,
+            smartSheetURIs.euBaseURI
         ].forEach(url => {
             it('should info log the request url and query params', () => {
                 var request = createRequest({
@@ -168,7 +168,8 @@ describe('#RequestLogger', function () {
     describe('#logRetryAttempt', function () {
         [
             smartSheetURIs.defaultBaseURI,
-            smartSheetURIs.govBaseURI
+            smartSheetURIs.govBaseURI,
+            smartSheetURIs.euBaseURI
         ].forEach(url => {
             it('should warn log the attempt and request url and query params', () => {
                 var request = createRequest({
@@ -321,7 +322,8 @@ describe('#RequestLogger', function () {
     describe('#logErrorResponse', function () {
         [
             smartSheetURIs.defaultBaseURI,
-            smartSheetURIs.govBaseURI
+            smartSheetURIs.govBaseURI,
+            smartSheetURIs.euBaseURI
         ].forEach(url => {
             it('should error log the request url and query params and the error response', () => {
                 var request = createRequest({

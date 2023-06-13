@@ -1,10 +1,10 @@
-var should = require('should');
 var request = require('request');
 var sinon = require('sinon');
 var Promise = require('bluebird');
 var _ = require('underscore');
 var packageJson = require('../../package.json');
 var fs = require('fs');
+const { smartSheetURIs } = require('../..');
 
 var requestor = require('../../lib/utils/httpRequestor').create({request: request});
 
@@ -64,16 +64,20 @@ describe('Utils Unit Tests', function() {
         builtUrl.should.equal(host + url);
       });
 
-      it('url should equal https://api.smartsheet.com/2.0/', () => {
+      it('url should equal default base url', () => {
         process.env.SMARTSHEET_API_HOST = '';
         var builtUrl = requestor.internal.buildUrl({});
-        builtUrl.should.equal('https://api.smartsheet.com/2.0/');
+        builtUrl.should.equal(smartSheetURIs.defaultBaseURI);
       });
 
-      it('url should equal https://api.smartsheetgov.com/2.0', () => {
-        var url = 'https://api.smartsheetgov.com/2.0';
-        var builtUrl = requestor.internal.buildUrl({baseUrl:url});
-        builtUrl.should.equal('https://api.smartsheetgov.com/2.0');
+      it('url should equal gov url', () => {
+        var builtUrl = requestor.internal.buildUrl({baseUrl:smartSheetURIs.govBaseURI});
+        builtUrl.should.equal(smartSheetURIs.govBaseURI);
+      });
+
+      it('url should equal eu url', () => {
+        var builtUrl = requestor.internal.buildUrl({baseUrl:smartSheetURIs.euBaseURI});
+        builtUrl.should.equal(smartSheetURIs.euBaseURI);
       });
 
       it('prefers baseUrl over env var', () => {
