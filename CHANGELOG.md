@@ -4,10 +4,6 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
-## [3.2.0] - 2023-08-17
-### Security
-- Removed `request` dependency and replaced it with `Axios`
-
 ## [3.1.2] - 2023-06-13
 ### Fixed
 - Added missing euBaseURI constant for smartsheet.eu 

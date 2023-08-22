@@ -11,21 +11,15 @@ describe('Utils Unit Tests', function() {
       var mockBody = null;
 
       beforeEach(() => {
-        mockBody = {
-          hello: "world"
-        };
-        mockBodyError = {
-          errorCode: 911,
-          message: "EMERGENCY"
-        };
-        
         mockResponse = {
-          status: 200,
+          statusCode: 200,
           headers: {
             'content-type':'application/json;charset=UTF-8'
-          },
-          data: mockBody
+          }
         };
+
+        mockBody = '{"hello":"world"}';
+        mockBodyError = '{"errorCode": 911, "message":"EMERGENCY"}';
       });
 
       afterEach(() => {
@@ -34,27 +28,24 @@ describe('Utils Unit Tests', function() {
       });
 
       it('should return a rejected promise if status code is not 200', () => {
-        mockResponse.status = 500;
-        mockResponse.data = mockBodyError;
-        handleResponse(mockResponse)
+        mockResponse.statusCode = 500;
+        handleResponse(mockResponse, mockBodyError)
           .catch(function(error) {
-            error.status.should.equal(500);
+            error.statusCode.should.equal(500);
             error.message.should.equal('EMERGENCY');
             error.errorCode.should.equal(911);
           });
       });
 
       it('should return parsed JSON body', () => {
-        var result = handleResponse(mockResponse);
-        result.content.hello.should.equal(mockBody.hello);
+        var parsed = JSON.parse(mockBody);
+        var result = handleResponse(mockResponse, mockBody);
+        result.content.hello.should.equal(parsed.hello);
       });
 
       it('should return the body if content type is not application/json', () => {
         mockResponse.headers['content-type'] = 'application/xml';
-        mockResponse.data = mockBody;
-        var result = handleResponse(mockResponse);
-        result.headers.should.equal(mockResponse.headers);
-        result.statusCode.should.equal(mockResponse.status);
+        var result = handleResponse(mockResponse, mockBody);
         result.content.should.equal(mockBody);
       });
     });
