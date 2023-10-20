@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.1] - 2023-10-20
+### Fixed
+- Resolved `4.0.0` issue with handling errors
+
 ## [4.0.0] - 2023-10-20
 ### Security
 - Removed `request` dependency and replaced it with `Axios`
