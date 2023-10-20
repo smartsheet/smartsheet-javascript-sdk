@@ -11,15 +11,21 @@ describe('Utils Unit Tests', function() {
       var mockBody = null;
 
       beforeEach(() => {
+        mockBody = {
+          hello: "world"
+        };
+        mockBodyError = {
+          errorCode: 911,
+          message: "EMERGENCY"
+        };
+        
         mockResponse = {
-          statusCode: 200,
+          status: 200,
           headers: {
             'content-type':'application/json;charset=UTF-8'
-          }
+          },
+          data: mockBody
         };
-
-        mockBody = '{"hello":"world"}';
-        mockBodyError = '{"errorCode": 911, "message":"EMERGENCY"}';
       });
 
       afterEach(() => {
@@ -28,24 +34,27 @@ describe('Utils Unit Tests', function() {
       });
 
       it('should return a rejected promise if status code is not 200', () => {
-        mockResponse.statusCode = 500;
-        handleResponse(mockResponse, mockBodyError)
+        mockResponse.status = 500;
+        mockResponse.data = mockBodyError;
+        handleResponse(mockResponse)
           .catch(function(error) {
-            error.statusCode.should.equal(500);
+            error.status.should.equal(500);
             error.message.should.equal('EMERGENCY');
             error.errorCode.should.equal(911);
           });
       });
 
       it('should return parsed JSON body', () => {
-        var parsed = JSON.parse(mockBody);
-        var result = handleResponse(mockResponse, mockBody);
-        result.content.hello.should.equal(parsed.hello);
+        var result = handleResponse(mockResponse);
+        result.content.hello.should.equal(mockBody.hello);
       });
 
       it('should return the body if content type is not application/json', () => {
         mockResponse.headers['content-type'] = 'application/xml';
-        var result = handleResponse(mockResponse, mockBody);
+        mockResponse.data = mockBody;
+        var result = handleResponse(mockResponse);
+        result.headers.should.equal(mockResponse.headers);
+        result.statusCode.should.equal(mockResponse.status);
         result.content.should.equal(mockBody);
       });
     });
