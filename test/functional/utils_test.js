@@ -255,13 +255,13 @@ describe('Utils Unit Tests', function() {
       it('request should error as false, using promises', () =>
         stubbedRequestor
           .get(sampleRequest)
-          .catch(error => error.error.should.be.true));
+          .catch(error => error.content.should.be.true));
 
       it('request should error as false, using callbacks', (done) => {
         stubbedRequestor
           .get(sampleRequest,
                (err, data) => {
-                 err.should.be.eql(mockBody);
+                 err.content.should.be.true
                  done();
                 });
       });
@@ -312,7 +312,7 @@ describe('Utils Unit Tests', function() {
 
       function givenGetReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns(Promise.reject({errorCode: 4001}));
+        handleResponseStub.returns({errorCode: 4001});
       }
 
       function givenGetReturnsSuccess() {
@@ -429,13 +429,13 @@ describe('Utils Unit Tests', function() {
       it('request should error as false', () =>
         stubbedRequestor
           .post(sampleRequest)
-          .catch(error => error.error.should.be.true));
+          .catch(error => error.content.should.be.true));
 
       it('request should error as false', (done) => {
         stubbedRequestor
           .post(sampleRequest,
                 (err, data) => {
-                  err.should.be.eql(mockBody);
+                  err.content.should.be.true
                   done();
                 });
       });
@@ -493,7 +493,7 @@ describe('Utils Unit Tests', function() {
 
       function givenPostReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns(Promise.reject({errorCode: 4001}));
+        handleResponseStub.returns({errorCode: 4001});
       }
 
       function givenPostReturnsSuccess() {
@@ -619,13 +619,13 @@ describe('Utils Unit Tests', function() {
       it('request should error as false', () =>
         stubbedRequestor
           .put(sampleRequest)
-          .catch(error => error.error.should.be.true));
+          .catch(error => error.content.should.be.true));
 
       it('request should error as false', (done) => {
         stubbedRequestor
           .put(sampleRequest,
                (err, data) => {
-                 err.should.eql(mockBody);
+                 err.content.should.be.true
                  done();
                 });
       });
@@ -683,7 +683,7 @@ describe('Utils Unit Tests', function() {
 
       function givenPutReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns(Promise.reject({errorCode: 4001}));
+        handleResponseStub.returns({errorCode: 4001});
       }
 
       function givenPutReturnsSuccess() {
@@ -810,13 +810,13 @@ describe('Utils Unit Tests', function() {
       it('request should error as false', () =>
         stubbedRequestor
           .delete(sampleRequest)
-          .catch(error => error.error.should.be.true));
+          .catch(error => error.content.should.be.true));
 
       it('request should error as false', (done) => {
         stubbedRequestor
           .delete(sampleRequest,
                   (err, data) => {
-                    err.should.eql(mockBody);
+                    err.content.should.be.true;
                     done();
                   });
       });
@@ -869,7 +869,7 @@ describe('Utils Unit Tests', function() {
 
       function givenDeleteReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns(Promise.reject({errorCode: 4001}));
+        handleResponseStub.returns({errorCode: 4001});
       }
 
       function givenDeleteReturnsSuccess() {

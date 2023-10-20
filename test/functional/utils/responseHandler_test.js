@@ -36,19 +36,14 @@ describe('responseHandler', () => {
         data: body
       };
 
-      return responseHandler(response)
-        .then(() => {
-          should.fail('Function should have thrown an error');
-        })
-        .catch((error) => {
-          error.should.have.properties(['statusCode', 'headers', 'errorCode', 'message', 'refId', 'detail']);
-          error.statusCode.should.equal(response.status);
-          error.headers.should.equal(response.headers);
-          error.errorCode.should.equal(body.errorCode);
-          error.message.should.equal(body.message);
-          error.refId.should.equal(body.refId);
-          error.detail.should.equal(body.detail);
-        });
+      var responseError = responseHandler(response);
+      responseError.should.have.properties(['statusCode', 'headers', 'errorCode', 'message', 'refId', 'detail']);
+      responseError.statusCode.should.equal(response.status);
+      responseError.headers.should.equal(response.headers);
+      responseError.errorCode.should.equal(body.errorCode);
+      responseError.message.should.equal(body.message);
+      responseError.refId.should.equal(body.refId);
+      responseError.detail.should.equal(body.detail);
     });
 
     it('should return a rejected promise with an error message for non-JSON response', () => {
@@ -59,16 +54,11 @@ describe('responseHandler', () => {
         data: body
       };
 
-      return responseHandler(response)
-        .then(() => {
-          should.fail('Function should have thrown an error');
-        })
-        .catch(error => {
-          error.should.have.properties(['statusCode', 'headers', 'message']);
-          error.statusCode.should.equal(response.status);
-          error.headers.should.equal(response.headers);
-          error.message.should.equal(body);
-        });
+      var responseError = responseHandler(response);
+      responseError.should.have.properties(['statusCode', 'headers', 'message']);
+      responseError.statusCode.should.equal(response.status);
+      responseError.headers.should.equal(response.headers);
+      responseError.message.should.equal(body);
     });
   });
 });

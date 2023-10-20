@@ -36,12 +36,10 @@ describe('Utils Unit Tests', function() {
       it('should return a rejected promise if status code is not 200', () => {
         mockResponse.status = 500;
         mockResponse.data = mockBodyError;
-        handleResponse(mockResponse)
-          .catch(function(error) {
-            error.status.should.equal(500);
-            error.message.should.equal('EMERGENCY');
-            error.errorCode.should.equal(911);
-          });
+        var errResponse = handleResponse(mockResponse);
+        errResponse.statusCode.should.equal(500);
+        errResponse.message.should.equal('EMERGENCY');
+        errResponse.errorCode.should.equal(911);
       });
 
       it('should return parsed JSON body', () => {
