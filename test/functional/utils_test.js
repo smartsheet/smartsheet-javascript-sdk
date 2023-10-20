@@ -312,7 +312,7 @@ describe('Utils Unit Tests', function() {
 
       function givenGetReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns(Promise.reject({errorCode: 4001}));
+        handleResponseStub.returns({errorCode: 4001});
       }
 
       function givenGetReturnsSuccess() {
@@ -493,7 +493,7 @@ describe('Utils Unit Tests', function() {
 
       function givenPostReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns(Promise.reject({errorCode: 4001}));
+        handleResponseStub.returns({errorCode: 4001});
       }
 
       function givenPostReturnsSuccess() {
@@ -683,7 +683,7 @@ describe('Utils Unit Tests', function() {
 
       function givenPutReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns(Promise.reject({errorCode: 4001}));
+        handleResponseStub.returns({errorCode: 4001});
       }
 
       function givenPutReturnsSuccess() {
@@ -869,7 +869,7 @@ describe('Utils Unit Tests', function() {
 
       function givenDeleteReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns(Promise.reject({errorCode: 4001}));
+        handleResponseStub.returns({errorCode: 4001});
       }
 
       function givenDeleteReturnsSuccess() {
