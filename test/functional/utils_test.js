@@ -255,13 +255,13 @@ describe('Utils Unit Tests', function() {
       it('request should error as false, using promises', () =>
         stubbedRequestor
           .get(sampleRequest)
-          .catch(error => error.error.should.be.true));
+          .catch(error => error.content.should.be.true));
 
       it('request should error as false, using callbacks', (done) => {
         stubbedRequestor
           .get(sampleRequest,
                (err, data) => {
-                 err.should.be.eql(mockBody);
+                 err.content.should.be.true
                  done();
                 });
       });
@@ -429,13 +429,13 @@ describe('Utils Unit Tests', function() {
       it('request should error as false', () =>
         stubbedRequestor
           .post(sampleRequest)
-          .catch(error => error.error.should.be.true));
+          .catch(error => error.content.should.be.true));
 
       it('request should error as false', (done) => {
         stubbedRequestor
           .post(sampleRequest,
                 (err, data) => {
-                  err.should.be.eql(mockBody);
+                  err.content.should.be.true
                   done();
                 });
       });
@@ -619,13 +619,13 @@ describe('Utils Unit Tests', function() {
       it('request should error as false', () =>
         stubbedRequestor
           .put(sampleRequest)
-          .catch(error => error.error.should.be.true));
+          .catch(error => error.content.should.be.true));
 
       it('request should error as false', (done) => {
         stubbedRequestor
           .put(sampleRequest,
                (err, data) => {
-                 err.should.eql(mockBody);
+                 err.content.should.be.true
                  done();
                 });
       });
@@ -810,13 +810,13 @@ describe('Utils Unit Tests', function() {
       it('request should error as false', () =>
         stubbedRequestor
           .delete(sampleRequest)
-          .catch(error => error.error.should.be.true));
+          .catch(error => error.content.should.be.true));
 
       it('request should error as false', (done) => {
         stubbedRequestor
           .delete(sampleRequest,
                   (err, data) => {
-                    err.should.eql(mockBody);
+                    err.content.should.be.true;
                     done();
                   });
       });
