@@ -1,6 +1,6 @@
 {
   "name": "smartsheet",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Smartsheet JavaScript client SDK",
   "main": "index.js",
   "scripts": {
@@ -33,6 +33,7 @@
     "axios": "^1.4.0",
     "bluebird": "^3.5.0",
     "extend": "^3.0.2",
+    "mime": "^3.0.0",
     "underscore": "^1.8.2",
     "winston": "^2.3.1"
   },

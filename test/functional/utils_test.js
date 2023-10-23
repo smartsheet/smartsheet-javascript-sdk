@@ -105,6 +105,8 @@ describe('Utils Unit Tests', function() {
     describe('#buildHeaders', function() {
       var newType = 'text/xml';
       var applicationJson = 'application/json';
+      var textCsv = 'text/csv'
+      var docType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
       var fsStub = null;
 
       beforeEach(() => {
@@ -139,6 +141,21 @@ describe('Utils Unit Tests', function() {
       it('content-type header should equal ' + newType, () => {
         var headers = requestor.internal.buildHeaders({contentType: newType});
         headers['Content-Type'].should.equal(newType);
+      });
+
+      it('Content-Type should equal ' + textCsv, () => {
+        var headers = requestor.internal.buildHeaders({fileName: 'test.csv'});
+        headers['Content-Type'].should.equal(textCsv);
+      });
+
+      it('Content-Type should equal ' + docType, () => {
+        var headers = requestor.internal.buildHeaders({fileName: 'test.docx'});
+        headers['Content-Type'].should.equal(docType);
+      });
+
+      it('Content-Type should equal ' + applicationJson, () => {
+        var headers = requestor.internal.buildHeaders({fileName: 'test'});
+        headers['Content-Type'].should.equal(applicationJson);
       });
 
       it('Content-Disposition should equal filename', () => {
