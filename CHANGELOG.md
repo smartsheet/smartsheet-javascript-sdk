@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.2] - 2023-10-23
+### Fixed
+- Resolved [Issue#44](https://github.com/smartsheet/smartsheet-javascript-sdk/issues/44) by using `mime` to generate `Content-Type` based on file extension.
+
+## [4.0.1] - 2023-10-20
+### Fixed
+- Resolved `4.0.0` issue with handling errors
+
+## [4.0.0] - 2023-10-20
+### Security
+- Removed `request` dependency and replaced it with `Axios`
+- Resolved issue in v3.1.3 with PUT/POST requests
+
 ## [3.1.4] - 2023-08-22
 ### Revert
 - Reverted changes in release v3.1.3 as it introduced a bug with PUT/POST requests.

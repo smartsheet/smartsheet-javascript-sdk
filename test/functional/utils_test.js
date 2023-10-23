@@ -1,12 +1,12 @@
-var request = require('request');
 var sinon = require('sinon');
 var Promise = require('bluebird');
 var _ = require('underscore');
 var packageJson = require('../../package.json');
 var fs = require('fs');
 const { smartSheetURIs } = require('../..');
+var axios = require('axios');
 
-var requestor = require('../../lib/utils/httpRequestor').create({request: request});
+var requestor = require('../../lib/utils/httpRequestor').create({request: axios});
 
 var sample = {
   name : 'name'
@@ -105,6 +105,8 @@ describe('Utils Unit Tests', function() {
     describe('#buildHeaders', function() {
       var newType = 'text/xml';
       var applicationJson = 'application/json';
+      var textCsv = 'text/csv'
+      var docType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
       var fsStub = null;
 
       beforeEach(() => {
@@ -139,6 +141,21 @@ describe('Utils Unit Tests', function() {
       it('content-type header should equal ' + newType, () => {
         var headers = requestor.internal.buildHeaders({contentType: newType});
         headers['Content-Type'].should.equal(newType);
+      });
+
+      it('Content-Type should equal ' + textCsv, () => {
+        var headers = requestor.internal.buildHeaders({fileName: 'test.csv'});
+        headers['Content-Type'].should.equal(textCsv);
+      });
+
+      it('Content-Type should equal ' + docType, () => {
+        var headers = requestor.internal.buildHeaders({fileName: 'test.docx'});
+        headers['Content-Type'].should.equal(docType);
+      });
+
+      it('Content-Type should equal ' + applicationJson, () => {
+        var headers = requestor.internal.buildHeaders({fileName: 'test'});
+        headers['Content-Type'].should.equal(applicationJson);
       });
 
       it('Content-Disposition should equal filename', () => {
@@ -198,18 +215,20 @@ describe('Utils Unit Tests', function() {
     describe('#Successful request', function() {
       var requestStub = null;
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: request, handleResponse: () => ({content: true})});
+        .create({request: axios, handleResponse: () => ({ content: true })});
 
       beforeEach(() => {
-        requestStub = sinon.stub(request, 'getAsync');
+        requestStub = sinon.stub(axios, 'get');
         var mockResponse = {
-          statusCode: 200,
+          status: 200,
           headers: {
             'content-type':'application/json;charset=UTF-8'
+          },
+          data: {
+            hello: "world"
           }
         };
-        var mockBody = '{"hello":"world"}';
-        requestStub.returns(Promise.resolve([mockResponse, mockBody]));
+        requestStub.returns(Promise.resolve(mockResponse));
       });
 
       afterEach(() => {
@@ -231,11 +250,11 @@ describe('Utils Unit Tests', function() {
     describe('#Error on request', function() {
       var requestStub = null;
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: request, handleResponse: () => ({content: true})});
+        .create({request: axios, handleResponse: () => ({ content: true })});
       var mockBody;
 
       beforeEach(() => {
-        requestStub = sinon.stub(request, 'getAsync');
+        requestStub = sinon.stub(axios, 'get');
         var mockResponse = {
           statusCode: 403,
           headers: {
@@ -253,13 +272,13 @@ describe('Utils Unit Tests', function() {
       it('request should error as false, using promises', () =>
         stubbedRequestor
           .get(sampleRequest)
-          .catch(error => error.error.should.be.true));
+          .catch(error => error.content.should.be.true));
 
       it('request should error as false, using callbacks', (done) => {
         stubbedRequestor
           .get(sampleRequest,
                (err, data) => {
-                 err.should.be.eql(mockBody);
+                 err.content.should.be.true
                  done();
                 });
       });
@@ -269,7 +288,7 @@ describe('Utils Unit Tests', function() {
       var spyGet;
 
       beforeEach(() => {
-        spyGet = sinon.spy(request, 'getAsync');
+        spyGet = sinon.spy(axios, 'get');
       });
 
       afterEach(() => {
@@ -284,20 +303,20 @@ describe('Utils Unit Tests', function() {
           'User-Agent': `smartsheet-javascript-sdk/${EXPECTED_VERSION}`
         };
         requestor.get(sampleRequest);
-        spyGet.args[0][0].headers.Authorization.should.equal(sampleHeaders.Authorization);
-        spyGet.args[0][0].headers.Accept.should.equal(sampleHeaders.Accept);
-        spyGet.args[0][0].headers['Content-Type'].should.equal(sampleHeaders['Content-Type']);
-        spyGet.args[0][0].headers['User-Agent'].should.equal(sampleHeaders['User-Agent']);
+        spyGet.args[0][1].headers.Authorization.should.equal(sampleHeaders.Authorization);
+        spyGet.args[0][1].headers.Accept.should.equal(sampleHeaders.Accept);
+        spyGet.args[0][1].headers['Content-Type'].should.equal(sampleHeaders['Content-Type']);
+        spyGet.args[0][1].headers['User-Agent'].should.equal(sampleHeaders['User-Agent']);
       });
 
       it('url sent to request should match given', () => {
         requestor.get(sampleRequest);
-        spyGet.args[0][0].url.should.equal('https://api.smartsheet.com/2.0/URL');
+        spyGet.args[0][0].should.equal('https://api.smartsheet.com/2.0/URL');
       });
 
       it('queryString sent to request should match given', () => {
         requestor.get(sampleRequestWithQueryParameters);
-        spyGet.args[0][0].qs.should.equal(sampleRequestWithQueryParameters.queryParameters);
+        spyGet.args[0][1].params.should.equal(sampleRequestWithQueryParameters.queryParameters);
       });
     });
 
@@ -305,12 +324,12 @@ describe('Utils Unit Tests', function() {
       var requestStub = null;
       var handleResponseStub = sinon.stub();
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: request, handleResponse: handleResponseStub});
+        .create({request: axios, handleResponse: handleResponseStub});
       var sampleRequestForRetry = null;
 
       function givenGetReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns(Promise.reject({errorCode: 4001}));
+        handleResponseStub.returns({errorCode: 4001});
       }
 
       function givenGetReturnsSuccess() {
@@ -330,7 +349,7 @@ describe('Utils Unit Tests', function() {
       }
 
       beforeEach(() => {
-        requestStub = sinon.stub(request, 'getAsync');
+        requestStub = sinon.stub(axios, 'get');
         sampleRequestForRetry = _.extend({}, sampleRequest);
         sampleRequestForRetry.maxRetryDurationMillis = 30;
         sampleRequestForRetry.calcRetryBackoff = function (numRetry) {return Math.pow(3, numRetry);};
@@ -377,10 +396,10 @@ describe('Utils Unit Tests', function() {
       var requestStub = null;
 
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: request, handleResponse: () => ({content: true})});
+        .create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
-        requestStub = sinon.stub(request, 'postAsync');
+        requestStub = sinon.stub(axios, 'post');
         var mockResponse = {
           statusCode: 200,
           headers: {
@@ -413,10 +432,10 @@ describe('Utils Unit Tests', function() {
       var mockBody = {error:true};
 
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: request, handleResponse: () => ({content: true})});
+        .create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
-        requestStub = sinon.stub(request, 'postAsync');
+        requestStub = sinon.stub(axios, 'post');
         requestStub.returns(Promise.reject(mockBody));
       });
 
@@ -427,13 +446,13 @@ describe('Utils Unit Tests', function() {
       it('request should error as false', () =>
         stubbedRequestor
           .post(sampleRequest)
-          .catch(error => error.error.should.be.true));
+          .catch(error => error.content.should.be.true));
 
       it('request should error as false', (done) => {
         stubbedRequestor
           .post(sampleRequest,
                 (err, data) => {
-                  err.should.be.eql(mockBody);
+                  err.content.should.be.true
                   done();
                 });
       });
@@ -443,7 +462,7 @@ describe('Utils Unit Tests', function() {
       var spyPost;
 
       beforeEach(() => {
-        spyPost = sinon.spy(request, 'postAsync');
+        spyPost = sinon.spy(axios, 'post');
       });
 
       afterEach(() => {
@@ -458,25 +477,25 @@ describe('Utils Unit Tests', function() {
           'User-Agent': `smartsheet-javascript-sdk/${EXPECTED_VERSION}`
         };
         requestor.post(sampleRequest);
-        spyPost.args[0][0].headers.Authorization.should.equal(sampleHeaders.Authorization);
-        spyPost.args[0][0].headers.Accept.should.equal(sampleHeaders.Accept);
-        spyPost.args[0][0].headers['Content-Type'].should.equal(sampleHeaders['Content-Type']);
-        spyPost.args[0][0].headers['User-Agent'].should.equal(sampleHeaders['User-Agent']);
+        spyPost.args[0][2].headers.Authorization.should.equal(sampleHeaders.Authorization);
+        spyPost.args[0][2].headers.Accept.should.equal(sampleHeaders.Accept);
+        spyPost.args[0][2].headers['Content-Type'].should.equal(sampleHeaders['Content-Type']);
+        spyPost.args[0][2].headers['User-Agent'].should.equal(sampleHeaders['User-Agent']);
       });
 
       it('url sent to request should match given', () => {
         requestor.post(sampleRequest);
-        spyPost.args[0][0].url.should.equal('https://api.smartsheet.com/2.0/URL');
+        spyPost.args[0][0].should.equal('https://api.smartsheet.com/2.0/URL');
       });
 
       it('queryString sent to request should match given', () => {
         requestor.post(sampleRequestWithQueryParameters);
-        spyPost.args[0][0].qs.should.equal(sampleRequestWithQueryParameters.queryParameters);
+        spyPost.args[0][2].params.should.equal(sampleRequestWithQueryParameters.queryParameters);
       });
 
       it('body sent to request should match given', () => {
         requestor.post(sampleRequestWithQueryParameters);
-        spyPost.args[0][0].body.should.equal(JSON.stringify(sampleRequestWithQueryParameters.body));
+        spyPost.args[0][1].should.equal(sampleRequestWithQueryParameters.body);
       });
     });
 
@@ -485,13 +504,13 @@ describe('Utils Unit Tests', function() {
       var handleResponseStub = sinon.stub();
 
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: request, handleResponse: handleResponseStub});
+        .create({request: axios, handleResponse: handleResponseStub});
 
       var sampleRequestForRetry;
 
       function givenPostReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns(Promise.reject({errorCode: 4001}));
+        handleResponseStub.returns({errorCode: 4001});
       }
 
       function givenPostReturnsSuccess() {
@@ -511,7 +530,7 @@ describe('Utils Unit Tests', function() {
       }
 
       beforeEach(() => {
-        requestStub = sinon.stub(request, 'postAsync');
+        requestStub = sinon.stub(axios, 'post');
 
         sampleRequestForRetry = _.extend({}, sampleRequest);
         sampleRequestForRetry.maxRetryDurationMillis = 30;
@@ -559,10 +578,10 @@ describe('Utils Unit Tests', function() {
       var requestStub = null;
 
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: request, handleResponse: () => ({content: true})});
+        .create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
-        requestStub = sinon.stub(request, 'putAsync');
+        requestStub = sinon.stub(axios, 'put');
         var mockResponse = {
           statusCode: 200,
           headers: {
@@ -597,10 +616,10 @@ describe('Utils Unit Tests', function() {
       var mockBody = {error: true};
 
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: request, handleResponse: () => ({content: true})});
+        .create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
-        stub = sinon.stub(request, 'putAsync');
+        stub = sinon.stub(axios, 'put');
         var mockResponse = {
           statusCode: 403,
           headers: {
@@ -617,13 +636,13 @@ describe('Utils Unit Tests', function() {
       it('request should error as false', () =>
         stubbedRequestor
           .put(sampleRequest)
-          .catch(error => error.error.should.be.true));
+          .catch(error => error.content.should.be.true));
 
       it('request should error as false', (done) => {
         stubbedRequestor
           .put(sampleRequest,
                (err, data) => {
-                 err.should.eql(mockBody);
+                 err.content.should.be.true
                  done();
                 });
       });
@@ -633,7 +652,7 @@ describe('Utils Unit Tests', function() {
       var spyPut;
 
       beforeEach(() => {
-        spyPut = sinon.spy(request, 'putAsync');
+        spyPut = sinon.spy(axios, 'put');
       });
 
       afterEach(() => {
@@ -648,25 +667,25 @@ describe('Utils Unit Tests', function() {
           'User-Agent': `smartsheet-javascript-sdk/${EXPECTED_VERSION}`
         };
         requestor.put(sampleRequest);
-        spyPut.args[0][0].headers.Authorization.should.equal(sampleHeaders.Authorization);
-        spyPut.args[0][0].headers.Accept.should.equal(sampleHeaders.Accept);
-        spyPut.args[0][0].headers['Content-Type'].should.equal(sampleHeaders['Content-Type']);
-        spyPut.args[0][0].headers['User-Agent'].should.equal(sampleHeaders['User-Agent']);
+        spyPut.args[0][2].headers.Authorization.should.equal(sampleHeaders.Authorization);
+        spyPut.args[0][2].headers.Accept.should.equal(sampleHeaders.Accept);
+        spyPut.args[0][2].headers['Content-Type'].should.equal(sampleHeaders['Content-Type']);
+        spyPut.args[0][2].headers['User-Agent'].should.equal(sampleHeaders['User-Agent']);
       });
 
       it('url sent to request should match given', () => {
         requestor.put(sampleRequest);
-        spyPut.args[0][0].url.should.equal('https://api.smartsheet.com/2.0/URL');
+        spyPut.args[0][0].should.equal('https://api.smartsheet.com/2.0/URL');
       });
 
       it('queryString sent to request should match given', () => {
         requestor.put(sampleRequestWithQueryParameters);
-        spyPut.args[0][0].qs.should.equal(sampleRequestWithQueryParameters.queryParameters);
+        spyPut.args[0][2].params.should.equal(sampleRequestWithQueryParameters.queryParameters);
       });
 
       it('body sent to request should match given', () => {
         requestor.put(sampleRequestWithQueryParameters);
-        spyPut.args[0][0].body.should.equal(JSON.stringify(sampleRequestWithQueryParameters.body));
+        spyPut.args[0][1].should.equal(sampleRequestWithQueryParameters.body);
       });
     });
 
@@ -675,13 +694,13 @@ describe('Utils Unit Tests', function() {
       var handleResponseStub = sinon.stub();
 
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: request, handleResponse: handleResponseStub});
+        .create({request: axios, handleResponse: handleResponseStub});
 
       var sampleRequestForRetry = null;
 
       function givenPutReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns(Promise.reject({errorCode: 4001}));
+        handleResponseStub.returns({errorCode: 4001});
       }
 
       function givenPutReturnsSuccess() {
@@ -701,7 +720,7 @@ describe('Utils Unit Tests', function() {
       }
 
       beforeEach(() => {
-        requestStub = sinon.stub(request, 'putAsync');
+        requestStub = sinon.stub(axios, 'put');
 
         sampleRequestForRetry = _.extend({}, sampleRequest);
         sampleRequestForRetry.maxRetryDurationMillis = 30;
@@ -749,10 +768,10 @@ describe('Utils Unit Tests', function() {
       var requestStub = null;
 
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: request, handleResponse: () => ({content: true})});
+        .create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
-        requestStub = sinon.stub(request, 'delAsync');
+        requestStub = sinon.stub(axios, 'delete');
         var mockResponse = {
           statusCode: 200,
           headers: {
@@ -788,10 +807,10 @@ describe('Utils Unit Tests', function() {
       var mockBody = {error: true};
 
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: request, handleResponse: () => ({content: true})});
+        .create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
-        requestStub = sinon.stub(request, 'delAsync');
+        requestStub = sinon.stub(axios, 'delete');
         var mockResponse = {
           statusCode: 403,
           headers: {
@@ -808,13 +827,13 @@ describe('Utils Unit Tests', function() {
       it('request should error as false', () =>
         stubbedRequestor
           .delete(sampleRequest)
-          .catch(error => error.error.should.be.true));
+          .catch(error => error.content.should.be.true));
 
       it('request should error as false', (done) => {
         stubbedRequestor
           .delete(sampleRequest,
                   (err, data) => {
-                    err.should.eql(mockBody);
+                    err.content.should.be.true;
                     done();
                   });
       });
@@ -824,7 +843,7 @@ describe('Utils Unit Tests', function() {
       var spyPut;
 
       beforeEach(() => {
-        spyPut = sinon.spy(request, 'delAsync');
+        spyPut = sinon.spy(axios, 'delete');
       });
 
       afterEach(() => {
@@ -839,20 +858,20 @@ describe('Utils Unit Tests', function() {
           'User-Agent': `smartsheet-javascript-sdk/${EXPECTED_VERSION}`
         };
         requestor.delete(sampleRequest);
-        spyPut.args[0][0].headers.Authorization.should.equal(sampleHeaders.Authorization);
-        spyPut.args[0][0].headers.Accept.should.equal(sampleHeaders.Accept);
-        spyPut.args[0][0].headers['Content-Type'].should.equal(sampleHeaders['Content-Type']);
-        spyPut.args[0][0].headers['User-Agent'].should.equal(sampleHeaders['User-Agent']);
+        spyPut.args[0][1].headers.Authorization.should.equal(sampleHeaders.Authorization);
+        spyPut.args[0][1].headers.Accept.should.equal(sampleHeaders.Accept);
+        spyPut.args[0][1].headers['Content-Type'].should.equal(sampleHeaders['Content-Type']);
+        spyPut.args[0][1].headers['User-Agent'].should.equal(sampleHeaders['User-Agent']);
       });
 
       it('url sent to request should match given', () => {
         requestor.delete(sampleRequest);
-        spyPut.args[0][0].url.should.equal('https://api.smartsheet.com/2.0/URL');
+        spyPut.args[0][0].should.equal('https://api.smartsheet.com/2.0/URL');
       });
 
       it('queryString sent to request should match given', () => {
         requestor.delete(sampleRequestWithQueryParameters);
-        spyPut.args[0][0].qs.should.equal(sampleRequestWithQueryParameters.queryParameters);
+        spyPut.args[0][1].params.should.equal(sampleRequestWithQueryParameters.queryParameters);
       });
     });
 
@@ -861,13 +880,13 @@ describe('Utils Unit Tests', function() {
       var handleResponseStub = sinon.stub();
 
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: request, handleResponse: handleResponseStub});
+        .create({request: axios, handleResponse: handleResponseStub});
 
       var sampleRequestForRetry;
 
       function givenDeleteReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns(Promise.reject({errorCode: 4001}));
+        handleResponseStub.returns({errorCode: 4001});
       }
 
       function givenDeleteReturnsSuccess() {
@@ -887,7 +906,7 @@ describe('Utils Unit Tests', function() {
       }
 
       beforeEach(() => {
-        requestStub = sinon.stub(request, 'delAsync');
+        requestStub = sinon.stub(axios, 'delete');
 
         sampleRequestForRetry = _.extend({}, sampleRequest);
         sampleRequestForRetry.maxRetryDurationMillis = 30;
