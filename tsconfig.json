@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+      "outDir": "./dist",
+      "allowJs": true,
+      "target": "ES6",
+      "declaration": true
+    },
+    "include": ["./lib/**/*", "./index.js"]
+}

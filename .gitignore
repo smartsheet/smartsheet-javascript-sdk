@@ -6,3 +6,4 @@ config/default.json
 npm-debug.log
 .nyc_output
 .vscode/
+dist/

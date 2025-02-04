@@ -1,9 +1,11 @@
 {
   "name": "smartsheet",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "description": "Smartsheet JavaScript client SDK",
   "main": "index.js",
+  "typings":  "dist/index.d.ts",
   "scripts": {
+    "build": "tsc",
     "lint": "jshint -c .jshintrc lib/",
     "test": "mocha \"test/**/*_test.js\"",
     "test-functional": "mocha \"test/functional/**/*_test.js\"",
@@ -34,6 +36,7 @@
     "bluebird": "^3.5.0",
     "extend": "^3.0.2",
     "mime": "^3.0.0",
+    "typescript": "~4.7.4",
     "underscore": "^1.8.2",
     "winston": "^2.3.1"
   },
