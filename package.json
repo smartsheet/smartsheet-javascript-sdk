@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.13.4",
+    "@types/underscore": "^1.13.0",
     "coveralls": "^3.1.1",
     "gulp": "^4.0.2",
     "gulp-jshint": "^2.1.0",
