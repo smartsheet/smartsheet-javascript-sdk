@@ -3,7 +3,7 @@ var should = require('should');
 var requestor = require('../../lib/utils/httpRequestor.js').create({});
 var constants = require('../../lib/utils/constants.js');
 var _ = require('underscore');
-var smartsheet = require('../../index.js');
+var smartsheet = require('../../dist/index.js');
 
 
 describe('Method Unit Tests', function () {
