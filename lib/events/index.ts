@@ -1,8 +1,8 @@
 import * as _ from 'underscore';
 import { EventsModule, GetEventsCallback, GetEventsOptions } from './types';
+import {CreateOptions} from "../types";
 
-// todo: add options type
-export const create = (options: any): EventsModule => {
+export const create = (options: CreateOptions): EventsModule => {
   const requestor = options.requestor;
 
   const optionsToSend = {
