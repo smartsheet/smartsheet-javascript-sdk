@@ -1,4 +1,4 @@
-import { CreateClient } from "./lib/types";
+import {CreateClient, CreateOptions} from "./lib/types";
 import { apiUrls } from "./lib/utils/apis";
 
 var _ = require('underscore');
@@ -76,7 +76,7 @@ function buildLoggerFromContainer(container) {
 export const createClient: CreateClient = function(clientOptions) {
   var requestor = buildRequestor(clientOptions);
 
-  var options = {
+  var options: CreateOptions = {
     apiUrls: apiUrls,
     requestor: requestor,
     clientOptions: {
