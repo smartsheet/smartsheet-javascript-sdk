@@ -1,8 +1,8 @@
 import { CreateClient } from "./lib/types";
+import { apiUrls } from "./lib/utils/apis";
 
 var _ = require('underscore');
 var winston = require('winston');
-var apiUrls = require('./lib/utils/apis.js');
 
 // Possible TODO: Namespace parameters for different subcomponents
 // E.g. clientOptions.requestor.instance OR

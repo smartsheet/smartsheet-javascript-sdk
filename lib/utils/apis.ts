@@ -1,4 +1,5 @@
-module.exports = {
+import {ApiUrls} from "../types";
+export const apiUrls: ApiUrls = {
   contacts         :  'contacts/',
   events           :  'events/',
   favorites        :  'favorites/',
@@ -18,3 +19,4 @@ module.exports = {
   webhooks         :  'webhooks/',
   workspaces       :  'workspaces/'
 };
+
