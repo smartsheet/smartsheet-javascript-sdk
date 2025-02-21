@@ -139,5 +139,5 @@ export interface GetEventsResponse {
 }
 
 export interface EventsModule {
-    getEvents: (getOptions: RequestOptions<GetEventsOptions, undefined>, callback?: RequestCallback<GetEventsResponse>) => void;
+    getEvents: (options: RequestOptions<GetEventsOptions, undefined>, callback?: RequestCallback<GetEventsResponse>) => void;
 }
