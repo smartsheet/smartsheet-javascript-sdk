@@ -1,6 +1,8 @@
 import {RequestCallback} from "../types/RequestCallback";
+import {RequestOptions} from "../types/RequestOptions";
 
 export interface GetEventsOptions {
+
     /**
      * The earliest time from which events are included in the response. Events before this time are excluded.
      * This parameter is intended for use when backfilling data at client startup or recovery--don't use it
@@ -137,5 +139,5 @@ export interface GetEventsResponse {
 }
 
 export interface EventsModule {
-    getEvents: (getOptions: GetEventsOptions, callback?: RequestCallback<GetEventsResponse>) => void;
+    getEvents: (getOptions: RequestOptions<GetEventsOptions, undefined>, callback?: RequestCallback<GetEventsResponse>) => void;
 }

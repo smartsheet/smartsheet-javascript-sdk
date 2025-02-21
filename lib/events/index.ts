@@ -14,8 +14,8 @@ export const create = (options: CreateOptions): EventsModule => {
   }
 
   return {
-    getEvents: (getOptions, callback) => {
-      return requester.get(_.extend({}, optionsToSend, getOptions), callback)
-    },
-  };
+    getEvents: (options, callback) => {
+      return requester.get(_.extend({}, optionsToSend, options), callback)
+    }
+  }
 };
