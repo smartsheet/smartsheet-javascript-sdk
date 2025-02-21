@@ -102,7 +102,7 @@ export interface Event {
      * in the request (i.e., it isn't an API call) or if the access token wasn't given a name when created
      * (only access tokens generated via the Smartsheet desktop UI can be given a name at creation time).
      */
-    accessTokenName: string;
+    accessTokenName?: string;
 
     /**
      * Identifies the type of action that triggered the event.
