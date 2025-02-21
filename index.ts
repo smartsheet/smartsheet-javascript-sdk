@@ -117,3 +117,4 @@ export const smartSheetURIs = {
 
 
 export { CreateClient, CreateClientOptions, SmartsheetClient } from "./lib/types";
+export * from "./lib/events/types"
