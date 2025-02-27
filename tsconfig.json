@@ -1,12 +1,12 @@
 {
-    "compilerOptions": {
-      "outDir": "./dist",
-      "allowJs": true,
-      "target": "ES6",
-      "declaration": true,
-      "moduleResolution": "node16",
-      "resolveJsonModule": true,
-      "module": "Node16"
-    },
-    "include": ["./lib/**/*", "./index.ts", "./package.json"]
+  "compilerOptions": {
+    "outDir": "./dist",
+    "allowJs": true,
+    "target": "ES6",
+    "declaration": true,
+    "moduleResolution": "node16",
+    "resolveJsonModule": true,
+    "module": "Node16"
+  },
+  "include": ["./lib/**/*", "./index.ts", "./package.json"]
 }
