@@ -1,21 +1,27 @@
-import * as _ from 'underscore';
 import { EventsModule } from './types';
-import {CreateOptions} from "../types";
+import {ClientOptions, CreateOptions} from "../types";
+
+type OptionsToSend = Partial<ClientOptions> & {
+  url: string
+}
 
 export const create = (options: CreateOptions): EventsModule => {
   const requester = options.requestor;
 
-  const optionsToSend = {
+  let optionsToSend: OptionsToSend= {
     url: options.apiUrls.events,
   };
 
-  if (options.clientOptions) { // Check if clientOptions exists
-    _.extend(optionsToSend, options.clientOptions);
+  if (options.clientOptions) {
+    optionsToSend = {
+      ...optionsToSend,
+      ...options.clientOptions
+    }
   }
 
   return {
     getEvents: (options, callback) => {
-      return requester.get(_.extend({}, optionsToSend, options), callback)
+      return requester.get({ ...optionsToSend, ...options}, callback)
     }
   }
 };
