@@ -1,11 +1,11 @@
-import { EventsModule } from './types';
-import {ClientOptions, CreateOptions} from "../types";
+import { EventsApi, GetEventsOptions, GetEventsResponse } from './types';
+import {ClientOptions, CreateOptions, RequestCallback, RequestOptions} from "../types";
 
 type OptionsToSend = Partial<ClientOptions> & {
   url: string
 }
 
-export const create = (options: CreateOptions): EventsModule => {
+export const createEvents = (options: CreateOptions): EventsApi => {
   const requester = options.requestor;
 
   let optionsToSend: OptionsToSend= {
@@ -20,7 +20,7 @@ export const create = (options: CreateOptions): EventsModule => {
   }
 
   return {
-    getEvents: (options, callback) => {
+    getEvents: (options: RequestOptions<GetEventsOptions, undefined>, callback?: RequestCallback<GetEventsResponse>): Promise<GetEventsResponse> => {
       return requester.get({ ...optionsToSend, ...options}, callback)
     }
   }

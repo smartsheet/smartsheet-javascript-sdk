@@ -138,6 +138,6 @@ export interface GetEventsResponse {
     data: Event[];
 }
 
-export interface EventsModule {
-    getEvents: (options: RequestOptions<GetEventsOptions, undefined>, callback?: RequestCallback<GetEventsResponse>) => void;
+export interface EventsApi {
+    getEvents: (options: RequestOptions<GetEventsOptions, undefined>, callback?: RequestCallback<GetEventsResponse>) => Promise<GetEventsResponse>;
 }
