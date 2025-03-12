@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.2.1] - 2025-2-21
+### Added
+- Convert "events" module to typescript
 
 ## [4.2.0] - 2025-2-18
 ### Added

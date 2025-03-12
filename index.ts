@@ -1,8 +1,9 @@
-import { CreateClient } from "./lib/types";
+import {CreateClient, CreateOptions} from "./lib/types";
+import { apiUrls } from "./lib/utils/apis";
+import { createEvents } from "./lib/events";
 
 var _ = require('underscore');
 var winston = require('winston');
-var apiUrls = require('./lib/utils/apis.js');
 
 // Possible TODO: Namespace parameters for different subcomponents
 // E.g. clientOptions.requestor.instance OR
@@ -76,7 +77,7 @@ function buildLoggerFromContainer(container) {
 export const createClient: CreateClient = function(clientOptions) {
   var requestor = buildRequestor(clientOptions);
 
-  var options = {
+  var options: CreateOptions = {
     apiUrls: apiUrls,
     requestor: requestor,
     clientOptions: {
@@ -89,7 +90,7 @@ export const createClient: CreateClient = function(clientOptions) {
   return {
     constants  : require('./lib/utils/constants.js'),
     contacts   : require('./lib/contacts/').create(options),
-    events     : require('./lib/events/').create(options),
+    events     : createEvents(options),
     favorites  : require('./lib/favorites/').create(options),
     folders    : require('./lib/folders/').create(options),
     groups     : require('./lib/groups/').create(options),
@@ -117,3 +118,4 @@ export const smartSheetURIs = {
 
 
 export { CreateClient, CreateClientOptions, SmartsheetClient } from "./lib/types";
+export * from "./lib/events/types"
