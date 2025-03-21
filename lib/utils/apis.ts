@@ -39,5 +39,3 @@ export const apiUrlBySection = {
   [ApiSection.Webhooks]: "webhooks/",
   [ApiSection.Workspaces]: "workspaces/",
 } as const;
-
-export type ApiUrlPath = (typeof apiUrlBySection)[ApiSection];

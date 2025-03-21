@@ -1,7 +1,6 @@
 import { RequestCallback } from "../../types";
 import {
   ApiCreator,
-  ApiEndpointCreator,
   FavoriteItem,
   Pagination,
   PaginationResponse,

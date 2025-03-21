@@ -1,4 +1,4 @@
-import { ApiUrls } from "./ApiUrls";
+import { ApiUrlPathBySection } from "./ApiUrls";
 import { CreateClientOptions } from "./CreateClientOptions";
 
 export type ClientOptions = Pick<
@@ -23,7 +23,7 @@ export type Requestor = {
 };
 
 export interface CreateOptions {
-  apiUrls: ApiUrls;
+  apiUrls: ApiUrlPathBySection;
   requestor: Requestor;
   clientOptions?: ClientOptions;
 }
