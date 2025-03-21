@@ -4,7 +4,7 @@ import type { RequestOptions } from "../types/RequestOptions";
 export interface ContactsApi {
   getContact: (
     options: RequestOptions<GetContactOptions, undefined>,
-    callback?: RequestCallback<Contact>
+    callback?: RequestCallback<GetContactResponse>
   ) => void;
   listContacts: (
     options: RequestOptions<ListContactsOptions, undefined>,
@@ -104,3 +104,5 @@ export interface GetContactOptions {
    */
   include: string;
 }
+
+export interface GetContactResponse extends Contact {}
