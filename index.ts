@@ -1,5 +1,5 @@
 import {CreateClient, CreateOptions} from "./lib/types";
-import { apiUrls } from "./lib/utils/apis";
+import { apiUrlByResource } from "./lib/utils/apis";
 import { createEvents } from "./lib/events";
 
 var _ = require('underscore');
@@ -78,7 +78,7 @@ export const createClient: CreateClient = function(clientOptions) {
   var requestor = buildRequestor(clientOptions);
 
   var options: CreateOptions = {
-    apiUrls: apiUrls,
+    apiUrls: apiUrlByResource,
     requestor: requestor,
     clientOptions: {
       accessToken: clientOptions.accessToken || process.env.SMARTSHEET_ACCESS_TOKEN,
