@@ -11,7 +11,7 @@ import type { RequestOptions } from "./../types/RequestOptions";
 
 // TODO: Finish the types for GetContactOptions and ListContactsOptions - need to trace the httpRequestor to see how they are used to make sure it all applies
 
-export function contacts(options: CreateOptions): ContactsApi {
+export function createContacts(options: CreateOptions): ContactsApi {
   const requestor = options.requestor;
 
   const optionsToSend = {

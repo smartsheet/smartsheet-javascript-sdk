@@ -1,5 +1,5 @@
 import { apiUrls } from "./lib/utils/apis";
-import { contacts } from "./lib/contacts";
+import { createContacts } from "./lib/contacts";
 import { createEvents } from "./lib/events";
 import type { CreateClient, CreateOptions } from "./lib/types";
 
@@ -100,7 +100,7 @@ export const createClient: CreateClient = function (clientOptions) {
 
   return {
     constants: require("./lib/utils/constants.js"),
-    contacts: contacts(options),
+    contacts: createContacts(options),
     events: createEvents(options),
     favorites: require("./lib/favorites/").create(options),
     folders: require("./lib/folders/").create(options),
