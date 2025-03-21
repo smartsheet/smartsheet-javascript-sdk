@@ -1,11 +1,17 @@
-import type { CreateOptions } from "../types";
 import type {
-  ContactsAPI,
+  Contact,
+  ContactsApi,
   GetContactOptions,
   ListContactsOptions,
+  ListContactsResponse,
 } from "./types";
+import type { CreateOptions } from "../types";
+import type { RequestCallback } from "../types/RequestCallback";
+import type { RequestOptions } from "./../types/RequestOptions";
 
-export function contacts(options: CreateOptions): ContactsAPI {
+// TODO: Finish the types for GetContactOptions and ListContactsOptions - need to trace the httpRequestor to see how they are used to make sure it all applies
+
+export function contacts(options: CreateOptions): ContactsApi {
   const requestor = options.requestor;
 
   const optionsToSend = {
@@ -14,12 +20,17 @@ export function contacts(options: CreateOptions): ContactsAPI {
   };
 
   const getContact = (
-    getOptions: GetContactOptions | ListContactsOptions,
-    callback: (error: any, response: any) => void
-  ) => requestor.get({ ...optionsToSend, ...getOptions }, callback);
+    options: RequestOptions<GetContactOptions, undefined>,
+    callback: RequestCallback<Contact>
+  ) => requestor.get({ ...optionsToSend, ...options }, callback);
+
+  const listContacts = (
+    options: RequestOptions<ListContactsOptions, undefined>,
+    callback: RequestCallback<ListContactsResponse>
+  ) => requestor.get({ ...optionsToSend, ...options }, callback);
 
   return {
-    getContact: getContact,
-    listContacts: getContact,
+    getContact,
+    listContacts,
   };
 }

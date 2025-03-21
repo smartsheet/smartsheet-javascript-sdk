@@ -1,11 +1,14 @@
-export interface ContactsAPI {
+import { RequestCallback } from "../types/RequestCallback";
+import type { RequestOptions } from "../types/RequestOptions";
+
+export interface ContactsApi {
   getContact: (
-    getOptions: GetContactOptions,
-    callback: (error: any, response: any) => void
+    options: RequestOptions<GetContactOptions, undefined>,
+    callback?: RequestCallback<Contact>
   ) => void;
   listContacts: (
-    getOptions: ListContactsOptions,
-    callback: (error: any, response: any) => void
+    options: RequestOptions<ListContactsOptions, undefined>,
+    callback?: RequestCallback<ListContactsResponse>
   ) => void;
 }
 

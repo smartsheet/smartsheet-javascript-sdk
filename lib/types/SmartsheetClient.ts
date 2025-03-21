@@ -1,9 +1,9 @@
 import { EventsApi } from "../events/types";
-import { ContactsAPI } from "../contacts/types";
+import { ContactsApi } from "../contacts/types";
 
 export interface SmartsheetClient {
   constants: any;
-  contacts: ContactsAPI;
+  contacts: ContactsApi;
   events: EventsApi;
   favorites: any;
   folders: any;
