@@ -1,5 +1,6 @@
 import { apiUrls } from "./lib/utils/apis";
 import { contacts } from "./lib/contacts";
+import { createEvents } from "./lib/events";
 import type { CreateClient, CreateOptions } from "./lib/types";
 
 var _ = require("underscore");
@@ -100,7 +101,7 @@ export const createClient: CreateClient = function (clientOptions) {
   return {
     constants: require("./lib/utils/constants.js"),
     contacts: contacts(options),
-    events: require("./lib/events/").create(options),
+    events: createEvents(options),
     favorites: require("./lib/favorites/").create(options),
     folders: require("./lib/folders/").create(options),
     groups: require("./lib/groups/").create(options),
@@ -131,3 +132,5 @@ export {
   CreateClientOptions,
   SmartsheetClient,
 } from "./lib/types";
+export * from "./lib/events/types";
+export * from "./lib/contacts/types";

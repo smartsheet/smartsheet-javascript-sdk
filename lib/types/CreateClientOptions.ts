@@ -14,7 +14,6 @@ export interface CreateClientOptions {
     | "info"
     | "http"
     | "info"
-    | "http"
     | "verbose"
     | "debug"
     | "silly";
