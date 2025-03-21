@@ -1,5 +1,5 @@
 import { CreateClient, CreateOptions } from "./lib/types";
-import { apiUrlBySection } from "./lib/utils/apis";
+import { apiUrlByResource } from "./lib/utils/apis";
 import { createEvents } from "./lib/events";
 
 var _ = require("underscore");
@@ -87,7 +87,7 @@ export const createClient: CreateClient = function (clientOptions) {
   var requestor = buildRequestor(clientOptions);
 
   var options: CreateOptions = {
-    apiUrls: apiUrlBySection,
+    apiUrls: apiUrlByResource,
     requestor: requestor,
     clientOptions: {
       accessToken:

@@ -1,5 +1,5 @@
 import { CreateOptions } from "../types";
-import { ApiSection } from "../utils/apis";
+import { ApiResource } from "../utils/apis";
 import { createApiProvider } from "../utils/createApiProvider";
 import { createListFavorites } from "./endpoints/ListFavorites";
 import { ApiCreator } from "./sharedTypes";
@@ -41,5 +41,5 @@ const buildFavoritesApi: ApiCreator<FavoritesApi> = (
 //}
 
 export const createFavorites = (options: CreateOptions) => {
-  return createApiProvider(options, ApiSection.Favorites, buildFavoritesApi);
+  return createApiProvider(options, ApiResource.Favorites, buildFavoritesApi);
 };

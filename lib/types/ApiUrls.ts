@@ -1,4 +1,7 @@
-import { ApiSection, apiUrlBySection } from "../utils/apis";
+import { ApiResource, apiUrlByResource } from "../utils/apis";
 
-export type ApiUrlPathBySection = typeof apiUrlBySection;
-export type ApiUrlPath = ApiUrlPathBySection[ApiSection];
+// Map of ApiResource to path
+export type ApiUrlPathByResource = typeof apiUrlByResource;
+
+// Valid paths for Api Resources
+export type ApiUrlPath = ApiUrlPathByResource[ApiResource];

@@ -1,15 +1,15 @@
 import { CreateOptions, OptionsToSend, Requestor } from "../types";
-import { ApiSection } from "./apis";
+import { ApiResource } from "./apis";
 
 export const createApiProvider = <ApiContract>(
   options: CreateOptions,
-  apiSection: ApiSection,
+  ApiResource: ApiResource,
   createApi: (requestor: Requestor, optionsToSend: OptionsToSend) => ApiContract
 ) => {
   const requestor: Requestor = options.requestor;
 
   let optionsToSend: OptionsToSend = {
-    url: options.apiUrls[apiSection],
+    url: options.apiUrls[ApiResource],
   };
 
   if (options.clientOptions) {

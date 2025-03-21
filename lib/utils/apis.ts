@@ -1,4 +1,4 @@
-export enum ApiSection {
+export enum ApiResource {
   Contacts = "contacts",
   Events = "events",
   Favorites = "favorites",
@@ -19,23 +19,23 @@ export enum ApiSection {
   Workspaces = "workspaces",
 }
 
-export const apiUrlBySection = {
-  [ApiSection.Contacts]: "contacts/",
-  [ApiSection.Events]: "events/",
-  [ApiSection.Favorites]: "favorites/",
-  [ApiSection.Folders]: "folders/",
-  [ApiSection.Groups]: "groups/",
-  [ApiSection.Home]: "home/",
-  [ApiSection.ImageUrls]: "imageurls/",
-  [ApiSection.Reports]: "reports/",
-  [ApiSection.Search]: "search/",
-  [ApiSection.Server]: "serverinfo/",
-  [ApiSection.Sheets]: "sheets/",
-  [ApiSection.Sights]: "sights/",
-  [ApiSection.Templates]: "templates/",
-  [ApiSection.TemplatesPublic]: "templates/public",
-  [ApiSection.Token]: "token",
-  [ApiSection.Users]: "users/",
-  [ApiSection.Webhooks]: "webhooks/",
-  [ApiSection.Workspaces]: "workspaces/",
+export const apiUrlByResource = {
+  [ApiResource.Contacts]: "contacts/",
+  [ApiResource.Events]: "events/",
+  [ApiResource.Favorites]: "favorites/",
+  [ApiResource.Folders]: "folders/",
+  [ApiResource.Groups]: "groups/",
+  [ApiResource.Home]: "home/",
+  [ApiResource.ImageUrls]: "imageurls/",
+  [ApiResource.Reports]: "reports/",
+  [ApiResource.Search]: "search/",
+  [ApiResource.Server]: "serverinfo/",
+  [ApiResource.Sheets]: "sheets/",
+  [ApiResource.Sights]: "sights/",
+  [ApiResource.Templates]: "templates/",
+  [ApiResource.TemplatesPublic]: "templates/public",
+  [ApiResource.Token]: "token",
+  [ApiResource.Users]: "users/",
+  [ApiResource.Webhooks]: "webhooks/",
+  [ApiResource.Workspaces]: "workspaces/",
 } as const;
