@@ -1,3 +1,14 @@
+export interface ContactsAPI {
+  getContact: (
+    getOptions: GetContactOptions,
+    callback: (error: any, response: any) => void
+  ) => void;
+  listContacts: (
+    getOptions: ListContactsOptions,
+    callback: (error: any, response: any) => void
+  ) => void;
+}
+
 export interface Contact {
   /**
    * @description Contact Id.

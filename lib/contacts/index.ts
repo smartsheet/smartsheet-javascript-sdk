@@ -1,18 +1,11 @@
 import type { CreateOptions } from "../types";
-import type { GetContactOptions, ListContactsOptions } from "./types";
+import type {
+  ContactsAPI,
+  GetContactOptions,
+  ListContactsOptions,
+} from "./types";
 
-interface ContactAPI {
-  getContact: (
-    getOptions: GetContactOptions,
-    callback: (error: any, response: any) => void
-  ) => void;
-  listContacts: (
-    getOptions: ListContactsOptions,
-    callback: (error: any, response: any) => void
-  ) => void;
-}
-
-export function contacts(options: CreateOptions): ContactAPI {
+export function contacts(options: CreateOptions): ContactsAPI {
   const requestor = options.requestor;
 
   const optionsToSend = {
