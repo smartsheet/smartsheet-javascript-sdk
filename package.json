@@ -13,8 +13,7 @@
     "test": "tsc && mocha \"test/**/*_test.js\"",
     "test-functional": "tsc && mocha \"test/functional/**/*_test.js\"",
     "test-mock-api": "tsc && mocha \"test/mock-api/**/*_test.js\"",
-    "coverage": "tsc && nyc --reporter=text --reporter=lcov mocha \"test/**/*_test.js\"",
-    "prepare": "husky"
+    "coverage": "tsc && nyc --reporter=text --reporter=lcov mocha \"test/**/*_test.js\""
   },
   "repository": {
     "type": "git",
