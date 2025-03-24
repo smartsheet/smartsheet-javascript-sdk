@@ -5,6 +5,7 @@ import prettierConfig from 'eslint-config-prettier';
 
 export default tseslint.config(
   {
+    ignores: ['dist/**/*', 'dist/**', '**/dist/**', '**/*_test.*', '**/test/**/*'],
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -12,19 +13,6 @@ export default tseslint.config(
       },
     },
   },
-  {
-    // Ignore patterns should be at the top level
-    ignores: [
-      'dist/**/*',
-      'dist/**',
-      '**/dist/**',
-      '**/*_test.*',
-      '**/test/**/*_test.js',
-      '**/test/**/*.js', // Ignore all JS files in test directory
-      '**/test/mock-api/**', // Specifically ignore all files in mock-api directory
-    ],
-  },
-
   eslint.configs.recommended,
   tseslint.configs.strict,
   tseslint.configs.stylistic,
@@ -46,13 +34,11 @@ export default tseslint.config(
     },
   },
   {
-    // Convert specific rules to warnings for JavaScript files only
+    // Apply to Javascript files only:
     files: ['**/*.{js,mjs,cjs}'],
     rules: {
       'no-undef': 'warn',
-      // Also configure standard no-unused-vars for JS files
     },
   },
-  // Add Prettier config last to disable conflicting rules
   prettierConfig
 );
