@@ -2,8 +2,8 @@ import { CreateClient, CreateOptions } from './lib/types';
 import { apiUrls } from './lib/utils/apis';
 import { createEvents } from './lib/events';
 
-var _ = require('underscore');
-var winston = require('winston');
+const _ = require('underscore');
+const winston = require('winston');
 
 // Possible TODO: Namespace parameters for different subcomponents
 // E.g. clientOptions.requestor.instance OR
@@ -13,7 +13,7 @@ var winston = require('winston');
 function buildRequestor(clientOptions) {
   if (clientOptions.requestor) return clientOptions.requestor;
 
-  var requestorConfig = _.pick(clientOptions, 'maxRetryDurationSeconds', 'calcRetryBackoff');
+  const requestorConfig = _.pick(clientOptions, 'maxRetryDurationSeconds', 'calcRetryBackoff');
 
   if (requestorConfig.maxRetryDurationSeconds)
     requestorConfig.maxRetryDurationMillis = requestorConfig.maxRetryDurationSeconds * 1000;
@@ -75,9 +75,9 @@ function buildLoggerFromContainer(container) {
 }
 
 export const createClient: CreateClient = function (clientOptions) {
-  var requestor = buildRequestor(clientOptions);
+  const requestor = buildRequestor(clientOptions);
 
-  var options: CreateOptions = {
+  const options: CreateOptions = {
     apiUrls: apiUrls,
     requestor: requestor,
     clientOptions: {

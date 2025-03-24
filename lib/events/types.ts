@@ -113,9 +113,7 @@ export interface Event {
    * See Event Reporting reference documentation for details on each event type.
    * https://smartsheet-platform.github.io/event-reporting-docs/
    */
-  additionalDetails?: {
-    [key: string]: any;
-  };
+  additionalDetails?: Record<string, any>;
 }
 
 export interface GetEventsResponse {

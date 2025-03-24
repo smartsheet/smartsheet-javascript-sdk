@@ -48,6 +48,7 @@
     "coveralls": "^3.1.1",
     "eslint": "^9.23.0",
     "eslint-config-prettier": "^10.1.1",
+    "globals": "^16.0.0",
     "gulp": "^4.0.2",
     "gulp-jshint": "^2.1.0",
     "gulp-mocha": "^8.0.0",
