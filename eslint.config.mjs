@@ -1,5 +1,6 @@
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
+import prettierConfig from "eslint-config-prettier";
 
 export default tseslint.config(
   {
@@ -28,5 +29,7 @@ export default tseslint.config(
       "@typescript-eslint/no-require-imports": "warn",
       "no-undef": "warn"
     }
-  }
+  },
+  // Add Prettier config last to disable conflicting rules
+  prettierConfig
 );
