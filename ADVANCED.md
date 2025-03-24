@@ -102,8 +102,6 @@ The source code comes with several scripts for running tests:
 |`npm run test-functional`|Runs only functional tests|
 |`npm run test-mock-api`|Runs only mock API tests. Clone the [Smartsheet SDK tests](https://github.com/smartsheet-platform/smartsheet-sdk-tests) repo and follow the instructions from the README to start the mock server|
 |`npm run coverage`|Runs functional tests and reports on code coverage|
-|`gulp jshint`|Runs JSHint against the codebase|
-|`gulp [watch]`|Watches the codebase and runs JSHint whenever changes are made|
 
 Note that a successful test run will currently output some unhandled rejection messages in the body of the logs. This is expected, and does not indicate test failure.
 
