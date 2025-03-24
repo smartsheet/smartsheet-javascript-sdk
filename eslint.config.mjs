@@ -5,7 +5,7 @@ import prettierConfig from 'eslint-config-prettier';
 
 export default tseslint.config(
   {
-    ignores: ['**/dist/**', '**/test/**'],
+    ignores: ['**/dist/**', '**/test/**', '**/smartsheet-sdk-tests/**'],
   },
   {
     languageOptions: {
