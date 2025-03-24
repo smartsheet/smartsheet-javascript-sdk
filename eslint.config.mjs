@@ -5,7 +5,9 @@ import prettierConfig from 'eslint-config-prettier';
 
 export default tseslint.config(
   {
-    ignores: ['dist/**/*', 'dist/**', '**/dist/**', '**/*_test.*', '**/test/**/*'],
+    ignores: ['**/dist/**', '**/test/**'],
+  },
+  {
     languageOptions: {
       globals: {
         ...globals.browser,

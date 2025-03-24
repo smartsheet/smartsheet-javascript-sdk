@@ -9,6 +9,5 @@
     "resolveJsonModule": true,
     "module": "Node16"
   },
-  "include": ["./lib/**/*", "./index.ts", "./package.json"],
-  "exclude": ["dist/**/*", "**/*_test.*"]
+  "include": ["./lib/**/*", "./index.ts", "./package.json"]
 }
