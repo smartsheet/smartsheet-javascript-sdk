@@ -1,12 +1,9 @@
-import { ApiUrlPathByResource } from "./ApiUrls";
-import { CreateClientOptions } from "./CreateClientOptions";
+import { ApiUrlPathByResource } from './ApiUrls';
+import { CreateClientOptions } from './CreateClientOptions';
 
-export type ClientOptions = Pick<
-  CreateClientOptions,
-  "accessToken" | "userAgent" | "baseUrl"
->;
+export type ClientOptions = Pick<CreateClientOptions, 'accessToken' | 'userAgent' | 'baseUrl'>;
 
-export type Requestor = {
+export interface Requestor {
   get: (options: any, callback: any) => any;
   put: (options: any, callback: any) => any;
   post: (options: any, callback: any) => any;
@@ -15,12 +12,12 @@ export type Requestor = {
   internal: {
     buildHeaders: (options: any) => {
       Accept: any;
-      "Content-Type": any;
-      "User-Agent": string;
+      'Content-Type': any;
+      'User-Agent': string;
     };
     buildUrl: (options: any) => any;
   };
-};
+}
 
 export interface CreateOptions {
   apiUrls: ApiUrlPathByResource;

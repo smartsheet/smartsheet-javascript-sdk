@@ -1,4 +1,4 @@
-import { apiUrlByResource } from "../types";
+import { apiUrlByResource } from '../types';
 
 /*
  * @depricated - Will be removed in v5, prefer apiUrlByResource instead

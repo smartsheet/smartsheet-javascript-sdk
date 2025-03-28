@@ -1,5 +1,4 @@
-import { CreateOptions, OptionsToSend, Requestor } from "../types";
-import { ApiResource } from "./apis";
+import { ApiResource, CreateOptions, OptionsToSend, Requestor } from '../types';
 
 export const createApiProvider = <ApiContract>(
   options: CreateOptions,

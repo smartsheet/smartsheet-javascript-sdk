@@ -1,14 +1,10 @@
-import { CreateOptions } from "../types";
-import { ApiResource } from "../utils/apis";
-import { createApiProvider } from "../utils/createApiProvider";
-import { createListFavorites } from "./endpoints/ListFavorites";
-import { ApiCreator } from "./sharedTypes";
-import { FavoritesApi } from "./types";
+import { ApiResource, CreateOptions } from '../types';
+import { createApiProvider } from '../utils/createApiProvider';
+import { createListFavorites } from './endpoints/ListFavorites';
+import { ApiCreator } from './sharedTypes';
+import { FavoritesApi } from './types';
 
-const buildFavoritesApi: ApiCreator<FavoritesApi> = (
-  requestor,
-  optionsToSend
-) => {
+const buildFavoritesApi: ApiCreator<FavoritesApi> = (requestor, optionsToSend) => {
   return {
     listFavorites: createListFavorites(requestor, optionsToSend),
   };

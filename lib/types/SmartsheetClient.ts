@@ -1,4 +1,4 @@
-import {EventsApi} from "../events/types";
+import { EventsApi } from '../events/types';
 
 export interface SmartsheetClient {
   constants: any;
