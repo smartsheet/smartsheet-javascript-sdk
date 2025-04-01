@@ -1,20 +1,54 @@
-import { RequestCallback } from '../types/RequestCallback';
-import { RequestOptions } from '../types/RequestOptions';
+import type { DashboardListing, GridListing, RequestCallback, RequestOptions } from '../types';
 
-export interface FolderOptions {
+export interface Folder {
   /**
-   * ID of the folder
+   * @description Folder Id.
    */
-  folderId: number | string;
+  id: number;
+  /**
+   * @deprecated
+   * @description Returned only if the user has marked the folder as a favorite in their "Home" tab (value=true).
+   */
+  favorite?: boolean;
+  /**
+   * @description Array of Folder oblects.
+   */
+  folders: Folder[];
+  /**
+   * @description Folder name.
+   */
+  name: string;
+  /**
+   * @description URL that represents a direct link to the folder in Smartsheet.
+   */
+  permalink: string;
+  /**
+   * @description Reports contained in folder.
+   */
+  reports: GridListing[];
+  /**
+   * @description Sheets contained in folder.
+   */
+  sheets: GridListing[];
+  /**
+   * @description Dashboards contained in folder.
+   */
+  sights: DashboardListing[];
+  /**
+   * @description Templates contained in folder.
+   */
+  templates: GridListing[];
 }
 
-export interface GetFolderOptions extends FolderOptions {
+
+export interface FolderBody {
   /**
-   * Additional options for getting a folder
-   */
-  includeAll?: boolean;
+   * @description Folder Id where you can create sheets, sights, reports, templates, and other folders.
+  */
+ folderId: number;
 }
 
+// BELOW CREATED BY ROO
 export interface ListChildFoldersOptions extends FolderOptions {
   /**
    * Additional options for listing child folders
@@ -70,13 +104,6 @@ export interface MoveFolderOptions extends FolderOptions {
     destinationType?: string;
     [key: string]: any;
   };
-}
-
-export interface Folder {
-  id: number;
-  name: string;
-  permalink?: string;
-  [key: string]: any;
 }
 
 export interface FolderList {

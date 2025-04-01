@@ -1,7 +1,17 @@
-import { ClientOptions, CreateOptions } from '../types';
-import { FoldersApi, GetFolderOptions, ListChildFoldersOptions, CreateChildFolderOptions, UpdateFolderOptions, DeleteFolderOptions, CopyFolderOptions, MoveFolderOptions, Folder, FolderList } from './types';
-import { RequestCallback } from '../types/RequestCallback';
-import { RequestOptions } from '../types/RequestOptions';
+import type { ClientOptions, CreateOptions, RequestCallback, RequestOptions } from '../types';
+import type {
+  FoldersApi,
+  ListChildFoldersOptions,
+  CreateChildFolderOptions,
+  UpdateFolderOptions,
+  DeleteFolderOptions,
+  CopyFolderOptions,
+  MoveFolderOptions,
+  Folder,
+  FolderList,
+  FolderBody,
+} from './types';
+import { GetFolderOptions } from './types/GetFolder';
 
 type OptionsToSend = Partial<ClientOptions> & {
   url: string;
@@ -24,12 +34,13 @@ export const createFolders = (options: CreateOptions): FoldersApi => {
   }
 
   const getFolder = (
-    getOptions: RequestOptions<GetFolderOptions, undefined>,
+    getOptions: RequestOptions<GetFolderOptions, FolderBody>,
     callback?: RequestCallback<Folder>
   ): Promise<Folder> => {
     return requestor.get({ ...optionsToSend, ...getOptions }, callback);
   };
 
+  // TODO (jandes)
   const listChildFolders = (
     getOptions: RequestOptions<ListChildFoldersOptions, undefined>,
     callback?: RequestCallback<FolderList>
@@ -38,6 +49,7 @@ export const createFolders = (options: CreateOptions): FoldersApi => {
     return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
 
+  // TODO (jandes)
   const createChildFolder = (
     postOptions: RequestOptions<CreateChildFolderOptions, any>,
     callback?: RequestCallback<Folder>
@@ -46,6 +58,7 @@ export const createFolders = (options: CreateOptions): FoldersApi => {
     return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
   };
 
+  // TODO (jandes)
   const updateFolder = (
     putOptions: RequestOptions<UpdateFolderOptions, any>,
     callback?: RequestCallback<Folder>
@@ -53,6 +66,7 @@ export const createFolders = (options: CreateOptions): FoldersApi => {
     return requestor.put({ ...optionsToSend, ...putOptions }, callback);
   };
 
+  // TODO (jandes)
   const deleteFolder = (
     deleteOptions: RequestOptions<DeleteFolderOptions, undefined>,
     callback?: RequestCallback<object>
@@ -60,6 +74,7 @@ export const createFolders = (options: CreateOptions): FoldersApi => {
     return requestor.delete({ ...optionsToSend, ...deleteOptions }, callback);
   };
 
+  // TODO (jandes)
   const copyFolder = (
     postOptions: RequestOptions<CopyFolderOptions, any>,
     callback?: RequestCallback<Folder>
@@ -68,6 +83,7 @@ export const createFolders = (options: CreateOptions): FoldersApi => {
     return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
   };
 
+  // TODO (jandes)
   const moveFolder = (
     postOptions: RequestOptions<MoveFolderOptions, any>,
     callback?: RequestCallback<Folder>
