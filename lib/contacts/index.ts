@@ -1,16 +1,7 @@
-import type {
-  ContactsApi,
-  GetContactOptions,
-  GetContactResponse,
-  ListContactsOptions,
-  ListContactsResponse,
-} from "./types";
-import type { CreateOptions } from "../types";
-import type { RequestCallback } from "../types/RequestCallback";
-import type { RequestOptions } from "./../types/RequestOptions";
-
-// TODO: (jandes) Finish the types for GetContactOptions and ListContactsOptions - need to trace the httpRequestor to see how they are used to make sure it all applies
-// TODO: (jandes) Query the API to see what the response ACTUALLY looks like for GetContactOptions and ListContactsOptions
+import type { Contact, ContactsApi, ListContactsOptions, ListContactsResponse } from './types';
+import type { CreateOptions } from '../types';
+import type { RequestCallback } from '../types/RequestCallback';
+import type { RequestOptions } from './../types/RequestOptions';
 
 export function createContacts(options: CreateOptions): ContactsApi {
   const requestor = options.requestor;
@@ -20,10 +11,8 @@ export function createContacts(options: CreateOptions): ContactsApi {
     ...options.clientOptions,
   };
 
-  const getContact = (
-    options: RequestOptions<GetContactOptions, undefined>,
-    callback: RequestCallback<GetContactResponse>
-  ) => requestor.get({ ...optionsToSend, ...options }, callback);
+  const getContact = (options: RequestOptions<undefined, undefined>, callback: RequestCallback<Contact>) =>
+    requestor.get({ ...optionsToSend, ...options }, callback);
 
   const listContacts = (
     options: RequestOptions<ListContactsOptions, undefined>,

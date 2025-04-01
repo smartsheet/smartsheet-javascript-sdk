@@ -1,6 +1,6 @@
 import { CreateClient, CreateOptions } from './lib/types';
 import { apiUrls } from './lib/utils/apis';
-import { createContacts } from "./lib/contacts";
+import { createContacts } from './lib/contacts';
 import { createEvents } from './lib/events';
 
 const _ = require('underscore');
@@ -82,8 +82,7 @@ export const createClient: CreateClient = function (clientOptions) {
     apiUrls: apiUrls,
     requestor: requestor,
     clientOptions: {
-      accessToken:
-        clientOptions.accessToken || process.env.SMARTSHEET_ACCESS_TOKEN,
+      accessToken: clientOptions.accessToken || process.env.SMARTSHEET_ACCESS_TOKEN,
       userAgent: clientOptions.userAgent,
       baseUrl: clientOptions.baseUrl,
     },

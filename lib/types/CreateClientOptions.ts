@@ -1,4 +1,4 @@
-import { LoggerInstance } from "winston";
+import { LoggerInstance } from 'winston';
 
 export interface CreateClientOptions {
   accessToken?: string;
@@ -8,14 +8,6 @@ export interface CreateClientOptions {
   maxRetryDurationSeconds?: number;
   calcRetryBackoff?: (retryCount: number, error?: any) => number;
   logger?: LoggerInstance;
-  logLevel?:
-    | "error"
-    | "warn"
-    | "info"
-    | "http"
-    | "info"
-    | "verbose"
-    | "debug"
-    | "silly";
+  logLevel?: 'error' | 'warn' | 'info' | 'http' | 'info' | 'verbose' | 'debug' | 'silly';
   loggerContainer?: any;
 }

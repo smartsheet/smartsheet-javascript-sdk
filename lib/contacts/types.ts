@@ -1,11 +1,8 @@
-import { RequestCallback } from "../types/RequestCallback";
-import type { RequestOptions } from "../types/RequestOptions";
+import { RequestCallback } from '../types/RequestCallback';
+import type { RequestOptions } from '../types/RequestOptions';
 
 export interface ContactsApi {
-  getContact: (
-    options: RequestOptions<GetContactOptions, undefined>,
-    callback?: RequestCallback<GetContactResponse>
-  ) => void;
+  getContact: (options: RequestOptions<undefined, undefined>, callback?: RequestCallback<Contact>) => void;
   listContacts: (
     options: RequestOptions<ListContactsOptions, undefined>,
     callback?: RequestCallback<ListContactsResponse>
@@ -56,7 +53,7 @@ export interface ListContactsOptions {
    * specify a value greater than the total number of pages, the last page of
    * results is returned.
    */
-  page: number;
+  page?: number;
   /**
    * @default 100
    * @description The maximum number of items to return per page. Unless
@@ -65,7 +62,7 @@ export interface ListContactsOptions {
    * rows. If you need larger sets of data from your report, returns a maximum
    * of 10,000 rows per request.
    */
-  pageSize: number;
+  pageSize?: number;
 }
 
 export interface ListContactsResponse {
@@ -81,7 +78,7 @@ export interface ListContactsResponse {
    * to page size (and hence, all results are included). Unless otherwise
    * specified, this defaults to 100 for most endpoints.
    */
-  pageSize: number | null;
+  pageSize?: number;
   /**
    * @description The total number of pages in the full result set.
    */
@@ -95,14 +92,3 @@ export interface ListContactsResponse {
    */
   data: Contact[];
 }
-
-export interface GetContactOptions {
-  /**
-   * @description A comma-separated list of optional elements to include in the
-   * response
-   * @
-   */
-  include: string;
-}
-
-export interface GetContactResponse extends Contact {}
