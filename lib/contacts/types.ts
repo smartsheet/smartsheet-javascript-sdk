@@ -2,11 +2,11 @@ import { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 
 export interface ContactsApi {
-  getContact: (options: RequestOptions<undefined, undefined>, callback?: RequestCallback<Contact>) => void;
+  getContact: (options: RequestOptions<undefined, undefined>, callback?: RequestCallback<Contact>) => Promise<Contact>;
   listContacts: (
     options: RequestOptions<ListContactsOptions, undefined>,
     callback?: RequestCallback<ListContactsResponse>
-  ) => void;
+  ) => Promise<ListContactsResponse>;
 }
 
 export interface Contact {
@@ -37,6 +37,7 @@ export interface ListContactsOptions {
    * includes the objects that are modified on or after the date and time
    * specified. If you need to keep track of frequent changes, it may be more
    * useful to use Get Sheet Version.
+   * @type { Timestamp_date-time (string) | Timestamp_number (number) }
    */
   modifiedSince?: string | number;
   /**
@@ -70,25 +71,50 @@ export interface ListContactsResponse {
    * @description The current page in the full result set that the data array
    * represents. NOTE when a page number greater than totalPages is requested,
    * the last page is instead returned.
+   * @example 1
    */
   pageNumber: number;
   /**
-   * @nullable
    * @description The number of items in a page. Omitted if there is no limit
    * to page size (and hence, all results are included). Unless otherwise
    * specified, this defaults to 100 for most endpoints.
+   * @example 50
    */
   pageSize?: number;
   /**
    * @description The total number of pages in the full result set.
+   * @example 25
    */
   totalPages: number;
   /**
-   * The total number of items in the full result set.
+   * @description The total number of items in the full result set.
+   * @example 136
    */
   totalCount: number;
   /**
    * @description List of Contacts.
+   * @example
+   * json```
+   * {
+   *    "id": "AAAAATYU54QAD7_fNhTnhA",
+   *    "name": "Jane Doe",
+   *    "email": "jane.doe@smartsheet.com"
+   * }
    */
   data: Contact[];
+}
+
+export interface GetContactOptions {
+  /**
+   * @description A comma-separated list of optional elements to include in the response
+   * @type {'profileImage'}
+   */
+  include?: 'profileImage'
+}
+
+export interface GetContactBody {
+  /**
+   * @description contactId of the contact being accessed.
+   */
+  contactId: number | string;
 }
