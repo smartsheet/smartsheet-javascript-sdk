@@ -109,7 +109,7 @@ export interface GetContactOptions {
    * @description A comma-separated list of optional elements to include in the response
    * @type {'profileImage'}
    */
-  include?: 'profileImage'
+  include?: 'profileImage';
 }
 
 export interface GetContactBody {
