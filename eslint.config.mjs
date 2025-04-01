@@ -33,6 +33,7 @@ export default tseslint.config(
           varsIgnorePattern: '^_',
         },
       ],
+      "@typescript-eslint/consistent-type-imports": "error"
     },
   },
   {
