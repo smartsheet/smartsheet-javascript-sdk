@@ -1,4 +1,4 @@
-import { CreateClient, CreateOptions } from './lib/types';
+import type { CreateClient, CreateOptions } from './lib/types';
 import { apiUrls } from './lib/utils/apis';
 import { createEvents } from './lib/events';
 
