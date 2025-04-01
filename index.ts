@@ -1,6 +1,7 @@
 import { CreateClient, CreateOptions } from './lib/types';
 import { apiUrls } from './lib/utils/apis';
 import { createEvents } from './lib/events';
+import { createFolders } from './lib/folders';
 
 const _ = require('underscore');
 const winston = require('winston');
@@ -92,7 +93,7 @@ export const createClient: CreateClient = function (clientOptions) {
     contacts: require('./lib/contacts/').create(options),
     events: createEvents(options),
     favorites: require('./lib/favorites/').create(options),
-    folders: require('./lib/folders/').create(options),
+    folders: createFolders(options),
     groups: require('./lib/groups/').create(options),
     home: require('./lib/home/').create(options),
     images: require('./lib/images/').create(options),
