@@ -6,7 +6,10 @@
   "typings": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "lint": "jshint -c .jshintrc lib/",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
     "test": "tsc && mocha \"test/**/*_test.js\"",
     "test-functional": "tsc && mocha \"test/functional/**/*_test.js\"",
     "test-mock-api": "tsc && mocha \"test/mock-api/**/*_test.js\"",
@@ -36,24 +39,27 @@
     "bluebird": "^3.5.0",
     "extend": "^3.0.2",
     "mime": "^3.0.0",
-    "typescript": "5.1.6",
     "underscore": "^1.8.2",
     "winston": "^2.3.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.23.0",
     "@types/node": "^22.13.4",
     "coveralls": "^3.1.1",
-    "gulp": "^4.0.2",
-    "gulp-jshint": "^2.1.0",
-    "gulp-mocha": "^8.0.0",
-    "jshint": "^2.13.6",
-    "jshint-stylish": "^2.2.1",
+    "eslint": "^9.23.0",
+    "eslint-config-prettier": "^10.1.1",
+    "globals": "^16.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
     "mocha": "^10.2.0",
     "mocha-lcov-reporter": "^1.3.0",
     "mock": "^0.1.1",
     "nyc": "^15.1.0",
+    "prettier": "^3.5.3",
     "should": "^13.2.3",
     "sinon": "^15.0.2",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.28.0",
     "yargs": "^17.7.1"
   },
   "directories": {
@@ -61,6 +67,6 @@
     "test": "test"
   },
   "volta": {
-    "node": "16.20.2"
+    "node": "20.19.0"
   }
 }

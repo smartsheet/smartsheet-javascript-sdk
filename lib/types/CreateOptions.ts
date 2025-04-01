@@ -1,5 +1,5 @@
-import { ApiUrls } from "./ApiUrls";
-import { CreateClientOptions } from "./CreateClientOptions";
+import { ApiUrls } from './ApiUrls';
+import { CreateClientOptions } from './CreateClientOptions';
 
 export type ClientOptions = Pick<
   CreateClientOptions,

@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.2.2] - 2025-03-24
+### Added
+- Transition from gulp/jshint to eslint/prettier 
+
 ## [4.2.1] - 2025-2-21
 ### Added
 - Convert "events" module to typescript
