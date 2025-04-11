@@ -1,4 +1,5 @@
 import { LoggerInstance } from 'winston';
+import { AxiosProxyConfig } from 'axios';
 
 export interface CreateClientOptions {
   accessToken?: string;
@@ -10,4 +11,5 @@ export interface CreateClientOptions {
   logger?: LoggerInstance;
   logLevel?: 'error' | 'warn' | 'info' | 'http' | 'info' | 'http' | 'verbose' | 'debug' | 'silly';
   loggerContainer?: any;
+  proxy?: AxiosProxyConfig; 
 }
