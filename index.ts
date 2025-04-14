@@ -99,8 +99,8 @@ export const createClient: CreateClient = function (clientOptions) {
      * The home module is deprecated. The endpoints powering this module
      * are being shut off as part of the sheets folder deprecation.
      * The endpoints will be available until June.
-     * 
-     * See this changelog entry for more information 
+     *
+     * See this changelog entry for more information
      * https://developers.smartsheet.com/api/smartsheet/changelog#2025-03-25
      */
     home: require('./lib/home/').create(options),
