@@ -1,14 +1,33 @@
 import { ApiResource, CreateOptions } from '../types';
 import { createApiProvider } from '../utils/createApiProvider';
 import { createListFavorites } from './endpoints/ListFavorites';
-import { ApiCreator } from './sharedTypes';
+import {
+  addFolderToFavorites,
+  addItemsToFavorites,
+  addReportToFavorites,
+  addSheetToFavorites,
+  addSightToFavorites,
+  addTemplateToFavorites,
+  addWorkspaceToFavorites,
+} from './endpoints/AddItemsToFavorites';
+import { ApiGenerator } from './sharedTypes';
 import { FavoritesApi } from './types';
 
-const buildFavoritesApi: ApiCreator<FavoritesApi> = (requestor, optionsToSend) => {
+const buildFavoritesApi: ApiGenerator<FavoritesApi> = (requestor, optionsToSend) => {
   return {
     listFavorites: createListFavorites(requestor, optionsToSend),
+    addItemsToFavorites: addItemsToFavorites(requestor, optionsToSend),
+    addFolderToFavorites: addFolderToFavorites(requestor, optionsToSend),
+    addReportToFavorites: addReportToFavorites(requestor, optionsToSend),
+    addSheetToFavorites: addSheetToFavorites(requestor, optionsToSend),
+    addSightToFavorites: addSightToFavorites(requestor, optionsToSend),
+    addTemplateToFavorites: addTemplateToFavorites(requestor, optionsToSend),
+    addWorkspaceToFavorites: addWorkspaceToFavorites(requestor, optionsToSend),
+    // Duplicate of addItemsToFavorites
+    addMultipleToFavorites: addItemsToFavorites(requestor, optionsToSend),
   };
 };
+
 //type FavoritesApi = {
 //    listFavorites : listFavorites,
 //    addItemsToFavorites : addItemsToFavorites,
