@@ -1,20 +1,47 @@
-export interface ApiUrls {
-  contacts: string;
-  events: string;
-  favorites: string;
-  folders: string;
-  groups: string;
-  home: string;
-  imageUrls: string;
-  reports: string;
-  search: string;
-  server: string;
-  sheets: string;
-  sights: string;
-  templates: string;
-  templatesPublic: string;
-  token: string;
-  users: string;
-  webhooks: string;
-  workspaces: string;
+export enum ApiResource {
+  Contacts = 'contacts',
+  Events = 'events',
+  Favorites = 'favorites',
+  Folders = 'folders',
+  Groups = 'groups',
+  Home = 'home',
+  ImageUrls = 'imageurls',
+  Reports = 'reports',
+  Search = 'search',
+  Server = 'serverinfo',
+  Sheets = 'sheets',
+  Sights = 'sights',
+  Templates = 'templates',
+  TemplatesPublic = 'templatespublic',
+  Token = 'token',
+  Users = 'users',
+  Webhooks = 'webhooks',
+  Workspaces = 'workspaces',
 }
+
+export const apiUrlByResource = {
+  [ApiResource.Contacts]: 'contacts/',
+  [ApiResource.Events]: 'events/',
+  [ApiResource.Favorites]: 'favorites/',
+  [ApiResource.Folders]: 'folders/',
+  [ApiResource.Groups]: 'groups/',
+  [ApiResource.Home]: 'home/',
+  [ApiResource.ImageUrls]: 'imageurls/',
+  [ApiResource.Reports]: 'reports/',
+  [ApiResource.Search]: 'search/',
+  [ApiResource.Server]: 'serverinfo/',
+  [ApiResource.Sheets]: 'sheets/',
+  [ApiResource.Sights]: 'sights/',
+  [ApiResource.Templates]: 'templates/',
+  [ApiResource.TemplatesPublic]: 'templates/public',
+  [ApiResource.Token]: 'token',
+  [ApiResource.Users]: 'users/',
+  [ApiResource.Webhooks]: 'webhooks/',
+  [ApiResource.Workspaces]: 'workspaces/',
+} as const;
+
+// Map of ApiResource to path
+export type ApiUrlPathByResource = typeof apiUrlByResource;
+
+// Valid paths for Api Resources
+export type ApiUrlPath = ApiUrlPathByResource[ApiResource];

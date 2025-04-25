@@ -1,30 +1,13 @@
-import type { EventsApi, GetEventsOptions, GetEventsResponse } from './types';
-import type { ClientOptions, CreateOptions, RequestCallback, RequestOptions } from '../types';
+import { apiUrlByResource } from '../types';
+import { CreateResourceProvider } from '../types/ApiResourceProvider';
+import { EventsApi, GetEventsOptions, GetEventsResponse } from './types';
 
-type OptionsToSend = Partial<ClientOptions> & {
-  url: string;
-};
+const RESOURCE_PATH = apiUrlByResource['events'];
 
-export const createEvents = (options: CreateOptions): EventsApi => {
-  const requester = options.requestor;
-
-  let optionsToSend: OptionsToSend = {
-    url: options.apiUrls.events,
-  };
-
-  if (options.clientOptions) {
-    optionsToSend = {
-      ...optionsToSend,
-      ...options.clientOptions,
-    };
-  }
-
+export const createEvents: CreateResourceProvider<EventsApi> = (httpClient) => {
   return {
-    getEvents: (
-      options: RequestOptions<GetEventsOptions, undefined>,
-      callback?: RequestCallback<GetEventsResponse>
-    ): Promise<GetEventsResponse> => {
-      return requester.get({ ...optionsToSend, ...options }, callback);
+    getEvents: (options: GetEventsOptions): Promise<GetEventsResponse> => {
+      return httpClient.get<GetEventsOptions, GetEventsResponse>(RESOURCE_PATH, { params: options });
     },
   };
 };
