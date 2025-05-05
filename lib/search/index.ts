@@ -1,5 +1,5 @@
-import { CreateOptions, RequestCallback } from "../types";
-import { SearchAllOptions, SearchApi, SearchResponse, SearchSheetOptions } from "./types";
+import { CreateOptions, RequestCallback } from '../types';
+import { SearchAllOptions, SearchApi, SearchResponse, SearchSheetOptions } from './types';
 
 export const createSearch = (options: CreateOptions): SearchApi => {
   const requestor = options.requestor;
@@ -7,7 +7,7 @@ export const createSearch = (options: CreateOptions): SearchApi => {
   const optionsToSend = {
     url: options.apiUrls.search,
     urls: options.apiUrls,
-    ...options.clientOptions
+    ...options.clientOptions,
   };
 
   const searchAll = (getOptions: SearchAllOptions, callback?: RequestCallback<SearchResponse>) => {
@@ -16,9 +16,9 @@ export const createSearch = (options: CreateOptions): SearchApi => {
       ...getOptions,
       queryParameters: {
         ...getOptions.queryParameters,
-        query: getOptions.query
-      }
-    }
+        query: getOptions.query,
+      },
+    };
 
     return requestor.get(options, callback);
   };
@@ -29,9 +29,9 @@ export const createSearch = (options: CreateOptions): SearchApi => {
       ...getOptions,
       queryParameters: {
         query: getOptions.query,
-        sheetId: getOptions.sheetId
-      }
-    }
+        sheetId: getOptions.sheetId,
+      },
+    };
 
     return requestor.get(options, callback);
   };
