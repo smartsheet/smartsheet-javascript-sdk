@@ -1,8 +1,9 @@
-import { CreateClient, CreateOptions } from './lib/types';
+import { CreateClient, CreateClientOptions, CreateOptions } from './lib/types';
 import { apiUrls } from './lib/utils/apis';
 import { createEvents } from './lib/events';
+import { maxRetryDurationMillis } from './lib/utils/constants';
+import { RequestorConfig } from './lib/types/RequestorConfig';
 
-const _ = require('underscore');
 const winston = require('winston');
 
 // Possible TODO: Namespace parameters for different subcomponents
@@ -10,10 +11,14 @@ const winston = require('winston');
 //      clientOptions.requestor.settings
 //          w/ sub-paths maxRetryDurationSeconds and calcRetryBackoff
 
-function buildRequestor(clientOptions) {
+function buildRequestor(clientOptions: CreateClientOptions) {
   if (clientOptions.requestor) return clientOptions.requestor;
 
-  const requestorConfig = _.pick(clientOptions, 'maxRetryDurationSeconds', 'calcRetryBackoff');
+  const requestorConfig: RequestorConfig = {
+    maxRetryDurationSeconds: clientOptions.maxRetryDurationSeconds,
+    calcRetryBackoff: clientOptions.calcRetryBackoff,
+    proxy: clientOptions.proxy
+  };
 
   if (requestorConfig.maxRetryDurationSeconds)
     requestorConfig.maxRetryDurationMillis = requestorConfig.maxRetryDurationSeconds * 1000;
