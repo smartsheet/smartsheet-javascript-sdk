@@ -1,30 +1,14 @@
+import { createApiProvider } from '../utils/createApiProvider';
 import { EventsApi, GetEventsOptions, GetEventsResponse } from './types';
-import { ClientOptions, CreateOptions, RequestCallback, RequestOptions } from '../types';
-
-type OptionsToSend = Partial<ClientOptions> & {
-  url: string;
-};
+import { ApiResource, CreateOptions, RequestCallback, RequestOptions } from '../types';
 
 export const createEvents = (options: CreateOptions): EventsApi => {
-  const requester = options.requestor;
-
-  let optionsToSend: OptionsToSend = {
-    url: options.apiUrls.events,
-  };
-
-  if (options.clientOptions) {
-    optionsToSend = {
-      ...optionsToSend,
-      ...options.clientOptions,
-    };
-  }
-
-  return {
+  return createApiProvider<EventsApi>(options, ApiResource.Events, (requester, optionsToSend) => ({
     getEvents: (
       options: RequestOptions<GetEventsOptions, undefined>,
       callback?: RequestCallback<GetEventsResponse>
     ): Promise<GetEventsResponse> => {
       return requester.get({ ...optionsToSend, ...options }, callback);
     },
-  };
+  }));
 };

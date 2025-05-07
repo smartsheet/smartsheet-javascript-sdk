@@ -1,21 +1,6 @@
-import { ApiUrls } from '../types';
-export const apiUrls: ApiUrls = {
-  contacts: 'contacts/',
-  events: 'events/',
-  favorites: 'favorites/',
-  folders: 'folders/',
-  groups: 'groups/',
-  home: 'home/',
-  imageUrls: 'imageurls/',
-  reports: 'reports/',
-  search: 'search/',
-  server: 'serverinfo/',
-  sheets: 'sheets/',
-  sights: 'sights/',
-  templates: 'templates/',
-  templatesPublic: 'templates/public',
-  token: 'token',
-  users: 'users/',
-  webhooks: 'webhooks/',
-  workspaces: 'workspaces/',
-};
+import { apiUrlByResource } from '../types';
+
+/*
+ * @depricated - Will be removed in v5, prefer apiUrlByResource instead
+ */
+export { apiUrlByResource as apiUrls };
