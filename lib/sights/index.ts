@@ -1,19 +1,28 @@
-import { CreateOptions } from "../types";
-import { CopySight, DeleteSight, GetSight, GetSightPublishStatus, ListSights, MoveSight, SetSightPublishStatus, UpdateSight } from "./types";
+import { CreateOptions } from '../types';
+import {
+  CopySight,
+  DeleteSight,
+  GetSight,
+  GetSightPublishStatus,
+  ListSights,
+  MoveSight,
+  SetSightPublishStatus,
+  UpdateSight,
+} from './types';
 
 export const createSights = (options: CreateOptions) => {
   const requestor = options.requestor;
   const shares = require('../share/share.js')(options.apiUrls.sights);
 
   const optionsToSend = {
-    ...options.clientOptions
+    ...options.clientOptions,
   };
 
   const getSight: GetSight = (getOptions, callback) => {
     const requestOptions = {
       ...optionsToSend,
       url: `${options.apiUrls.sights}${getOptions.sightId}`,
-      ...getOptions
+      ...getOptions,
     };
     return requestor.get(requestOptions, callback);
   };
@@ -22,16 +31,16 @@ export const createSights = (options: CreateOptions) => {
     const requestOptions = {
       ...optionsToSend,
       url: options.apiUrls.sights,
-      ...getOptions
+      ...getOptions,
     };
     return requestor.get(requestOptions, callback);
   };
 
   const deleteSight: DeleteSight = (deleteOptions, callback) => {
-    const requestOptions = { 
+    const requestOptions = {
       ...optionsToSend,
       url: `${options.apiUrls.sights}${deleteOptions.sightId}`,
-      ...deleteOptions
+      ...deleteOptions,
     };
     return requestor.delete(requestOptions, callback);
   };
@@ -40,25 +49,25 @@ export const createSights = (options: CreateOptions) => {
     const requestOptions = {
       ...optionsToSend,
       url: `${options.apiUrls.sights}${putOptions.sightId}`,
-      ...putOptions
+      ...putOptions,
     };
     return requestor.put(requestOptions, callback);
   };
 
   const copySight: CopySight = (postOptions, callback) => {
-    const requestOptions = { 
+    const requestOptions = {
       ...optionsToSend,
       url: `${options.apiUrls.sights}${postOptions.sightId}/copy`,
-      ...postOptions
+      ...postOptions,
     };
     return requestor.post(requestOptions, callback);
   };
 
   const moveSight: MoveSight = (postOptions, callback) => {
-    const requestOptions = { 
+    const requestOptions = {
       ...optionsToSend,
       url: `${options.apiUrls.sights}${postOptions.sightId}/move`,
-      ...postOptions
+      ...postOptions,
     };
     return requestor.post(requestOptions, callback);
   };
@@ -67,7 +76,7 @@ export const createSights = (options: CreateOptions) => {
     const requestOptions = {
       ...optionsToSend,
       url: `${options.apiUrls.sights}${getOptions.sightId}/publish`,
-      ...getOptions
+      ...getOptions,
     };
     return requestor.get(requestOptions, callback);
   };
@@ -76,7 +85,7 @@ export const createSights = (options: CreateOptions) => {
     const requestOptions = {
       ...optionsToSend,
       url: `${options.apiUrls.sights}${putOptions.sightId}/publish`,
-      ...putOptions
+      ...putOptions,
     };
     return requestor.put(requestOptions, callback);
   };
@@ -90,6 +99,6 @@ export const createSights = (options: CreateOptions) => {
     moveSight,
     getSightPublishStatus,
     setSightPublishStatus,
-    ...shares.create(options)
+    ...shares.create(options),
   };
 };
