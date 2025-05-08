@@ -285,9 +285,9 @@ export interface SightApi {
   getSightPublshStatus: GetSightPublishStatus;
   setSightPublishStatus: SetSightPublishStatus;
   // TODO -> the sharing method will be exposed as part of the sharing module work
-  getShare: any,
-  listShares: any,
-  share: any,
-  deleteShare: any,
-  updateShare: any,
-};
+  getShare: any;
+  listShares: any;
+  share: any;
+  deleteShare: any;
+  updateShare: any;
+}
