@@ -31,7 +31,7 @@ export const createSights = (options: CreateOptions) => {
     const requestOptions = { 
       ...optionsToSend,
       url: `${options.apiUrls.sights}${deleteOptions.sightId}`,
-      deleteOptions
+      ...deleteOptions
     };
     return requestor.delete(requestOptions, callback);
   };
@@ -40,7 +40,7 @@ export const createSights = (options: CreateOptions) => {
     const requestOptions = {
       ...optionsToSend,
       url: `${options.apiUrls.sights}${putOptions.sightId}`,
-      putOptions
+      ...putOptions
     };
     return requestor.put(requestOptions, callback);
   };

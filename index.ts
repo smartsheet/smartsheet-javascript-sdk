@@ -2,6 +2,7 @@ import type { CreateClient, CreateOptions } from './lib/types';
 import { apiUrls } from './lib/utils/apis';
 import { createEvents } from './lib/events';
 import { createSearch } from './lib/search';
+import { createSights } from './lib/sights';
 
 const _ = require('underscore');
 const winston = require('winston');
@@ -111,7 +112,7 @@ export const createClient: CreateClient = function (clientOptions) {
     search: createSearch(options),
     server: require('./lib/server/').create(options),
     sheets: require('./lib/sheets/').create(options),
-    sights: require('./lib/sights/').create(options),
+    sights: createSights(options),
     templates: require('./lib/templates/').create(options),
     tokens: require('./lib/tokens/').create(options),
     users: require('./lib/users/').create(options),
