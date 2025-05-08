@@ -7,10 +7,11 @@ import {
   ListSights,
   MoveSight,
   SetSightPublishStatus,
+  SightApi,
   UpdateSight,
 } from './types';
 
-export const createSights = (options: CreateOptions) => {
+export const createSights = (options: CreateOptions): SightApi => {
   const requestor = options.requestor;
   const shares = require('../share/share.js')(options.apiUrls.sights);
 

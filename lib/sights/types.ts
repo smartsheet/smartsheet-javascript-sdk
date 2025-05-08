@@ -274,3 +274,20 @@ export type SetSightPublishStatus = (
   options: SetSightPublishStatusOptions,
   callback: RequestCallback<SetSightPublishStatusResponse>
 ) => Promise<SetSightPublishStatusResponse>;
+
+export interface SightApi {
+  listSights: ListSights;
+  getSight: GetSight;
+  deleteSight: DeleteSight;
+  updateSight: UpdateSight;
+  copySight: CopySight;
+  moveSight: MoveSight;
+  getSightPublshStatus: GetSightPublishStatus;
+  setSightPublishStatus: SetSightPublishStatus;
+  // TODO -> the sharing method will be exposed as part of the sharing module work
+  getShare: any,
+  listShares: any,
+  share: any,
+  deleteShare: any,
+  updateShare: any,
+};
