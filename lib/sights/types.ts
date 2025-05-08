@@ -275,7 +275,7 @@ export type SetSightPublishStatus = (
   callback: RequestCallback<SetSightPublishStatusResponse>
 ) => Promise<SetSightPublishStatusResponse>;
 
-export interface SightApi {
+export interface SightsApi {
   listSights: ListSights;
   getSight: GetSight;
   deleteSight: DeleteSight;
