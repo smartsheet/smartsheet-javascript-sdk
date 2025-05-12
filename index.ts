@@ -95,6 +95,15 @@ export const createClient: CreateClient = function (clientOptions) {
     favorites: require('./lib/favorites/').create(options),
     folders: createFolders(options),
     groups: require('./lib/groups/').create(options),
+    /**
+     * @deprecated
+     * The home module is deprecated. The endpoints powering this module
+     * are being shut off as part of the sheets folder deprecation.
+     * The endpoints will be available until June.
+     *
+     * See this changelog entry for more information
+     * https://developers.smartsheet.com/api/smartsheet/changelog#2025-03-25
+     */
     home: require('./lib/home/').create(options),
     images: require('./lib/images/').create(options),
     reports: require('./lib/reports/').create(options),
