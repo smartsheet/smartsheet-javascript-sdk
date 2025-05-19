@@ -1,5 +1,5 @@
-import { RequestCallback } from '../types';
-import { RequestOptions } from '../types/RequestOptions';
+import type { RequestCallback } from '../types';
+import type { RequestOptions } from '../types/RequestOptions';
 
 export enum ParentResultType {
   Workspace = 'workspace',

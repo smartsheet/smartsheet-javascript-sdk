@@ -1,5 +1,5 @@
-import { CreateOptions, RequestCallback } from '../types';
-import { SearchAllOptions, SearchApi, SearchResponse, SearchSheetOptions } from './types';
+import type { CreateOptions, RequestCallback } from '../types';
+import type { SearchAllOptions, SearchApi, SearchResponse, SearchSheetOptions } from './types';
 
 export const createSearch = (options: CreateOptions): SearchApi => {
   const requestor = options.requestor;
