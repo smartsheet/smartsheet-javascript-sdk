@@ -1,5 +1,5 @@
-import { CreateOptions } from '../types';
-import {
+import type { CreateOptions } from '../types';
+import type {
   CopySight,
   DeleteSight,
   GetSight,

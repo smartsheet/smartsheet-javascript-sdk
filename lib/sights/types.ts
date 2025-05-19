@@ -1,5 +1,5 @@
-import { BaseResponseStatus, RequestCallback, RequestOptions } from '../types';
-import { APIAccessLevel } from '../types/ApiAccessLevel';
+import type { BaseResponseStatus, RequestCallback, RequestOptions } from '../types';
+import type { APIAccessLevel } from '../types/ApiAccessLevel';
 
 export interface GetSightQueryParameters {
   /**
