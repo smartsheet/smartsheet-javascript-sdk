@@ -7,7 +7,7 @@ const EXPOSED_CENSOR_CHARS = 4;
 // Calling censorFn(logObject) will return a new object with any field matching the keys in filterList redacted
 const buildCensorFn =
   (filterList: string[]) =>
-  (loggedObject?: Record<string, unknown>): Record<string, unknown> =>
+  (loggedObject: Record<string, unknown>): Record<string, unknown> =>
     Object.entries(loggedObject).reduce<Record<string, unknown>>((redactedLogObject, [key, value]) => {
       const keyLower = key.toLowerCase();
       if (filterList.includes(keyLower) && typeof value === 'string') {
@@ -50,8 +50,4 @@ export const getSanitizedUrlForLogs = (requestConfig: AxiosRequestConfig): strin
     .join('&');
 
   return url + '?' + queryString;
-};
-
-export const getHttpVerb = (requestConfig: AxiosRequestConfig): string => {
-  return requestConfig.method || 'UNKNOWN';
 };

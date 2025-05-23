@@ -1,8 +1,8 @@
 import { AxiosError, AxiosHeaderValue, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Logger } from 'winston';
-import { SmartsheetErrorResponseData } from '../types/ServerResponses';
-import { SupportedLogLevel } from '../types/clientConfiguration';
-import { getHttpVerb, getSanitizedUrlForLogs, withRedactedPayload, withRedactedHeaders } from './utils';
+import { SmartsheetErrorResponseData } from '../../types/ServerResponses';
+import { SupportedLogLevel } from '../../types/clientConfiguration';
+import { getSanitizedUrlForLogs, withRedactedPayload, withRedactedHeaders } from './logSanitizer';
 
 // Define RequestLogger interface
 export interface RequestLogger {
@@ -12,6 +12,10 @@ export interface RequestLogger {
   logSuccessfulResponse: (response: AxiosResponse) => void;
   logErrorResponse: (requestConfig: AxiosRequestConfig, error: AxiosError, attemptNum?: number) => void;
 }
+
+const getHttpVerb = (requestConfig: AxiosRequestConfig): string => {
+  return requestConfig.method || 'UNKNOWN';
+};
 
 export const createInternalRequestLogger = (logger: Logger): RequestLogger => {
   const PAYLOAD_PREVIEW_LENGTH = 1024;
@@ -64,6 +68,7 @@ export const createInternalRequestLogger = (logger: Logger): RequestLogger => {
 
   const logHeaders = (context: string, headers: Record<string, AxiosHeaderValue | undefined>): void => {
     if (!headers || Object.keys(headers).length === 0) return;
+
     logger.silly({ context, headers: withRedactedHeaders(headers) });
   };
 

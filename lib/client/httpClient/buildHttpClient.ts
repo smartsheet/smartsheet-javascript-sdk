@@ -1,40 +1,36 @@
 import { create, AxiosError, AxiosInstance } from 'axios';
-import { FullClientConfig } from './types/clientConfiguration';
+import { FullClientConfig } from '../types/clientConfiguration';
 import axiosRetry from 'axios-retry';
-import { SmartsheetErrorResponseData, errorCodes } from './types/ServerResponses';
-import { version } from '../../package.json';
+import { SmartsheetErrorResponseData, errorCodes } from '../types/ServerResponses';
+import { version } from '../../../package.json';
 import { createRequestInterceptor, createResponseInterceptors, createRetryLogger } from './logging/buildCallbacks';
 import { createInternalRequestLogger, RequestLogger } from './logging/buildInternalRequestLogger';
 
 export const buildHttpClient = (fullConfiguration: FullClientConfig): AxiosInstance => {
-  // Pull headers out of the axios config it it exists, they will be applied in buildDefaultHeaders
-  const { headers: _headers, ...restAxiosConfig } = fullConfiguration.axiosConfig || {};
-  const defaultHeaders = buildDefaultHeaders(fullConfiguration);
-  //
   const axiosClient = create({
     baseURL: fullConfiguration.smartsheetClientConfig.apiHost,
-    headers: defaultHeaders,
-    // Set all axios options (excluding headers as they were previously set)
-    ...restAxiosConfig,
+    ...fullConfiguration.axiosConfig,
+    headers: buildHeaders(fullConfiguration),
   });
 
   const loggingCallbacks = getInternalLogCallbacks(
     createInternalRequestLogger(fullConfiguration.loggingConfig.loggerInstance)
   );
 
-  configureInterceptors(axiosClient, loggingCallbacks);
+  configureLoggingInterceptors(axiosClient, loggingCallbacks);
   configureRetry(axiosClient, fullConfiguration, loggingCallbacks);
 
   return axiosClient;
 };
 
-const buildDefaultHeaders = (fullConfiguration: FullClientConfig) => {
+const buildHeaders = (fullConfiguration: FullClientConfig) => {
   return {
     Accept: 'application/json',
     'Content-Type': 'application/json',
+    ...(fullConfiguration.axiosConfig.headers || {}),
+    // non-overridable values for userAgent and authorization
     'User-Agent': `smartsheet-javascript-sdk/${version}`,
     Authorization: `Bearer ${fullConfiguration.smartsheetClientConfig.accessToken}`,
-    ...(fullConfiguration.axiosConfig.headers || {}),
   };
 };
 
@@ -52,7 +48,7 @@ const configureRetry = (
   });
 };
 
-const configureInterceptors = (axiosClient: AxiosInstance, loggingCallbacks: LoggingCallbacks) => {
+const configureLoggingInterceptors = (axiosClient: AxiosInstance, loggingCallbacks: LoggingCallbacks) => {
   axiosClient.interceptors.request.use(loggingCallbacks.requestInterceptors);
   axiosClient.interceptors.response.use(
     loggingCallbacks.responseInterceptors.onFulfilled,

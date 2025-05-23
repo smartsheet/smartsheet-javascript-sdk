@@ -30,7 +30,7 @@ const buildLoggingConfig = (loggingConfig?: LoggingConfig): Required<LoggingConf
   // Fetch or build new logging instance
   const loggerInstance =
     loggingConfig?.loggerInstance ??
-    new winston.Logger({
+    winston.createLogger({
       level: loggingConfig?.logLevel || DEFAULT_LOG_LEVEL,
       format: format.combine(format.timestamp(), format.json()),
       transports: [new winston.transports.Console()],
@@ -42,7 +42,7 @@ const buildLoggingConfig = (loggingConfig?: LoggingConfig): Required<LoggingConf
   if (!isSupportedLogLevel(logLevel)) {
     return throwRequiredConfigMissingError(
       'loggerInstance.logLevel',
-      `Log level ${logLevel} is not supported, please set logging level to one of [${SUPPORTED_LOG_LEVELS.join(', ')}]`
+      `Log level '${logLevel}' is not supported, please set logging level to one of [${SUPPORTED_LOG_LEVELS.join(', ')}]`
     );
   }
 
@@ -65,7 +65,7 @@ const buildSmarClientConfig = (smarConfig?: SmartsheetClientConfig): Required<Sm
   if (!accessToken) {
     return throwRequiredConfigMissingError(
       'accessToken',
-      'Please provide a value within smartsheetClientConfig or setting SMARTSHEET_ACCESS_TOKEN env variable'
+      'Please provide a value within smartsheetClientConfig or set SMARTSHEET_ACCESS_TOKEN env variable'
     );
   }
 
@@ -73,5 +73,5 @@ const buildSmarClientConfig = (smarConfig?: SmartsheetClientConfig): Required<Sm
 };
 
 const throwRequiredConfigMissingError = (field: string, message: string) => {
-  throw new Error(`Required config missing ${field}.` + message);
+  throw new Error(`Required config missing ${field}. ` + message);
 };

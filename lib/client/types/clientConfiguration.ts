@@ -61,15 +61,3 @@ export const DEFAULT_RETRY_CONFIG: RetryConfig = {
 export const DEFAULT_LOGGING_CONFIG: LoggingConfig = {
   logLevel: 'warn',
 } as const;
-
-// Deprecated
-//export interface CreateClientOptions {
-//  accessToken?: string;
-//  userAgent?: string;
-//  baseUrl?: string;
-//  maxRetryDurationSeconds?: number;
-//  calcRetryBackoff?: (retryCount: number, error?: any) => number;
-//  logger?: Logger;
-//  logLevel?: 'error' | 'warn' | 'info' | 'http' | 'info' | 'http' | 'verbose' | 'debug' | 'silly';
-//  loggerContainer?: ContainerInstance;
-//}
