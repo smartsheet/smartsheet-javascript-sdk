@@ -7,8 +7,8 @@ const EXPOSED_CENSOR_CHARS = 4;
 // Calling censorFn(logObject) will return a new object with any field matching the keys in filterList redacted
 const buildCensorFn =
   (filterList: string[]) =>
-  (loggedObject: Record<string, unknown>): Record<string, unknown> =>
-    Object.entries(loggedObject).reduce<Record<string, unknown>>((redactedLogObject, [key, value]) => {
+  (loggedObject?: Record<string, unknown>): Record<string, unknown> =>
+    Object.entries(loggedObject || {}).reduce<Record<string, unknown>>((redactedLogObject, [key, value]) => {
       const keyLower = key.toLowerCase();
       if (filterList.includes(keyLower) && typeof value === 'string') {
         redactedLogObject[key] = rectactString(value);
@@ -36,9 +36,9 @@ export const withRedactedHeaders = buildCensorFn(headerFilterList);
 export const withRedactedPayload = buildCensorFn(payloadFilterList);
 export const withRedactedQueryParams = buildCensorFn(queryParamFilterList);
 
-export const getSanitizedUrlForLogs = (requestConfig: AxiosRequestConfig): string => {
-  const url = requestConfig.url || '';
-  const params = requestConfig.params;
+export const getSanitizedUrlForLogs = (requestConfig?: AxiosRequestConfig): string => {
+  const url = requestConfig?.url || '';
+  const params = requestConfig?.params || {};
 
   if (!params || Object.keys(params).length === 0) {
     return url;

@@ -62,6 +62,13 @@ describe('logging utils', function() {
       result.should.be.an.Object();
       Object.keys(result).should.have.length(0);
     });
+    it('handles undefined log object', () => {
+      const result = withRedactedHeaders();
+      
+      // Assert
+      result.should.be.an.Object();
+      Object.keys(result).should.have.length(0);
+    }) 
   });
   
   describe('withRedactedPayload', function() {
@@ -110,6 +117,14 @@ describe('logging utils', function() {
       result.should.be.an.Object();
       Object.keys(result).should.have.length(0);
     });
+
+    it('handles undefined log object', () => {
+      const result = withRedactedPayload();
+      
+      // Assert
+      result.should.be.an.Object();
+      Object.keys(result).should.have.length(0);
+    }) 
   });
   
   describe('withRedactedQueryParams', function() {
@@ -150,6 +165,13 @@ describe('logging utils', function() {
       result.should.be.an.Object();
       Object.keys(result).should.have.length(0);
     });
+    it('handles undefined log object', () => {
+      const result = withRedactedQueryParams();
+      
+      // Assert
+      result.should.be.an.Object();
+      Object.keys(result).should.have.length(0);
+    }) 
   });
   
   describe('getSanitizedUrlForLogs', function() {
@@ -204,5 +226,10 @@ describe('logging utils', function() {
       // It should not contain the original code value
       result.should.not.containEql('auth_code1234');
     });
+
+    it('handles undefined request object', () => {
+      const newUrl = getSanitizedUrlForLogs({});
+      newUrl.should.be.eql('')
+    }) 
   });
 });
