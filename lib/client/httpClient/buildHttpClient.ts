@@ -9,7 +9,7 @@ import { createInternalRequestLogger, RequestLogger } from './logging/buildInter
 export const buildHttpClient = (fullConfiguration: FullClientConfig): AxiosInstance => {
   const axiosClient = create({
     baseURL: fullConfiguration.smartsheetClientConfig.apiHost,
-    ...fullConfiguration.axiosConfig,
+    ...(fullConfiguration.axiosConfig || {}),
     headers: buildHeaders(fullConfiguration),
   });
 
@@ -27,7 +27,7 @@ const buildHeaders = (fullConfiguration: FullClientConfig) => {
   return {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    ...(fullConfiguration.axiosConfig.headers || {}),
+    ...(fullConfiguration.axiosConfig?.headers || {}),
     // non-overridable values for userAgent and authorization
     'User-Agent': `smartsheet-javascript-sdk/${version}`,
     Authorization: `Bearer ${fullConfiguration.smartsheetClientConfig.accessToken}`,

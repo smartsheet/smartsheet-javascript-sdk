@@ -4,7 +4,7 @@ import * as winston from 'winston';
 import axios, { AxiosError } from 'axios';
 import axiosRetry from 'axios-retry';
 import { buildHttpClient, shouldRetry } from '../../lib/client/httpClient/buildHttpClient';
-import { ApiHost, FullClientConfig } from '../../lib/client/types/clientConfiguration';
+import { ApiHost, CreateClientOptions, FullClientConfig } from '../../lib/client/types/clientConfiguration';
 import { SmartsheetErrorResponseData, errorCodes } from '../../lib/client/types/ServerResponses';
 
 describe('buildHttpRequestor', function() {
@@ -66,6 +66,24 @@ describe('buildHttpRequestor', function() {
       axiosCreateStub.firstCall.args[0].should.have.property('headers');
       axiosCreateStub.firstCall.args[0].headers.should.have.property('Authorization', 'Bearer test-token');
     });
+
+    it("should build a client from minimum config", () => {
+      const minimumConfig: FullClientConfig = {
+        retryConfig: {
+          maxRetries: 3
+        },
+        loggingConfig: {
+          loggerInstance: loggerStub as winston.Logger,
+          logLevel: 'warn'
+        },
+        smartsheetClientConfig: {
+          apiHost: ApiHost.DEFAULT,
+          accessToken: 'test-token'
+        },
+      }
+
+      buildHttpClient(minimumConfig);
+    })
     
     it('should merge custom headers with default headers', function() {
       // Arrange
