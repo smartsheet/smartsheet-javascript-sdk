@@ -1,6 +1,3 @@
-import type { RequestCallback } from '../types/RequestCallback';
-import type { RequestOptions } from '../types/RequestOptions';
-
 export interface GetEventsOptions {
   /**
    * The earliest time from which events are included in the response. Events before this time are excluded.
@@ -135,8 +132,5 @@ export interface GetEventsResponse {
 }
 
 export interface EventsApi {
-  getEvents: (
-    options: RequestOptions<GetEventsOptions, undefined>,
-    callback?: RequestCallback<GetEventsResponse>
-  ) => Promise<GetEventsResponse>;
+  getEvents: (options: GetEventsOptions) => Promise<GetEventsResponse>;
 }

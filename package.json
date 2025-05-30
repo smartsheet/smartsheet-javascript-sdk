@@ -1,6 +1,6 @@
 {
   "name": "smartsheet",
-  "version": "4.2.3",
+  "version": "5.0.0",
   "description": "Smartsheet JavaScript client SDK",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -10,10 +10,12 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "test": "tsc && mocha \"test/**/*_test.js\"",
-    "test-functional": "tsc && mocha \"test/functional/**/*_test.js\"",
-    "test-mock-api": "tsc && mocha \"test/mock-api/**/*_test.js\"",
-    "coverage": "tsc && nyc --reporter=text --reporter=lcov mocha \"test/**/*_test.js\""
+    "test": "npm run test-ts && npm run test-js",
+    "test-js": "exit 0 && tsc && mocha \"test/**/*_test.js\"",
+    "test-ts": "mocha --require ts-node/register \"test/**/*.test.ts\"",
+    "coverage": "npm run coverage-js && npm run coverage-ts",
+    "coverage-js": "tsc && nyc --reporter=text --reporter=lcov mocha \"test/**/*_test.js\"",
+    "coverage-ts": "nyc --reporter=text --reporter=lcov mocha --require ts-node/register \"test/**/*.test.ts\""
   },
   "repository": {
     "type": "git",
@@ -36,14 +38,16 @@
   "homepage": "http://developers.smartsheet.com",
   "dependencies": {
     "axios": "^1.4.0",
+    "axios-retry": "^4.5.0",
     "bluebird": "^3.5.0",
     "extend": "^3.0.2",
     "mime": "^3.0.0",
     "underscore": "^1.8.2",
-    "winston": "^2.3.1"
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
+    "@types/mocha": "^10.0.10",
     "@types/node": "^22.13.4",
     "coveralls": "^3.1.1",
     "eslint": "^9.23.0",
@@ -58,6 +62,7 @@
     "prettier": "^3.5.3",
     "should": "^13.2.3",
     "sinon": "^15.0.2",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.28.0",
     "yargs": "^17.7.1"

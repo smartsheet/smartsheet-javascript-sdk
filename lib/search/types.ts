@@ -1,6 +1,3 @@
-import type { RequestCallback } from '../types';
-import type { RequestOptions } from '../types/RequestOptions';
-
 export enum ParentResultType {
   Workspace = 'workspace',
   Sheet = 'sheet',
@@ -39,18 +36,15 @@ export interface SearchResponse {
   results: SearchResult[];
 }
 
-export interface SearchQueryParameters {
+export interface SearchAllOptions {
   // when specified with the value of `personalWorkspace` it limits the response to only items in the user's personal workspace.
   location?: string;
   // when specified with a datetime in ms will only show results modified since that time.
   modifiedSince?: string;
+  // Text to search for
+  query: string;
   // when specified results will be limited to the passed scopes.
   scopes?: SearchResultType[];
-}
-
-export interface SearchAllOptions extends RequestOptions<SearchQueryParameters, undefined> {
-  // text to search for
-  query: string;
 }
 
 export interface SearchSheetOptions extends SearchAllOptions {
@@ -59,6 +53,6 @@ export interface SearchSheetOptions extends SearchAllOptions {
 }
 
 export interface SearchApi {
-  searchAll: (options: SearchAllOptions, callback?: RequestCallback<SearchResponse>) => Promise<SearchResponse>;
-  searchSheet: (options: SearchSheetOptions, callback?: RequestCallback<SearchResponse>) => Promise<SearchResponse>;
+  searchAll: (options: SearchAllOptions) => Promise<SearchResponse>;
+  searchSheet: (options: SearchSheetOptions) => Promise<SearchResponse>;
 }
