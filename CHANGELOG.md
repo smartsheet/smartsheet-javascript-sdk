@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0.0-pre1] - 2025-05-23
+### Added
+- New WIP TS based client
+### Removed
+- Existing JS client
+
 ## [4.2.3] - 2025-05-5
 ### Added
 - Fix issue with PUT and POST methods where the body wasn't passed on retries.
