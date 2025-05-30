@@ -1,6 +1,6 @@
 import type { EventsApi } from '../events/types';
 import type { SearchApi } from '../search/types';
-import { SightsApi } from '../sights/types';
+import type { SightsApi } from '../sights/types';
 
 export interface SmartsheetClient {
   constants: any;
