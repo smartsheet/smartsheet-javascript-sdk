@@ -1,7 +1,7 @@
-import { AxiosError, AxiosHeaderValue, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { Logger } from 'winston';
-import { SmartsheetErrorResponseData } from '../../types/ServerResponses';
-import { SupportedLogLevel } from '../../types/clientConfiguration';
+import type { AxiosError, AxiosHeaderValue, AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { Logger } from 'winston';
+import type { SmartsheetErrorResponseData } from '../../types/ServerResponses';
+import type { SupportedLogLevel } from '../../types/clientConfiguration';
 import { getSanitizedUrlForLogs, withRedactedPayload, withRedactedHeaders } from './logSanitizer';
 
 // Define RequestLogger interface

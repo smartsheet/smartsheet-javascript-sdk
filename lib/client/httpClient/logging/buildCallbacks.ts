@@ -1,5 +1,5 @@
-import { AxiosRequestConfig, AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { RequestLogger } from './buildInternalRequestLogger';
+import type { AxiosRequestConfig, AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axios';
+import type { RequestLogger } from './buildInternalRequestLogger';
 
 // Create request interceptor
 export const createRequestInterceptor = (logger: RequestLogger) => {

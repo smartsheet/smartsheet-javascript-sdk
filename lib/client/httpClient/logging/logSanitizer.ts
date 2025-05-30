@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from 'axios';
+import type { AxiosRequestConfig } from 'axios';
 
 // Censoring logs
 const EXPOSED_CENSOR_CHARS = 4;

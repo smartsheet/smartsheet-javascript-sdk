@@ -1,6 +1,6 @@
 import { apiUrlByResource } from '../types';
-import { CreateResourceProvider } from '../types/ApiResourceProvider';
-import { EventsApi, GetEventsOptions, GetEventsResponse } from './types';
+import type { CreateResourceProvider } from '../types/ApiResourceProvider';
+import type { EventsApi, GetEventsOptions, GetEventsResponse } from './types';
 
 const RESOURCE_PATH = apiUrlByResource['events'];
 

@@ -1,10 +1,10 @@
-import { create, AxiosError, AxiosInstance } from 'axios';
-import { FullClientConfig } from '../types/clientConfiguration';
+import { create, type AxiosError, type AxiosInstance } from 'axios';
+import type { FullClientConfig } from '../types/clientConfiguration';
 import axiosRetry from 'axios-retry';
-import { SmartsheetErrorResponseData, errorCodes } from '../types/ServerResponses';
+import { type SmartsheetErrorResponseData, errorCodes } from '../types/ServerResponses';
 import { version } from '../../../package.json';
 import { createRequestInterceptor, createResponseInterceptors, createRetryLogger } from './logging/buildCallbacks';
-import { createInternalRequestLogger, RequestLogger } from './logging/buildInternalRequestLogger';
+import { createInternalRequestLogger, type RequestLogger } from './logging/buildInternalRequestLogger';
 
 export const buildHttpClient = (fullConfiguration: FullClientConfig): AxiosInstance => {
   const axiosClient = create({

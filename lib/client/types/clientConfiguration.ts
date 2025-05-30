@@ -1,5 +1,5 @@
-import { AxiosRequestConfig } from 'axios';
-import { Logger } from 'winston';
+import type { AxiosRequestConfig } from 'axios';
+import type { Logger } from 'winston';
 
 export enum ApiHost {
   DEFAULT = 'https://api.smartsheet.com/2.0/',

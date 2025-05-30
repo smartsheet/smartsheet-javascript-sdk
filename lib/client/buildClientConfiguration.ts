@@ -1,14 +1,14 @@
 import winston, { format } from 'winston';
 import {
-  ApiHost,
-  CreateClientOptions,
+  type ApiHost,
+  type CreateClientOptions,
   DEFAULT_LOG_LEVEL,
   DEFAULT_RETRY_CONFIG,
-  FullClientConfig,
-  LoggingConfig,
-  RetryConfig,
+  type FullClientConfig,
+  type LoggingConfig,
+  type RetryConfig,
   SUPPORTED_LOG_LEVELS,
-  SmartsheetClientConfig,
+  type SmartsheetClientConfig,
   isSupportedLogLevel,
 } from './types/clientConfiguration';
 
