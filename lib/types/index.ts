@@ -8,3 +8,5 @@ export * from './GridListing';
 export * from './RequestCallback';
 export * from './RequestOptions';
 export * from './SmartsheetClient';
+export * from './ApiAccessLevel';
+export * from './BaseResponseStatus';

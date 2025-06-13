@@ -118,8 +118,8 @@ describe('Method Unit Tests', function () {
             methods: [
                 { name: 'searchAll', stub: 'get', options: {query: "query"}, expectedRequest: {url: "search/", queryParameters: {query: "query"}}},
                 { name: 'searchAll', stub: 'get', options: {query: "query", queryParameters: {someParam: "something"}}, expectedRequest: {url: "search/", queryParameters: {query: "query", someParam: "something"}}},
-                { name: 'searchAll', stub: 'get', options: {query: "query", queryParameters: {query: "something"}}, expectedRequest: {url: "search/", queryParameters: {query: "something"}}},
-                { name: 'searchSheet', stub: 'get', options: {sheetId: 123}, expectedRequest: {url: "search/sheets/123" }},
+                { name: 'searchAll', stub: 'get', options: {query: "query"}, expectedRequest: {url: "search/", queryParameters: {query: "query"}}},
+                { name: 'searchSheet', stub: 'get', options: {query: "query", sheetId: 123}, expectedRequest: {url: "search/", queryParameters: {query: "query", sheetId: 123}}},
             ]
         },
         {
