@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.3.0] - 2025-06-30
+### Added
+- Support for new asset-based sharing endpoints in a new `sharing` module:
+  - `listAssetShares`: List all shares for a specified asset
+  - `getAssetShare`: Get a specific share for a specified asset
+  - `shareAsset`: Share an asset with specified users and/or groups
+  - `updateShare`: Update a specific share for a specified asset
+  - `deleteShare`: Delete a specific share for a specified asset
+- Added TypeScript interfaces and enums for the sharing API
+
+### Updated
+- Deprecated old sharing endpoints in the `share` module
+- Added backward compatibility wrappers in sheets, reports, workspaces, and sights modules
+- Added deprecation notices and migration examples in documentation
+
 ## [4.2.3] - 2025-05-5
 ### Added
 - Fix issue with PUT and POST methods where the body wasn't passed on retries.

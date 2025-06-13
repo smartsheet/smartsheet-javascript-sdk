@@ -1,4 +1,7 @@
 import type { CreateOptions } from '../types';
+// Use any type for CommonJS module
+// @ts-ignore
+import shareModule from '../share/share.js';
 import type {
   CopySight,
   DeleteSight,
@@ -13,7 +16,54 @@ import type {
 
 export const createSights = (options: CreateOptions): SightsApi => {
   const requestor = options.requestor;
-  const shares = require('../share/share.js')(options.apiUrls.sights);
+  // Legacy shares module (deprecated)
+  const shares = shareModule(options.apiUrls.sights);
+  
+  // Create a wrapper for the new sharing API that maintains backward compatibility
+  const sharesWrapper = {
+    create: function(options: any) {
+      const legacyShares = shares.create(options);
+      
+      /**
+       * @deprecated Use client.sharing.listAssetShares instead
+       */
+      function getSightShares(getOptions: any, callback?: any) {
+        console.warn('DEPRECATED: getSightShares is deprecated. Use client.sharing.listAssetShares instead.');
+        return legacyShares.listShares(getOptions, callback);
+      }
+      
+      /**
+       * @deprecated Use client.sharing.shareAsset instead
+       */
+      function shareSight(postOptions: any, callback?: any) {
+        console.warn('DEPRECATED: shareSight is deprecated. Use client.sharing.shareAsset instead.');
+        return legacyShares.share(postOptions, callback);
+      }
+      
+      /**
+       * @deprecated Use client.sharing.deleteShare instead
+       */
+      function deleteShare(deleteOptions: any, callback?: any) {
+        console.warn('DEPRECATED: deleteShare is deprecated. Use client.sharing.deleteShare instead.');
+        return legacyShares.deleteShare(deleteOptions, callback);
+      }
+      
+      /**
+       * @deprecated Use client.sharing.updateShare instead
+       */
+      function updateShare(putOptions: any, callback?: any) {
+        console.warn('DEPRECATED: updateShare is deprecated. Use client.sharing.updateShare instead.');
+        return legacyShares.updateShare(putOptions, callback);
+      }
+      
+      return {
+        getSightShares,
+        shareSight,
+        deleteShare,
+        updateShare
+      };
+    }
+  };
 
   const optionsToSend = {
     ...options.clientOptions,
@@ -98,8 +148,8 @@ export const createSights = (options: CreateOptions): SightsApi => {
     updateSight,
     copySight,
     moveSight,
-    getSightPublishStatus,
+    getSightPublshStatus: getSightPublishStatus,
     setSightPublishStatus,
-    ...shares.create(options),
+    ...sharesWrapper.create(options),
   };
 };
