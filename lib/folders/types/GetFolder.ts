@@ -1,3 +1,5 @@
+import type { FolderPath } from "../types";
+
 export enum GetFolderQueryEnum {
   /**
    * @description adds the Source object indicating which object the folder was created from, if any
@@ -15,7 +17,7 @@ export enum GetFolderQueryEnum {
   permalinks = 'permalinks',
 }
 
-export interface GetFolderOptions {
+export interface GetFolderOptions extends FolderPath {
   /**
    * @description A comma-separated list of optional elements to include in the response
    * @example "source,distributionLink,ownerInfo,sheetVersion,permalinks"

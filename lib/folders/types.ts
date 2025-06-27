@@ -1,4 +1,8 @@
 import type { DashboardListing, GridListing, RequestCallback, RequestOptions } from '../types';
+import type { CopyFolderBody, CopyFolderResponse } from './types/CopyFolder';
+import type { CreateChildFolderBody, CreateChildFolderOptions, CreateChildFolderResponse } from './types/CreateChildFolder';
+import type { GetFolderOptions } from './types/GetFolder';
+import type { ListChildFoldersOptions, ListChildFoldersResponse } from './types/ListChildFolders';
 
 export interface Folder {
   /**
@@ -11,7 +15,7 @@ export interface Folder {
    */
   favorite?: boolean;
   /**
-   * @description Array of Folder oblects.
+   * @description Array of Folder objects.
    */
   folders: Folder[];
   /**
@@ -40,32 +44,21 @@ export interface Folder {
   templates: GridListing[];
 }
 
-
-export interface FolderBody {
+export interface FolderPath {
   /**
    * @description Folder Id where you can create sheets, sights, reports, templates, and other folders.
   */
  folderId: number;
 }
 
+export enum FolderSkipRemapEnum {
+    CELL_LINKS = 'cellLinks',
+    REPORTS = 'reports',
+    SHEET_HYPERLINKS = 'sheetHyperlinks',
+    SIGHTS = 'sights',
+}
+
 // BELOW CREATED BY ROO
-export interface ListChildFoldersOptions extends FolderOptions {
-  /**
-   * Additional options for listing child folders
-   */
-  includeAll?: boolean;
-}
-
-export interface CreateChildFolderOptions extends FolderOptions {
-  /**
-   * Data for the new folder
-   */
-  body?: {
-    name: string;
-    [key: string]: any;
-  };
-}
-
 export interface UpdateFolderOptions extends FolderOptions {
   /**
    * Data for updating the folder
@@ -120,29 +113,32 @@ export interface FoldersApi {
 
   listChildFolders: (
     options: RequestOptions<ListChildFoldersOptions, undefined>,
-    callback?: RequestCallback<FolderList>
-  ) => Promise<FolderList>;
+    callback?: RequestCallback<ListChildFoldersResponse>
+  ) => Promise<ListChildFoldersResponse>;
 
   createChildFolder: (
-    options: RequestOptions<CreateChildFolderOptions, any>,
-    callback?: RequestCallback<Folder>
-  ) => Promise<Folder>;
+    options: RequestOptions<CreateChildFolderOptions, CreateChildFolderBody>,
+    callback?: RequestCallback<CreateChildFolderResponse>
+  ) => Promise<CreateChildFolderResponse>;
 
+  // TODO (jandes)
   updateFolder: (
     options: RequestOptions<UpdateFolderOptions, any>,
     callback?: RequestCallback<Folder>
   ) => Promise<Folder>;
 
+  // TODO (jandes)
   deleteFolder: (
     options: RequestOptions<DeleteFolderOptions, undefined>,
     callback?: RequestCallback<object>
   ) => Promise<object>;
 
   copyFolder: (
-    options: RequestOptions<CopyFolderOptions, any>,
-    callback?: RequestCallback<Folder>
-  ) => Promise<Folder>;
+    options: RequestOptions<CopyFolderOptions, CopyFolderBody>,
+    callback?: RequestCallback<CopyFolderResponse>
+  ) => Promise<CopyFolderResponse>;
 
+  // TODO (jandes)
   moveFolder: (
     options: RequestOptions<MoveFolderOptions, any>,
     callback?: RequestCallback<Folder>

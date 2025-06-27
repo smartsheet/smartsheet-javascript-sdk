@@ -1,17 +1,17 @@
 import type { ClientOptions, CreateOptions, RequestCallback, RequestOptions } from '../types';
 import type {
   FoldersApi,
-  ListChildFoldersOptions,
-  CreateChildFolderOptions,
-  UpdateFolderOptions,
-  DeleteFolderOptions,
-  CopyFolderOptions,
-  MoveFolderOptions,
   Folder,
   FolderList,
-  FolderBody,
 } from './types';
-import { GetFolderOptions } from './types/GetFolder';
+import { CopyFolderBody, CopyFolderOptions, CopyFolderResponse } from './types/CopyFolder';
+import type {
+  CreateChildFolderBody,
+  CreateChildFolderOptions,
+  CreateChildFolderResponse,
+} from './types/CreateChildFolder';
+import type { GetFolderOptions } from './types/GetFolder';
+import type { ListChildFoldersOptions, ListChildFoldersResponse } from './types/ListChildFolders';
 
 type OptionsToSend = Partial<ClientOptions> & {
   url: string;
@@ -33,53 +33,37 @@ export const createFolders = (options: CreateOptions): FoldersApi => {
     };
   }
 
+  /** GET Endpoints */
   const getFolder = (
-    getOptions: RequestOptions<GetFolderOptions, FolderBody>,
+    getOptions: RequestOptions<GetFolderOptions, undefined>,
     callback?: RequestCallback<Folder>
   ): Promise<Folder> => {
     return requestor.get({ ...optionsToSend, ...getOptions }, callback);
   };
 
-  // TODO (jandes)
   const listChildFolders = (
     getOptions: RequestOptions<ListChildFoldersOptions, undefined>,
-    callback?: RequestCallback<FolderList>
-  ): Promise<FolderList> => {
+    callback?: RequestCallback<ListChildFoldersResponse>
+  ): Promise<ListChildFoldersResponse> => {
     const urlOptions = { url: options.apiUrls.folders + getOptions.queryParameters?.folderId + '/folders' };
     return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
 
-  // TODO (jandes)
+  /** POST Endpoints */
   const createChildFolder = (
-    postOptions: RequestOptions<CreateChildFolderOptions, any>,
-    callback?: RequestCallback<Folder>
-  ): Promise<Folder> => {
+    postOptions: RequestOptions<CreateChildFolderOptions, CreateChildFolderBody>,
+    callback?: RequestCallback<CreateChildFolderResponse>
+  ): Promise<CreateChildFolderResponse> => {
     const urlOptions = { url: options.apiUrls.folders + postOptions.queryParameters?.folderId + '/folders' };
     return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
   };
 
-  // TODO (jandes)
-  const updateFolder = (
-    putOptions: RequestOptions<UpdateFolderOptions, any>,
-    callback?: RequestCallback<Folder>
-  ): Promise<Folder> => {
-    return requestor.put({ ...optionsToSend, ...putOptions }, callback);
-  };
-
-  // TODO (jandes)
-  const deleteFolder = (
-    deleteOptions: RequestOptions<DeleteFolderOptions, undefined>,
-    callback?: RequestCallback<object>
-  ): Promise<object> => {
-    return requestor.delete({ ...optionsToSend, ...deleteOptions }, callback);
-  };
-
-  // TODO (jandes)
   const copyFolder = (
-    postOptions: RequestOptions<CopyFolderOptions, any>,
-    callback?: RequestCallback<Folder>
-  ): Promise<Folder> => {
+    postOptions: RequestOptions<CopyFolderOptions, CopyFolderBody>,
+    callback?: RequestCallback<CopyFolderResponse>
+  ): Promise<CopyFolderResponse> => {
     const urlOptions = { url: options.apiUrls.folders + postOptions.queryParameters?.folderId + '/copy' };
+    // TODO: Update to use an array with the include enum in new major version
     return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
   };
 
@@ -90,6 +74,24 @@ export const createFolders = (options: CreateOptions): FoldersApi => {
   ): Promise<Folder> => {
     const urlOptions = { url: options.apiUrls.folders + postOptions.queryParameters?.folderId + '/move' };
     return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
+  };
+
+  /** PUT Endpoints */
+  // TODO (jandes)
+  const updateFolder = (
+    putOptions: RequestOptions<UpdateFolderOptions, any>,
+    callback?: RequestCallback<Folder>
+  ): Promise<Folder> => {
+    return requestor.put({ ...optionsToSend, ...putOptions }, callback);
+  };
+
+  /** DELETE Endpoints */
+  // TODO (jandes)
+  const deleteFolder = (
+    deleteOptions: RequestOptions<DeleteFolderOptions, undefined>,
+    callback?: RequestCallback<object>
+  ): Promise<object> => {
+    return requestor.delete({ ...optionsToSend, ...deleteOptions }, callback);
   };
 
   return {
