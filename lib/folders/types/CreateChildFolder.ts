@@ -1,40 +1,16 @@
-import type { Folder, FolderPath } from "../types";
-
-export enum CreateChildFolderQueryEnum {
-    ATTACHMENTS = 'attachments',
-    /**
-     * @description includes cross-sheet references
-     */
-    CELL_LINKS = 'cellLinks',
-    /**
-     * @description includes formatting
-     */
-    DATA = 'data',
-    /**
-     * @description includes comments
-     */
-    DISCUSSIONS = 'discussions',
-    FILTERS = 'filters',
-    FORMS = 'forms',
-    /**
-     * @description includes notification recipients, must also include rules when using this attribute
-     */
-    RULE_RECIPIENTS = 'ruleRecipients',
-    /**
-     * @description includes notifications and workflow rules
-     */
-    RULES = 'rules',
-    /**
-     * @description NOTE: Cell history is not copied, regardless of which include parameter values are specified.
-     */
-    SHARES = 'shares',
-}
+import type { Folder, FolderPath, FolderResultCodeEnum, FolderResultMessageEnum } from "../types";
+// ignoring as this is for documentation purposes
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { FolderQueryEnum } from '../types';
+// ignoring as this is for documentation purposes
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { FolderSkipRemapEnum } from '../types';
 
 export interface CreateChildFolderOptions extends FolderPath {
     /**
      * @description A comma-separated list of elements to copy
      * @example "attachments,cellLinks,data,discussions,filters,forms,ruleRecipients,rules,shares"
-     * @see {@link CreateChildFolderQueryEnum}
+     * @see {@link FolderQueryEnum}
      */
     include?: string;
     /**
@@ -67,18 +43,8 @@ export interface CreateChildFolderBody {
     folders?: Folder[];
 }
 
-export enum CreateChildFolderResultMessageEnum {
-    SUCCESS = 'SUCCESS',
-    PARTIAL_SUCCESS = 'PARTIAL_SUCCESS',
-}
-
-export enum CreateChildFolderResultCodeEnum {
-    SUCCESS = 3,
-    PARTIAL_SUCCESS = 0,
-}
-
 export interface CreateChildFolderResponse {
-    message: CreateChildFolderResultMessageEnum;
-    resultCode: CreateChildFolderResultCodeEnum;
+    message: FolderResultMessageEnum;
+    resultCode: FolderResultCodeEnum;
     result: Folder;
 }

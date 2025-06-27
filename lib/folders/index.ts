@@ -1,4 +1,4 @@
-import type { ClientOptions, CreateOptions, RequestCallback, RequestOptions } from '../types';
+import type { ApiUrls, ClientOptions, CreateOptions, RequestCallback, RequestOptions } from '../types';
 import type { FoldersApi, Folder, FolderPath } from './types';
 import type { CopyFolderBody, CopyFolderOptions, CopyFolderResponse } from './types/CopyFolder';
 import type {
@@ -6,6 +6,7 @@ import type {
   CreateChildFolderOptions,
   CreateChildFolderResponse,
 } from './types/CreateChildFolder';
+import type { DeleteFolderResponse } from './types/DeleteFolder';
 import type { GetFolderOptions } from './types/GetFolder';
 import type { ListChildFoldersOptions, ListChildFoldersResponse } from './types/ListChildFolders';
 import type { MoveFolderBody, MoveFolderResponse } from './types/MoveFolder';
@@ -13,7 +14,7 @@ import type { UpdateFolderBody, UpdateFolderResponse } from './types/UpdateFolde
 
 type OptionsToSend = Partial<ClientOptions> & {
   url: string;
-  urls: any;
+  urls: ApiUrls;
 };
 
 export const createFolders = (options: CreateOptions): FoldersApi => {
@@ -82,11 +83,10 @@ export const createFolders = (options: CreateOptions): FoldersApi => {
   };
 
   /** DELETE Endpoints */
-  // TODO (jandes)
   const deleteFolder = (
-    deleteOptions: RequestOptions<DeleteFolderOptions, undefined>,
-    callback?: RequestCallback<object>
-  ): Promise<object> => {
+    deleteOptions: RequestOptions<FolderPath, undefined>,
+    callback?: RequestCallback<DeleteFolderResponse>
+  ): Promise<DeleteFolderResponse> => {
     return requestor.delete({ ...optionsToSend, ...deleteOptions }, callback);
   };
 

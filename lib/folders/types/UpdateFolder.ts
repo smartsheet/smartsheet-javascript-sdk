@@ -1,4 +1,4 @@
-import type { Folder } from '../types';
+import type { Folder, FolderResultCodeEnum, FolderResultMessageEnum } from '../types';
 import type { GridListing } from '../../types';
 
 export interface FailedItemsError {
@@ -85,12 +85,12 @@ export interface UpdateFolderResponse {
    * @description Message that indicates the outcome of the request.
    * @example "SUCCESS" or "PARTIAL_SUCCESS"
    */
-  message: 'SUCCESS' | 'PARTIAL_SUCCESS';
+  message: FolderResultMessageEnum;
   /**
    * @description '0' for success, '3' for partial success of Bulk Operation
    * @example 0 or 3
    */
-  resultCode: 0 | 3;
+  resultCode: FolderResultCodeEnum;
   /**
    * @description Can contain dashboards, folders, reports, sheets, or templates.
    * @see {@link Folder}

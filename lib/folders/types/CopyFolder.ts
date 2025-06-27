@@ -1,40 +1,16 @@
-import type { FolderPath } from '../types';
-
-export enum CopyFolderQueryEnum {
-  ATTACHMENTS = 'attachments',
-  /**
-   * @description includes cross-sheet references
-   */
-  CELL_LINKS = 'cellLinks',
-  /**
-   * @description includes formatting
-   */
-  DATA = 'data',
-  /**
-   * @description includes comments
-   */
-  DISCUSSIONS = 'discussions',
-  FILTERS = 'filters',
-  FORMS = 'forms',
-  /**
-   * @description includes notification recipients, must also include rules when using this attribute
-   */
-  RULE_RECIPIENTS = 'ruleRecipients',
-  /**
-   * @description includes notifications and workflow rules
-   */
-  RULES = 'rules',
-  /**
-   * @description Cell history is not copied, regardless of which include parameter values are specified
-   */
-  SHARES = 'shares',
-}
+import type { FolderDestinationTypeEnum, FolderPath } from '../types';
+// ignoring as this is for documentation purposes
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { FolderQueryEnum } from '../types';
+// ignoring as this is for documentation purposes
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { FolderSkipRemapEnum } from '../types';
 
 export interface CopyFolderOptions extends FolderPath {
   /**
    * @description A comma-separated list of elements to copy
    * @example "attachments,cellLinks,data,discussions,filters,forms,ruleRecipients,rules,shares"
-   * @see {@link CopyFolderQueryEnum}
+   * @see {@link FolderQueryEnum}
    */
   include: string;
   /**
@@ -50,16 +26,6 @@ export interface CopyFolderOptions extends FolderPath {
   skipRemap?: string;
 }
 
-export enum CopyFolderDestinationTypeEnum {
-    FOLDER = 'folder',
-    /**
-     * @deprecated
-     * @description The HOME destination type is deprecated since March 25, 2025, and will be removed.
-     */
-    HOME = 'home',
-    WORKSPACE = 'workspace',
-}
-
 export interface CopyFolderBody {
     /**
      * @description The ID of the destination container.
@@ -69,7 +35,7 @@ export interface CopyFolderBody {
      * @description Type of destination container.
      * @note The HOME destination type is deprecated since March 25, 2025, and will be removed.
      */
-    destinationType?: CopyFolderDestinationTypeEnum | null;
+    destinationType?: FolderDestinationTypeEnum | null;
     /**
      * @description Name of the newly created object (when copying a dashboard, folder, sheet, or workspace).
      */
@@ -84,7 +50,7 @@ export interface CopyFolderResponse {
     /**
      * @description The type of the destination container.
      */
-    destinationType?: CopyFolderDestinationTypeEnum | null;
+    destinationType?: FolderDestinationTypeEnum | null;
     /**
      * @description The name of the newly created object (when copying a dashboard, folder, sheet, or workspace).
      */

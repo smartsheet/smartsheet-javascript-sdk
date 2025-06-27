@@ -1,12 +1,4 @@
-export enum MoveFolderDestinationTypeEnum {
-    FOLDER = 'folder',
-    /**
-     * @deprecated
-     * @description The HOME destination type is deprecated since March 25, 2025, and will be removed.
-     */
-    HOME = 'home',
-    WORKSPACE = 'workspace',
-}
+import type { FolderDestinationTypeEnum } from "../types";
 
 export interface MoveFolderBody {
     /**
@@ -16,7 +8,7 @@ export interface MoveFolderBody {
     /**
      * @description Type of destination container.
      */
-    destinationType?: MoveFolderDestinationTypeEnum | null;
+    destinationType?: FolderDestinationTypeEnum | null;
 }
 
 export interface MoveFolderResponse {
@@ -27,5 +19,5 @@ export interface MoveFolderResponse {
     /**
      * @description The type of the destination container.
      */
-    destinationType?: MoveFolderDestinationTypeEnum | null;
+    destinationType?: FolderDestinationTypeEnum | null;
 }
