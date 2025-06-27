@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.3.0] - 2025-26-27
+### Added
+- ESLint Rule for enforcing type imports.
+- Convert the Search module to TypeScript.
+- Convert the Sights module to TypeScript.
+- Convert the Contacts module to TypeScript.
+
 ## [4.2.3] - 2025-05-5
 ### Added
 - Fix issue with PUT and POST methods where the body wasn't passed on retries.
