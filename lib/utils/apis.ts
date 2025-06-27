@@ -1,4 +1,5 @@
 import type { ApiUrls } from '../types';
+
 export const apiUrls: ApiUrls = {
   contacts: 'contacts/',
   events: 'events/',

@@ -1,5 +1,5 @@
-import { RequestCallback } from '../types/RequestCallback';
-import { RequestOptions } from '../types/RequestOptions';
+import type { RequestCallback } from '../types/RequestCallback';
+import type { RequestOptions } from '../types/RequestOptions';
 
 export interface GetEventsOptions {
   /**

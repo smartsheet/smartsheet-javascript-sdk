@@ -1,4 +1,4 @@
-import { LoggerInstance } from 'winston';
+import type { LoggerInstance } from 'winston';
 
 export interface CreateClientOptions {
   accessToken?: string;
