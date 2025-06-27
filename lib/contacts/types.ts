@@ -1,4 +1,4 @@
-import { RequestCallback } from '../types/RequestCallback';
+import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 
 export interface ContactsApi {
