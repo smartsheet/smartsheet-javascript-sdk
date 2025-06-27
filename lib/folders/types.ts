@@ -96,23 +96,23 @@ export enum FolderQueryEnum {
 }
 
 export enum FolderDestinationTypeEnum {
-    FOLDER = 'folder',
-    /**
-     * @deprecated
-     * @description The HOME destination type is deprecated since March 25, 2025, and will be removed.
-     */
-    HOME = 'home',
-    WORKSPACE = 'workspace',
+  FOLDER = 'folder',
+  /**
+   * @deprecated
+   * @description The HOME destination type is deprecated since March 25, 2025, and will be removed.
+   */
+  HOME = 'home',
+  WORKSPACE = 'workspace',
 }
 
 export enum FolderResultMessageEnum {
-    SUCCESS = 'SUCCESS',
-    PARTIAL_SUCCESS = 'PARTIAL_SUCCESS',
+  SUCCESS = 'SUCCESS',
+  PARTIAL_SUCCESS = 'PARTIAL_SUCCESS',
 }
 
 export enum FolderResultCodeEnum {
-    SUCCESS = 3,
-    PARTIAL_SUCCESS = 0,
+  SUCCESS = 3,
+  PARTIAL_SUCCESS = 0,
 }
 
 export interface FoldersApi {

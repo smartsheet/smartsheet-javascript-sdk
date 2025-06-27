@@ -1,4 +1,4 @@
-import type { FolderPath } from "../types";
+import type { FolderPath } from '../types';
 
 export enum GetFolderQueryEnum {
   /**
