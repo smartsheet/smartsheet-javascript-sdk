@@ -1,10 +1,11 @@
+import type { ContactsApi } from '../contacts/types';
 import type { EventsApi } from '../events/types';
 import type { SearchApi } from '../search/types';
 import type { SightsApi } from '../sights/types';
 
 export interface SmartsheetClient {
   constants: any;
-  contacts: any;
+  contacts: ContactsApi;
   events: EventsApi;
   favorites: any;
   folders: any;
