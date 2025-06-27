@@ -1,8 +1,10 @@
 import type { DashboardListing, GridListing, RequestCallback, RequestOptions } from '../types';
-import type { CopyFolderBody, CopyFolderResponse } from './types/CopyFolder';
+import type { CopyFolderBody, CopyFolderOptions, CopyFolderResponse } from './types/CopyFolder';
 import type { CreateChildFolderBody, CreateChildFolderOptions, CreateChildFolderResponse } from './types/CreateChildFolder';
 import type { GetFolderOptions } from './types/GetFolder';
 import type { ListChildFoldersOptions, ListChildFoldersResponse } from './types/ListChildFolders';
+import type { MoveFolderBody, MoveFolderResponse } from './types/MoveFolder';
+import type { UpdateFolderBody, UpdateFolderResponse } from './types/UpdateFolder';
 
 export interface Folder {
   /**
@@ -58,53 +60,6 @@ export enum FolderSkipRemapEnum {
     SIGHTS = 'sights',
 }
 
-// BELOW CREATED BY ROO
-export interface UpdateFolderOptions extends FolderOptions {
-  /**
-   * Data for updating the folder
-   */
-  body?: {
-    name?: string;
-    [key: string]: any;
-  };
-}
-
-export interface DeleteFolderOptions extends FolderOptions {
-  /**
-   * Additional options for deleting a folder
-   */
-  permanent?: boolean;
-}
-
-export interface CopyFolderOptions extends FolderOptions {
-  /**
-   * Data for copying the folder
-   */
-  body?: {
-    destinationId: number | string;
-    destinationType?: string;
-    newName?: string;
-    [key: string]: any;
-  };
-}
-
-export interface MoveFolderOptions extends FolderOptions {
-  /**
-   * Data for moving the folder
-   */
-  body?: {
-    destinationId: number | string;
-    destinationType?: string;
-    [key: string]: any;
-  };
-}
-
-export interface FolderList {
-  data: Folder[];
-  totalCount: number;
-  [key: string]: any;
-}
-
 export interface FoldersApi {
   getFolder: (
     options: RequestOptions<GetFolderOptions, undefined>,
@@ -121,11 +76,10 @@ export interface FoldersApi {
     callback?: RequestCallback<CreateChildFolderResponse>
   ) => Promise<CreateChildFolderResponse>;
 
-  // TODO (jandes)
   updateFolder: (
-    options: RequestOptions<UpdateFolderOptions, any>,
-    callback?: RequestCallback<Folder>
-  ) => Promise<Folder>;
+    options: RequestOptions<FolderPath, UpdateFolderBody>,
+    callback?: RequestCallback<UpdateFolderResponse>
+  ) => Promise<UpdateFolderResponse>;
 
   // TODO (jandes)
   deleteFolder: (
@@ -138,9 +92,8 @@ export interface FoldersApi {
     callback?: RequestCallback<CopyFolderResponse>
   ) => Promise<CopyFolderResponse>;
 
-  // TODO (jandes)
   moveFolder: (
-    options: RequestOptions<MoveFolderOptions, any>,
-    callback?: RequestCallback<Folder>
-  ) => Promise<Folder>;
+    options: RequestOptions<FolderPath, MoveFolderBody>,
+    callback?: RequestCallback<MoveFolderResponse>
+  ) => Promise<MoveFolderResponse>;
 }

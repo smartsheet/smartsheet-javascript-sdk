@@ -8,7 +8,8 @@ import type {
 } from './types/CreateChildFolder';
 import type { GetFolderOptions } from './types/GetFolder';
 import type { ListChildFoldersOptions, ListChildFoldersResponse } from './types/ListChildFolders';
-import type { MoveFolderBody } from './types/MoveFolder';
+import type { MoveFolderBody, MoveFolderResponse } from './types/MoveFolder';
+import type { UpdateFolderBody, UpdateFolderResponse } from './types/UpdateFolder';
 
 type OptionsToSend = Partial<ClientOptions> & {
   url: string;
@@ -66,18 +67,17 @@ export const createFolders = (options: CreateOptions): FoldersApi => {
 
   const moveFolder = (
     postOptions: RequestOptions<FolderPath, MoveFolderBody>,
-    callback?: RequestCallback<Folder>
-  ): Promise<Folder> => {
+    callback?: RequestCallback<MoveFolderResponse>
+  ): Promise<MoveFolderResponse> => {
     const urlOptions = { url: options.apiUrls.folders + postOptions.queryParameters?.folderId + '/move' };
     return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
   };
 
   /** PUT Endpoints */
-  // TODO (jandes)
   const updateFolder = (
-    putOptions: RequestOptions<UpdateFolderOptions, any>,
-    callback?: RequestCallback<Folder>
-  ): Promise<Folder> => {
+    putOptions: RequestOptions<FolderPath, UpdateFolderBody>,
+    callback?: RequestCallback<UpdateFolderResponse>
+  ): Promise<UpdateFolderResponse> => {
     return requestor.put({ ...optionsToSend, ...putOptions }, callback);
   };
 
