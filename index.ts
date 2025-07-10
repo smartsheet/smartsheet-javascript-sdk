@@ -2,6 +2,7 @@ import type { CreateClient, CreateOptions } from './lib/types';
 import { apiUrls } from './lib/utils/apis';
 import { createContacts } from './lib/contacts';
 import { createEvents } from './lib/events';
+import { createFolders } from './lib/folders';
 import { createSearch } from './lib/search';
 import { createSights } from './lib/sights';
 
@@ -95,7 +96,7 @@ export const createClient: CreateClient = function (clientOptions) {
     contacts: createContacts(options),
     events: createEvents(options),
     favorites: require('./lib/favorites/').create(options),
-    folders: require('./lib/folders/').create(options),
+    folders: createFolders(options),
     groups: require('./lib/groups/').create(options),
     /**
      * @deprecated
