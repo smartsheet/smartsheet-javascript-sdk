@@ -39,6 +39,7 @@
     "bluebird": "^3.5.0",
     "extend": "^3.0.2",
     "mime": "^3.0.0",
+    "smartsheet": "^4.3.0",
     "underscore": "^1.8.2",
     "winston": "^2.3.1"
   },

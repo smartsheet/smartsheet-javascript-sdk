@@ -313,9 +313,9 @@ describe('Method Unit Tests', function () {
             name: 'workspaces',
             methods: [
                 { name: 'listWorkspaces', stub: 'get', options: undefined, expectedRequest: {url: "workspaces/"}},
-                { name: 'listWorkspaces', stub: 'get', options: {paginationType: 'token', lastKey: 'abc123'}, expectedRequest: {url: "workspaces/", qs: {lastKey: 'abc123'}}},
-                { name: 'listWorkspaces', stub: 'get', options: {paginationType: 'token', maxItems: 500}, expectedRequest: {url: "workspaces/", qs: {maxItems: 500}}},
-                { name: 'listWorkspaces', stub: 'get', options: {paginationType: 'token', lastKey: 'abc123', maxItems: 100}, expectedRequest: {url: "workspaces/", qs: {lastKey: 'abc123', maxItems: 100}}},
+                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {paginationType: 'token', lastKey: 'abc123'}}, expectedRequest: {url: "workspaces/", queryParameters: {paginationType: 'token', lastKey: 'abc123'}}},
+                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {paginationType: 'token', maxItems: 500}}, expectedRequest: {url: "workspaces/", queryParameters: {paginationType: 'token', maxItems: 500}}},
+                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {paginationType: 'token', lastKey: 'abc123', maxItems: 100}}, expectedRequest: {url: "workspaces/", queryParameters: {paginationType: 'token', lastKey: 'abc123', maxItems: 100}}},
                 { name: 'getWorkspace', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123"}},
                 { name: 'getWorkspaceMetadata', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/metadata"}},
                 { name: 'getWorkspaceChildren', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/children"}},
