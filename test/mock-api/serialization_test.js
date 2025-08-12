@@ -546,6 +546,16 @@ describe("Mock API SDK Tests", function() {
                     planId: 456,
                     body: { seatType: "MEMBER" }
                 }
+            },
+            {
+                name: "Serialization - DowngradeUserPlan",
+                method: client.users.downgradeUserPlan,
+                shouldError: false,
+                options: {
+                    userId: 123,
+                    planId: 456,
+                    body: { seatType: "VIEWER" }
+                }
             }
         ];
 
