@@ -538,8 +538,8 @@ describe("Mock API SDK Tests", function() {
                 }
             },
             {
-                name: "Serialization - UpgradeUserPlan",
-                method: client.users.upgradeUserPlan,
+                name: "Serialization - upgradeUserForPlan",
+                method: client.users.upgradeUserForPlan,
                 shouldError: false,
                 options: {
                     userId: 123,
@@ -548,8 +548,8 @@ describe("Mock API SDK Tests", function() {
                 }
             },
             {
-                name: "Serialization - DowngradeUserPlan",
-                method: client.users.downgradeUserPlan,
+                name: "Serialization - downgradeUserForPlan",
+                method: client.users.downgradeUserForPlan,
                 shouldError: false,
                 options: {
                     userId: 123,
