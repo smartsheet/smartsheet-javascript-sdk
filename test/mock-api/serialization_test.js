@@ -536,6 +536,16 @@ describe("Mock API SDK Tests", function() {
                         "endColumnId": 6
                     }
                 }
+            },
+            {
+                name: "Serialization - UpgradeUserPlan",
+                method: client.users.upgradeUserPlan,
+                shouldError: false,
+                options: {
+                    userId: 123,
+                    planId: 456,
+                    body: { seatType: "MEMBER" }
+                }
             }
         ];
 
