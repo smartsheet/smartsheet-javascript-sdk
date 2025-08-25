@@ -57,6 +57,8 @@ describe('Method Unit Tests', function () {
             name: 'folders',
             methods: [
                 { name: 'getFolder', stub: 'get', options: {}, expectedRequest: {url: "folders/" }},
+                { name: 'getFolderMetadata', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123/metadata" }},
+                { name: 'getFolderChildren', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123/children" }},
                 { name: 'listChildFolders', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123/folders" }},
                 { name: 'createChildFolder', stub: 'post', options: {folderId: 123}, expectedRequest: {url: "folders/123/folders" }},
                 { name: 'updateFolder', stub: 'put', options: {folderId: 123}, expectedRequest: {url: "folders/" }},
@@ -312,6 +314,8 @@ describe('Method Unit Tests', function () {
             methods: [
                 { name: 'listWorkspaces', stub: 'get', options: undefined, expectedRequest: {url: "workspaces/"}},
                 { name: 'getWorkspace', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123"}},
+                { name: 'getWorkspaceMetadata', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/metadata"}},
+                { name: 'getWorkspaceChildren', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/children"}},
                 { name: 'listWorkspaceFolders', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/folders"}},
                 { name: 'createWorkspace', stub: 'post', options: {}, expectedRequest: {url: "workspaces/"}},
                 { name: 'createFolder', stub: 'post', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/folders"}},
