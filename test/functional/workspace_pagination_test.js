@@ -1,5 +1,6 @@
 var should = require('should');
 var _ = require('underscore');
+var sinon = require('sinon');
 
 describe('Workspace Pagination Tests', function() {
   var client;
@@ -90,6 +91,92 @@ describe('Workspace Pagination Tests', function() {
         response.content.should.have.property('lastKey');
         response.content.data.should.be.Array();
         response.content.lastKey.should.equal('next_page_token_123');
+        done();
+      });
+    });
+  });
+
+  describe('#listWorkspaces validation warnings', function() {
+    var consoleWarnStub;
+
+    beforeEach(function() {
+      consoleWarnStub = sinon.stub(console, 'warn');
+    });
+
+    afterEach(function() {
+      consoleWarnStub.restore();
+    });
+
+    it('should show deprecation warning when pageSize is used', function(done) {
+      client.workspaces.listWorkspaces({pageSize: 100}, function(error, response) {
+        should.not.exist(error);
+        consoleWarnStub.calledOnce.should.be.true();
+        consoleWarnStub.firstCall.args[0].should.equal('[DEPRECATED] pageSize parameter is deprecated in listWorkspaces. Use paginationType: "token" with maxItems instead.');
+        done();
+      });
+    });
+
+    it('should show deprecation warning when page is used', function(done) {
+      client.workspaces.listWorkspaces({page: 1}, function(error, response) {
+        should.not.exist(error);
+        consoleWarnStub.calledOnce.should.be.true();
+        consoleWarnStub.firstCall.args[0].should.equal('[DEPRECATED] page parameter is deprecated in listWorkspaces. Use paginationType: "token" with lastKey instead.');
+        done();
+      });
+    });
+
+    it('should show deprecation warning when includeAll is used', function(done) {
+      client.workspaces.listWorkspaces({includeAll: true}, function(error, response) {
+        should.not.exist(error);
+        consoleWarnStub.calledOnce.should.be.true();
+        consoleWarnStub.firstCall.args[0].should.equal('[DEPRECATED] includeAll parameter is deprecated in listWorkspaces. Use paginationType: "token" instead.');
+        done();
+      });
+    });
+
+    it('should show validation error when lastKey is used without token pagination', function(done) {
+      client.workspaces.listWorkspaces({lastKey: 'abc123'}, function(error, response) {
+        should.not.exist(error);
+        consoleWarnStub.calledOnce.should.be.true();
+        consoleWarnStub.firstCall.args[0].should.equal('[VALIDATION ERROR] lastKey parameter can only be used when paginationType is set to "token".');
+        done();
+      });
+    });
+
+    it('should show validation error when maxItems is used without token pagination', function(done) {
+      client.workspaces.listWorkspaces({maxItems: 100}, function(error, response) {
+        should.not.exist(error);
+        consoleWarnStub.calledOnce.should.be.true();
+        consoleWarnStub.firstCall.args[0].should.equal('[VALIDATION ERROR] maxItems parameter can only be used when paginationType is set to "token".');
+        done();
+      });
+    });
+
+    it('should show multiple warnings when multiple deprecated parameters are used', function(done) {
+      client.workspaces.listWorkspaces({pageSize: 100, page: 1, includeAll: true}, function(error, response) {
+        should.not.exist(error);
+        consoleWarnStub.calledThrice.should.be.true();
+        consoleWarnStub.getCall(0).args[0].should.equal('[DEPRECATED] pageSize parameter is deprecated in listWorkspaces. Use paginationType: "token" with maxItems instead.');
+        consoleWarnStub.getCall(1).args[0].should.equal('[DEPRECATED] page parameter is deprecated in listWorkspaces. Use paginationType: "token" with lastKey instead.');
+        consoleWarnStub.getCall(2).args[0].should.equal('[DEPRECATED] includeAll parameter is deprecated in listWorkspaces. Use paginationType: "token" instead.');
+        done();
+      });
+    });
+
+    it('should show multiple validation errors when lastKey and maxItems are used without token pagination', function(done) {
+      client.workspaces.listWorkspaces({lastKey: 'abc123', maxItems: 100}, function(error, response) {
+        should.not.exist(error);
+        consoleWarnStub.calledTwice.should.be.true();
+        consoleWarnStub.getCall(0).args[0].should.equal('[VALIDATION ERROR] lastKey parameter can only be used when paginationType is set to "token".');
+        consoleWarnStub.getCall(1).args[0].should.equal('[VALIDATION ERROR] maxItems parameter can only be used when paginationType is set to "token".');
+        done();
+      });
+    });
+
+    it('should not show warnings when using token pagination correctly', function(done) {
+      client.workspaces.listWorkspaces({paginationType: 'token', lastKey: 'abc123', maxItems: 100}, function(error, response) {
+        should.not.exist(error);
+        consoleWarnStub.called.should.be.false();
         done();
       });
     });
