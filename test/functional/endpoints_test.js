@@ -332,7 +332,13 @@ describe('Method Unit Tests', function () {
 
                     beforeEach(function () {
                         stub = sinon.stub(requestor, method.stub);
-                        client = smartsheet.createClient({accessToken: "token", requestor: requestor, userAgent: "user agent", baseUrl: "base url"});
+                        client = smartsheet.createClient({
+    accessToken: "token", 
+    requestor: requestor, 
+    userAgent: "user agent", 
+    baseUrl: "base url",
+    smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+});
                     });
 
                     afterEach(function () {

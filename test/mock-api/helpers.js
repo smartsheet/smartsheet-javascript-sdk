@@ -6,7 +6,11 @@ var sinon = require("sinon");
 var axios = require("axios");
 
 exports.setupClient = function() {
-    return smartsheet.createClient({accessToken:'1234', baseUrl: "http://localhost:8082/"});
+    return smartsheet.createClient({
+        accessToken:'1234', 
+        baseUrl: "http://localhost:8082/",
+        smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+    });
 };
 
 exports.defineMockApiTests = function(scenarios) {

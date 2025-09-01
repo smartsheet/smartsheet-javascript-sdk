@@ -6,7 +6,10 @@ var fs = require('fs');
 const { smartSheetURIs } = require('../..');
 var axios = require('axios');
 
-var requestor = require('../../lib/utils/httpRequestor').create({request: axios});
+var requestor = require('../../lib/utils/httpRequestor').create({
+  request: axios,
+  smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+});
 
 var sample = {
   name : 'name'
@@ -14,12 +17,14 @@ var sample = {
 
 var sampleRequest = {
   url:'URL',
-  accessToken:'TOKEN'
+  accessToken:'TOKEN',
+  smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
 };
 
 var sampleRequestNoContentType = {
   accessToken: 'TOKEN',
-  body: sample
+  body: sample,
+  smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
 };
 
 var sampleRequestWithQueryParameters = {
@@ -29,7 +34,8 @@ var sampleRequestWithQueryParameters = {
   queryParameters: {
     parameter1:'',
     parameter2:''
-  }
+  },
+  smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
 };
 
 var EXPECTED_VERSION = packageJson.version;
@@ -119,92 +125,149 @@ describe('Utils Unit Tests', function() {
       });
 
       it('authorization header should have token', () => {
-        var headers = requestor.internal.buildHeaders({accessToken: 'token'});
+        var headers = requestor.internal.buildHeaders({
+        accessToken: 'token',
+        smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+      });
         headers.Authorization.should.equal('Bearer token');
       });
 
       it('accept header should equal ' + applicationJson, () => {
-        var headers = requestor.internal.buildHeaders({});
+        var headers = requestor.internal.buildHeaders({
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
         headers.Accept.should.equal(applicationJson);
       });
 
       it('accept header should equal ' + newType, () => {
-        var headers = requestor.internal.buildHeaders({accept: newType});
+        var headers = requestor.internal.buildHeaders({
+          accept: newType,
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
         headers.Accept.should.equal(newType);
       });
 
       it('content-type header should ' + applicationJson, () => {
-        var headers = requestor.internal.buildHeaders({contentType: applicationJson});
+        var headers = requestor.internal.buildHeaders({
+          contentType: applicationJson,
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
         headers['Content-Type'].should.equal(applicationJson);
       });
 
       it('content-type header should equal ' + newType, () => {
-        var headers = requestor.internal.buildHeaders({contentType: newType});
+        var headers = requestor.internal.buildHeaders({
+          contentType: newType,
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
         headers['Content-Type'].should.equal(newType);
       });
 
       it('Content-Type should equal ' + textCsv, () => {
-        var headers = requestor.internal.buildHeaders({fileName: 'test.csv'});
+        var headers = requestor.internal.buildHeaders({
+          fileName: 'test.csv',
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
         headers['Content-Type'].should.equal(textCsv);
       });
 
       it('Content-Type should equal ' + docType, () => {
-        var headers = requestor.internal.buildHeaders({fileName: 'test.docx'});
+        var headers = requestor.internal.buildHeaders({
+          fileName: 'test.docx',
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
         headers['Content-Type'].should.equal(docType);
       });
 
       it('Content-Type should equal ' + applicationJson, () => {
-        var headers = requestor.internal.buildHeaders({fileName: 'test'});
+        var headers = requestor.internal.buildHeaders({
+          fileName: 'test',
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
         headers['Content-Type'].should.equal(applicationJson);
       });
 
       it('Content-Disposition should equal filename', () => {
-        var headers = requestor.internal.buildHeaders({fileName: 'test'});
+        var headers = requestor.internal.buildHeaders({
+          fileName: 'test',
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
         headers['Content-Disposition'].should.equal('attachment; filename="test"');
       });
 
       it('Should set Content-Disposition to contentDisposition', () => {
-        var headers = requestor.internal.buildHeaders({contentDisposition: 'some content disposition'});
+        var headers = requestor.internal.buildHeaders({
+          contentDisposition: 'some content disposition',
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
         headers['Content-Disposition'].should.equal('some content disposition');
       });
 
       it('Should prefer contentDisposition to fileName', () => {
-        var headers = requestor.internal.buildHeaders({fileName: 'test', contentDisposition: 'something else'});
+        var headers = requestor.internal.buildHeaders({
+          fileName: 'test', 
+          contentDisposition: 'something else',
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
         headers['Content-Disposition'].should.equal('something else');
       });
 
       it('Should set Content-Length to fileSize', () => {
-        var headers = requestor.internal.buildHeaders({fileName: 'test',   fileSize: 123});
+        var headers = requestor.internal.buildHeaders({
+          fileName: 'test',   
+          fileSize: 123,
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
         headers['Content-Length'].should.equal(123);
       });
 
       it('Should set Content-Length from file size when path is specified', () => {
-        var headers = requestor.internal.buildHeaders({fileName: 'test',   path: "somePath"});
+        var headers = requestor.internal.buildHeaders({
+          fileName: 'test',   
+          path: "somePath",
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
         headers['Content-Length'].should.equal(234);
       });
 
       it('Should prefer path over fileSize for Content-Length', () => {
-        var headers = requestor.internal.buildHeaders({fileName: 'test',   path: "somePath", fileSize: 123});
+        var headers = requestor.internal.buildHeaders({
+          fileName: 'test',   
+          path: "somePath", 
+          fileSize: 123,
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
         headers['Content-Length'].should.equal(234);
       });
 
       it('Assume-User should equal URI encoded email', () => {
-        var headers = requestor.internal.buildHeaders({assumeUser: 'john.doe@smartsheet.com'});
+        var headers = requestor.internal.buildHeaders({
+          assumeUser: 'john.doe@smartsheet.com',
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
         headers['Assume-User'].should.equal('john.doe%40smartsheet.com');
       });
 
       it('Should set the user agent string based on the version', () => {
-        var headers = requestor.internal.buildHeaders({});
+        var headers = requestor.internal.buildHeaders({
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
         headers['User-Agent'].should.equal(`smartsheet-javascript-sdk/${packageJson.version}`);
       });
 
       it('Should used a passed in value for the user agent string', () => {
-        var headers = requestor.internal.buildHeaders({userAgent: 'someAgentString'});
+        var headers = requestor.internal.buildHeaders({
+          userAgent: 'someAgentString',
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
         headers['User-Agent'].should.equal(`smartsheet-javascript-sdk/${packageJson.version}/someAgentString`);
       });
 
       it('Custom properties should be allowed', () => {
-        var headers = requestor.internal.buildHeaders({customProperties: {custom1: 'value', custom2: 'value2'}});
+        var headers = requestor.internal.buildHeaders({
+          customProperties: {custom1: 'value', custom2: 'value2'},
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
         headers['custom1'].should.equal(`value`);
         headers['custom2'].should.equal(`value2`);
       });
@@ -215,7 +278,11 @@ describe('Utils Unit Tests', function() {
     describe('#Successful request', function() {
       var requestStub = null;
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: () => ({ content: true })});
+        .create({
+          request: axios, 
+          handleResponse: () => ({ content: true }),
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'get');
@@ -250,7 +317,11 @@ describe('Utils Unit Tests', function() {
     describe('#Error on request', function() {
       var requestStub = null;
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: () => ({ content: true })});
+        .create({
+          request: axios, 
+          handleResponse: () => ({ content: true }),
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
       var mockBody;
 
       beforeEach(() => {
@@ -324,7 +395,11 @@ describe('Utils Unit Tests', function() {
       var requestStub = null;
       var handleResponseStub = sinon.stub();
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: handleResponseStub});
+        .create({
+          request: axios, 
+          handleResponse: handleResponseStub,
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
       var sampleRequestForRetry = null;
 
       function givenGetReturnsError() {
@@ -396,7 +471,11 @@ describe('Utils Unit Tests', function() {
       var requestStub = null;
 
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: () => ({content: true})});
+        .create({
+          request: axios, 
+          handleResponse: () => ({content: true}),
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'post');
@@ -432,7 +511,11 @@ describe('Utils Unit Tests', function() {
       var mockBody = {error:true};
 
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: () => ({content: true})});
+        .create({
+          request: axios, 
+          handleResponse: () => ({content: true}),
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'post');
@@ -504,7 +587,11 @@ describe('Utils Unit Tests', function() {
       var handleResponseStub = sinon.stub();
 
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: handleResponseStub});
+        .create({
+          request: axios, 
+          handleResponse: handleResponseStub,
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
 
       var sampleRequestForRetry;
 
@@ -578,7 +665,11 @@ describe('Utils Unit Tests', function() {
       var requestStub = null;
 
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: () => ({content: true})});
+        .create({
+          request: axios, 
+          handleResponse: () => ({content: true}),
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'put');
@@ -616,7 +707,11 @@ describe('Utils Unit Tests', function() {
       var mockBody = {error: true};
 
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: () => ({content: true})});
+        .create({
+          request: axios, 
+          handleResponse: () => ({content: true}),
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
 
       beforeEach(() => {
         stub = sinon.stub(axios, 'put');
@@ -694,7 +789,11 @@ describe('Utils Unit Tests', function() {
       var handleResponseStub = sinon.stub();
 
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: handleResponseStub});
+        .create({
+          request: axios, 
+          handleResponse: handleResponseStub,
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
 
       var sampleRequestForRetry = null;
 
@@ -768,7 +867,11 @@ describe('Utils Unit Tests', function() {
       var requestStub = null;
 
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: () => ({content: true})});
+        .create({
+          request: axios, 
+          handleResponse: () => ({content: true}),
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'delete');
@@ -807,7 +910,11 @@ describe('Utils Unit Tests', function() {
       var mockBody = {error: true};
 
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: () => ({content: true})});
+        .create({
+          request: axios, 
+          handleResponse: () => ({content: true}),
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'delete');
@@ -880,7 +987,11 @@ describe('Utils Unit Tests', function() {
       var handleResponseStub = sinon.stub();
 
       var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: handleResponseStub});
+        .create({
+          request: axios, 
+          handleResponse: handleResponseStub,
+          smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+        });
 
       var sampleRequestForRetry;
 

@@ -4,6 +4,7 @@ import { createContacts } from './lib/contacts';
 import { createEvents } from './lib/events';
 import { createSearch } from './lib/search';
 import { createSights } from './lib/sights';
+import { isValidFormat } from './lib/utils/smartsheetIntegrationSourceValidator';
 
 const _ = require('underscore');
 const winston = require('winston');
@@ -78,6 +79,9 @@ function buildLoggerFromContainer(container) {
 }
 
 export const createClient: CreateClient = function (clientOptions) {
+  // Validate smartsheetIntegrationSource header if provided
+  isValidFormat(clientOptions.smartsheetIntegrationSource);
+
   const requestor = buildRequestor(clientOptions);
 
   const options: CreateOptions = {
@@ -87,6 +91,7 @@ export const createClient: CreateClient = function (clientOptions) {
       accessToken: clientOptions.accessToken || process.env.SMARTSHEET_ACCESS_TOKEN,
       userAgent: clientOptions.userAgent,
       baseUrl: clientOptions.baseUrl,
+      smartsheetIntegrationSource: clientOptions.smartsheetIntegrationSource,
     },
   };
 
