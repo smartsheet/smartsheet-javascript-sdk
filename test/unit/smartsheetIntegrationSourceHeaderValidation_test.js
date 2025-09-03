@@ -41,7 +41,7 @@ describe('SmartsheetIntegrationSource Header Validation', function() {
           baseUrl: 'https://api.test.smartsheet.com/2.0/',
           smartsheetIntegrationSource: 'AI,MyOrg'
         });
-      }).should.throw('Invalid smartsheet integration source format');
+      }).should.throw('Invalid smartsheet integration source format. Expected format: \'TYPE,ORGANIZATION,INTEGRATOR. https://developers.smartsheet.com/api/smartsheet/guides/basics/http-and-rest#http-headers');
     });
 
     it('should throw error for invalid format - too many parts', function() {
@@ -51,7 +51,7 @@ describe('SmartsheetIntegrationSource Header Validation', function() {
           baseUrl: 'https://api.test.smartsheet.com/2.0/',
           smartsheetIntegrationSource: 'AI,MyOrg,MyGPT,Extra'
         });
-      }).should.throw('Invalid smartsheet integration source format');
+      }).should.throw('Invalid smartsheet integration source format. Expected format: \'TYPE,ORGANIZATION,INTEGRATOR. https://developers.smartsheet.com/api/smartsheet/guides/basics/http-and-rest#http-headers');
     });
 
     it('should throw error for invalid type', function() {
@@ -61,7 +61,7 @@ describe('SmartsheetIntegrationSource Header Validation', function() {
           baseUrl: 'https://api.test.smartsheet.com/2.0/',
           smartsheetIntegrationSource: 'INVALID,MyOrg,MyGPT'
         });
-      }).should.throw('Invalid smartsheet integration source format. The integration type has to be one of the following: AI, SCRIPT, APPLICATION');
+      }).should.throw('Invalid smartsheet integration source format. The integration type has to be one of the following: AI, SCRIPT, APPLICATION, PERSONAL_ACCOUNT. Invalid integration type: INVALID https://developers.smartsheet.com/api/smartsheet/guides/basics/http-and-rest#http-headers');
     });
 
     it('should throw error for empty integrator name', function() {
@@ -102,6 +102,16 @@ describe('SmartsheetIntegrationSource Header Validation', function() {
           accessToken: 'test-token',
           baseUrl: 'https://api.test.smartsheet.com/2.0/',
           smartsheetIntegrationSource: 'APPLICATION,MyOrg,MyGPT'
+        });
+      }).should.not.throw();
+    });
+
+    it('should accept valid PERSONAL_ACCOUNT integration source', function() {
+      (function() {
+        createClient({
+          accessToken: 'test-token',
+          baseUrl: 'https://api.test.smartsheet.com/2.0/',
+          smartsheetIntegrationSource: 'PERSONAL_ACCOUNT,MyOrg,MyGPT'
         });
       }).should.not.throw();
     });
