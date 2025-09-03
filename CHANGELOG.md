@@ -5,9 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.3.1] - 2025-08-18
+## [4.6.0] - 2025-09-01
 ### Added
 - Support for the `Smartsheet-Integration-Source` header. This can be configured using the `httpRequestor.js`.
+
+## [4.5.0] - 2025-08-25
+### Added
+  - Token-based pagination support for `workspaces.listWorkspaces()` method with `paginationType`, `lastKey` and `maxItems` parameters.
+
+## [4.4.0] - 2025-08-05
+### Added
+- Added new workspace and folder endpoints.
+  - `getWorkspaceMetadata()` - Returns workspace metadata only
+  - `getWorkspaceChildren()` - Returns workspace child items with token-based pagination
+  - `getFolderMetadata()` - Returns folder metadata only
+  - `getFolderChildren()` - Returns folder child items with token-based pagination
+
+### Deprecated
+- Deprecated the following Workspace and Folder endpoints:
+  - `getWorkspace()` - Use both `getWorkspaceMetadata()` and `getWorkspaceChildren()` instead
+  - `listWorkspaceFolders()` - Use `getWorkspaceChildren()` with `childrenResourceTypes=folders` instead
+  - `getFolder()` - Use both `getFolderMetadata()` and `getFolderChildren()` instead
+  - `listChildFolders()` - Use `getFolderChildren()` with `childrenResourceTypes=folders` instead
+- Deprecated the Home endpoints. See the [Migrate from using the Sheets folder](https://developers.smartsheet.com/api/smartsheet/guides/updating-code/migrate-from-using-the-sheets-folder) page on the API site for guidance on adapting to this deprecation. The deprecated endpoints are:
+  - `listContents()`
+  - `listFolders()`
+  - `createFolder()`
 
 ## [4.3.0] - 2025-26-27
 ### Added
@@ -64,7 +87,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [3.1.2] - 2023-06-13
 ### Fixed
-- Added missing euBaseURI constant for smartsheet.eu 
+- Added missing euBaseURI constant for smartsheet.eu
 ## [3.1.1] - 2023-06-07
 ### Added
 - Developer program agreement note to README
@@ -74,7 +97,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Support for reactivate user endpoint
 ## [3.0.0] - 2022-12-05
 ### Updated
-- Migrated SDK to new project 
+- Migrated SDK to new project
 - Update supported versions to 14, 16 and 18
 ### Added
 - Add Github Actions pipeline
