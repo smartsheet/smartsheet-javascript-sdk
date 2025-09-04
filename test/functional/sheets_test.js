@@ -9,7 +9,11 @@ describe('Client Unit Tests', function() {
     requestor = require('../../lib/utils/httpRequestor.js').create({});
     sinon.spy(requestor, 'get');
     var client = require('../..');
-    smartsheet = client.createClient({accessToken:'1234', requestor: requestor});
+    smartsheet = client.createClient({
+    accessToken:'1234', 
+    requestor: requestor,
+    smartsheetIntegrationSource: 'AI,MyOrg,MyGPT'
+});
   });
 
   afterEach(function() {

@@ -25,6 +25,24 @@ describe("Mock API SDK Tests", function() {
             },
             "changeAgent": "MyChangeAgent"
           }
+        },
+        {
+          "name": "Integration Source Header - Can Be Passed",
+          "method": client.sheets.createSheet,
+          "shouldError": false,
+          "options": {
+            "body": {
+              "name": "My new sheet",
+              "columns": [
+                {
+                  "title": "Col1",
+                  "primary": true,
+                  "type": "TEXT_NUMBER"
+                }
+              ]
+            },
+            "smartsheetIntegrationSource": "AI,MyCompany,MyGPT"
+          }
         }
       ];
 

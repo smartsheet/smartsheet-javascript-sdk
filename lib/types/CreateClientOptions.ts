@@ -4,6 +4,7 @@ export interface CreateClientOptions {
   accessToken?: string;
   userAgent?: string;
   baseUrl?: string;
+  smartsheetIntegrationSource: string;
   requestor?: any; // Custom HTTP client that will be used. TODO -> Evaluate if we want to keep this.
   maxRetryDurationSeconds?: number;
   calcRetryBackoff?: (retryCount: number, error?: any) => number;

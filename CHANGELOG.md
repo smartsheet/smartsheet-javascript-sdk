@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.6.0] - 2025-09-01
+### Added
+- Support for the `Smartsheet-Integration-Source` header. This can be configured using the `httpRequestor.js`.
+
 ## [4.5.0] - 2025-08-25
 ### Added
   - Token-based pagination support for `workspaces.listWorkspaces()` method with `paginationType`, `lastKey` and `maxItems` parameters.
