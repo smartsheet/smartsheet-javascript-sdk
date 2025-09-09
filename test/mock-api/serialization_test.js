@@ -536,7 +536,37 @@ describe("Mock API SDK Tests", function() {
                         "endColumnId": 6
                     }
                 }
-            }
+            },
+            {
+                name: "Serialization - DeleteUserFromPlan",
+                method: client.users.deleteUserFromPlan,
+                shouldError: false,
+                options: {
+                    userId: 123,
+                    planId: 456
+                }
+            },
+            {
+                name: "Serialization - GetUserPlans",
+                method: client.users.getUserPlans,
+                shouldError: false,
+                options: {
+                    userId: 123
+                }
+            },
+            {
+                name: "Serialization - ListUsers",
+                method: client.users.listUsers,
+                shouldError: false,
+                options: {
+                    planId: 123,
+                    seatType: "VIEWER",
+                    emails: ["a@b.com"],
+                    pageSize: 10,
+                    page: 1,
+                    numericDates: false
+                }
+            },
         ];
 
         helpers.defineMockApiTests(scenarios);
