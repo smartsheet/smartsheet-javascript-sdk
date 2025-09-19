@@ -6,7 +6,7 @@ var smartsheet = null;
 describe('Client Unit Tests', function() {
   beforeEach(function() {
     client = require('../../');
-    smartsheet = client.createClient({accessToken:'1234'});
+    smartsheet = client.createClient({ accessToken: '1234' });
   });
 
   afterEach(function() {
@@ -51,7 +51,7 @@ describe('Client Unit Tests', function() {
   });
 
   describe('#Favorites', function() {
-    it('should have Favorites object',function(){
+    it('should have Favorites object', function() {
       smartsheet.should.have.property('favorites');
     });
 
@@ -86,7 +86,7 @@ describe('Client Unit Tests', function() {
   });
 
   describe('#folders', function() {
-    it('should have folders object',function(){
+    it('should have folders object', function() {
       smartsheet.should.have.property('folders');
       Object.keys(smartsheet.folders).should.be.length(9);
     });
@@ -114,7 +114,7 @@ describe('Client Unit Tests', function() {
   });
 
   describe('#groups', function() {
-    it('should have groups object',function(){
+    it('should have groups object', function() {
       smartsheet.should.have.property('groups');
       Object.keys(smartsheet.groups).should.be.length(7);
     });
@@ -140,7 +140,7 @@ describe('Client Unit Tests', function() {
   });
 
   describe('#home', function() {
-    it('should have home object',function(){
+    it('should have home object', function() {
       smartsheet.should.have.property('home');
       Object.keys(smartsheet.home).should.be.length(3);
     });
@@ -156,7 +156,7 @@ describe('Client Unit Tests', function() {
   });
 
   describe('#images', function() {
-    it('should have image object', function(){
+    it('should have image object', function() {
       smartsheet.should.have.property('images');
       Object.keys(smartsheet.images).should.be.length(1);
     });
@@ -166,13 +166,13 @@ describe('Client Unit Tests', function() {
     });
   });
 
-  describe('#search', function () {
-    it('should have search object', function () {
+  describe('#search', function() {
+    it('should have search object', function() {
       smartsheet.should.have.property('search');
       Object.keys(smartsheet.search).should.be.length(2);
     });
 
-    it('should have get methods', function () {
+    it('should have get methods', function() {
       smartsheet.search.should.have.property('searchAll');
       smartsheet.search.should.have.property('searchSheet');
     });
@@ -184,7 +184,7 @@ describe('Client Unit Tests', function() {
       Object.keys(smartsheet.reports).should.be.length(12);
     });
 
-    it('should have get methods', function () {
+    it('should have get methods', function() {
       smartsheet.reports.should.have.property('listReports');
       smartsheet.reports.should.have.property('getReport');
       smartsheet.reports.should.have.property('getReportAsExcel');
@@ -192,25 +192,25 @@ describe('Client Unit Tests', function() {
       smartsheet.reports.should.have.property('getReportPublishStatus');
     });
 
-    it('should have update methods', function () {
+    it('should have update methods', function() {
       smartsheet.reports.should.have.property('setReportPublishStatus');
       smartsheet.reports.should.have.property('sendReportViaEmail');
     });
   });
 
-  describe('#server', function () {
-    it('should have server object', function () {
+  describe('#server', function() {
+    it('should have server object', function() {
       smartsheet.should.have.property('server');
       Object.keys(smartsheet.server).should.be.length(1);
     });
 
-    it('should have get methods', function () {
+    it('should have get methods', function() {
       smartsheet.server.should.have.property('getInfo');
     });
   });
 
   describe('#Sheets', function() {
-    it('should have Sheets object',function(){
+    it('should have Sheets object', function() {
       smartsheet.should.have.property('sheets');
     });
 
@@ -237,7 +237,7 @@ describe('Client Unit Tests', function() {
       smartsheet.sheets.should.have.property('listSheets');
     });
 
-    it('should have Row methods', function () {
+    it('should have Row methods', function() {
       smartsheet.sheets.should.have.property('addImageToCell');
       smartsheet.sheets.should.have.property('addRow');
       smartsheet.sheets.should.have.property('addRows');
@@ -308,7 +308,7 @@ describe('Client Unit Tests', function() {
     });
   });
   describe('#Sights', function() {
-    it('should have Sights object',function(){
+    it('should have Sights object', function() {
       smartsheet.should.have.property('sights');
       Object.keys(smartsheet.sights).should.be.length(13);
     });
@@ -337,41 +337,41 @@ describe('Client Unit Tests', function() {
     });
   });
 
-  describe('#templates', function () {
-    it('should have templates object', function () {
+  describe('#templates', function() {
+    it('should have templates object', function() {
       smartsheet.should.have.property('templates');
       Object.keys(smartsheet.templates).should.be.length(2);
     });
 
-    it('should have get methods', function () {
+    it('should have get methods', function() {
       smartsheet.templates.should.have.property('listPublicTemplates');
       smartsheet.templates.should.have.property('listUserCreatedTemplates');
     });
   });
 
   describe('#tokens', function() {
-    it('should have a tokens object', function () {
+    it('should have a tokens object', function() {
       smartsheet.should.have.property('tokens');
       Object.keys(smartsheet.tokens).should.be.length(3);
     });
 
-    it('should have get methods', function () {
+    it('should have get methods', function() {
       smartsheet.tokens.should.have.property('getAccessToken');
       smartsheet.tokens.should.have.property('refreshAccessToken');
     });
 
-    it('should have delete methods', function () {
+    it('should have delete methods', function() {
       smartsheet.tokens.should.have.property('revokeAccessToken');
     });
   });
 
-  describe('#users', function () {
-    it('should have user object', function () {
+  describe('#users', function() {
+    it('should have user object', function() {
       smartsheet.should.have.property('users');
-      Object.keys(smartsheet.users).should.be.length(15);
+      Object.keys(smartsheet.users).should.be.length(17);
     });
 
-    it('should have get methods', function () {
+    it('should have get methods', function() {
       smartsheet.users.should.have.property('getCurrentUser');
       smartsheet.users.should.have.property('listAllUsers');
       smartsheet.users.should.have.property('getUser');
@@ -379,7 +379,7 @@ describe('Client Unit Tests', function() {
       smartsheet.users.should.have.property('listAlternateEmails');
     });
 
-    it('should have create methods', function () {
+    it('should have create methods', function() {
       smartsheet.users.should.have.property('addUser');
       smartsheet.users.should.have.property('addUserAndSendEmail');
       smartsheet.users.should.have.property('addAlternateEmail');
@@ -388,49 +388,49 @@ describe('Client Unit Tests', function() {
       smartsheet.users.should.have.property('reactivateUser');
     });
 
-    it('should have update methods', function () {
+    it('should have update methods', function() {
       smartsheet.users.should.have.property('updateUser');
       smartsheet.users.should.have.property('makeAlternateEmailPrimary');
     });
 
-    it('should have delete methods', function () {
+    it('should have delete methods', function() {
       smartsheet.users.should.have.property('removeUser');
       smartsheet.users.should.have.property('deleteAlternateEmail');
     });
   });
 
-  describe('#webhooks', function () {
-    it('should have webhook object', function () {
+  describe('#webhooks', function() {
+    it('should have webhook object', function() {
       smartsheet.should.have.property('webhooks');
       Object.keys(smartsheet.webhooks).should.be.length(6);
     });
 
-    it('should have get methods', function () {
+    it('should have get methods', function() {
       smartsheet.webhooks.should.have.property('getWebhook');
       smartsheet.webhooks.should.have.property('listWebhooks');
     });
 
-    it('should have post methods', function () {
+    it('should have post methods', function() {
       smartsheet.webhooks.should.have.property('createWebhook');
       smartsheet.webhooks.should.have.property('resetSharedSecret');
     });
 
-    it('should have put methods', function () {
+    it('should have put methods', function() {
       smartsheet.webhooks.should.have.property('updateWebhook');
     });
 
-    it('should have delete methods', function () {
+    it('should have delete methods', function() {
       smartsheet.webhooks.should.have.property('deleteWebhook');
     });
   });
 
-  describe('#workspaces', function () {
-    it('should have workspaces object', function () {
+  describe('#workspaces', function() {
+    it('should have workspaces object', function() {
       smartsheet.should.have.property('workspaces');
       Object.keys(smartsheet.workspaces).should.be.length(15);
     });
 
-    it('should have get methods', function () {
+    it('should have get methods', function() {
       smartsheet.workspaces.should.have.property('getShare');
       smartsheet.workspaces.should.have.property('listShares');
       smartsheet.workspaces.should.have.property('getWorkspace');
@@ -440,19 +440,19 @@ describe('Client Unit Tests', function() {
       smartsheet.workspaces.should.have.property('listWorkspaces');
     });
 
-    it('should have create methods', function () {
+    it('should have create methods', function() {
       smartsheet.workspaces.should.have.property('share');
       smartsheet.workspaces.should.have.property('createWorkspace');
       smartsheet.workspaces.should.have.property('createFolder');
       smartsheet.workspaces.should.have.property('copyWorkspace');
     });
 
-    it('should have update methods', function () {
+    it('should have update methods', function() {
       smartsheet.workspaces.should.have.property('updateShare');
       smartsheet.workspaces.should.have.property('updateWorkspace');
     });
 
-    it('should have delete methods', function () {
+    it('should have delete methods', function() {
       smartsheet.workspaces.should.have.property('deleteShare');
       smartsheet.workspaces.should.have.property('deleteWorkspace');
     });
