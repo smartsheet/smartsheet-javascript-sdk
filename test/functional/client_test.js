@@ -368,7 +368,7 @@ describe('Client Unit Tests', function() {
   describe('#users', function () {
     it('should have user object', function () {
       smartsheet.should.have.property('users');
-      Object.keys(smartsheet.users).should.be.length(15);
+      Object.keys(smartsheet.users).should.be.length(17);
     });
 
     it('should have get methods', function () {
@@ -427,7 +427,7 @@ describe('Client Unit Tests', function() {
   describe('#workspaces', function () {
     it('should have workspaces object', function () {
       smartsheet.should.have.property('workspaces');
-      Object.keys(smartsheet.workspaces).should.be.length(17);
+      Object.keys(smartsheet.workspaces).should.be.length(15);
     });
 
     it('should have get methods', function () {
