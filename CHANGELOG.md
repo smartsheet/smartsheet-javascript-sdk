@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## 4.6.0 - 2025-09-25
 ### Added
   - Support for upgrade/downgrade endpoints
+  - Support for GET /users/{userId}/plans
+  - Support for DELETE /users/{userId}/plans/{planId}
 
 ## [4.5.0] - 2025-08-25
 ### Added

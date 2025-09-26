@@ -556,6 +556,23 @@ describe("Mock API SDK Tests", function() {
                     planId: 456,
                     body: { seatType: "VIEWER" }
                 }
+            },
+            {
+                name: "Serialization - ListUserPlans",
+                method: client.users.listUserPlans,
+                shouldError: false,
+                options: {
+                    userId: 123
+                }
+            },
+            {
+                name: "Serialization - RemoveUserFromPlan",
+                method: client.users.removeUserFromPlan,
+                shouldError: false,
+                options: {
+                    userId: 123,
+                    planId: 456
+                }
             }
         ];
 
