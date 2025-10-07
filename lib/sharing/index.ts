@@ -113,7 +113,7 @@ export interface ListSharesOptions extends RequestOptions<ListSharesQueryParams,
 /**
  * Options for getting a share
  */
-export interface GetShareOptions extends RequestOptions<{}, undefined> {
+export interface GetShareOptions extends RequestOptions<object, undefined> {
   assetType: AssetType;
   assetId: string | number;
   shareId: string;
@@ -132,7 +132,7 @@ export interface ShareAssetOptions extends RequestOptions<{ sendEmail?: boolean 
 /**
  * Options for updating a share
  */
-export interface UpdateShareOptions extends RequestOptions<{}, UpdateShareRequest> {
+export interface UpdateShareOptions extends RequestOptions<object, UpdateShareRequest> {
   assetType: AssetType;
   assetId: string | number;
   shareId: string;
@@ -142,7 +142,7 @@ export interface UpdateShareOptions extends RequestOptions<{}, UpdateShareReques
 /**
  * Options for deleting a share
  */
-export interface DeleteShareOptions extends RequestOptions<{}, undefined> {
+export interface DeleteShareOptions extends RequestOptions<object, undefined> {
   assetType: AssetType;
   assetId: string | number;
   shareId: string;

@@ -1,6 +1,5 @@
 import type { CreateOptions } from '../types';
 // Use any type for CommonJS module
-// @ts-ignore
 import shareModule from '../share/share.js';
 import type {
   CopySight,
