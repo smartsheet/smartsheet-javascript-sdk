@@ -88,11 +88,13 @@ describe('Client Unit Tests', function() {
   describe('#folders', function() {
     it('should have folders object',function(){
       smartsheet.should.have.property('folders');
-      Object.keys(smartsheet.folders).should.be.length(7);
+      Object.keys(smartsheet.folders).should.be.length(9);
     });
 
     it('should have get methods', function() {
       smartsheet.folders.should.have.property('getFolder');
+      smartsheet.folders.should.have.property('getFolderMetadata');
+      smartsheet.folders.should.have.property('getFolderChildren');
       smartsheet.folders.should.have.property('listChildFolders');
     });
 
@@ -101,7 +103,7 @@ describe('Client Unit Tests', function() {
       smartsheet.folders.should.have.property('copyFolder');
     });
 
-    it('should have Sheets update methods', function() {
+    it('should have update methods', function() {
       smartsheet.folders.should.have.property('updateFolder');
       smartsheet.folders.should.have.property('moveFolder');
     });
@@ -366,7 +368,7 @@ describe('Client Unit Tests', function() {
   describe('#users', function () {
     it('should have user object', function () {
       smartsheet.should.have.property('users');
-      Object.keys(smartsheet.users).should.be.length(15);
+      Object.keys(smartsheet.users).should.be.length(19);
     });
 
     it('should have get methods', function () {
@@ -425,13 +427,15 @@ describe('Client Unit Tests', function() {
   describe('#workspaces', function () {
     it('should have workspaces object', function () {
       smartsheet.should.have.property('workspaces');
-      Object.keys(smartsheet.workspaces).should.be.length(13);
+      Object.keys(smartsheet.workspaces).should.be.length(15);
     });
 
     it('should have get methods', function () {
       smartsheet.workspaces.should.have.property('getShare');
       smartsheet.workspaces.should.have.property('listShares');
       smartsheet.workspaces.should.have.property('getWorkspace');
+      smartsheet.workspaces.should.have.property('getWorkspaceMetadata');
+      smartsheet.workspaces.should.have.property('getWorkspaceChildren');
       smartsheet.workspaces.should.have.property('listWorkspaceFolders');
       smartsheet.workspaces.should.have.property('listWorkspaces');
     });

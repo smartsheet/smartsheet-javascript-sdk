@@ -57,6 +57,8 @@ describe('Method Unit Tests', function () {
             name: 'folders',
             methods: [
                 { name: 'getFolder', stub: 'get', options: {}, expectedRequest: {url: "folders/" }},
+                { name: 'getFolderMetadata', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123/metadata" }},
+                { name: 'getFolderChildren', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123/children" }},
                 { name: 'listChildFolders', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123/folders" }},
                 { name: 'createChildFolder', stub: 'post', options: {folderId: 123}, expectedRequest: {url: "folders/123/folders" }},
                 { name: 'updateFolder', stub: 'put', options: {folderId: 123}, expectedRequest: {url: "folders/" }},
@@ -286,6 +288,10 @@ describe('Method Unit Tests', function () {
                 { name: 'removeUser', stub: 'delete', options: {}, expectedRequest: {url: "users/"}},
                 { name: 'deactivateUser', stub: 'post', options: {userId: 123}, expectedRequest: {url: "users/123/deactivate"}},
                 { name: 'reactivateUser', stub: 'post', options: {userId: 123}, expectedRequest: {url: "users/123/reactivate"}},
+                { name: 'upgradeUser', stub: 'post', options: {userId: 123, planId: 456, body: {seatType: 'MEMBER'}}, expectedRequest: {url: "users/123/plans/456/upgrade", body: {seatType: 'MEMBER'}}},
+                { name: 'downgradeUser', stub: 'post', options: {userId: 123, planId: 456, body: {seatType: 'VIEWER'}}, expectedRequest: {url: "users/123/plans/456/downgrade", body: {seatType: 'VIEWER'}}},
+                { name: 'listUserPlans', stub: 'get', options: { userId: 123 }, expectedRequest: { url: "users/123/plans" }},
+                { name: 'removeUserFromPlan', stub: 'delete', options: { userId: 123, planId: 456 }, expectedRequest: { url: "users/123/plans/456" }},
                 // alternate emails
                 { name: 'addAlternateEmail', stub: 'post', options: {userId: 123}, expectedRequest: {url: "users/123/alternateemails/"}},
                 { name: 'getAlternateEmail', stub: 'get', options: {userId: 123, alternateEmailId: 234}, expectedRequest: {url: "users/123/alternateemails/234"}},
@@ -311,7 +317,12 @@ describe('Method Unit Tests', function () {
             name: 'workspaces',
             methods: [
                 { name: 'listWorkspaces', stub: 'get', options: undefined, expectedRequest: {url: "workspaces/"}},
+                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {paginationType: 'token', lastKey: 'abc123'}}, expectedRequest: {url: "workspaces/", queryParameters: {paginationType: 'token', lastKey: 'abc123'}}},
+                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {paginationType: 'token', maxItems: 500}}, expectedRequest: {url: "workspaces/", queryParameters: {paginationType: 'token', maxItems: 500}}},
+                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {paginationType: 'token', lastKey: 'abc123', maxItems: 100}}, expectedRequest: {url: "workspaces/", queryParameters: {paginationType: 'token', lastKey: 'abc123', maxItems: 100}}},
                 { name: 'getWorkspace', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123"}},
+                { name: 'getWorkspaceMetadata', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/metadata"}},
+                { name: 'getWorkspaceChildren', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/children"}},
                 { name: 'listWorkspaceFolders', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/folders"}},
                 { name: 'createWorkspace', stub: 'post', options: {}, expectedRequest: {url: "workspaces/"}},
                 { name: 'createFolder', stub: 'post', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/folders"}},

@@ -535,6 +535,43 @@ describe("Mock API SDK Tests", function() {
                         "startColumnId": 5,
                         "endColumnId": 6
                     }
+                },
+            },
+            {
+                name: "Serialization - upgradeUser",
+                method: client.users.upgradeUser,
+                shouldError: false,
+                options: {
+                    userId: 123,
+                    planId: 456,
+                    body: { seatType: "MEMBER" }
+                }
+            },
+            {
+                name: "Serialization - downgradeUser",
+                method: client.users.downgradeUser,
+                shouldError: false,
+                options: {
+                    userId: 123,
+                    planId: 456,
+                    body: { seatType: "VIEWER" }
+                }
+            },
+            {
+                name: "Serialization - ListUserPlans",
+                method: client.users.listUserPlans,
+                shouldError: false,
+                options: {
+                    userId: 123
+                }
+            },
+            {
+                name: "Serialization - RemoveUserFromPlan",
+                method: client.users.removeUserFromPlan,
+                shouldError: false,
+                options: {
+                    userId: 123,
+                    planId: 456
                 }
             }
         ];
