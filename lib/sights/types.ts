@@ -287,6 +287,9 @@ export interface SightsApi {
   // Deprecated sharing methods - will be replaced by the sharing module
   getSightShares?: any;
   shareSight?: any;
+  getShare?: any; // Alias for backward compatibility
+  share?: any; // Alias for backward compatibility
+  listShares?: any; // Alias for backward compatibility
   deleteShare?: any;
   updateShare?: any;
 }

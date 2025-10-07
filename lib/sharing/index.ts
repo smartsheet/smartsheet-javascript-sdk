@@ -203,10 +203,26 @@ export const createSharing = (options: CreateOptions): SharingApi => {
     options: ListSharesOptions,
     callback?: RequestCallback<SharesResponse>
   ): Promise<SharesResponse> => {
-    const { assetType, assetId, queryParameters } = options;
-    
-    const url = `${baseUrl}?assetType=${assetType}&assetId=${assetId}`;
-    
+    const { assetType, assetId, maxItems, lastKey, sharingInclude } = options;
+
+    // Build the base URL with required parameters
+    const urlParams = new URLSearchParams();
+    urlParams.append('assetType', assetType.toString());
+    urlParams.append('assetId', assetId.toString());
+
+    // Add optional query parameters
+    if (maxItems !== undefined) {
+      urlParams.append('maxItems', maxItems.toString());
+    }
+    if (lastKey) {
+      urlParams.append('lastKey', lastKey);
+    }
+    if (sharingInclude) {
+      urlParams.append('include', sharingInclude);
+    }
+
+    const url = `${baseUrl}?${urlParams.toString()}`;
+
     return requestor.get({ ...optionsToSend, url, ...options }, callback);
   };
 

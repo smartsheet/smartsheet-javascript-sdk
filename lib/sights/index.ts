@@ -59,6 +59,9 @@ export const createSights = (options: CreateOptions): SightsApi => {
       return {
         getSightShares,
         shareSight,
+        getShare: getSightShares, // Alias for backward compatibility
+        share: shareSight, // Alias for backward compatibility
+        listShares: getSightShares, // Alias for backward compatibility
         deleteShare,
         updateShare
       };
@@ -148,7 +151,7 @@ export const createSights = (options: CreateOptions): SightsApi => {
     updateSight,
     copySight,
     moveSight,
-    getSightPublshStatus: getSightPublishStatus,
+    getSightPublishStatus: getSightPublishStatus,
     setSightPublishStatus,
     ...sharesWrapper.create(options),
   };
