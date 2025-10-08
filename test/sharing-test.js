@@ -69,8 +69,8 @@ async function testGetAssetShare() {
       assetId: TEST_SHEET_ID
     });
     
-    if (shares.result && shares.result.length > 0) {
-      const shareId = shares.result[0].id;
+    if (shares.items && shares.items.length > 0) {
+      const shareId = shares.items[0].id;
       console.log(`Getting share with ID ${shareId}...`);
       
       const share = await client.sharing.getAssetShare({
@@ -124,8 +124,8 @@ async function testUpdateShare() {
       assetId: TEST_SHEET_ID
     });
     
-    if (shares.result && shares.result.length > 0) {
-      const shareId = shares.result[0].id;
+    if (shares.items && shares.items.length > 0) {
+      const shareId = shares.items[0].id;
       console.log(`Updating share with ID ${shareId}...`);
       
       const result = await client.sharing.updateShare({
@@ -156,8 +156,8 @@ async function testDeleteShare() {
       assetId: TEST_SHEET_ID
     });
     
-    if (shares.result && shares.result.length > 0) {
-      const shareId = shares.result[0].id;
+    if (shares.items && shares.items.length > 0) {
+      const shareId = shares.items[0].id;
       console.log(`Deleting share with ID ${shareId}...`);
       
       const result = await client.sharing.deleteShare({

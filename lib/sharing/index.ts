@@ -77,7 +77,7 @@ export interface UpdateShareRequest {
  * Response for share operations
  */
 export interface SharesResponse {
-  result: ShareResponse[];
+  items: ShareResponse[];
   lastKey?: string;
 }
 
