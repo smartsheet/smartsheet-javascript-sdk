@@ -11,8 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `listAssetShares`: List all shares for a specified asset
   - `getAssetShare`: Get a specific share for a specified asset
   - `shareAsset`: Share an asset with specified users and/or groups
-  - `updateShare`: Update a specific share for a specified asset
-  - `deleteShare`: Delete a specific share for a specified asset
+  - `updateAssetShare`: Update a specific share for a specified asset
+  - `deleteAssetShare`: Delete a specific share for a specified asset
 - Added TypeScript interfaces and enums for the sharing API
 
 ### Updated

@@ -128,7 +128,7 @@ async function testUpdateShare() {
       const shareId = shares.items[0].id;
       console.log(`Updating share with ID ${shareId}...`);
       
-      const result = await client.sharing.updateShare({
+      const result = await client.sharing.updateAssetShare({
         assetType: 'sheet',
         assetId: TEST_SHEET_ID,
         shareId,
@@ -160,7 +160,7 @@ async function testDeleteShare() {
       const shareId = shares.items[0].id;
       console.log(`Deleting share with ID ${shareId}...`);
       
-      const result = await client.sharing.deleteShare({
+      const result = await client.sharing.deleteAssetShare({
         assetType: 'sheet',
         assetId: TEST_SHEET_ID,
         shareId

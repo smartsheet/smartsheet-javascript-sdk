@@ -74,9 +74,9 @@ export interface UpdateShareRequest {
 }
 
 /**
- * Response for share operations
+ * Response for list share operations
  */
-export interface SharesResponse {
+export interface ListSharesResponse {
   items: ShareResponse[];
   lastKey?: string;
 }
@@ -84,7 +84,7 @@ export interface SharesResponse {
 /**
  * Success result with shares
  */
-export interface SharesSuccessResult {
+export interface SharesResult {
   result: ShareResponse[];
   message: string;
   resultCode: number;
@@ -154,8 +154,8 @@ export interface DeleteShareOptions extends RequestOptions<object, undefined> {
 export interface SharingApi {
   listAssetShares: (
     options: ListSharesOptions,
-    callback?: RequestCallback<SharesResponse>
-  ) => Promise<SharesResponse>;
+    callback?: RequestCallback<ListSharesResponse>
+  ) => Promise<ListSharesResponse>;
   
   getAssetShare: (
     options: GetShareOptions,
@@ -164,15 +164,15 @@ export interface SharingApi {
   
   shareAsset: (
     options: ShareAssetOptions,
-    callback?: RequestCallback<SharesSuccessResult>
-  ) => Promise<SharesSuccessResult>;
+    callback?: RequestCallback<SharesResult>
+  ) => Promise<SharesResult>;
   
-  updateShare: (
+  updateAssetShare: (
     options: UpdateShareOptions,
     callback?: RequestCallback<ShareResponse>
   ) => Promise<ShareResponse>;
   
-  deleteShare: (
+  deleteAssetShare: (
     options: DeleteShareOptions,
     callback?: RequestCallback<any>
   ) => Promise<any>;
@@ -201,8 +201,8 @@ export const createSharing = (options: CreateOptions): SharingApi => {
    */
   const listAssetShares = (
     options: ListSharesOptions,
-    callback?: RequestCallback<SharesResponse>
-  ): Promise<SharesResponse> => {
+    callback?: RequestCallback<ListSharesResponse>
+  ): Promise<ListSharesResponse> => {
     const { assetType, assetId, maxItems, lastKey, sharingInclude } = options;
 
     // Build the base URL with required parameters
@@ -251,8 +251,8 @@ export const createSharing = (options: CreateOptions): SharingApi => {
    */
   const shareAsset = (
     options: ShareAssetOptions,
-    callback?: RequestCallback<SharesSuccessResult>
-  ): Promise<SharesSuccessResult> => {
+    callback?: RequestCallback<SharesResult>
+  ): Promise<SharesResult> => {
     const { assetType, assetId, body, queryParameters } = options;
     
     let url = `${baseUrl}?assetType=${assetType}&assetId=${assetId}`;
@@ -269,7 +269,7 @@ export const createSharing = (options: CreateOptions): SharingApi => {
    * @param callback Optional callback
    * @returns Promise with share response
    */
-  const updateShare = (
+  const updateAssetShare = (
     options: UpdateShareOptions,
     callback?: RequestCallback<ShareResponse>
   ): Promise<ShareResponse> => {
@@ -286,7 +286,7 @@ export const createSharing = (options: CreateOptions): SharingApi => {
    * @param callback Optional callback
    * @returns Promise with success result
    */
-  const deleteShare = (
+  const deleteAssetShare = (
     options: DeleteShareOptions,
     callback?: RequestCallback<any>
   ): Promise<any> => {
@@ -301,7 +301,7 @@ export const createSharing = (options: CreateOptions): SharingApi => {
     listAssetShares,
     getAssetShare,
     shareAsset,
-    updateShare,
-    deleteShare
+    updateAssetShare,
+    deleteAssetShare
   };
 };
