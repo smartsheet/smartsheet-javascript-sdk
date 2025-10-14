@@ -310,7 +310,7 @@ describe('Client Unit Tests', function() {
   describe('#Sights', function() {
     it('should have Sights object',function(){
       smartsheet.should.have.property('sights');
-      Object.keys(smartsheet.sights).should.be.length(15);
+      Object.keys(smartsheet.sights).should.be.length(13);
     });
 
     it('should have Sights get methods', function() {
@@ -427,7 +427,7 @@ describe('Client Unit Tests', function() {
   describe('#workspaces', function () {
     it('should have workspaces object', function () {
       smartsheet.should.have.property('workspaces');
-      Object.keys(smartsheet.workspaces).should.be.length(17);
+      Object.keys(smartsheet.workspaces).should.be.length(15);
     });
 
     it('should have get methods', function () {
