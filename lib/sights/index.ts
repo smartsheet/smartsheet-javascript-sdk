@@ -150,7 +150,7 @@ export const createSights = (options: CreateOptions): SightsApi => {
     updateSight,
     copySight,
     moveSight,
-    getSightPublshStatus: getSightPublishStatus,
+    getSightPublishStatus: getSightPublishStatus,
     setSightPublishStatus,
     ...sharesWrapper.create(options),
   };

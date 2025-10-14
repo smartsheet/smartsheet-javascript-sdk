@@ -69,7 +69,7 @@ async function testGetAssetShare() {
       assetId: TEST_SHEET_ID
     });
     
-    if (shares.items && shares.items.length > 0) {
+    if (shares.items?.length > 0) {
       const shareId = shares.items[0].id;
       console.log(`Getting share with ID ${shareId}...`);
       

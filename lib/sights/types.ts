@@ -282,7 +282,7 @@ export interface SightsApi {
   updateSight: UpdateSight;
   copySight: CopySight;
   moveSight: MoveSight;
-  getSightPublshStatus: GetSightPublishStatus;
+  getSightPublishStatus: GetSightPublishStatus;
   setSightPublishStatus: SetSightPublishStatus;
   // Deprecated sharing methods - will be replaced by the sharing module
   getSightShares?: any;

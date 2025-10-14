@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Deprecated old sharing endpoints in the `share` module
 - Added backward compatibility wrappers in sheets, reports, workspaces, and sights modules
 - Added deprecation notices and migration examples in documentation
+- Fix typo in SightsApi (`getSightPublshStatus` to `getSightPublishStatus`)
 
 ## 4.6.0 - 2025-09-25
 ### Added

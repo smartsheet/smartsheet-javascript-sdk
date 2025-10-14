@@ -105,9 +105,8 @@ export interface ListSharesQueryParams {
 export interface ListSharesOptions extends RequestOptions<ListSharesQueryParams, undefined> {
   assetType: AssetType;
   assetId: string | number;
-  maxItems?: number;
-  lastKey?: string;
   sharingInclude?: string;
+  queryParameters?: ListSharesQueryParams;
 }
 
 /**
@@ -203,7 +202,7 @@ export const createSharing = (options: CreateOptions): SharingApi => {
     options: ListSharesOptions,
     callback?: RequestCallback<ListSharesResponse>
   ): Promise<ListSharesResponse> => {
-    const { assetType, assetId, maxItems, lastKey, sharingInclude } = options;
+    const { assetType, assetId, sharingInclude, queryParameters } = options;
 
     // Build the base URL with required parameters
     const urlParams = new URLSearchParams();
@@ -211,14 +210,14 @@ export const createSharing = (options: CreateOptions): SharingApi => {
     urlParams.append('assetId', assetId.toString());
 
     // Add optional query parameters
-    if (maxItems !== undefined) {
-      urlParams.append('maxItems', maxItems.toString());
+    if (queryParameters && queryParameters.maxItems !== undefined) {
+      urlParams.append('maxItems', queryParameters.maxItems.toString());
     }
-    if (lastKey) {
-      urlParams.append('lastKey', lastKey);
+    if (queryParameters && queryParameters.lastKey) {
+      urlParams.append('lastKey', queryParameters.lastKey);
     }
     if (sharingInclude) {
-      urlParams.append('include', sharingInclude);
+      urlParams.append('sharingInclude', sharingInclude);
     }
 
     const url = `${baseUrl}?${urlParams.toString()}`;
