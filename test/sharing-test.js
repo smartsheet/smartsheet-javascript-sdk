@@ -1,23 +1,10 @@
 const smartsheet = require('../');
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config();
 
 // Load API key from environment variable or a local .env file
 let accessToken = process.env.SMARTSHEET_ACCESS_TOKEN;
-if (!accessToken) {
-  try {
-    const envPath = path.join(__dirname, '.env');
-    if (fs.existsSync(envPath)) {
-      const envContent = fs.readFileSync(envPath, 'utf8');
-      const match = envContent.match(/SMARTSHEET_ACCESS_TOKEN=(.+)/);
-      if (match) {
-        accessToken = match[1];
-      }
-    }
-  } catch (err) {
-    console.error('Error loading .env file:', err);
-  }
-}
 
 if (!accessToken) {
   console.error('SMARTSHEET_ACCESS_TOKEN not found. Please set it as an environment variable or in a .env file.');
