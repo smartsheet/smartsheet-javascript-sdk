@@ -9,7 +9,7 @@ export enum AssetType {
   SIGHT = 'sight',
   WORKSPACE = 'workspace',
   COLLECTION = 'collection',
-  FILE = 'file'
+  FILE = 'file',
 }
 
 /**
@@ -21,7 +21,7 @@ export enum AccessLevel {
   EDITOR = 'EDITOR',
   EDITOR_SHARE = 'EDITOR_SHARE',
   OWNER = 'OWNER',
-  VIEWER = 'VIEWER'
+  VIEWER = 'VIEWER',
 }
 
 /**
@@ -29,7 +29,7 @@ export enum AccessLevel {
  */
 export enum ShareScope {
   ITEM = 'ITEM',
-  WORKSPACE = 'WORKSPACE'
+  WORKSPACE = 'WORKSPACE',
 }
 
 /**
@@ -37,7 +37,7 @@ export enum ShareScope {
  */
 export enum ShareType {
   GROUP = 'GROUP',
-  USER = 'USER'
+  USER = 'USER',
 }
 
 /**
@@ -155,26 +155,14 @@ export interface SharingApi {
     options: ListSharesOptions,
     callback?: RequestCallback<ListSharesResponse>
   ) => Promise<ListSharesResponse>;
-  
-  getAssetShare: (
-    options: GetShareOptions,
-    callback?: RequestCallback<ShareResponse>
-  ) => Promise<ShareResponse>;
-  
-  shareAsset: (
-    options: ShareAssetOptions,
-    callback?: RequestCallback<SharesResult>
-  ) => Promise<SharesResult>;
-  
-  updateAssetShare: (
-    options: UpdateShareOptions,
-    callback?: RequestCallback<ShareResponse>
-  ) => Promise<ShareResponse>;
-  
-  deleteAssetShare: (
-    options: DeleteShareOptions,
-    callback?: RequestCallback<any>
-  ) => Promise<any>;
+
+  getAssetShare: (options: GetShareOptions, callback?: RequestCallback<ShareResponse>) => Promise<ShareResponse>;
+
+  shareAsset: (options: ShareAssetOptions, callback?: RequestCallback<SharesResult>) => Promise<SharesResult>;
+
+  updateAssetShare: (options: UpdateShareOptions, callback?: RequestCallback<ShareResponse>) => Promise<ShareResponse>;
+
+  deleteAssetShare: (options: DeleteShareOptions, callback?: RequestCallback<any>) => Promise<any>;
 }
 
 /**
@@ -184,11 +172,11 @@ export interface SharingApi {
  */
 export const createSharing = (options: CreateOptions): SharingApi => {
   const requestor = options.requestor;
-  
+
   const optionsToSend = {
-    ...options.clientOptions
+    ...options.clientOptions,
   };
-  
+
   // Base URL for shares endpoints
   const baseUrl = '/shares';
 
@@ -236,9 +224,9 @@ export const createSharing = (options: CreateOptions): SharingApi => {
     callback?: RequestCallback<ShareResponse>
   ): Promise<ShareResponse> => {
     const { assetType, assetId, shareId } = options;
-    
+
     const url = `${baseUrl}/${shareId}?assetType=${assetType}&assetId=${assetId}`;
-    
+
     return requestor.get({ ...optionsToSend, url, ...options }, callback);
   };
 
@@ -248,17 +236,14 @@ export const createSharing = (options: CreateOptions): SharingApi => {
    * @param callback Optional callback
    * @returns Promise with shares success result
    */
-  const shareAsset = (
-    options: ShareAssetOptions,
-    callback?: RequestCallback<SharesResult>
-  ): Promise<SharesResult> => {
+  const shareAsset = (options: ShareAssetOptions, callback?: RequestCallback<SharesResult>): Promise<SharesResult> => {
     const { assetType, assetId, body, queryParameters } = options;
-    
+
     let url = `${baseUrl}?assetType=${assetType}&assetId=${assetId}`;
     if (queryParameters?.sendEmail) {
       url += '&sendEmail=true';
     }
-    
+
     return requestor.post({ ...optionsToSend, url, body, ...options }, callback);
   };
 
@@ -273,9 +258,9 @@ export const createSharing = (options: CreateOptions): SharingApi => {
     callback?: RequestCallback<ShareResponse>
   ): Promise<ShareResponse> => {
     const { assetType, assetId, shareId, body } = options;
-    
+
     const url = `${baseUrl}/${shareId}?assetType=${assetType}&assetId=${assetId}`;
-    
+
     return requestor.patch({ ...optionsToSend, url, body, ...options }, callback);
   };
 
@@ -285,14 +270,11 @@ export const createSharing = (options: CreateOptions): SharingApi => {
    * @param callback Optional callback
    * @returns Promise with success result
    */
-  const deleteAssetShare = (
-    options: DeleteShareOptions,
-    callback?: RequestCallback<any>
-  ): Promise<any> => {
+  const deleteAssetShare = (options: DeleteShareOptions, callback?: RequestCallback<any>): Promise<any> => {
     const { assetType, assetId, shareId } = options;
-    
+
     const url = `${baseUrl}/${shareId}?assetType=${assetType}&assetId=${assetId}`;
-    
+
     return requestor.delete({ ...optionsToSend, url, ...options }, callback);
   };
 
@@ -301,6 +283,6 @@ export const createSharing = (options: CreateOptions): SharingApi => {
     getAssetShare,
     shareAsset,
     updateAssetShare,
-    deleteAssetShare
+    deleteAssetShare,
   };
 };
