@@ -94,46 +94,69 @@ export interface SharesResult {
  * Query parameters for listing shares
  */
 export interface ListSharesQueryParams {
+  assetType: AssetType;
+  assetId: string | number;
+  sharingInclude?: string;
   maxItems?: number;
   lastKey?: string;
-  include?: string;
+}
+
+/**
+ * Query parameters for get shares
+ */
+export interface GetSharesQueryParams {
+  assetType: AssetType;
+  assetId: string | number;
+}
+
+/**
+ * Query parameters for update shares
+ */
+export interface UpdateSharesQueryParams {
+  assetType: AssetType;
+  assetId: string | number;
+}
+
+/**
+ * Query parameters for delete shares
+ */
+export interface DeleteSharesQueryParams {
+  assetType: AssetType;
+  assetId: string | number;
+}
+
+/**
+ * Query parameters for share asset
+ */
+export interface ShareAssetQueryParams {
+  assetType: AssetType;
+  assetId: string | number;
+  sendEmail?: boolean;
 }
 
 /**
  * Options for listing shares
  */
-export interface ListSharesOptions extends RequestOptions<ListSharesQueryParams, undefined> {
-  assetType: AssetType;
-  assetId: string | number;
-  sharingInclude?: string;
-  queryParameters?: ListSharesQueryParams;
-}
+export interface ListSharesOptions extends RequestOptions<ListSharesQueryParams, undefined> {}
 
 /**
  * Options for getting a share
  */
-export interface GetShareOptions extends RequestOptions<object, undefined> {
-  assetType: AssetType;
-  assetId: string | number;
+export interface GetShareOptions extends RequestOptions<GetSharesQueryParams, undefined> {
   shareId: string;
 }
 
 /**
  * Options for sharing an asset
  */
-export interface ShareAssetOptions extends RequestOptions<{ sendEmail?: boolean }, CreateShareRequest[]> {
-  assetType: AssetType;
-  assetId: string | number;
-  sendEmail?: boolean;
+export interface ShareAssetOptions extends RequestOptions<ShareAssetQueryParams, CreateShareRequest[]> {
   body: CreateShareRequest[];
 }
 
 /**
  * Options for updating a share
  */
-export interface UpdateShareOptions extends RequestOptions<object, UpdateShareRequest> {
-  assetType: AssetType;
-  assetId: string | number;
+export interface UpdateShareOptions extends RequestOptions<UpdateSharesQueryParams, UpdateShareRequest> {
   shareId: string;
   body: UpdateShareRequest;
 }
@@ -141,9 +164,7 @@ export interface UpdateShareOptions extends RequestOptions<object, UpdateShareRe
 /**
  * Options for deleting a share
  */
-export interface DeleteShareOptions extends RequestOptions<object, undefined> {
-  assetType: AssetType;
-  assetId: string | number;
+export interface DeleteShareOptions extends RequestOptions<DeleteSharesQueryParams, undefined> {
   shareId: string;
 }
 
@@ -190,22 +211,22 @@ export const createSharing = (options: CreateOptions): SharingApi => {
     options: ListSharesOptions,
     callback?: RequestCallback<ListSharesResponse>
   ): Promise<ListSharesResponse> => {
-    const { assetType, assetId, sharingInclude, queryParameters } = options;
+    const { queryParameters } = options;
 
     // Build the base URL with required parameters
     const urlParams = new URLSearchParams();
-    urlParams.append('assetType', assetType.toString());
-    urlParams.append('assetId', assetId.toString());
+    urlParams.append('assetType', queryParameters.assetType.toString());
+    urlParams.append('assetId', queryParameters.assetId.toString());
 
     // Add optional query parameters
-    if (queryParameters && queryParameters.maxItems !== undefined) {
+    if (queryParameters.maxItems) {
       urlParams.append('maxItems', queryParameters.maxItems.toString());
     }
-    if (queryParameters && queryParameters.lastKey) {
+    if (queryParameters.lastKey) {
       urlParams.append('lastKey', queryParameters.lastKey);
     }
-    if (sharingInclude) {
-      urlParams.append('sharingInclude', sharingInclude);
+    if (queryParameters.sharingInclude) {
+      urlParams.append('sharingInclude', queryParameters.sharingInclude);
     }
 
     const url = `${baseUrl}?${urlParams.toString()}`;
@@ -223,9 +244,9 @@ export const createSharing = (options: CreateOptions): SharingApi => {
     options: GetShareOptions,
     callback?: RequestCallback<ShareResponse>
   ): Promise<ShareResponse> => {
-    const { assetType, assetId, shareId } = options;
+    const { shareId, queryParameters } = options;
 
-    const url = `${baseUrl}/${shareId}?assetType=${assetType}&assetId=${assetId}`;
+    const url = `${baseUrl}/${shareId}?assetType=${queryParameters.assetType}&assetId=${queryParameters.assetId}`;
 
     return requestor.get({ ...optionsToSend, url, ...options }, callback);
   };
@@ -237,10 +258,10 @@ export const createSharing = (options: CreateOptions): SharingApi => {
    * @returns Promise with shares success result
    */
   const shareAsset = (options: ShareAssetOptions, callback?: RequestCallback<SharesResult>): Promise<SharesResult> => {
-    const { assetType, assetId, body, queryParameters } = options;
+    const { body, queryParameters } = options;
 
-    let url = `${baseUrl}?assetType=${assetType}&assetId=${assetId}`;
-    if (queryParameters?.sendEmail) {
+    let url = `${baseUrl}?assetType=${queryParameters.assetType}&assetId=${queryParameters.assetId}`;
+    if (queryParameters.sendEmail) {
       url += '&sendEmail=true';
     }
 
@@ -257,9 +278,9 @@ export const createSharing = (options: CreateOptions): SharingApi => {
     options: UpdateShareOptions,
     callback?: RequestCallback<ShareResponse>
   ): Promise<ShareResponse> => {
-    const { assetType, assetId, shareId, body } = options;
+    const { shareId, queryParameters, body } = options;
 
-    const url = `${baseUrl}/${shareId}?assetType=${assetType}&assetId=${assetId}`;
+    const url = `${baseUrl}/${shareId}?assetType=${queryParameters.assetType}&assetId=${queryParameters.assetId}`;
 
     return requestor.patch({ ...optionsToSend, url, body, ...options }, callback);
   };
@@ -271,9 +292,9 @@ export const createSharing = (options: CreateOptions): SharingApi => {
    * @returns Promise with success result
    */
   const deleteAssetShare = (options: DeleteShareOptions, callback?: RequestCallback<any>): Promise<any> => {
-    const { assetType, assetId, shareId } = options;
+    const { shareId, queryParameters } = options;
 
-    const url = `${baseUrl}/${shareId}?assetType=${assetType}&assetId=${assetId}`;
+    const url = `${baseUrl}/${shareId}?assetType=${queryParameters.assetType}&assetId=${queryParameters.assetId}`;
 
     return requestor.delete({ ...optionsToSend, url, ...options }, callback);
   };
