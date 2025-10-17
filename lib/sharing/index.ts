@@ -104,7 +104,7 @@ export interface ListSharesQueryParams {
 /**
  * Query parameters for get shares
  */
-export interface GetSharesQueryParams {
+export interface GetShareQueryParams {
   assetType: AssetType;
   assetId: string | number;
 }
@@ -112,7 +112,7 @@ export interface GetSharesQueryParams {
 /**
  * Query parameters for update shares
  */
-export interface UpdateSharesQueryParams {
+export interface UpdateShareQueryParams {
   assetType: AssetType;
   assetId: string | number;
 }
@@ -120,7 +120,7 @@ export interface UpdateSharesQueryParams {
 /**
  * Query parameters for delete shares
  */
-export interface DeleteSharesQueryParams {
+export interface DeleteShareQueryParams {
   assetType: AssetType;
   assetId: string | number;
 }
@@ -142,7 +142,7 @@ export interface ListSharesOptions extends RequestOptions<ListSharesQueryParams,
 /**
  * Options for getting a share
  */
-export interface GetShareOptions extends RequestOptions<GetSharesQueryParams, undefined> {
+export interface GetShareOptions extends RequestOptions<GetShareQueryParams, undefined> {
   shareId: string;
 }
 
@@ -156,7 +156,7 @@ export interface ShareAssetOptions extends RequestOptions<ShareAssetQueryParams,
 /**
  * Options for updating a share
  */
-export interface UpdateShareOptions extends RequestOptions<UpdateSharesQueryParams, UpdateShareRequest> {
+export interface UpdateShareOptions extends RequestOptions<UpdateShareQueryParams, UpdateShareRequest> {
   shareId: string;
   body: UpdateShareRequest;
 }
@@ -164,7 +164,7 @@ export interface UpdateShareOptions extends RequestOptions<UpdateSharesQueryPara
 /**
  * Options for deleting a share
  */
-export interface DeleteShareOptions extends RequestOptions<DeleteSharesQueryParams, undefined> {
+export interface DeleteShareOptions extends RequestOptions<DeleteShareQueryParams, undefined> {
   shareId: string;
 }
 
