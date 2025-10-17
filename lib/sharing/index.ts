@@ -135,6 +135,12 @@ export interface ShareAssetQueryParams {
 }
 
 /**
+ * Options for listing shares
+ */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface ListSharesOptions extends RequestOptions<ListSharesQueryParams, undefined> {}
+
+/**
  * Options for getting a share
  */
 export interface GetShareOptions extends RequestOptions<GetShareQueryParams, undefined> {
@@ -168,7 +174,7 @@ export interface DeleteShareOptions extends RequestOptions<DeleteShareQueryParam
  */
 export interface SharingApi {
   listAssetShares: (
-    queryParameters: ListSharesQueryParams,
+    options: ListSharesOptions,
     callback?: RequestCallback<ListSharesResponse>
   ) => Promise<ListSharesResponse>;
 
@@ -198,14 +204,16 @@ export const createSharing = (options: CreateOptions): SharingApi => {
 
   /**
    * List all shares for a specified asset
-   * @param queryParameters query parameters for listing shares
+   * @param options Options for listing shares
    * @param callback Optional callback
    * @returns Promise with shares response
    */
   const listAssetShares = (
-    queryParameters: ListSharesQueryParams,
+    options: ListSharesOptions,
     callback?: RequestCallback<ListSharesResponse>
   ): Promise<ListSharesResponse> => {
+    const { queryParameters } = options;
+
     // Build the base URL with required parameters
     const urlParams = new URLSearchParams();
     urlParams.append('assetType', queryParameters.assetType.toString());
