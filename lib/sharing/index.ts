@@ -206,7 +206,6 @@ export const createSharing = (options: CreateOptions): SharingApi => {
     queryParameters: ListSharesQueryParams,
     callback?: RequestCallback<ListSharesResponse>
   ): Promise<ListSharesResponse> => {
-
     // Build the base URL with required parameters
     const urlParams = new URLSearchParams();
     urlParams.append('assetType', queryParameters.assetType.toString());
