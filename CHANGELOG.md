@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.7.0] - 2025-06-30
+### Added
+- Support for new asset-based sharing endpoints in a new `sharing` module:
+  - `listAssetShares`: List all shares for a specified asset
+  - `getAssetShare`: Get a specific share for a specified asset
+  - `shareAsset`: Share an asset with specified users and/or groups
+  - `updateAssetShare`: Update a specific share for a specified asset
+  - `deleteAssetShare`: Delete a specific share for a specified asset
+- Added TypeScript interfaces and enums for the sharing API
+
+### Updated
+- Deprecated old sharing endpoints in the `share` module
+- Added backward compatibility wrappers in sheets, reports, workspaces, and sights modules
+- Added deprecation notices and migration examples in documentation
+- Fix typo in SightsApi (`getSightPublshStatus` to `getSightPublishStatus`)
+
 ## 4.6.0 - 2025-09-25
 ### Added
   - Support for upgrade/downgrade endpoints

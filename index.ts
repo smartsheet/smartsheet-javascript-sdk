@@ -3,6 +3,7 @@ import { apiUrls } from './lib/utils/apis';
 import { createContacts } from './lib/contacts';
 import { createEvents } from './lib/events';
 import { createSearch } from './lib/search';
+import { createSharing } from './lib/sharing';
 import { createSights } from './lib/sights';
 
 const _ = require('underscore');
@@ -112,6 +113,7 @@ export const createClient: CreateClient = function (clientOptions) {
     request: require('./lib/request/').create(options),
     search: createSearch(options),
     server: require('./lib/server/').create(options),
+    sharing: createSharing(options),
     sheets: require('./lib/sheets/').create(options),
     sights: createSights(options),
     templates: require('./lib/templates/').create(options),
@@ -130,3 +132,4 @@ export const smartSheetURIs = {
 
 export { CreateClient, CreateClientOptions, SmartsheetClient } from './lib/types';
 export * from './lib/events/types';
+export * from './lib/sharing';

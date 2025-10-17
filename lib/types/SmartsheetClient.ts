@@ -1,6 +1,7 @@
 import type { ContactsApi } from '../contacts/types';
 import type { EventsApi } from '../events/types';
 import type { SearchApi } from '../search/types';
+import type { SharingApi } from '../sharing';
 import type { SightsApi } from '../sights/types';
 
 export interface SmartsheetClient {
@@ -16,6 +17,7 @@ export interface SmartsheetClient {
   request: any;
   search: SearchApi;
   server: any;
+  sharing: SharingApi;
   sheets: any;
   sights: SightsApi;
   templates: any;

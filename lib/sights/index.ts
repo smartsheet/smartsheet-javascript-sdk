@@ -1,4 +1,6 @@
 import type { CreateOptions } from '../types';
+// Use any type for CommonJS module
+import shareModule from '../share/share.js';
 import type {
   CopySight,
   DeleteSight,
@@ -13,7 +15,8 @@ import type {
 
 export const createSights = (options: CreateOptions): SightsApi => {
   const requestor = options.requestor;
-  const shares = require('../share/share.js')(options.apiUrls.sights);
+  // Legacy shares module (deprecated)
+  const shares = shareModule(options.apiUrls.sights);
 
   const optionsToSend = {
     ...options.clientOptions,
