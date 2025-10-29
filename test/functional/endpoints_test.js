@@ -279,8 +279,8 @@ describe('Method Unit Tests', function () {
         {
             name: 'users',
             methods: [
-                { name: 'getUser', stub: 'get', options: {}, expectedRequest: {url: "users/"}},
-                { name: 'listAllUsers', stub: 'get', options: undefined, expectedRequest: {url: "users/"}},
+                { name: 'getUser', stub: 'get', options: {}, expectedRequest: {url: "users"}},
+                { name: 'listAllUsers', stub: 'get', options: undefined, expectedRequest: {url: "users"}},
                 { name: 'getCurrentUser', stub: 'get', options: {}, expectedRequest: {url: "users/me"}},
                 { name: 'addUser', stub: 'post', options: {}, expectedRequest: {url: "users/"}},
                 { name: 'addUserAndSendEmail', stub: 'post', options: {}, expectedRequest: {url: "users/", queryParameters:{sendEmail:true}}},
