@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { assert } from 'assert';
 import { smartsheet } from '../../lib';
 import { crypto } from 'crypto';

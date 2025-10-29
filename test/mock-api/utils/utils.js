@@ -1,3 +1,5 @@
+import { axios } from 'axios';
+
 async function findWireMockRequests(wiremockUrl, requestId) {
     const requestBody = {
         headers: {
