@@ -43,7 +43,7 @@ jobs:
           repository: 'smartsheet-sdk-tests'
       - name: Setup mock API
         run: |
-          docker compose -f smartsheet-sdk-tests/docker-compose.yml up -d
+          docker compose -f smartsheet-sdk-tests/docker-compose.yml up -d --wait
           sleep 5
       - name: Run coverage on Node ${{ matrix.node-version }}
         run: npm run coverage
