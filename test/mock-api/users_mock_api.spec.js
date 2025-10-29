@@ -1,7 +1,7 @@
-import { assert } from 'assert';
-import { smartsheet } from '../../lib';
-import { crypto } from 'crypto';
-import { findWireMockRequests } from '../../utils/apis';
+import smartsheet from '../../dist/index.js';
+import assert from 'assert';
+import crypto from 'crypto';
+import findWireMockRequests from '../mock-api/utils/utils.js';
 
 describe('Users - GET endpoints tests', function () {
     let client;

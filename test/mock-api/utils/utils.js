@@ -1,6 +1,6 @@
-import { axios } from 'axios';
+import axios from 'axios';
 
-async function findWireMockRequests(wiremockUrl, requestId) {
+export default async function findWireMockRequests(wiremockUrl, requestId) {
     const requestBody = {
         headers: {
             'x-request-id': {
@@ -12,5 +12,3 @@ async function findWireMockRequests(wiremockUrl, requestId) {
         headers: { 'Content-Type': 'application/json' }
     });
 }
-
-export { findWireMockRequests };
