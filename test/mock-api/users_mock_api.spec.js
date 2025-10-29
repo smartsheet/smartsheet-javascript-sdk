@@ -1,7 +1,8 @@
-const axios = require('axios');
-const assert = require('assert');
-const smartsheet = require('../../dist');
-const crypto = require('crypto');
+import axios from 'axios';
+import { assert } from 'assert';
+import { smartsheet } from '../../lib';
+import { crypto } from 'crypto';
+import { findWireMockRequests } from '../../utils/apis';
 
 describe('Users - GET endpoints tests', function () {
     let client;
@@ -14,19 +15,6 @@ describe('Users - GET endpoints tests', function () {
             baseUrl: baseUrl
         });
     });
-
-    async function findWireMockRequests(wiremockUrl, requestId) {
-        const requestBody = {
-            headers: {
-                'x-request-id': {
-                    equalTo: requestId
-                }
-            }
-        };
-        return axios.post(`${wiremockUrl}/__admin/requests/find`, requestBody, {
-            headers: { 'Content-Type': 'application/json' }
-        });
-    }
 
     it('listUserPlans generated url is correct', async function () {
         const userId = 12345678;
