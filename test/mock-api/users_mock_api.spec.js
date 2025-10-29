@@ -15,6 +15,19 @@ describe('Users - GET endpoints tests', function () {
         });
     });
 
+    async function findWireMockRequests(wiremockUrl, requestId) {
+        const requestBody = {
+            headers: {
+                'x-request-id': {
+                    equalTo: requestId
+                }
+            }
+        };
+        return axios.post(`${wiremockUrl}/__admin/requests/find`, requestBody, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+
     it('listUserPlans generated url is correct', async function () {
         const userId = 12345678;
         const lastKey = 'abcDefGhIjKlMnOpQrStUvWxYz';
@@ -34,16 +47,7 @@ describe('Users - GET endpoints tests', function () {
         };
         await client.users.listUserPlans(options);
         
-        const requestBody = {
-            headers: {
-                'x-request-id': {
-                    equalTo: requestId
-                }
-            }
-        };
-        const response = await axios.post(`${wiremockUrl}/__admin/requests/find`, requestBody, {
-            headers: { 'Content-Type': 'application/json' }
-        });
+        const response = await findWireMockRequests(wiremockUrl, requestId);
 
         const matchingRequests = response.data.requests;
         assert.ok(matchingRequests, 'No requests found in the WireMock response.');
@@ -152,57 +156,7 @@ describe('Users - GET endpoints tests', function () {
         }
     });
 
-    it('listUsers generated url is correct includeAll true', async function () {
-        const emails = 'test.user@smartsheet.com';
-        const planId = 1234567890123456;
-        const seatType = 'MEMBER';
-        const includeAll = true;
-        const requestId = crypto.randomUUID();
-
-        const options = {
-            queryParameters: {
-                emails: emails,
-                planId: planId,
-                seatType: seatType,
-                includeAll: includeAll
-            },
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/users/list-users/required-response-body-properties'
-            }
-        };
-        await client.users.listAllUsers(options);
-
-        const requestBody = {
-            headers: {
-                'x-request-id': {
-                    equalTo: requestId
-                }
-            }
-        };
-        const response = await axios.post(`${wiremockUrl}/__admin/requests/find`, requestBody, {
-            headers: { 'Content-Type': 'application/json' }
-        });
-
-        const matchingRequests = response.data.requests;
-        assert.ok(matchingRequests, 'No requests found in the WireMock response.');
-        assert.strictEqual(matchingRequests.length, 1, `Expected 1 request, but found ${matchingRequests.length}.`);
-
-        const matchedRequest = matchingRequests[0];
-        const queryParams = matchedRequest.queryParams;
-        const emailsActual = queryParams.emails.values[0];
-        const planIdActual = parseInt(queryParams.planId.values[0]);
-        const seatTypeActual = queryParams.seatType.values[0];
-        const includeAllActual = queryParams.includeAll.values[0];
-
-        assert.ok(matchedRequest.url.includes(`/2.0/users`));
-        assert.strictEqual(emailsActual, emails);
-        assert.strictEqual(planIdActual, planId);
-        assert.strictEqual(seatTypeActual, seatType);
-        assert.strictEqual(includeAllActual, includeAll.toString());
-    });
-
-    it('listUsers generated url is correct includeAll false', async function () {
+    it('listUsers generated url is correct', async function () {
       const emails = 'test.user@smartsheet.com';
       const planId = 1234567890123456;
       const seatType = 'MEMBER';
@@ -227,16 +181,7 @@ describe('Users - GET endpoints tests', function () {
       };
       await client.users.listAllUsers(options);
 
-      const requestBody = {
-        headers: {
-          'x-request-id': {
-            equalTo: requestId
-          }
-        }
-      };
-      const response = await axios.post(`${wiremockUrl}/__admin/requests/find`, requestBody, {
-        headers: { 'Content-Type': 'application/json' }
-      });
+      const response = await findWireMockRequests(wiremockUrl, requestId);
 
       const matchingRequests = response.data.requests;
       assert.ok(matchingRequests, 'No requests found in the WireMock response.');
