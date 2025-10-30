@@ -86,7 +86,6 @@ describe('Users - GET endpoints tests', function () {
 
     it('listUserPlans error 500 response', async function () {
         const requestId = crypto.randomUUID();
-
         const options = {
             userId: userId,
             customProperties: {
@@ -94,11 +93,11 @@ describe('Users - GET endpoints tests', function () {
                 'x-test-name': '/errors/500-response'
             }
         };
-
         try {
             await client.users.listUserPlans(options);
             assert.fail('Expected an error to be thrown');
         } catch (error) {
+            console.log('Caught error (500):', error);
             assert.strictEqual(error.statusCode, 500);
             assert.strictEqual(error.message, 'Internal Server Error');
         }
@@ -106,7 +105,6 @@ describe('Users - GET endpoints tests', function () {
 
     it('listUserPlans error 400 response', async function () {
         const requestId = crypto.randomUUID();
-
         const options = {
             userId: userId,
             customProperties: {
@@ -114,11 +112,11 @@ describe('Users - GET endpoints tests', function () {
                 'x-test-name': '/errors/400-response'
             }
         };
-
         try {
             await client.users.listUserPlans(options);
             assert.fail('Expected an error to be thrown');
         } catch (error) {
+            console.log('Caught error (400):', error);
             assert.strictEqual(error.statusCode, 400);
             assert.strictEqual(error.message, 'Malformed Request');
         }
@@ -239,7 +237,6 @@ describe('Users - GET endpoints tests', function () {
 
     it('listUserPlans error 500 response', async function () {
       const requestId = crypto.randomUUID();
-
       const options = {
         queryParameters: {
           planId: planId
@@ -249,11 +246,11 @@ describe('Users - GET endpoints tests', function () {
           'x-test-name': '/errors/500-response'
         }
       };
-
       try {
         await client.users.listAllUsers(options);
         assert.fail('Expected an error to be thrown');
       } catch (error) {
+        console.log('Caught error (500):', error);
         assert.strictEqual(error.statusCode, 500);
         assert.strictEqual(error.message, 'Internal Server Error');
       }
@@ -261,7 +258,6 @@ describe('Users - GET endpoints tests', function () {
 
     it('listUserPlans error 400 response', async function () {
       const requestId = crypto.randomUUID();
-
       const options = {
         queryParameters: {
           planId: planId
@@ -271,11 +267,11 @@ describe('Users - GET endpoints tests', function () {
           'x-test-name': '/errors/400-response'
         }
       };
-
       try {
         await client.users.listAllUsers(options);
         assert.fail('Expected an error to be thrown');
       } catch (error) {
+        console.log('Caught error (400):', error);
         assert.strictEqual(error.statusCode, 400);
         assert.strictEqual(error.message, 'Malformed Request');
       }
