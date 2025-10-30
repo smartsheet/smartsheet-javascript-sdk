@@ -1,11 +1,22 @@
 const assert = require('assert');
 const crypto = require('crypto');
+const axios = require('axios');
 const { createClient, baseUrl, wiremockUrl, findWireMockRequest } = require('./utils/utils.js');
 
 describe('Users - GET endpoints tests', function () {
     let client = createClient(baseUrl, 'test_token');
     const userId = 12345678;
     const planId = 1234567890123456;
+
+    before(async function() {
+        try {
+            const response = await axios.get(wiremockUrl + '/__admin');
+            console.log('WireMock health check:', response.status, response.statusText);
+        } catch (err) {
+            console.error('WireMock health check failed:', err.message);
+            throw new Error('WireMock is not running or not accessible at ' + wiremockUrl);
+        }
+    });
 
     it('listUserPlans generated url is correct', async function () {
         const lastKey = 'abcDefGhIjKlMnOpQrStUvWxYz';
