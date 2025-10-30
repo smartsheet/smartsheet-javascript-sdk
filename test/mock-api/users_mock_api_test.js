@@ -1,22 +1,13 @@
-import smartsheet from '../../dist/index.js';
-import assert from 'assert';
-import crypto from 'crypto';
-import findWireMockRequests from '../mock-api/utils/utils.js';
+const assert = require('assert');
+const crypto = require('crypto');
+const { createClient, baseUrl, wiremockUrl, findWireMockRequest } = require('./utils/utils.js');
 
 describe('Users - GET endpoints tests', function () {
-    let client;
-    const baseUrl = 'http://localhost:8082/2.0/';
-    const wiremockUrl = 'http://localhost:8082';
-
-    this.beforeEach(function () {
-        client = smartsheet.createClient({
-            accessToken: 'test_token',
-            baseUrl: baseUrl
-        });
-    });
+    let client = createClient(baseUrl, 'test_token');
+    const userId = 12345678;
+    const planId = 1234567890123456;
 
     it('listUserPlans generated url is correct', async function () {
-        const userId = 12345678;
         const lastKey = 'abcDefGhIjKlMnOpQrStUvWxYz';
         const maxItems = 100;
         const requestId = crypto.randomUUID();
@@ -34,13 +25,7 @@ describe('Users - GET endpoints tests', function () {
         };
         await client.users.listUserPlans(options);
         
-        const response = await findWireMockRequests(wiremockUrl, requestId);
-
-        const matchingRequests = response.data.requests;
-        assert.ok(matchingRequests, 'No requests found in the WireMock response.');
-        assert.strictEqual(matchingRequests.length, 1, `Expected 1 request, but found ${matchingRequests.length}.`);
-
-        const matchedRequest = matchingRequests[0];
+        const matchedRequest = await findWireMockRequest(wiremockUrl, requestId);
         const queryParams = matchedRequest.queryParams;
         const lastKeyActual = queryParams.lastKey.values[0];
         const maxItemsActual = parseInt(queryParams.maxItems.values[0]);
@@ -51,7 +36,6 @@ describe('Users - GET endpoints tests', function () {
     });
 
     it('listUserPlans all response body properties', async function () {
-        const userId = 12345678;
         const lastKey = 'abcDefGhIjKlMnOpQrStUvWxYz';
         const maxItems = 100;
         const requestId = crypto.randomUUID();
@@ -80,7 +64,6 @@ describe('Users - GET endpoints tests', function () {
     });
 
     it('listUserPlans required response body properties', async function () {
-        const userId = 12345678;
         const requestId = crypto.randomUUID();
 
         const options = {
@@ -102,7 +85,6 @@ describe('Users - GET endpoints tests', function () {
     });
 
     it('listUserPlans error 500 response', async function () {
-        const userId = 12345678;
         const requestId = crypto.randomUUID();
 
         const options = {
@@ -123,7 +105,6 @@ describe('Users - GET endpoints tests', function () {
     });
 
     it('listUserPlans error 400 response', async function () {
-        const userId = 12345678;
         const requestId = crypto.randomUUID();
 
         const options = {
@@ -145,7 +126,6 @@ describe('Users - GET endpoints tests', function () {
 
     it('listUsers generated url is correct', async function () {
       const emails = 'test.user@smartsheet.com';
-      const planId = 1234567890123456;
       const seatType = 'MEMBER';
       const page = 1;
       const pageSize = 100;
@@ -168,13 +148,8 @@ describe('Users - GET endpoints tests', function () {
       };
       await client.users.listAllUsers(options);
 
-      const response = await findWireMockRequests(wiremockUrl, requestId);
+      const matchedRequest = await findWireMockRequest(wiremockUrl, requestId);
 
-      const matchingRequests = response.data.requests;
-      assert.ok(matchingRequests, 'No requests found in the WireMock response.');
-      assert.strictEqual(matchingRequests.length, 1, `Expected 1 request, but found ${matchingRequests.length}.`);
-
-      const matchedRequest = matchingRequests[0];
       const queryParams = matchedRequest.queryParams;
       const emailsActual = queryParams.emails.values[0];
       const planIdActual = parseInt(queryParams.planId.values[0]);
@@ -193,7 +168,6 @@ describe('Users - GET endpoints tests', function () {
     });
 
     it('listUsers all response body properties', async function () {
-      const planId = 1234567890123456;
       const requestId = crypto.randomUUID();
 
       const options = {
@@ -229,7 +203,6 @@ describe('Users - GET endpoints tests', function () {
     });
 
     it('listUsers required response body properties', async function () {
-      const planId = 1234567890123456;
       const requestId = crypto.randomUUID();
 
       const options = {
@@ -265,7 +238,6 @@ describe('Users - GET endpoints tests', function () {
     });
 
     it('listUserPlans error 500 response', async function () {
-      const planId = 1234567890123456;
       const requestId = crypto.randomUUID();
 
       const options = {
@@ -288,7 +260,6 @@ describe('Users - GET endpoints tests', function () {
     });
 
     it('listUserPlans error 400 response', async function () {
-      const planId = 1234567890123456;
       const requestId = crypto.randomUUID();
 
       const options = {
