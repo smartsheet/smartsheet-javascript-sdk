@@ -1,16 +1,15 @@
 const assert = require('assert');
 const crypto = require('crypto');
-const axios = require('axios');
-const { createClient, baseUrl, wiremockUrl, findWireMockRequest } = require('./utils/utils.js');
+const { createClient, findWireMockRequest } = require('./utils/utils.js');
 
 describe('Users - GET endpoints tests', function () {
-    let client = createClient(baseUrl, 'test_token');
+    let client = createClient();
     const userId = 12345678;
     const planId = 1234567890123456;
+    const lastKey = 'abcDefGhIjKlMnOpQrStUvWxYz';
+    const maxItems = 100;
 
     it('listUserPlans generated url is correct', async function () {
-        const lastKey = 'abcDefGhIjKlMnOpQrStUvWxYz';
-        const maxItems = 100;
         const requestId = crypto.randomUUID();
 
         const options = {
@@ -26,7 +25,7 @@ describe('Users - GET endpoints tests', function () {
         };
         await client.users.listUserPlans(options);
         
-        const matchedRequest = await findWireMockRequest(wiremockUrl, requestId);
+        const matchedRequest = await findWireMockRequest(requestId);
         const queryParams = matchedRequest.queryParams;
         const lastKeyActual = queryParams.lastKey.values[0];
         const maxItemsActual = parseInt(queryParams.maxItems.values[0]);
@@ -37,8 +36,6 @@ describe('Users - GET endpoints tests', function () {
     });
 
     it('listUserPlans all response body properties', async function () {
-        const lastKey = 'abcDefGhIjKlMnOpQrStUvWxYz';
-        const maxItems = 100;
         const requestId = crypto.randomUUID();
 
         const options = {
@@ -145,7 +142,7 @@ describe('Users - GET endpoints tests', function () {
       };
       await client.users.listAllUsers(options);
 
-      const matchedRequest = await findWireMockRequest(wiremockUrl, requestId);
+      const matchedRequest = await findWireMockRequest(requestId);
 
       const queryParams = matchedRequest.queryParams;
       const emailsActual = queryParams.emails.values[0];
