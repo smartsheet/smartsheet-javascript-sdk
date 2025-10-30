@@ -8,16 +8,6 @@ describe('Users - GET endpoints tests', function () {
     const userId = 12345678;
     const planId = 1234567890123456;
 
-    before(async function() {
-        try {
-            const response = await axios.get(wiremockUrl + '/__admin');
-            console.log('WireMock health check:', response.status, response.statusText);
-        } catch (err) {
-            console.error('WireMock health check failed:', err.message);
-            throw new Error('WireMock is not running or not accessible at ' + wiremockUrl);
-        }
-    });
-
     it('listUserPlans generated url is correct', async function () {
         const lastKey = 'abcDefGhIjKlMnOpQrStUvWxYz';
         const maxItems = 100;
@@ -105,11 +95,9 @@ describe('Users - GET endpoints tests', function () {
             }
         };
         try {
-            console.log('BEFORE CLIENT CALL');
             await client.users.listUserPlans(options);
-            console.log('AFTER CLIENT CALL');
+            assert.fail('Expected an error to be thrown');
         } catch (error) {
-            console.log('Caught error (500):', error);
             assert.strictEqual(error.statusCode, 500);
             assert.strictEqual(error.message, 'Internal Server Error');
         }
@@ -125,12 +113,11 @@ describe('Users - GET endpoints tests', function () {
             }
         };
         try {
-            await client.users.listUserPlans(options);
-            assert.fail('Expected an error to be thrown');
+          await client.users.listUserPlans(options);
+          assert.fail('Expected an error to be thrown');
         } catch (error) {
-            console.log('Caught error (400):', error);
-            assert.strictEqual(error.statusCode, 400);
-            assert.strictEqual(error.message, 'Malformed Request');
+          assert.strictEqual(error.statusCode, 400);
+          assert.strictEqual(error.message, 'Malformed Request');
         }
     });
 
@@ -262,7 +249,6 @@ describe('Users - GET endpoints tests', function () {
         await client.users.listAllUsers(options);
         assert.fail('Expected an error to be thrown');
       } catch (error) {
-        console.log('Caught error (500):', error);
         assert.strictEqual(error.statusCode, 500);
         assert.strictEqual(error.message, 'Internal Server Error');
       }
@@ -283,7 +269,6 @@ describe('Users - GET endpoints tests', function () {
         await client.users.listAllUsers(options);
         assert.fail('Expected an error to be thrown');
       } catch (error) {
-        console.log('Caught error (400):', error);
         assert.strictEqual(error.statusCode, 400);
         assert.strictEqual(error.message, 'Malformed Request');
       }
