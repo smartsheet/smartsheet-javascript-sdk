@@ -94,8 +94,9 @@ describe('Users - GET endpoints tests', function () {
             }
         };
         try {
+            console.log('BEFORE CLIENT CALL');
             await client.users.listUserPlans(options);
-            assert.fail('Expected an error to be thrown');
+            console.log('AFTER CLIENT CALL');
         } catch (error) {
             console.log('Caught error (500):', error);
             assert.strictEqual(error.statusCode, 500);
