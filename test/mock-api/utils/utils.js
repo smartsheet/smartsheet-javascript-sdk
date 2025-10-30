@@ -1,7 +1,7 @@
 const axios = require('axios');
 var smartsheet = require('../../../');
 
-exports.baseUrl = 'http://localhost:8082/2.0/';
+exports.baseUrl = 'http://127.0.0.1:8082/2.0/';
 exports.wiremockUrl = 'http://127.0.0.1:8082';
 
 exports.createClient = function (baseUrl, accessToken) {
