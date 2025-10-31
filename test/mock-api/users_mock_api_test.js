@@ -8,6 +8,11 @@ describe('Users - GET endpoints tests', function () {
     const planId = 1234567890123456;
     const lastKey = 'abcDefGhIjKlMnOpQrStUvWxYz';
     const maxItems = 100;
+    const emails = 'test.user@smartsheet.com';
+    const seatType = 'MEMBER';
+    const page = 1;
+    const pageSize = 100;
+    const includeAll = false;
 
     it('listUserPlans generated url is correct', async function () {
         const requestId = crypto.randomUUID();
@@ -119,11 +124,6 @@ describe('Users - GET endpoints tests', function () {
     });
 
     it('listUsers generated url is correct', async function () {
-      const emails = 'test.user@smartsheet.com';
-      const seatType = 'MEMBER';
-      const page = 1;
-      const pageSize = 100;
-      const includeAll = false;
       const requestId = crypto.randomUUID();
 
       const options = {
