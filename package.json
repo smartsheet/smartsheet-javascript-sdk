@@ -1,6 +1,6 @@
 {
   "name": "smartsheet",
-  "version": "4.7.0",
+  "version": "4.8.0",
   "description": "Smartsheet JavaScript client SDK",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -10,7 +10,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "test": "tsc && mocha \"test/**/*_test.js\"",
+    "test": "tsc && mocha \"test/**/*{_test.js,*.spec.js,*.spec.ts}\"",
     "test-functional": "tsc && mocha \"test/functional/**/*_test.js\"",
     "test-mock-api": "tsc && mocha \"test/mock-api/**/*_test.js\"",
     "coverage": "tsc && nyc --reporter=text --reporter=lcov mocha \"test/**/*_test.js\""

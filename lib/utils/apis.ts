@@ -16,7 +16,7 @@ export const apiUrls: ApiUrls = {
   templates: 'templates/',
   templatesPublic: 'templates/public',
   token: 'token',
-  users: 'users/',
+  users: 'users',
   webhooks: 'webhooks/',
   workspaces: 'workspaces/',
 };

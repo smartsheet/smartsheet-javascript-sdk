@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.8.0] - Unreleased
+### Added
+- Wiremock integration tests for contract testing for GET /2.0/users/{userId}/plans and GET /2.0/users endpoints
+### Updated
+- listAllUsers url generation
+
 ## [4.7.0] - 2025-06-30
 ### Added
 - Support for new asset-based sharing endpoints in a new `sharing` module:
