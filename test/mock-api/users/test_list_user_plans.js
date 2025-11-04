@@ -4,7 +4,7 @@ const { createClient, findWireMockRequest } = require('../utils/utils.js');
 const { TEST_USER_ID, TEST_PLAN_ID } = require('./common_test_constants.js');
 
 describe('Users - listUserPlans endpoint tests', function () {
-    let client = createClient();
+    const client = createClient();
     const lastKey = '12345678901234569';
     const maxItems = 100;
     const seatType = 'MEMBER';
