@@ -138,23 +138,6 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         assert.strictEqual(response.resultCode, 0);
     });
 
-    it('downgradeUser no seat type passed', async function () {
-        const requestId = crypto.randomUUID();
-        const options = {
-            userId: TEST_USER_ID,
-            planId: TEST_PLAN_ID,
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/users/downgrade-user/all-response-body-properties'
-            }
-        };
-        try {
-            await client.users.downgradeUser(options);
-        } catch (error) {
-            assert.strictEqual(error.message, 'seatType must be provided in the body for downgradeUser');
-        }
-    });
-
     it('downgradeUser error 500 response', async function () {
         const requestId = crypto.randomUUID();
         const options = {

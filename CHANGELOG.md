@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.8.0] - Unreleased
 ### Added
-- Wiremock integration tests for contract testing for GET /2.0/users/{userId}/plans and GET /2.0/users endpoints
+- WiremMock integration tests for contract testing for GET /2.0/users/{userId}/plans and GET /2.0/users endpoints
+- WireMock integration tests for contract testing for POST /2.0/users/{userId}/plans/{planId}/upgrade and POST /2.0/users/{userId}/plans/{planId}/downgrade
 ### Updated
 - listAllUsers url generation
+- Folder structure for the Users related WireMock tests
 
 ## [4.7.0] - 2025-06-30
 ### Added
