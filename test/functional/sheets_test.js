@@ -21,7 +21,7 @@ describe('Client Unit Tests', function() {
     it('should not change base URL when getSheetVersion is called first', function() {
       // First call to getSheet
       smartsheet.sheets.getSheet({ id: 100 });
-      should(requestor.get.firstCall.args[0]).have.property('url', 'sheets/');
+      should(requestor.get.firstCall.args[0]).have.property('url', 'sheets');
 
       // First call to getSheetVersion
       smartsheet.sheets.getSheetVersion({ sheetId: 100 });
@@ -29,13 +29,13 @@ describe('Client Unit Tests', function() {
 
       // Second call to getSheet
       smartsheet.sheets.getSheet({ id: 100 });
-      should(requestor.get.thirdCall.args[0]).have.property('url', 'sheets/');
+      should(requestor.get.thirdCall.args[0]).have.property('url', 'sheets');
     });
 
     it('should not change base URL when getOrganizationSheets is called first', function () {
       // First call to getSheet
       smartsheet.sheets.getSheet({ id: 100 });
-      should(requestor.get.firstCall.args[0]).have.property('url', 'sheets/');
+      should(requestor.get.firstCall.args[0]).have.property('url', 'sheets');
 
       // First call to getSheetVersion
       smartsheet.sheets.listOrganizationSheets();
@@ -43,7 +43,7 @@ describe('Client Unit Tests', function() {
 
       // Second call to getSheet
       smartsheet.sheets.getSheet({ id: 100 });
-      should(requestor.get.thirdCall.args[0]).have.property('url', 'sheets/');
+      should(requestor.get.thirdCall.args[0]).have.property('url', 'sheets');
     });
   });
 });
