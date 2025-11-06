@@ -6,14 +6,14 @@ export const apiUrls: ApiUrls = {
   favorites: 'favorites',
   folders: 'folders',
   groups: 'groups',
-  home: 'home/', // deprecated
+  home: 'home', // deprecated
   imageUrls: 'imageurls',
   reports: 'reports',
   search: 'search',
   server: 'serverinfo',
   sheets: 'sheets',
   sights: 'sights',
-  templates: 'templates/', // deprecated
+  templates: 'templates', // deprecated
   templatesPublic: 'templates/public', // deprecated
   token: 'token',
   users: 'users',
