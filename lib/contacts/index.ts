@@ -19,7 +19,10 @@ export function createContacts(options: CreateOptions): ContactsApi {
     ...options.clientOptions,
   };
 
-  const getContact = (options: RequestOptions<GetContactOptions, GetContactBody>, callback: RequestCallback<Contact>) => {
+  const getContact = (
+    options: RequestOptions<GetContactOptions, GetContactBody>,
+    callback: RequestCallback<Contact>
+  ) => {
     const urlWithSlash = baseUrl + '/';
     return requestor.get({ ...optionsToSend, url: urlWithSlash, ...options }, callback);
   };
