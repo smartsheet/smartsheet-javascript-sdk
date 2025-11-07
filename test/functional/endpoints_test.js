@@ -97,7 +97,7 @@ describe('Method Unit Tests', function () {
             name: 'reports',
             methods: [
                 { name: 'getReport', stub: 'get', options: {reportId: 123}, expectedRequest: {url: "reports/123" }},
-                { name: 'listReports', stub: 'get', options: {}, expectedRequest: {url: "reports"}},
+                { name: 'listReports', stub: 'get', options: undefined, expectedRequest: {url: "reports"}},
                 { name: 'sendReportViaEmail', stub: 'post', options: {reportId: 123}, expectedRequest: {url: "reports/123/emails" }},
                 { name: 'getReportAsExcel', stub: 'get', options: {reportId: 123}, expectedRequest: {url: "reports/123", accept: constants.acceptHeaders.vndMsExcel, encoding:null }},
                 { name: 'getReportAsCSV', stub: 'get', options: {reportId: 123}, expectedRequest: {url: "reports/123", accept: constants.acceptHeaders.textCsv }},
