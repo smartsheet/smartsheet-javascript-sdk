@@ -1,22 +1,22 @@
 import type { ApiUrls } from '../types';
 
 export const apiUrls: ApiUrls = {
-  contacts: 'contacts/',
-  events: 'events/',
-  favorites: 'favorites/',
-  folders: 'folders/',
-  groups: 'groups/',
-  home: 'home/',
-  imageUrls: 'imageurls/',
-  reports: 'reports/',
-  search: 'search/',
-  server: 'serverinfo/',
-  sheets: 'sheets/',
-  sights: 'sights/',
-  templates: 'templates/',
-  templatesPublic: 'templates/public',
+  contacts: 'contacts',
+  events: 'events',
+  favorites: 'favorites',
+  folders: 'folders',
+  groups: 'groups',
+  home: 'home', // deprecated
+  imageUrls: 'imageurls',
+  reports: 'reports',
+  search: 'search',
+  server: 'serverinfo',
+  sheets: 'sheets',
+  sights: 'sights',
+  templates: 'templates', // deprecated
+  templatesPublic: 'templates/public', // deprecated
   token: 'token',
   users: 'users',
-  webhooks: 'webhooks/',
-  workspaces: 'workspaces/',
+  webhooks: 'webhooks',
+  workspaces: 'workspaces',
 };
