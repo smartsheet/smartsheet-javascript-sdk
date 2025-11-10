@@ -7,15 +7,15 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
     let client = createClient();
     const TEST_UPGRADE_SEAT_TYPE = 'MEMBER';
     const TEST_DOWNGRADE_SEAT_TYPE = 'VIEWER';
+    const TEST_UPGRADE_BODY = { seatType: TEST_UPGRADE_SEAT_TYPE };
+    const TEST_DOWNGRADE_BODY = { seatType: TEST_DOWNGRADE_SEAT_TYPE };
 
     it('upgradeUser generated url is correct', async function () {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
             planId: TEST_PLAN_ID,
-            body: { 
-                seatType: TEST_UPGRADE_SEAT_TYPE
-            },
+            body: TEST_UPGRADE_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/users/upgrade-user/all-response-body-properties'
@@ -26,7 +26,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
 
         assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}/upgrade`));
         let body = JSON.parse(matchedRequest.body);
-        assert.strictEqual(body.seatType, TEST_UPGRADE_SEAT_TYPE);
+        assert.deepStrictEqual(body, TEST_UPGRADE_BODY);
     });
 
     it('upgradeUser all response body properties', async function () {
@@ -34,7 +34,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         const options = {
             userId: TEST_USER_ID,
             planId: TEST_PLAN_ID,
-            body: { seatType: TEST_UPGRADE_SEAT_TYPE },
+            body: TEST_UPGRADE_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/users/upgrade-user/all-response-body-properties'
@@ -51,7 +51,6 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         const options = {
             userId: TEST_USER_ID,
             planId: TEST_PLAN_ID,
-            body: { },
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/users/upgrade-user/all-response-body-properties'
@@ -68,7 +67,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         const options = {
             userId: TEST_USER_ID,
             planId: TEST_PLAN_ID,
-            body: { seatType: TEST_UPGRADE_SEAT_TYPE },
+            body: TEST_UPGRADE_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/errors/500-response'
@@ -88,7 +87,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         const options = {
             userId: TEST_USER_ID,
             planId: TEST_PLAN_ID,
-            body: { seatType: TEST_UPGRADE_SEAT_TYPE },
+            body: TEST_UPGRADE_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/errors/400-response'
@@ -108,7 +107,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         const options = {
             userId: TEST_USER_ID,
             planId: TEST_PLAN_ID,
-            body: { seatType: TEST_DOWNGRADE_SEAT_TYPE },
+            body: TEST_DOWNGRADE_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/users/downgrade-user/all-response-body-properties'
@@ -118,7 +117,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         const matchedRequest = await findWireMockRequest(requestId);
         assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}/downgrade`));
         let body = JSON.parse(matchedRequest.body);
-        assert.strictEqual(body.seatType, TEST_DOWNGRADE_SEAT_TYPE);
+        assert.deepStrictEqual(body, TEST_DOWNGRADE_BODY);
     });
 
     it('downgradeUser all response body properties', async function () {
@@ -126,7 +125,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         const options = {
             userId: TEST_USER_ID,
             planId: TEST_PLAN_ID,
-            body: { seatType: TEST_DOWNGRADE_SEAT_TYPE },
+            body: TEST_DOWNGRADE_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/users/downgrade-user/all-response-body-properties'
@@ -143,7 +142,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         const options = {
             userId: TEST_USER_ID,
             planId: TEST_PLAN_ID,
-            body: { seatType: TEST_DOWNGRADE_SEAT_TYPE },
+            body: TEST_DOWNGRADE_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/errors/500-response'
@@ -163,7 +162,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         const options = {
             userId: TEST_USER_ID,
             planId: TEST_PLAN_ID,
-            body: { seatType: TEST_DOWNGRADE_SEAT_TYPE },
+            body: TEST_DOWNGRADE_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/errors/400-response'
