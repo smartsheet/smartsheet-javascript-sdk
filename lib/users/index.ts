@@ -21,7 +21,7 @@ import type {
   UpdateUserResponse,
   AddUserResponse,
   RemoveUserOptions,
-  AddProfileImageResponse
+  AddProfileImageResponse,
 } from './types';
 
 const alternateEmails = require('./alternateemails.js');
@@ -42,13 +42,10 @@ export function create(options: CreateOptions): UsersApi {
     return requestor.get(requestOptions, callback);
   };
 
-  const getUser = (
-    getOptions: GetUserOptions,
-    callback?: RequestCallback<GetUserResponse>
-  ) => {
+  const getUser = (getOptions: GetUserOptions, callback?: RequestCallback<GetUserResponse>) => {
     const urlOptions = { url: options.apiUrls.users + '/' + getOptions.userId };
     return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
-  }
+  };
 
   const getCurrentUser = (
     getOptions: RequestOptions<GetCurrentUserQueryParameters, undefined>,
@@ -58,44 +55,30 @@ export function create(options: CreateOptions): UsersApi {
     return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
 
-  const addUser = (
-    postOptions: RequestOptions<undefined, AddUserBody>,
-    callback?: RequestCallback<AddUserResponse>
-  ) => requestor.post({ ...optionsToSend, ...postOptions }, callback);
+  const addUser = (postOptions: RequestOptions<undefined, AddUserBody>, callback?: RequestCallback<AddUserResponse>) =>
+    requestor.post({ ...optionsToSend, ...postOptions }, callback);
 
   const addUserAndSendEmail = (
     postOptions: RequestOptions<AddUserQueryParameters, AddUserBody>,
     callback?: RequestCallback<AddUserResponse>
   ) => requestor.post({ ...optionsToSend, ...postOptions }, callback);
 
-  const updateUser = (
-    putOptions: UpdateUserOptions,
-    callback?: RequestCallback<UpdateUserResponse>
-  ) => {
+  const updateUser = (putOptions: UpdateUserOptions, callback?: RequestCallback<UpdateUserResponse>) => {
     const urlOptions = { url: options.apiUrls.users + '/' + putOptions.userId };
     return requestor.put({ ...optionsToSend, ...urlOptions, ...putOptions }, callback);
   };
 
-  const removeUser = (
-    deleteOptions: RemoveUserOptions,
-    callback?: RequestCallback<BaseResponseStatus>
-  ) => {
+  const removeUser = (deleteOptions: RemoveUserOptions, callback?: RequestCallback<BaseResponseStatus>) => {
     const urlOptions = { url: options.apiUrls.users + '/' + deleteOptions.userId };
     return requestor.delete({ ...optionsToSend, ...urlOptions, ...deleteOptions }, callback);
   };
 
-  const deactivateUser = (
-    postOptions: DeactivateUserOptions,
-    callback?: RequestCallback<BaseResponseStatus>
-  ) => {
+  const deactivateUser = (postOptions: DeactivateUserOptions, callback?: RequestCallback<BaseResponseStatus>) => {
     const urlOptions = { url: buildDeactivateUserUrl(postOptions) };
     return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
   };
 
-  const reactivateUser = (
-    postOptions: ReactivateUserOptions,
-    callback?: RequestCallback<BaseResponseStatus>
-  ) => {
+  const reactivateUser = (postOptions: ReactivateUserOptions, callback?: RequestCallback<BaseResponseStatus>) => {
     const urlOptions = { url: buildReactivateUserUrl(postOptions) };
     return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
   };
@@ -108,26 +91,17 @@ export function create(options: CreateOptions): UsersApi {
     return requestor.postFile({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
   };
 
-  const upgradeUser = (
-    postOptions: UpgradeUserOptions,
-    callback?: RequestCallback<BaseResponseStatus>
-  ) => {
+  const upgradeUser = (postOptions: UpgradeUserOptions, callback?: RequestCallback<BaseResponseStatus>) => {
     const urlOptions = { url: buildUserUpgradeUrl(postOptions) };
     return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
   };
 
-  const downgradeUser = (
-    postOptions: DowngradeUserOptions,
-    callback?: RequestCallback<BaseResponseStatus>
-  ) => {
+  const downgradeUser = (postOptions: DowngradeUserOptions, callback?: RequestCallback<BaseResponseStatus>) => {
     const urlOptions = { url: buildUserDowngradeUrl(postOptions) };
     return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
   };
 
-  const listUserPlans = (
-    getOptions: ListUserPlansOptions,
-    callback?: RequestCallback<ListUserPlansResponse>
-  ) => {
+  const listUserPlans = (getOptions: ListUserPlansOptions, callback?: RequestCallback<ListUserPlansResponse>) => {
     const urlOptions = { url: buildListUserPlansUrl(getOptions) };
     const requestOptions = { ...optionsToSend, ...urlOptions, ...getOptions };
     return requestor.get(requestOptions, callback);

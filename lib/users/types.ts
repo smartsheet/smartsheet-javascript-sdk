@@ -7,10 +7,7 @@ import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 // ============================================================================
 
 export interface UsersApi {
-  getUser: (
-    options: GetUserOptions,
-    callback?: RequestCallback<GetUserResponse>
-  ) => Promise<GetUserResponse>;
+  getUser: (options: GetUserOptions, callback?: RequestCallback<GetUserResponse>) => Promise<GetUserResponse>;
   listAllUsers: (
     options: RequestOptions<ListUsersQueryParameters, undefined>,
     callback?: RequestCallback<ListUsersResponse>
@@ -70,10 +67,10 @@ export interface UsersApi {
 // ============================================================================
 
 export enum SeatTypes {
-    MEMBER = 'MEMBER',
-    PROVISIONAL_MEMBER = 'PROVISIONAL_MEMBER',
-    GUEST = 'GUEST',
-    VIEWER = 'VIEWER'
+  MEMBER = 'MEMBER',
+  PROVISIONAL_MEMBER = 'PROVISIONAL_MEMBER',
+  GUEST = 'GUEST',
+  VIEWER = 'VIEWER',
 }
 
 export interface UserProfile {
@@ -212,122 +209,122 @@ export interface GetUserResponse {
    * @description User Id.
    */
   id: number;
-  
+
   /**
    * @description Account information.
    */
   account: Account;
-  
+
   /**
    * @description User's admin status.
    */
   admin?: boolean;
-  
+
   /**
    * @description Alternate email addresses.
    */
   alternateEmails?: AlternateEmail[];
-  
+
   /**
    * @description User's company.
    */
   company: string;
-  
+
   /**
    * @description User's custom welcome screen viewed timestamp.
    */
   customWelcomeScreenViewed?: Date | string;
-  
+
   /**
    * @description User's department.
    */
   department: string;
-  
+
   /**
    * @description User's email address.
    */
   email: string;
-  
+
   /**
    * @description User's first name.
    */
   firstName: string;
-  
+
   /**
    * @description User's group admin status.
    */
   groupAdmin?: boolean;
-  
+
   /**
    * @description User's Jira admin status.
    */
   jiraAdmin: boolean;
-  
+
   /**
    * @description User's last login timestamp.
    */
   lastLogin?: Date | string;
-  
+
   /**
    * @description User's last name.
    */
   lastName: string;
-  
+
   /**
    * @description User's licensed sheet creator status.
    */
   licensedSheetCreator?: boolean;
-  
+
   /**
    * @description User's locale.
    */
   locale: string;
-  
+
   /**
    * @description User's mobile phone.
    */
   mobilePhone: string;
-  
+
   /**
    * @description User's profile image.
    */
   profileImage?: ProfileImage;
-  
+
   /**
    * @description User's resource viewer status.
    */
   resourceViewer?: boolean;
-  
+
   /**
    * @description User's role.
    */
   role: string;
-  
+
   /**
    * @description User's Salesforce admin status.
    */
   salesforceAdmin: boolean;
-  
+
   /**
    * @description User's Salesforce user status.
    */
   salesforceUser: boolean;
-  
+
   /**
    * @description User's sheet count.
    */
   sheetCount?: number;
-  
+
   /**
    * @description User's time zone.
    */
   timeZone: string;
-  
+
   /**
    * @description User's title.
    */
   title: string;
-  
+
   /**
    * @description User's work phone.
    */
@@ -335,7 +332,7 @@ export interface GetUserResponse {
 }
 
 export interface GetUserOptions extends RequestOptions<undefined, undefined> {
-    /**
+  /**
    * @description User Id to deactivate.
    */
   userId: number;
@@ -350,12 +347,12 @@ export interface ListUsersQueryParameters {
    * @description A comma-separated list of emails.
    */
   email?: string;
-  
+
   /**
    * @description A comma-separated list of elements to include in the response.
    */
   include?: string;
-  
+
   /**
    * @default false
    * @description If true, include all results (do not paginate).
@@ -383,7 +380,7 @@ export interface ListUsersQueryParameters {
    * @description Which page to return.
    */
   page?: number;
-  
+
   /**
    * @default 100
    * @description The maximum number of items to return per page.
@@ -396,87 +393,87 @@ export interface ListUsersData {
    * @description User Id.
    */
   id: number;
-  
+
   /**
    * @description User's admin status.
    */
   admin: boolean;
-  
+
   /**
    * @description User's custom welcome screen viewed timestamp.
    */
   customWelcomeScreenViewed?: Date | string;
-  
+
   /**
    * @description User's email address.
    */
   email: string;
-  
+
   /**
    * @description User's first name.
    */
   firstName: string;
-  
+
   /**
    * @description User's group admin status.
    */
   groupAdmin: boolean;
-  
+
   /**
    * @description Whether the user is internal.
    */
   isInternal: boolean;
-  
+
   /**
    * @description User's last login timestamp.
    */
   lastLogin?: Date | string;
-  
+
   /**
    * @description User's last name.
    */
   lastName: string;
-  
+
   /**
    * @description User's licensed sheet creator status.
    */
   licensedSheetCreator: boolean;
-  
+
   /**
    * @description User's full name.
    */
   name: string;
-  
+
   /**
    * @description User's profile image.
    */
   profileImage?: ProfileImage;
-  
+
   /**
    * @description Provisional expiration date.
    */
   provisionalExpirationDate?: Date | string;
-  
+
   /**
    * @description User's resource viewer status.
    */
   resourceViewer: boolean;
-  
+
   /**
    * @description User's seat type.
    */
   seatType: SeatTypes | string;
-  
+
   /**
    * @description When the seat type was last changed.
    */
   seatTypeLastChangedAt?: Date | string;
-  
+
   /**
    * @description User's sheet count.
    */
   sheetCount?: number;
-  
+
   /**
    * @description User's status.
    */
@@ -489,23 +486,23 @@ export interface ListUsersResponse {
    * @description The current page number.
    */
   pageNumber: number;
-  
+
   /**
    * @default 100
    * @description The number of items per page.
    */
   pageSize: number;
-  
+
   /**
    * @description The total number of pages.
    */
   totalPages: number;
-  
+
   /**
    * @description The total number of users.
    */
   totalCount: number;
-  
+
   /**
    * @description Array of User objects.
    */
@@ -517,132 +514,131 @@ export interface ListUsersResponse {
 // ============================================================================
 
 export interface GetCurrentUserResponse {
-
   /**
    * @description User Id.
    */
   id: number;
-  
+
   /**
    * @description Account information.
    */
   account: Account;
-  
+
   /**
    * @description User's admin status.
    */
   admin: boolean;
-  
+
   /**
    * @description Alternate email addresses.
    */
   alternateEmails?: AlternateEmail[];
-  
+
   /**
    * @description User's company.
    */
   company: string;
-  
+
   /**
    * @description User's custom welcome screen viewed timestamp.
    */
   customWelcomeScreenViewed?: Date | string;
-  
+
   /**
    * @description User's department.
    */
   department: string;
-  
+
   /**
    * @description User's email address.
    */
   email: string;
-  
+
   /**
    * @description User's first name.
    */
   firstName: string;
-  
+
   /**
    * @description User's group admin status.
    */
   groupAdmin: boolean;
-  
+
   /**
    * @description User's Jira admin status.
    */
   jiraAdmin: boolean;
-  
+
   /**
    * @description User's last login timestamp.
    */
   lastLogin?: Date | string;
- 
+
   /**
    * @description User's last name.
    */
   lastName: string;
-  
+
   /**
    * @description User's licensed sheet creator status.
    */
   licensedSheetCreator: boolean;
-  
+
   /**
    * @description User's locale.
    */
   locale: string;
-  
+
   /**
    * @description User's mobile phone.
    */
   mobilePhone: string;
-  
+
   /**
    * @description User's profile image.
    */
   profileImage?: ProfileImage;
-  
+
   /**
    * @description User's resource viewer status.
    */
   resourceViewer: boolean;
-  
+
   /**
    * @description User's role.
    */
   role: string;
-  
+
   /**
    * @description User's Salesforce admin status.
    */
   salesforceAdmin: boolean;
-  
+
   /**
    * @description User's Salesforce user status.
    */
   salesforceUser: boolean;
-  
+
   /**
    * @description User's sheet count.
    */
   sheetCount: number;
-  
+
   /**
    * @description User's time zone.
    */
   timeZone: string;
-  
+
   /**
    * @description User's title.
    */
   title: string;
-  
+
   /**
    * @description User's work phone.
    */
   workPhone: string;
-  
+
   /**
    * @description Array of group data objects.
    */
@@ -651,32 +647,32 @@ export interface GetCurrentUserResponse {
      * @description Group Id.
      */
     id: number;
-    
+
     /**
      * @description Group name.
      */
     name: string;
-    
+
     /**
      * @description Group description.
      */
     description: string;
-    
+
     /**
      * @description Group owner email.
      */
     owner: string;
-    
+
     /**
      * @description Group owner Id.
      */
     ownerId: number;
-    
+
     /**
      * @description Group created timestamp.
      */
     createdAt: Date | string;
-    
+
     /**
      * @description Group modified timestamp.
      */
@@ -696,11 +692,11 @@ export interface GetCurrentUserQueryParameters {
 // ============================================================================
 
 export interface AddUserQueryParameters {
-    /**
-     * @default false
-     * @description Whether to notify the user by email.
-     */
-    sendEmail?: boolean;
+  /**
+   * @default false
+   * @description Whether to notify the user by email.
+   */
+  sendEmail?: boolean;
 }
 
 export interface AddUserBody {
@@ -708,23 +704,23 @@ export interface AddUserBody {
    * @description User's email address.
    */
   email: string;
-  
+
   /**
    * @description User's first name.
    */
   firstName: string;
-  
+
   /**
    * @description User's last name.
    */
   lastName: string;
-  
+
   /**
    * @default false
    * @description User's admin status.
    */
   admin?: boolean;
-  
+
   /**
    * @default false
    * @description User's licensed sheet creator status.
@@ -735,13 +731,13 @@ export interface AddUserBody {
    * @description User's profile image.
    */
   profileImage?: ProfileImage;
-  
+
   /**
    * @default false
    * @description User's group admin status.
    */
   groupAdmin?: boolean;
-  
+
   /**
    * @default false
    * @description User's resource viewer status.
@@ -882,10 +878,10 @@ export interface UpdateUserBody {
 }
 
 export interface UpdateUserOptions extends RequestOptions<undefined, UpdateUserBody> {
-    /**
-     * @description User Id.
-     */
-    userId: number;
+  /**
+   * @description User Id.
+   */
+  userId: number;
 }
 
 export interface UpdateUserResponse {
@@ -950,10 +946,10 @@ export interface RemoveUserQueryParameters {
 }
 
 export interface RemoveUserOptions extends RequestOptions<RemoveUserQueryParameters, undefined> {
-    /**
-     * @description User Id.
-     */
-    userId: number;
+  /**
+   * @description User Id.
+   */
+  userId: number;
 }
 
 // ============================================================================
@@ -1062,15 +1058,15 @@ export interface DowngradeUserOptions extends RequestOptions<undefined, undefine
 // ============================================================================
 
 export interface ListUserPlansQueryParameters {
-    /**
-     * @description The lastKey token returned from the previous page of results.
-     */
-    lastKey?: string;
-    /**
-     * @default 100
-     * @description The maximum amount of items to return in the response.
-     */
-    maxItems?: number;
+  /**
+   * @description The lastKey token returned from the previous page of results.
+   */
+  lastKey?: string;
+  /**
+   * @default 100
+   * @description The maximum amount of items to return in the response.
+   */
+  maxItems?: number;
 }
 
 export interface ListUserPlansOptions extends RequestOptions<ListUserPlansQueryParameters, undefined> {
