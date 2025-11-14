@@ -24,7 +24,7 @@ import type {
   AddProfileImageResponse,
 } from './types';
 
-const alternateEmails = require('./alternateemails.js');
+import * as alternateEmails from './alternateemails';
 
 export function create(options: CreateOptions): UsersApi {
   const requestor = options.requestor;
@@ -154,6 +154,6 @@ export function create(options: CreateOptions): UsersApi {
     removeUserFromPlan: removeUserFromPlan,
   };
 
-  // Extend with alternate emails functionality (keeping JS module for now)
+  // Extend with alternate emails functionality
   return { ...userObject, ...alternateEmails.create(options) };
 }

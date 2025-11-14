@@ -293,9 +293,9 @@ describe('Method Unit Tests', function () {
                 { name: 'listUserPlans', stub: 'get', options: { userId: 123 }, expectedRequest: { url: "users/123/plans" }},
                 { name: 'removeUserFromPlan', stub: 'delete', options: { userId: 123, planId: 456 }, expectedRequest: { url: "users/123/plans/456" }},
                 // alternate emails
-                { name: 'addAlternateEmail', stub: 'post', options: {userId: 123}, expectedRequest: {url: "users/123/alternateemails/"}},
+                { name: 'addAlternateEmail', stub: 'post', options: {userId: 123}, expectedRequest: {url: "users/123/alternateemails"}},
                 { name: 'getAlternateEmail', stub: 'get', options: {userId: 123, alternateEmailId: 234}, expectedRequest: {url: "users/123/alternateemails/234"}},
-                { name: 'listAlternateEmails', stub: 'get', options: {userId: 123}, expectedRequest: {url: "users/123/alternateemails/"}},
+                { name: 'listAlternateEmails', stub: 'get', options: {userId: 123}, expectedRequest: {url: "users/123/alternateemails"}},
                 { name: 'makeAlternateEmailPrimary', stub: 'post', options: {userId: 123, alternateEmailId: 234}, expectedRequest: {url: "users/123/alternateemails/234/makeprimary"}},
                 { name: 'deleteAlternateEmail', stub: 'delete', options: {userId: 123, alternateEmailId: 234}, expectedRequest: {url: "users/123/alternateemails/234"}},
                 // profile image

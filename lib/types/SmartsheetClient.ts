@@ -3,6 +3,7 @@ import type { EventsApi } from '../events/types';
 import type { SearchApi } from '../search/types';
 import type { SharingApi } from '../sharing';
 import type { SightsApi } from '../sights/types';
+import type { UsersApi } from '../users/types';
 
 export interface SmartsheetClient {
   constants: any;
@@ -22,7 +23,7 @@ export interface SmartsheetClient {
   sights: SightsApi;
   templates: any;
   tokens: any;
-  users: any;
+  users: UsersApi;
   webhooks: any;
   workspaces: any;
 }
