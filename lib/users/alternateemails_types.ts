@@ -163,6 +163,7 @@ export interface AddAlternateEmailOptions extends RequestOptions<undefined, AddA
 export interface AddAlternateEmailResponse extends BaseResponseStatus {
   /**
    * Array of added alternate email objects
+   * @see AlternateEmail
    */
   data: AlternateEmail[];
 }
@@ -196,6 +197,7 @@ export interface ListAlternateEmailsOptions extends RequestOptions<undefined, un
 export interface ListAlternateEmailsResponse {
   /**
    * Array of alternate email objects
+   * @see AlternateEmail
    */
   data: AlternateEmail[];
   /**
@@ -234,6 +236,7 @@ export interface MakeAlternateEmailPrimaryOptions extends RequestOptions<undefin
 export interface MakeAlternateEmailPrimaryResponse extends BaseResponseStatus {
   /**
    * The alternate email that was made primary
+   * @see AlternateEmail
    */
   data: AlternateEmail[];
 }

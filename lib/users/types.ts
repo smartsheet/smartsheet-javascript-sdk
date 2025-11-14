@@ -458,10 +458,12 @@ export interface UserProfile {
   resourceViewer?: boolean;
   /**
    * User's status.
+   * @see UserStatus
    */
   status?: UserStatus;
   /**
    * URL to user's profile image.
+   * @see ProfileImage
    */
   profileImage?: ProfileImage;
   /**
@@ -558,6 +560,7 @@ export interface GetUserResponse {
 
   /**
    * Account information.
+   * @see Account
    */
   account: Account;
 
@@ -568,6 +571,7 @@ export interface GetUserResponse {
 
   /**
    * Alternate email addresses.
+   * @see AlternateEmail
    */
   alternateEmails?: AlternateEmail[];
 
@@ -633,6 +637,7 @@ export interface GetUserResponse {
 
   /**
    * User's profile image.
+   * @see ProfileImage
    */
   profileImage?: ProfileImage;
 
@@ -718,6 +723,7 @@ export interface ListUsersQueryParameters {
 
   /**
    * Seat type based on which to filter the results.
+   * @see SeatTypes
    */
   seatType?: SeatTypes;
 
@@ -792,6 +798,7 @@ export interface ListUsersData {
 
   /**
    * User's profile image.
+   * @see ProfileImage
    */
   profileImage?: ProfileImage;
 
@@ -807,6 +814,7 @@ export interface ListUsersData {
 
   /**
    * User's seat type.
+   * @see SeatTypes
    */
   seatType: SeatTypes | string;
 
@@ -822,6 +830,7 @@ export interface ListUsersData {
 
   /**
    * User's status.
+   * @see UserStatus
    */
   status: UserStatus | string;
 }
@@ -867,6 +876,7 @@ export interface GetCurrentUserResponse {
 
   /**
    * Account information.
+   * @see Account
    */
   account: Account;
 
@@ -877,6 +887,7 @@ export interface GetCurrentUserResponse {
 
   /**
    * Alternate email addresses.
+   * @see AlternateEmail
    */
   alternateEmails?: AlternateEmail[];
 
@@ -942,6 +953,7 @@ export interface GetCurrentUserResponse {
 
   /**
    * User's profile image.
+   * @see ProfileImage
    */
   profileImage?: ProfileImage;
 
@@ -1075,6 +1087,7 @@ export interface AddUserBody {
 
   /**
    * User's profile image.
+   * @see ProfileImage
    */
   profileImage?: ProfileImage;
 
@@ -1092,6 +1105,7 @@ export interface AddUserBody {
 
   /**
    * User's status.
+   * @see UserStatus
    */
   status: UserStatus;
 }
@@ -1155,6 +1169,7 @@ export interface AddUserResponse {
     name: string;
     /**
      * User's profile image.
+     * @see ProfileImage
      */
     profileImage?: ProfileImage;
     /**
@@ -1167,6 +1182,7 @@ export interface AddUserResponse {
     resourceViewer?: boolean;
     /**
      * User's seat type.
+     * @see SeatTypes
      */
     seatType?: SeatTypes | string;
     /**
@@ -1179,6 +1195,7 @@ export interface AddUserResponse {
     sheetCount?: number;
     /**
      * User's status.
+     * @see UserStatus
      */
     status: UserStatus | string;
   };
@@ -1261,6 +1278,7 @@ export interface UpdateUserResponse {
     lastName: string;
     /**
      * User's profile image.
+     * @see ProfileImage
      */
     profileImage?: ProfileImage;
     /**
@@ -1364,6 +1382,7 @@ export interface AddProfileImageResponse {
     lastName: string;
     /**
      * User's profile image.
+     * @see ProfileImage
      */
     profileImage: ProfileImage;
     /**
@@ -1380,6 +1399,7 @@ export interface AddProfileImageResponse {
 export interface UpgradeUserBody {
   /**
    * User's seat type to upgrade to. Can be 'GUEST' (only for external users) or 'MEMBER' (default).
+   * @see SeatTypes
    */
   seatType?: SeatTypes;
 }
@@ -1398,6 +1418,7 @@ export interface UpgradeUserOptions extends RequestOptions<undefined, UpgradeUse
 export interface DowngradeUserBody {
   /**
    * User's seat type to downgrade to. Can be 'GUEST' (only for external users) or 'VIEWER' (required).
+   * @see SeatTypes
    */
   seatType: SeatTypes;
 }
@@ -1451,6 +1472,7 @@ export interface ListUserPlansResponse {
     planId: number;
     /**
      * User's seat type.
+     * @see SeatTypes
      */
     seatType: SeatTypes | string;
     /**
