@@ -16,9 +16,9 @@ export interface AlternateEmailsApi {
    * (Add Group Members, Add User, Create Update Request, Share Report, Share Sheet, Share Workspace)
    * must be performed using the user's primary email address.
    *
-   * @param options - AddAlternateEmailOptions - Configuration options for the request
-   * @param callback - RequestCallback<AddAlternateEmailResponse> - Optional callback function
-   * @returns Promise resolving to the result containing newly created AlternateEmail objects
+   * @param options - {@link AddAlternateEmailOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link AddAlternateEmailResponse}\> - Optional callback function
+   * @returns Promise\<{@link AddAlternateEmailResponse}\>
    *
    * @remarks
    * **Who can use this operation:**
@@ -42,9 +42,9 @@ export interface AlternateEmailsApi {
   /**
    * Gets the specified alternate email address for a user.
    *
-   * @param options - GetAlternateEmailOptions - Configuration options for the request
-   * @param callback - RequestCallback<AlternateEmail> - Optional callback function
-   * @returns Promise resolving to the AlternateEmail object
+   * @param options - {@link GetAlternateEmailOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link AlternateEmail}\> - Optional callback function
+   * @returns Promise\<{@link AlternateEmail}\>
    *
    * @remarks
    * It mirrors to the following Smartsheet REST API method: `GET /users/{userId}/alternateemails/{alternateEmailId}`
@@ -65,9 +65,9 @@ export interface AlternateEmailsApi {
   /**
    * Gets a list of all alternate email addresses for the specified user.
    *
-   * @param options - ListAlternateEmailsOptions - Configuration options for the request
-   * @param callback - RequestCallback<ListAlternateEmailsResponse> - Optional callback function
-   * @returns Promise resolving to an IndexResult object containing an array of AlternateEmail objects
+   * @param options - {@link ListAlternateEmailsOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link ListAlternateEmailsResponse}\> - Optional callback function
+   * @returns Promise\<{@link ListAlternateEmailsResponse}\>
    *
    * @remarks
    * It mirrors to the following Smartsheet REST API method: `GET /users/{userId}/alternateemails`
@@ -91,9 +91,9 @@ export interface AlternateEmailsApi {
    * - The primary email address domain is validated
    * - The alternate email address is confirmed OR the alternate email address domain is validated
    *
-   * @param options - MakeAlternateEmailPrimaryOptions - Configuration options for the request
-   * @param callback - RequestCallback<MakeAlternateEmailPrimaryResponse> - Optional callback function
-   * @returns Promise resolving to the result containing updated AlternateEmail objects
+   * @param options - {@link MakeAlternateEmailPrimaryOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link MakeAlternateEmailPrimaryResponse}\> - Optional callback function
+   * @returns Promise\<{@link MakeAlternateEmailPrimaryResponse}\>
    *
    * @remarks
    * **Who can use this operation:**
@@ -118,9 +118,9 @@ export interface AlternateEmailsApi {
   /**
    * Deletes the specified alternate email address for the specified user.
    *
-   * @param options - DeleteAlternateEmailOptions - Configuration options for the request
-   * @param callback - RequestCallback<BaseResponseStatus> - Optional callback function
-   * @returns Promise resolving to the result object
+   * @param options - {@link DeleteAlternateEmailOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    *
    * @remarks
    * **Who can use this operation:**
@@ -148,21 +148,21 @@ export interface AlternateEmailsApi {
 
 export interface AddAlternateEmailBody {
   /**
-   * @description The alternate email address to add
+   * The alternate email address to add
    */
   email: string;
 }
 
 export interface AddAlternateEmailOptions extends RequestOptions<undefined, AddAlternateEmailBody[]> {
   /**
-   * @description User ID
+   * User ID
    */
   userId: number;
 }
 
 export interface AddAlternateEmailResponse extends BaseResponseStatus {
   /**
-   * @description Array of added alternate email objects
+   * Array of added alternate email objects
    */
   data: AlternateEmail[];
 }
@@ -173,11 +173,11 @@ export interface AddAlternateEmailResponse extends BaseResponseStatus {
 
 export interface GetAlternateEmailOptions extends RequestOptions<undefined, undefined> {
   /**
-   * @description User ID
+   * User ID
    */
   userId: number;
   /**
-   * @description Alternate email ID
+   * Alternate email ID
    */
   alternateEmailId: number;
 }
@@ -188,14 +188,14 @@ export interface GetAlternateEmailOptions extends RequestOptions<undefined, unde
 
 export interface ListAlternateEmailsOptions extends RequestOptions<undefined, undefined> {
   /**
-   * @description User ID
+   * User ID
    */
   userId: number;
 }
 
 export interface ListAlternateEmailsResponse {
   /**
-   * @description Array of alternate email objects
+   * Array of alternate email objects
    */
   data: AlternateEmail[];
   /**
@@ -203,15 +203,15 @@ export interface ListAlternateEmailsResponse {
    */
   pageNumber: number;
   /**
-   * @description Number of items in a page.
+   * Number of items in a page.
    */
   pageSize: number;
   /**
-   * @description Total number of pages
+   * Total number of pages
    */
   totalPages: number;
   /**
-   * @description Total count of alternate emails
+   * Total count of alternate emails
    */
   totalCount: number;
 }
@@ -222,18 +222,18 @@ export interface ListAlternateEmailsResponse {
 
 export interface MakeAlternateEmailPrimaryOptions extends RequestOptions<undefined, undefined> {
   /**
-   * @description User ID
+   * User ID
    */
   userId: number;
   /**
-   * @description Alternate email ID to make primary
+   * Alternate email ID to make primary
    */
   alternateEmailId: number;
 }
 
 export interface MakeAlternateEmailPrimaryResponse extends BaseResponseStatus {
   /**
-   * @description The alternate email that was made primary
+   * The alternate email that was made primary
    */
   data: AlternateEmail[];
 }
@@ -244,11 +244,11 @@ export interface MakeAlternateEmailPrimaryResponse extends BaseResponseStatus {
 
 export interface DeleteAlternateEmailOptions extends RequestOptions<undefined, undefined> {
   /**
-   * @description User ID
+   * User ID
    */
   userId: number;
   /**
-   * @description Alternate email ID to delete
+   * Alternate email ID to delete
    */
   alternateEmailId: number;
 }

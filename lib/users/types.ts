@@ -10,9 +10,9 @@ export interface UsersApi {
   /**
    * Gets the specified user.
    *
-   * @param options - GetUserOptions - Configuration options for the request
-   * @param callback - RequestCallback<GetUserResponse> - Optional callback function
-   * @returns Promise resolving to the User object
+   * @param options - {@link GetUserOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link GetUserResponse}\> - Optional callback function
+   * @returns Promise\<{@link GetUserResponse}\>
    *
    * @remarks
    * It mirrors to the following Smartsheet REST API method: `GET /users/{userId}`
@@ -34,9 +34,9 @@ export interface UsersApi {
    * For System admins, additional User object attributes are included in the response (admin, groupAdmin,
    * isInternal, licensedSheetCreator, resourceViewer, seatType, seatTypeLastChangedAt, sheetCount, status).
    *
-   * @param options - RequestOptions<ListUsersQueryParameters, undefined> - Configuration options for the request
-   * @param callback - RequestCallback<ListUsersResponse> - Optional callback function
-   * @returns Promise resolving to an IndexResult object containing an array of User objects
+   * @param options - {@link RequestOptions}\<{@link ListUsersQueryParameters}, undefined\> - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link ListUsersResponse}\> - Optional callback function
+   * @returns Promise\<{@link ListUsersResponse}\>
    *
    * @remarks
    * It mirrors to the following Smartsheet REST API method: `GET /users`
@@ -56,9 +56,9 @@ export interface UsersApi {
   /**
    * Gets the current user (the user whose access token is being used to make the API call).
    *
-   * @param options - RequestOptions<GetCurrentUserQueryParameters, undefined> - Configuration options for the request
-   * @param callback - RequestCallback<GetCurrentUserResponse> - Optional callback function
-   * @returns Promise resolving to the current User object
+   * @param options - {@link RequestOptions}\<{@link GetCurrentUserQueryParameters}, undefined\> - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link GetCurrentUserResponse}\> - Optional callback function
+   * @returns Promise\<{@link GetCurrentUserResponse}\>
    *
    * @remarks
    * It mirrors to the following Smartsheet REST API method: `GET /users/me`
@@ -80,9 +80,9 @@ export interface UsersApi {
    * user is added to the org. If UAP is off, or user does not match UAP rules, user is invited to the org
    * and must explicitly accept the invitation to join.
    *
-   * @param options - RequestOptions<undefined, AddUserBody> - Configuration options for the request
-   * @param callback - RequestCallback<AddUserResponse> - Optional callback function
-   * @returns Promise resolving to the result containing the newly created User object
+   * @param options - {@link RequestOptions}\<undefined, {@link AddUserBody}\> - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link AddUserResponse}\> - Optional callback function
+   * @returns Promise\<{@link AddUserResponse}\>
    *
    * @remarks
    * **Who can use this operation:**
@@ -113,9 +113,9 @@ export interface UsersApi {
    *
    * This is a convenience method that adds a user with sendEmail=true query parameter.
    *
-   * @param options - RequestOptions<undefined, AddUserBody> - Configuration options for the request
-   * @param callback - RequestCallback<AddUserResponse> - Optional callback function
-   * @returns Promise resolving to the result containing the newly created User object
+   * @param options - {@link RequestOptions}\<undefined, {@link AddUserBody}\> - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link AddUserResponse}\> - Optional callback function
+   * @returns Promise\<{@link AddUserResponse}\>
    *
    * @remarks
    * **Who can use this operation:**
@@ -142,9 +142,9 @@ export interface UsersApi {
   /**
    * Updates the specified user.
    *
-   * @param options - UpdateUserOptions - Configuration options for the request
-   * @param callback - RequestCallback<UpdateUserResponse> - Optional callback function
-   * @returns Promise resolving to the result containing updated user data
+   * @param options - {@link UpdateUserOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link UpdateUserResponse}\> - Optional callback function
+   * @returns Promise\<{@link UpdateUserResponse}\>
    *
    * @remarks
    * **Who can use this operation:**
@@ -174,9 +174,9 @@ export interface UsersApi {
    * User is transitioned to a free collaborator with read-only access to owned sheets
    * (unless those are optionally transferred to another user).
    *
-   * @param options - RemoveUserOptions - Configuration options for the request
-   * @param callback - RequestCallback<BaseResponseStatus> - Optional callback function
-   * @returns Promise resolving to the result object
+   * @param options - {@link RemoveUserOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    *
    * @remarks
    * **Who can use this operation:**
@@ -199,16 +199,15 @@ export interface UsersApi {
     options: RemoveUserOptions,
     callback?: RequestCallback<BaseResponseStatus>
   ) => Promise<BaseResponseStatus>;
-
   /**
    * Deactivates the specified user.
    *
    * Deactivated users retain their account information but cannot access Smartsheet.
    * They can be reactivated later.
    *
-   * @param options - DeactivateUserOptions - Configuration options for the request
-   * @param callback - RequestCallback<BaseResponseStatus> - Optional callback function
-   * @returns Promise resolving to the result object
+   * @param options - {@link DeactivateUserOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    *
    * @remarks
    * **Who can use this operation:**
@@ -233,9 +232,9 @@ export interface UsersApi {
    *
    * Reactivated users regain access to their account and Smartsheet.
    *
-   * @param options - ReactivateUserOptions - Configuration options for the request
-   * @param callback - RequestCallback<BaseResponseStatus> - Optional callback function
-   * @returns Promise resolving to the result object
+   * @param options - {@link ReactivateUserOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    *
    * @remarks
    * **Who can use this operation:**
@@ -260,9 +259,9 @@ export interface UsersApi {
    *
    * The image file must be a PNG, JPEG, or GIF file. The maximum file size is 1 MB.
    *
-   * @param options - AddProfileImageOptions - Configuration options for the request
-   * @param callback - RequestCallback<AddProfileImageResponse> - Optional callback function
-   * @returns Promise resolving to the result containing user data with profile image info
+   * @param options - {@link AddProfileImageOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link AddProfileImageResponse}\> - Optional callback function
+   * @returns Promise\<{@link AddProfileImageResponse}\>
    *
    * @remarks
    * **Who can use this operation:**
@@ -292,9 +291,9 @@ export interface UsersApi {
    * - GUEST - only external users can be upgraded to this seat type
    * - MEMBER (default)
    *
-   * @param options - UpgradeUserOptions - Configuration options for the request
-   * @param callback - RequestCallback<BaseResponseStatus> - Optional callback function
-   * @returns Promise resolving to the result object
+   * @param options - {@link UpgradeUserOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    *
    * @remarks
    * **Who can use this operation:**
@@ -329,9 +328,9 @@ export interface UsersApi {
    * - GUEST - only external users can be downgraded to this seat type
    * - VIEWER
    *
-   * @param options - DowngradeUserOptions - Configuration options for the request
-   * @param callback - RequestCallback<BaseResponseStatus> - Optional callback function
-   * @returns Promise resolving to the result object
+   * @param options - {@link DowngradeUserOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    *
    * @remarks
    * **Who can use this operation:**
@@ -360,9 +359,9 @@ export interface UsersApi {
   /**
    * Gets a list of plans for the specified user.
    *
-   * @param options - ListUserPlansOptions - Configuration options for the request
-   * @param callback - RequestCallback<ListUserPlansResponse> - Optional callback function
-   * @returns Promise resolving to an object containing an array of user plan data
+   * @param options - {@link ListUserPlansOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link ListUserPlansResponse}\> - Optional callback function
+   * @returns Promise\<{@link ListUserPlansResponse}\>
    *
    * @remarks
    * **Who can use this operation:**
@@ -385,9 +384,9 @@ export interface UsersApi {
   /**
    * Removes the specified user from the specified plan.
    *
-   * @param options - RemoveUserFromPlanOptions - Configuration options for the request
-   * @param callback - RequestCallback<BaseResponseStatus> - Optional callback function
-   * @returns Promise resolving to the result object
+   * @param options - {@link RemoveUserFromPlanOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    *
    * @remarks
    * **Who can use this operation:**
@@ -422,79 +421,79 @@ export enum SeatTypes {
 
 export interface UserProfile {
   /**
-   * @description User Id.
+   * User Id.
    */
   id: number;
   /**
-   * @description User's email address.
+   * User's email address.
    */
   email: string;
   /**
-   * @description User's first name.
+   * User's first name.
    */
   firstName?: string;
   /**
-   * @description User's last name.
+   * User's last name.
    */
   lastName?: string;
   /**
-   * @description User's full name (read-only).
+   * User's full name (read-only).
    */
   name?: string;
   /**
-   * @description User's role.
+   * User's role.
    */
   admin?: boolean;
   /**
-   * @description User's license type.
+   * User's license type.
    */
   licensedSheetCreator?: boolean;
   /**
-   * @description User's group admin status.
+   * User's group admin status.
    */
   groupAdmin?: boolean;
   /**
-   * @description User's resource viewer status.
+   * User's resource viewer status.
    */
   resourceViewer?: boolean;
   /**
-   * @description User's status.
+   * User's status.
    */
   status?: UserStatus;
   /**
-   * @description URL to user's profile image.
+   * URL to user's profile image.
    */
   profileImage?: ProfileImage;
   /**
-   * @description User's title.
+   * User's title.
    */
   title?: string;
   /**
-   * @description User's department.
+   * User's department.
    */
   department?: string;
   /**
-   * @description User's company.
+   * User's company.
    */
   company?: string;
   /**
-   * @description User's work phone.
+   * User's work phone.
    */
   workPhone?: string;
   /**
-   * @description User's mobile phone.
+   * User's mobile phone.
    */
   mobilePhone?: string;
   /**
-   * @description User's role.
+   * User's role.
    */
   role?: string;
   /**
-   * @description User's custom welcome screen viewed status.
+   * User's custom welcome screen viewed status.
    */
   customWelcomeScreenViewed?: Date | string;
   /**
-   * @description User's last login time.
+   * User's last login time.
    */
   lastLogin?: Date | string;
 }
@@ -508,41 +507,41 @@ export enum UserStatus {
 
 export interface Account {
   /**
-   * @description Account Id.
+   * Account Id.
    */
   id: number;
   /**
-   * @description Account name.
+   * Account name.
    */
   name: string;
 }
 
 export interface AlternateEmail {
   /**
-   * @description Alternate email Id.
+   * Alternate email Id.
    */
   id: number;
   /**
-   * @description Whether the alternate email is confirmed.
+   * Whether the alternate email is confirmed.
    */
   confirmed: boolean;
   /**
-   * @description The alternate email address.
+   * The alternate email address.
    */
   email: string;
 }
 
 export interface ProfileImage {
   /**
-   * @description Image Id.
+   * Image Id.
    */
   imageId: string;
   /**
-   * @description Image height in pixels.
+   * Image height in pixels.
    */
   height?: number;
   /**
-   * @description Image width in pixels.
+   * Image width in pixels.
    */
   width?: number;
 }
@@ -553,134 +552,134 @@ export interface ProfileImage {
 
 export interface GetUserResponse {
   /**
-   * @description User Id.
+   * User Id.
    */
   id: number;
 
   /**
-   * @description Account information.
+   * Account information.
    */
   account: Account;
 
   /**
-   * @description User's admin status.
+   * User's admin status.
    */
   admin?: boolean;
 
   /**
-   * @description Alternate email addresses.
+   * Alternate email addresses.
    */
   alternateEmails?: AlternateEmail[];
 
   /**
-   * @description User's company.
+   * User's company.
    */
   company: string;
 
   /**
-   * @description User's custom welcome screen viewed timestamp.
+   * User's custom welcome screen viewed timestamp.
    */
   customWelcomeScreenViewed?: Date | string;
 
   /**
-   * @description User's department.
+   * User's department.
    */
   department: string;
 
   /**
-   * @description User's email address.
+   * User's email address.
    */
   email: string;
 
   /**
-   * @description User's first name.
+   * User's first name.
    */
   firstName: string;
 
   /**
-   * @description User's group admin status.
+   * User's group admin status.
    */
   groupAdmin?: boolean;
 
   /**
-   * @description User's Jira admin status.
+   * User's Jira admin status.
    */
   jiraAdmin: boolean;
 
   /**
-   * @description User's last login timestamp.
+   * User's last login timestamp.
    */
   lastLogin?: Date | string;
 
   /**
-   * @description User's last name.
+   * User's last name.
    */
   lastName: string;
 
   /**
-   * @description User's licensed sheet creator status.
+   * User's licensed sheet creator status.
    */
   licensedSheetCreator?: boolean;
 
   /**
-   * @description User's locale.
+   * User's locale.
    */
   locale: string;
 
   /**
-   * @description User's mobile phone.
+   * User's mobile phone.
    */
   mobilePhone: string;
 
   /**
-   * @description User's profile image.
+   * User's profile image.
    */
   profileImage?: ProfileImage;
 
   /**
-   * @description User's resource viewer status.
+   * User's resource viewer status.
    */
   resourceViewer?: boolean;
 
   /**
-   * @description User's role.
+   * User's role.
    */
   role: string;
 
   /**
-   * @description User's Salesforce admin status.
+   * User's Salesforce admin status.
    */
   salesforceAdmin: boolean;
 
   /**
-   * @description User's Salesforce user status.
+   * User's Salesforce user status.
    */
   salesforceUser: boolean;
 
   /**
-   * @description User's sheet count.
+   * User's sheet count.
    */
   sheetCount?: number;
 
   /**
-   * @description User's time zone.
+   * User's time zone.
    */
   timeZone: string;
 
   /**
-   * @description User's title.
+   * User's title.
    */
   title: string;
 
   /**
-   * @description User's work phone.
+   * User's work phone.
    */
   workPhone: string;
 }
 
 export interface GetUserOptions extends RequestOptions<undefined, undefined> {
   /**
-   * @description User Id to deactivate.
+   * User Id to deactivate.
    */
   userId: number;
 }
@@ -691,167 +690,167 @@ export interface GetUserOptions extends RequestOptions<undefined, undefined> {
 
 export interface ListUsersQueryParameters {
   /**
-   * @description A comma-separated list of emails.
+   * A comma-separated list of emails.
    */
   email?: string;
 
   /**
-   * @description A comma-separated list of elements to include in the response.
+   * A comma-separated list of elements to include in the response.
    */
   include?: string;
 
   /**
-   * @default false
-   * @description If true, include all results (do not paginate).
+   * @defaultValue false
+   * If true, include all results (do not paginate).
    */
   includeAll?: boolean;
 
   /**
-   * @default false
-   * @description If true, dates/times are sent and received as milliseconds since the UNIX epoch (midnight on January 1, 1970 in UTC time).
+   * @defaultValue false
+   * If true, dates/times are sent and received as milliseconds since the UNIX epoch (midnight on January 1, 1970 in UTC time).
    */
   numericDates?: boolean;
 
   /**
-   * @description Plan Id for which seat types are returned. Available only to system administrators.
+   * Plan Id for which seat types are returned. Available only to system administrators.
    */
   planId?: number;
 
   /**
-   * @description Seat type based on which to filter the results.
+   * Seat type based on which to filter the results.
    */
   seatType?: SeatTypes;
 
   /**
-   * @default 1
-   * @description Which page to return.
+   * @defaultValue 1
+   * Which page to return.
    */
   page?: number;
 
   /**
-   * @default 100
-   * @description The maximum number of items to return per page.
+   * @defaultValue 100
+   * The maximum number of items to return per page.
    */
   pageSize?: number;
 }
 
 export interface ListUsersData {
   /**
-   * @description User Id.
+   * User Id.
    */
   id: number;
 
   /**
-   * @description User's admin status.
+   * User's admin status.
    */
   admin: boolean;
 
   /**
-   * @description User's custom welcome screen viewed timestamp.
+   * User's custom welcome screen viewed timestamp.
    */
   customWelcomeScreenViewed?: Date | string;
 
   /**
-   * @description User's email address.
+   * User's email address.
    */
   email: string;
 
   /**
-   * @description User's first name.
+   * User's first name.
    */
   firstName: string;
 
   /**
-   * @description User's group admin status.
+   * User's group admin status.
    */
   groupAdmin: boolean;
 
   /**
-   * @description Whether the user is internal.
+   * Whether the user is internal.
    */
   isInternal: boolean;
 
   /**
-   * @description User's last login timestamp.
+   * User's last login timestamp.
    */
   lastLogin?: Date | string;
 
   /**
-   * @description User's last name.
+   * User's last name.
    */
   lastName: string;
 
   /**
-   * @description User's licensed sheet creator status.
+   * User's licensed sheet creator status.
    */
   licensedSheetCreator: boolean;
 
   /**
-   * @description User's full name.
+   * User's full name.
    */
   name: string;
 
   /**
-   * @description User's profile image.
+   * User's profile image.
    */
   profileImage?: ProfileImage;
 
   /**
-   * @description Provisional expiration date.
+   * Provisional expiration date.
    */
   provisionalExpirationDate?: Date | string;
 
   /**
-   * @description User's resource viewer status.
+   * User's resource viewer status.
    */
   resourceViewer: boolean;
 
   /**
-   * @description User's seat type.
+   * User's seat type.
    */
   seatType: SeatTypes | string;
 
   /**
-   * @description When the seat type was last changed.
+   * When the seat type was last changed.
    */
   seatTypeLastChangedAt?: Date | string;
 
   /**
-   * @description User's sheet count.
+   * User's sheet count.
    */
   sheetCount?: number;
 
   /**
-   * @description User's status.
+   * User's status.
    */
   status: UserStatus | string;
 }
 
 export interface ListUsersResponse {
   /**
-   * @default 1
-   * @description The current page number.
+   * @defaultValue 1
+   * The current page number.
    */
   pageNumber: number;
 
   /**
-   * @default 100
-   * @description The number of items per page.
+   * @defaultValue 100
+   * The number of items per page.
    */
   pageSize: number;
 
   /**
-   * @description The total number of pages.
+   * The total number of pages.
    */
   totalPages: number;
 
   /**
-   * @description The total number of users.
+   * The total number of users.
    */
   totalCount: number;
 
   /**
-   * @description Array of User objects.
+   * Array of User objects.
    */
   data: ListUsersData[];
 }
@@ -862,166 +861,166 @@ export interface ListUsersResponse {
 
 export interface GetCurrentUserResponse {
   /**
-   * @description User Id.
+   * User Id.
    */
   id: number;
 
   /**
-   * @description Account information.
+   * Account information.
    */
   account: Account;
 
   /**
-   * @description User's admin status.
+   * User's admin status.
    */
   admin: boolean;
 
   /**
-   * @description Alternate email addresses.
+   * Alternate email addresses.
    */
   alternateEmails?: AlternateEmail[];
 
   /**
-   * @description User's company.
+   * User's company.
    */
   company: string;
 
   /**
-   * @description User's custom welcome screen viewed timestamp.
+   * User's custom welcome screen viewed timestamp.
    */
   customWelcomeScreenViewed?: Date | string;
 
   /**
-   * @description User's department.
+   * User's department.
    */
   department: string;
 
   /**
-   * @description User's email address.
+   * User's email address.
    */
   email: string;
 
   /**
-   * @description User's first name.
+   * User's first name.
    */
   firstName: string;
 
   /**
-   * @description User's group admin status.
+   * User's group admin status.
    */
   groupAdmin: boolean;
 
   /**
-   * @description User's Jira admin status.
+   * User's Jira admin status.
    */
   jiraAdmin: boolean;
 
   /**
-   * @description User's last login timestamp.
+   * User's last login timestamp.
    */
   lastLogin?: Date | string;
 
   /**
-   * @description User's last name.
+   * User's last name.
    */
   lastName: string;
 
   /**
-   * @description User's licensed sheet creator status.
+   * User's licensed sheet creator status.
    */
   licensedSheetCreator: boolean;
 
   /**
-   * @description User's locale.
+   * User's locale.
    */
   locale: string;
 
   /**
-   * @description User's mobile phone.
+   * User's mobile phone.
    */
   mobilePhone: string;
 
   /**
-   * @description User's profile image.
+   * User's profile image.
    */
   profileImage?: ProfileImage;
 
   /**
-   * @description User's resource viewer status.
+   * User's resource viewer status.
    */
   resourceViewer: boolean;
 
   /**
-   * @description User's role.
+   * User's role.
    */
   role: string;
 
   /**
-   * @description User's Salesforce admin status.
+   * User's Salesforce admin status.
    */
   salesforceAdmin: boolean;
 
   /**
-   * @description User's Salesforce user status.
+   * User's Salesforce user status.
    */
   salesforceUser: boolean;
 
   /**
-   * @description User's sheet count.
+   * User's sheet count.
    */
   sheetCount: number;
 
   /**
-   * @description User's time zone.
+   * User's time zone.
    */
   timeZone: string;
 
   /**
-   * @description User's title.
+   * User's title.
    */
   title: string;
 
   /**
-   * @description User's work phone.
+   * User's work phone.
    */
   workPhone: string;
 
   /**
-   * @description Array of group data objects.
+   * Array of group data objects.
    */
   data: {
     /**
-     * @description Group Id.
+     * Group Id.
      */
     id: number;
 
     /**
-     * @description Group name.
+     * Group name.
      */
     name: string;
 
     /**
-     * @description Group description.
+     * Group description.
      */
     description: string;
 
     /**
-     * @description Group owner email.
+     * Group owner email.
      */
     owner: string;
 
     /**
-     * @description Group owner Id.
+     * Group owner Id.
      */
     ownerId: number;
 
     /**
-     * @description Group created timestamp.
+     * Group created timestamp.
      */
     createdAt: Date | string;
 
     /**
-     * @description Group modified timestamp.
+     * Group modified timestamp.
      */
     modifiedAt: Date | string;
   }[];
@@ -1029,7 +1028,7 @@ export interface GetCurrentUserResponse {
 
 export interface GetCurrentUserQueryParameters {
   /**
-   * @description A comma-separated list of elements to include in the response.
+   * A comma-separated list of elements to include in the response.
    */
   include?: string;
 }
@@ -1040,146 +1039,146 @@ export interface GetCurrentUserQueryParameters {
 
 export interface AddUserQueryParameters {
   /**
-   * @default false
-   * @description Whether to notify the user by email.
+   * @defaultValue false
+   * Whether to notify the user by email.
    */
   sendEmail?: boolean;
 }
 
 export interface AddUserBody {
   /**
-   * @description User's email address.
+   * User's email address.
    */
   email: string;
 
   /**
-   * @description User's first name.
+   * User's first name.
    */
   firstName: string;
 
   /**
-   * @description User's last name.
+   * User's last name.
    */
   lastName: string;
 
   /**
-   * @default false
-   * @description User's admin status.
+   * @defaultValue false
+   * User's admin status.
    */
   admin?: boolean;
 
   /**
-   * @default false
-   * @description User's licensed sheet creator status.
+   * @defaultValue false
+   * User's licensed sheet creator status.
    */
   licensedSheetCreator?: boolean;
 
   /**
-   * @description User's profile image.
+   * User's profile image.
    */
   profileImage?: ProfileImage;
 
   /**
-   * @default false
-   * @description User's group admin status.
+   * @defaultValue false
+   * User's group admin status.
    */
   groupAdmin?: boolean;
 
   /**
-   * @default false
-   * @description User's resource viewer status.
+   * @defaultValue false
+   * User's resource viewer status.
    */
   resourceViewer?: boolean;
 
   /**
-   * @description User's status.
+   * User's status.
    */
   status: UserStatus;
 }
 
 export interface AddUserResponse {
   /**
-   * @description Status message.
+   * Status message.
    */
   message: string;
   /**
-   * @description Result code.
+   * Result code.
    */
   resultCode: number;
   /**
-   * @description The created user object.
+   * The created user object.
    */
   result: {
     /**
-     * @description User Id.
+     * User Id.
      */
     id: number;
     /**
-     * @description User's admin status.
+     * User's admin status.
      */
     admin?: boolean;
     /**
-     * @description User's custom welcome screen viewed timestamp.
+     * User's custom welcome screen viewed timestamp.
      */
     customWelcomeScreenViewed?: Date | string;
     /**
-     * @description User's email address.
+     * User's email address.
      */
     email: string;
     /**
-     * @description User's first name.
+     * User's first name.
      */
     firstName: string;
     /**
-     * @description User's group admin status.
+     * User's group admin status.
      */
     groupAdmin?: boolean;
     /**
-     * @description Whether the user is internal.
+     * Whether the user is internal.
      */
     isInternal?: boolean;
     /**
-     * @description User's last login timestamp.
+     * User's last login timestamp.
      */
     lastLogin?: Date | string;
     /**
-     * @description User's last name.
+     * User's last name.
      */
     lastName: string;
     /**
-     * @description User's licensed sheet creator status.
+     * User's licensed sheet creator status.
      */
     licensedSheetCreator?: boolean;
     /**
-     * @description User's full name.
+     * User's full name.
      */
     name: string;
     /**
-     * @description User's profile image.
+     * User's profile image.
      */
     profileImage?: ProfileImage;
     /**
-     * @description Provisional expiration date.
+     * Provisional expiration date.
      */
     provisionalExpirationDate?: Date | string;
     /**
-     * @description User's resource viewer status.
+     * User's resource viewer status.
      */
     resourceViewer?: boolean;
     /**
-     * @description User's seat type.
+     * User's seat type.
      */
     seatType?: SeatTypes | string;
     /**
-     * @description When the seat type was last changed.
+     * When the seat type was last changed.
      */
     seatTypeLastChangedAt?: Date | string;
     /**
-     * @description User's sheet count.
+     * User's sheet count.
      */
     sheetCount?: number;
     /**
-     * @description User's status.
+     * User's status.
      */
     status: UserStatus | string;
   };
@@ -1191,81 +1190,81 @@ export interface AddUserResponse {
 
 export interface UpdateUserBody {
   /**
-   * @description User's email address.
+   * User's email address.
    */
   email?: string;
   /**
-   * @description User's first name.
+   * User's first name.
    */
   firstName?: string;
   /**
-   * @description User's last name.
+   * User's last name.
    */
   lastName?: string;
   /**
-   * @default false
-   * @description User's admin status.
+   * @defaultValue false
+   * User's admin status.
    */
   admin?: boolean;
   /**
-   * @default false
-   * @description User's licensed sheet creator status.
+   * @defaultValue false
+   * User's licensed sheet creator status.
    */
   licensedSheetCreator?: boolean;
   /**
-   * @default false
-   * @description User's group admin status.
+   * @defaultValue false
+   * User's group admin status.
    */
   groupAdmin?: boolean;
   /**
-   * @default false
-   * @description User's resource viewer status.
+   * @defaultValue false
+   * User's resource viewer status.
    */
   resourceViewer?: boolean;
 }
 
 export interface UpdateUserOptions extends RequestOptions<undefined, UpdateUserBody> {
   /**
-   * @description User Id.
+   * User Id.
    */
   userId: number;
 }
 
 export interface UpdateUserResponse {
   /**
-   * @description Status message.
+   * Status message.
    */
   message: string;
   /**
-   * @description Result code.
+   * Result code.
    */
   resultCode: number;
   /**
-   * @description Array of updated user data.
+   * Array of updated user data.
    */
   data: {
     /**
-     * @description User's email address.
+     * User's email address.
      */
     email: string;
     /**
-     * @description User's full name.
+     * User's full name.
      */
     name: string;
     /**
-     * @description User's first name.
+     * User's first name.
      */
     firstName: string;
     /**
-     * @description User's last name.
+     * User's last name.
      */
     lastName: string;
     /**
-     * @description User's profile image.
+     * User's profile image.
      */
     profileImage?: ProfileImage;
     /**
-     * @description User Id.
+     * User Id.
      */
     id: number;
   }[];
@@ -1277,24 +1276,24 @@ export interface UpdateUserResponse {
 
 export interface RemoveUserQueryParameters {
   /**
-   * @description ID of the user to transfer ownership to.
+   * ID of the user to transfer ownership to.
    */
   transferTo?: number;
   /**
-   * @default false
-   * @description Whether to transfer sheets.
+   * @defaultValue false
+   * Whether to transfer sheets.
    */
   transferSheets?: boolean;
   /**
-   * @default false
-   * @description Whether to remove from sharing.
+   * @defaultValue false
+   * Whether to remove from sharing.
    */
   removeFromSharing?: boolean;
 }
 
 export interface RemoveUserOptions extends RequestOptions<RemoveUserQueryParameters, undefined> {
   /**
-   * @description User Id.
+   * User Id.
    */
   userId: number;
 }
@@ -1305,14 +1304,14 @@ export interface RemoveUserOptions extends RequestOptions<RemoveUserQueryParamet
 
 export interface DeactivateUserOptions extends RequestOptions<undefined, undefined> {
   /**
-   * @description User Id to deactivate.
+   * User Id to deactivate.
    */
   userId: number;
 }
 
 export interface ReactivateUserOptions extends RequestOptions<undefined, undefined> {
   /**
-   * @description User Id to reactivate.
+   * User Id to reactivate.
    */
   userId: number;
 }
@@ -1322,53 +1321,53 @@ export interface ReactivateUserOptions extends RequestOptions<undefined, undefin
 // ============================================================================
 export interface AddProfileImageBody {
   /**
-   * @description The binary image file to upload as the user's profile image.
+   * The binary image file to upload as the user's profile image.
    */
   file: Buffer | Blob | ArrayBuffer | Uint8Array | ReadableStream;
 }
 
 export interface AddProfileImageOptions extends RequestOptions<undefined, AddProfileImageBody> {
   /**
-   * @description User Id.
+   * User Id.
    */
   userId: number;
 }
 
 export interface AddProfileImageResponse {
   /**
-   * @description Status message.
+   * Status message.
    */
   message: string;
   /**
-   * @description Result code.
+   * Result code.
    */
   resultCode: number;
   /**
-   * @description Array of user data with profile image info.
+   * Array of user data with profile image info.
    */
   data: {
     /**
-     * @description User's email address.
+     * User's email address.
      */
     email: string;
     /**
-     * @description User's full name.
+     * User's full name.
      */
     name: string;
     /**
-     * @description User's first name.
+     * User's first name.
      */
     firstName: string;
     /**
-     * @description User's last name.
+     * User's last name.
      */
     lastName: string;
     /**
-     * @description User's profile image.
+     * User's profile image.
      */
     profileImage: ProfileImage;
     /**
-     * @description User Id.
+     * User Id.
      */
     id: number;
   }[];
@@ -1380,36 +1379,36 @@ export interface AddProfileImageResponse {
 
 export interface UpgradeUserBody {
   /**
-   * @description User's seat type to upgrade to. Can be 'GUEST' (only for external users) or 'MEMBER' (default).
+   * User's seat type to upgrade to. Can be 'GUEST' (only for external users) or 'MEMBER' (default).
    */
   seatType?: SeatTypes;
 }
 
 export interface UpgradeUserOptions extends RequestOptions<undefined, UpgradeUserBody> {
   /**
-   * @description User Id.
+   * User Id.
    */
   userId: number;
   /**
-   * @description Plan Id.
+   * Plan Id.
    */
   planId: number;
 }
 
 export interface DowngradeUserBody {
   /**
-   * @description User's seat type to downgrade to. Can be 'GUEST' (only for external users) or 'VIEWER' (required).
+   * User's seat type to downgrade to. Can be 'GUEST' (only for external users) or 'VIEWER' (required).
    */
   seatType: SeatTypes;
 }
 
 export interface DowngradeUserOptions extends RequestOptions<undefined, DowngradeUserBody> {
   /**
-   * @description User Id.
+   * User Id.
    */
   userId: number;
   /**
-   * @description Plan Id.
+   * Plan Id.
    */
   planId: number;
 }
@@ -1420,50 +1419,50 @@ export interface DowngradeUserOptions extends RequestOptions<undefined, Downgrad
 
 export interface ListUserPlansQueryParameters {
   /**
-   * @description The lastKey token returned from the previous page of results.
+   * The lastKey token returned from the previous page of results.
    */
   lastKey?: string;
   /**
-   * @default 100
-   * @description The maximum amount of items to return in the response.
+   * @defaultValue 100
+   * The maximum amount of items to return in the response.
    */
   maxItems?: number;
 }
 
 export interface ListUserPlansOptions extends RequestOptions<ListUserPlansQueryParameters, undefined> {
   /**
-   * @description User Id.
+   * User Id.
    */
   userId: number;
 }
 
 export interface ListUserPlansResponse {
   /**
-   * @description The lastKey token for pagination.
+   * The lastKey token for pagination.
    */
   lastKey?: string;
   /**
-   * @description Array of user plan data.
+   * Array of user plan data.
    */
   data: {
     /**
-     * @description Plan Id.
+     * Plan Id.
      */
     planId: number;
     /**
-     * @description User's seat type.
+     * User's seat type.
      */
     seatType: SeatTypes | string;
     /**
-     * @description When the seat type was last changed.
+     * When the seat type was last changed.
      */
     seatTypeLastChangedAt?: Date | string;
     /**
-     * @description Whether the user is internal.
+     * Whether the user is internal.
      */
     isInternal?: boolean;
     /**
-     * @description Provisional expiration date.
+     * Provisional expiration date.
      */
     provisionalExpirationDate?: Date | string;
   }[];
@@ -1475,11 +1474,11 @@ export interface ListUserPlansResponse {
 
 export interface RemoveUserFromPlanOptions extends RequestOptions<undefined, undefined> {
   /**
-   * @description User Id.
+   * User Id.
    */
   userId: number;
   /**
-   * @description Plan Id.
+   * Plan Id.
    */
   planId: number;
 }
