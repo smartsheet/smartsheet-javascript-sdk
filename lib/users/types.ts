@@ -11,7 +11,7 @@ export interface UsersApi {
    * GET /users/{userId}
    */
   getUser: (options: GetUserOptions, callback?: RequestCallback<GetUserResponse>) => Promise<GetUserResponse>;
-  
+
   /**
    * GET /users
    */
@@ -19,7 +19,7 @@ export interface UsersApi {
     options: RequestOptions<ListUsersQueryParameters, undefined>,
     callback?: RequestCallback<ListUsersResponse>
   ) => Promise<ListUsersResponse>;
-  
+
   /**
    * GET /users/me
    */
@@ -27,7 +27,7 @@ export interface UsersApi {
     options: RequestOptions<GetCurrentUserQueryParameters, undefined>,
     callback?: RequestCallback<GetCurrentUserResponse>
   ) => Promise<GetCurrentUserResponse>;
-  
+
   /**
    * POST /users
    */
@@ -35,7 +35,7 @@ export interface UsersApi {
     options: RequestOptions<undefined, AddUserBody>,
     callback?: RequestCallback<AddUserResponse>
   ) => Promise<AddUserResponse>;
-  
+
   /**
    * POST /users?sendEmail=true
    */
@@ -43,7 +43,7 @@ export interface UsersApi {
     options: RequestOptions<undefined, AddUserBody>,
     callback?: RequestCallback<AddUserResponse>
   ) => Promise<AddUserResponse>;
-  
+
   /**
    * PUT /users/{userId}
    */
@@ -51,7 +51,7 @@ export interface UsersApi {
     options: UpdateUserOptions,
     callback?: RequestCallback<UpdateUserResponse>
   ) => Promise<UpdateUserResponse>;
-  
+
   /**
    * DELETE /users/{userId}
    */
@@ -59,7 +59,7 @@ export interface UsersApi {
     options: RemoveUserOptions,
     callback?: RequestCallback<BaseResponseStatus>
   ) => Promise<BaseResponseStatus>;
-  
+
   /**
    * POST /users/{userId}/deactivate
    */
@@ -67,7 +67,7 @@ export interface UsersApi {
     options: DeactivateUserOptions,
     callback?: RequestCallback<BaseResponseStatus>
   ) => Promise<BaseResponseStatus>;
-  
+
   /**
    * POST /users/{userId}/reactivate
    */
@@ -75,7 +75,7 @@ export interface UsersApi {
     options: ReactivateUserOptions,
     callback?: RequestCallback<BaseResponseStatus>
   ) => Promise<BaseResponseStatus>;
-  
+
   /**
    * POST /users/{userId}/profileimage
    */
@@ -83,7 +83,7 @@ export interface UsersApi {
     options: AddProfileImageOptions,
     callback?: RequestCallback<AddProfileImageResponse>
   ) => Promise<AddProfileImageResponse>;
-  
+
   /**
    * POST /users/{userId}/plans/{planId}/upgrade
    */
@@ -91,7 +91,7 @@ export interface UsersApi {
     options: UpgradeUserOptions,
     callback?: RequestCallback<BaseResponseStatus>
   ) => Promise<BaseResponseStatus>;
-  
+
   /**
    * POST /users/{userId}/plans/{planId}/downgrade
    */
@@ -99,7 +99,7 @@ export interface UsersApi {
     options: DowngradeUserOptions,
     callback?: RequestCallback<BaseResponseStatus>
   ) => Promise<BaseResponseStatus>;
-  
+
   /**
    * GET /users/{userId}/plans
    */
@@ -107,7 +107,7 @@ export interface UsersApi {
     options: ListUserPlansOptions,
     callback?: RequestCallback<ListUserPlansResponse>
   ) => Promise<ListUserPlansResponse>;
-  
+
   /**
    * DELETE /users/{userId}/plans/{planId}
    */
