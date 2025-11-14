@@ -8,12 +8,45 @@ import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 
 export interface UsersApi {
   /**
-   * GET /users/{userId}
+   * Gets the specified user.
+   *
+   * @param options - GetUserOptions - Configuration options for the request
+   * @param callback - RequestCallback<GetUserResponse> - Optional callback function
+   * @returns Promise resolving to the User object
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `GET /users/{userId}`
+   *
+   * @example
+   * ```typescript
+   * const user = await client.users.getUser({
+   *   userId: 123456789012345
+   * });
+   * ```
    */
   getUser: (options: GetUserOptions, callback?: RequestCallback<GetUserResponse>) => Promise<GetUserResponse>;
 
   /**
-   * GET /users
+   * Gets a list of users in the organization account.
+   *
+   * To filter by email, use the optional email query string parameter to specify a list of users' email addresses.
+   *
+   * For System admins, additional User object attributes are included in the response (admin, groupAdmin,
+   * isInternal, licensedSheetCreator, resourceViewer, seatType, seatTypeLastChangedAt, sheetCount, status).
+   *
+   * @param options - RequestOptions<ListUsersQueryParameters, undefined> - Configuration options for the request
+   * @param callback - RequestCallback<ListUsersResponse> - Optional callback function
+   * @returns Promise resolving to an IndexResult object containing an array of User objects
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `GET /users`
+   *
+   * @example
+   * ```typescript
+   * const userList = await client.users.listAllUsers({
+   *   queryParams: { includeAll: true }
+   * });
+   * ```
    */
   listAllUsers: (
     options: RequestOptions<ListUsersQueryParameters, undefined>,
@@ -21,7 +54,19 @@ export interface UsersApi {
   ) => Promise<ListUsersResponse>;
 
   /**
-   * GET /users/me
+   * Gets the current user (the user whose access token is being used to make the API call).
+   *
+   * @param options - RequestOptions<GetCurrentUserQueryParameters, undefined> - Configuration options for the request
+   * @param callback - RequestCallback<GetCurrentUserResponse> - Optional callback function
+   * @returns Promise resolving to the current User object
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `GET /users/me`
+   *
+   * @example
+   * ```typescript
+   * const currentUser = await client.users.getCurrentUser({});
+   * ```
    */
   getCurrentUser: (
     options: RequestOptions<GetCurrentUserQueryParameters, undefined>,
@@ -29,7 +74,34 @@ export interface UsersApi {
   ) => Promise<GetCurrentUserResponse>;
 
   /**
-   * POST /users
+   * Adds a user to the organization account.
+   *
+   * If successful, and user auto provisioning (UAP) is on, and user matches the auto provisioning rules,
+   * user is added to the org. If UAP is off, or user does not match UAP rules, user is invited to the org
+   * and must explicitly accept the invitation to join.
+   *
+   * @param options - RequestOptions<undefined, AddUserBody> - Configuration options for the request
+   * @param callback - RequestCallback<AddUserResponse> - Optional callback function
+   * @returns Promise resolving to the result containing the newly created User object
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** System Admin
+   *
+   * It mirrors to the following Smartsheet REST API method: `POST /users`
+   *
+   * @example
+   * ```typescript
+   * const newUser = await client.users.addUser({
+   *   body: {
+   *     email: 'john.doe@example.com',
+   *     firstName: 'John',
+   *     lastName: 'Doe',
+   *     admin: false,
+   *     licensedSheetCreator: true
+   *   }
+   * });
+   * ```
    */
   addUser: (
     options: RequestOptions<undefined, AddUserBody>,
@@ -37,7 +109,30 @@ export interface UsersApi {
   ) => Promise<AddUserResponse>;
 
   /**
-   * POST /users?sendEmail=true
+   * Adds a user to the organization account and sends an email notification.
+   *
+   * This is a convenience method that adds a user with sendEmail=true query parameter.
+   *
+   * @param options - RequestOptions<undefined, AddUserBody> - Configuration options for the request
+   * @param callback - RequestCallback<AddUserResponse> - Optional callback function
+   * @returns Promise resolving to the result containing the newly created User object
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** System Admin
+   *
+   * It mirrors to the following Smartsheet REST API method: `POST /users?sendEmail=true`
+   *
+   * @example
+   * ```typescript
+   * const newUser = await client.users.addUserAndSendEmail({
+   *   body: {
+   *     email: 'john.doe@example.com',
+   *     firstName: 'John',
+   *     lastName: 'Doe'
+   *   }
+   * });
+   * ```
    */
   addUserAndSendEmail: (
     options: RequestOptions<undefined, AddUserBody>,
@@ -45,7 +140,28 @@ export interface UsersApi {
   ) => Promise<AddUserResponse>;
 
   /**
-   * PUT /users/{userId}
+   * Updates the specified user.
+   *
+   * @param options - UpdateUserOptions - Configuration options for the request
+   * @param callback - RequestCallback<UpdateUserResponse> - Optional callback function
+   * @returns Promise resolving to the result containing updated user data
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** System Admin
+   *
+   * It mirrors to the following Smartsheet REST API method: `PUT /users/{userId}`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.users.updateUser({
+   *   userId: 123456789012345,
+   *   body: {
+   *     admin: true,
+   *     licensedSheetCreator: true
+   *   }
+   * });
+   * ```
    */
   updateUser: (
     options: UpdateUserOptions,
@@ -53,7 +169,31 @@ export interface UsersApi {
   ) => Promise<UpdateUserResponse>;
 
   /**
-   * DELETE /users/{userId}
+   * Removes the specified user from the organization account.
+   *
+   * User is transitioned to a free collaborator with read-only access to owned sheets
+   * (unless those are optionally transferred to another user).
+   *
+   * @param options - RemoveUserOptions - Configuration options for the request
+   * @param callback - RequestCallback<BaseResponseStatus> - Optional callback function
+   * @returns Promise resolving to the result object
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** System Admin
+   *
+   * It mirrors to the following Smartsheet REST API method: `DELETE /users/{userId}`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.users.removeUser({
+   *   userId: 123456789012345,
+   *   queryParams: {
+   *     transferTo: 987654321098765,
+   *     transferSheets: true
+   *   }
+   * });
+   * ```
    */
   removeUser: (
     options: RemoveUserOptions,
@@ -61,7 +201,27 @@ export interface UsersApi {
   ) => Promise<BaseResponseStatus>;
 
   /**
-   * POST /users/{userId}/deactivate
+   * Deactivates the specified user.
+   *
+   * Deactivated users retain their account information but cannot access Smartsheet.
+   * They can be reactivated later.
+   *
+   * @param options - DeactivateUserOptions - Configuration options for the request
+   * @param callback - RequestCallback<BaseResponseStatus> - Optional callback function
+   * @returns Promise resolving to the result object
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** System Admin
+   *
+   * It mirrors to the following Smartsheet REST API method: `POST /users/{userId}/deactivate`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.users.deactivateUser({
+   *   userId: 123456789012345
+   * });
+   * ```
    */
   deactivateUser: (
     options: DeactivateUserOptions,
@@ -69,7 +229,26 @@ export interface UsersApi {
   ) => Promise<BaseResponseStatus>;
 
   /**
-   * POST /users/{userId}/reactivate
+   * Reactivates the specified user.
+   *
+   * Reactivated users regain access to their account and Smartsheet.
+   *
+   * @param options - ReactivateUserOptions - Configuration options for the request
+   * @param callback - RequestCallback<BaseResponseStatus> - Optional callback function
+   * @returns Promise resolving to the result object
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** System Admin
+   *
+   * It mirrors to the following Smartsheet REST API method: `POST /users/{userId}/reactivate`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.users.reactivateUser({
+   *   userId: 123456789012345
+   * });
+   * ```
    */
   reactivateUser: (
     options: ReactivateUserOptions,
@@ -77,7 +256,29 @@ export interface UsersApi {
   ) => Promise<BaseResponseStatus>;
 
   /**
-   * POST /users/{userId}/profileimage
+   * Adds a profile image to the specified user's Smartsheet account.
+   *
+   * The image file must be a PNG, JPEG, or GIF file. The maximum file size is 1 MB.
+   *
+   * @param options - AddProfileImageOptions - Configuration options for the request
+   * @param callback - RequestCallback<AddProfileImageResponse> - Optional callback function
+   * @returns Promise resolving to the result containing user data with profile image info
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** System Admin or the user themselves
+   *
+   * It mirrors to the following Smartsheet REST API method: `POST /users/{userId}/profileimage`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.users.addProfileImage({
+   *   userId: 123456789012345,
+   *   body: {
+   *     file: imageBuffer
+   *   }
+   * });
+   * ```
    */
   addProfileImage: (
     options: AddProfileImageOptions,
@@ -85,7 +286,34 @@ export interface UsersApi {
   ) => Promise<AddProfileImageResponse>;
 
   /**
-   * POST /users/{userId}/plans/{planId}/upgrade
+   * Upgrades the user associated with the specified Smartsheet plan.
+   *
+   * A user can be upgraded to the following seat types:
+   * - GUEST - only external users can be upgraded to this seat type
+   * - MEMBER (default)
+   *
+   * @param options - UpgradeUserOptions - Configuration options for the request
+   * @param callback - RequestCallback<BaseResponseStatus> - Optional callback function
+   * @returns Promise resolving to the result object
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** System Admin
+   *
+   * **Note:** Upgrading a user to its current seat type returns 200 OK.
+   *
+   * It mirrors to the following Smartsheet REST API method: `POST /users/{userId}/plans/{planId}/upgrade`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.users.upgradeUser({
+   *   userId: 123456789012345,
+   *   planId: 456789012345678,
+   *   body: {
+   *     seatType: 'MEMBER'
+   *   }
+   * });
+   * ```
    */
   upgradeUser: (
     options: UpgradeUserOptions,
@@ -93,7 +321,36 @@ export interface UsersApi {
   ) => Promise<BaseResponseStatus>;
 
   /**
-   * POST /users/{userId}/plans/{planId}/downgrade
+   * Downgrades the user associated with the specified Smartsheet plan.
+   *
+   * Downgrading a user does not affect their existing permissions on owned or shared items.
+   *
+   * A user can be downgraded to the following seat types:
+   * - GUEST - only external users can be downgraded to this seat type
+   * - VIEWER
+   *
+   * @param options - DowngradeUserOptions - Configuration options for the request
+   * @param callback - RequestCallback<BaseResponseStatus> - Optional callback function
+   * @returns Promise resolving to the result object
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** System Admin
+   *
+   * **Note:** Downgrading a user to its current seat type returns 200 OK.
+   *
+   * It mirrors to the following Smartsheet REST API method: `POST /users/{userId}/plans/{planId}/downgrade`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.users.downgradeUser({
+   *   userId: 123456789012345,
+   *   planId: 456789012345678,
+   *   body: {
+   *     seatType: 'VIEWER'
+   *   }
+   * });
+   * ```
    */
   downgradeUser: (
     options: DowngradeUserOptions,
@@ -101,7 +358,24 @@ export interface UsersApi {
   ) => Promise<BaseResponseStatus>;
 
   /**
-   * GET /users/{userId}/plans
+   * Gets a list of plans for the specified user.
+   *
+   * @param options - ListUserPlansOptions - Configuration options for the request
+   * @param callback - RequestCallback<ListUserPlansResponse> - Optional callback function
+   * @returns Promise resolving to an object containing an array of user plan data
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** System Admin
+   *
+   * It mirrors to the following Smartsheet REST API method: `GET /users/{userId}/plans`
+   *
+   * @example
+   * ```typescript
+   * const plans = await client.users.listUserPlans({
+   *   userId: 123456789012345
+   * });
+   * ```
    */
   listUserPlans: (
     options: ListUserPlansOptions,
@@ -109,7 +383,25 @@ export interface UsersApi {
   ) => Promise<ListUserPlansResponse>;
 
   /**
-   * DELETE /users/{userId}/plans/{planId}
+   * Removes the specified user from the specified plan.
+   *
+   * @param options - RemoveUserFromPlanOptions - Configuration options for the request
+   * @param callback - RequestCallback<BaseResponseStatus> - Optional callback function
+   * @returns Promise resolving to the result object
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** System Admin
+   *
+   * It mirrors to the following Smartsheet REST API method: `DELETE /users/{userId}/plans/{planId}`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.users.removeUserFromPlan({
+   *   userId: 123456789012345,
+   *   planId: 456789012345678
+   * });
+   * ```
    */
   removeUserFromPlan: (
     options: RemoveUserFromPlanOptions,
@@ -1086,7 +1378,14 @@ export interface AddProfileImageResponse {
 // Upgrade/Downgrade User
 // ============================================================================
 
-export interface UpgradeUserOptions extends RequestOptions<undefined, undefined> {
+export interface UpgradeUserBody {
+  /**
+   * @description User's seat type to upgrade to. Can be 'GUEST' (only for external users) or 'MEMBER' (default).
+   */
+  seatType?: SeatTypes;
+}
+
+export interface UpgradeUserOptions extends RequestOptions<undefined, UpgradeUserBody> {
   /**
    * @description User Id.
    */
@@ -1097,7 +1396,14 @@ export interface UpgradeUserOptions extends RequestOptions<undefined, undefined>
   planId: number;
 }
 
-export interface DowngradeUserOptions extends RequestOptions<undefined, undefined> {
+export interface DowngradeUserBody {
+  /**
+   * @description User's seat type to downgrade to. Can be 'GUEST' (only for external users) or 'VIEWER' (required).
+   */
+  seatType: SeatTypes;
+}
+
+export interface DowngradeUserOptions extends RequestOptions<undefined, DowngradeUserBody> {
   /**
    * @description User Id.
    */

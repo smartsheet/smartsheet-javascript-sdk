@@ -9,7 +9,30 @@ import type { AlternateEmail } from './types';
 
 export interface AlternateEmailsApi {
   /**
-   * POST /users/{userId}/alternateemails
+   * Adds one or more alternate email addresses for the specified user.
+   *
+   * A User in Smartsheet must have a primary email address associated with their user account
+   * and may optionally have one or more alternate email addresses. Note that certain operations
+   * (Add Group Members, Add User, Create Update Request, Share Report, Share Sheet, Share Workspace)
+   * must be performed using the user's primary email address.
+   *
+   * @param options - AddAlternateEmailOptions - Configuration options for the request
+   * @param callback - RequestCallback<AddAlternateEmailResponse> - Optional callback function
+   * @returns Promise resolving to the result containing newly created AlternateEmail objects
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** System Admin
+   *
+   * It mirrors to the following Smartsheet REST API method: `POST /users/{userId}/alternateemails`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.users.addAlternateEmail({
+   *   userId: 123456789012345,
+   *   body: [{ email: 'john.doe@example.com' }]
+   * });
+   * ```
    */
   addAlternateEmail(
     options: AddAlternateEmailOptions,
@@ -17,7 +40,22 @@ export interface AlternateEmailsApi {
   ): Promise<AddAlternateEmailResponse>;
 
   /**
-   * GET /users/{userId}/alternateemails/{alternateEmailId}
+   * Gets the specified alternate email address for a user.
+   *
+   * @param options - GetAlternateEmailOptions - Configuration options for the request
+   * @param callback - RequestCallback<AlternateEmail> - Optional callback function
+   * @returns Promise resolving to the AlternateEmail object
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `GET /users/{userId}/alternateemails/{alternateEmailId}`
+   *
+   * @example
+   * ```typescript
+   * const email = await client.users.getAlternateEmail({
+   *   userId: 123456789012345,
+   *   alternateEmailId: 987654321098765
+   * });
+   * ```
    */
   getAlternateEmail(
     options: GetAlternateEmailOptions,
@@ -25,7 +63,21 @@ export interface AlternateEmailsApi {
   ): Promise<AlternateEmail>;
 
   /**
-   * GET /users/{userId}/alternateemails
+   * Gets a list of all alternate email addresses for the specified user.
+   *
+   * @param options - ListAlternateEmailsOptions - Configuration options for the request
+   * @param callback - RequestCallback<ListAlternateEmailsResponse> - Optional callback function
+   * @returns Promise resolving to an IndexResult object containing an array of AlternateEmail objects
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `GET /users/{userId}/alternateemails`
+   *
+   * @example
+   * ```typescript
+   * const emailList = await client.users.listAlternateEmails({
+   *   userId: 123456789012345
+   * });
+   * ```
    */
   listAlternateEmails(
     options: ListAlternateEmailsOptions,
@@ -33,7 +85,30 @@ export interface AlternateEmailsApi {
   ): Promise<ListAlternateEmailsResponse>;
 
   /**
-   * POST /users/{userId}/alternateemails/{alternateEmailId}/makeprimary
+   * Makes the specified alternate email address the primary email address for the specified user.
+   *
+   * The alternate email address can only be made primary if both conditions are met:
+   * - The primary email address domain is validated
+   * - The alternate email address is confirmed OR the alternate email address domain is validated
+   *
+   * @param options - MakeAlternateEmailPrimaryOptions - Configuration options for the request
+   * @param callback - RequestCallback<MakeAlternateEmailPrimaryResponse> - Optional callback function
+   * @returns Promise resolving to the result containing updated AlternateEmail objects
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** System Admin
+   * - **Plans:** Only Enterprise plans with this feature activated by Support can use this method
+   *
+   * It mirrors to the following Smartsheet REST API method: `POST /users/{userId}/alternateemails/{alternateEmailId}/makeprimary`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.users.makeAlternateEmailPrimary({
+   *   userId: 123456789012345,
+   *   alternateEmailId: 987654321098765
+   * });
+   * ```
    */
   makeAlternateEmailPrimary(
     options: MakeAlternateEmailPrimaryOptions,
@@ -41,7 +116,25 @@ export interface AlternateEmailsApi {
   ): Promise<MakeAlternateEmailPrimaryResponse>;
 
   /**
-   * DELETE /users/{userId}/alternateemails/{alternateEmailId}
+   * Deletes the specified alternate email address for the specified user.
+   *
+   * @param options - DeleteAlternateEmailOptions - Configuration options for the request
+   * @param callback - RequestCallback<BaseResponseStatus> - Optional callback function
+   * @returns Promise resolving to the result object
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** System Admin
+   *
+   * It mirrors to the following Smartsheet REST API method: `DELETE /users/{userId}/alternateemails/{alternateEmailId}`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.users.deleteAlternateEmail({
+   *   userId: 123456789012345,
+   *   alternateEmailId: 987654321098765
+   * });
+   * ```
    */
   deleteAlternateEmail(
     options: DeleteAlternateEmailOptions,
