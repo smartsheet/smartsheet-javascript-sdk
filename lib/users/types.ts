@@ -7,55 +7,110 @@ import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 // ============================================================================
 
 export interface UsersApi {
+  /**
+   * GET /users/{userId}
+   */
   getUser: (options: GetUserOptions, callback?: RequestCallback<GetUserResponse>) => Promise<GetUserResponse>;
+  
+  /**
+   * GET /users
+   */
   listAllUsers: (
     options: RequestOptions<ListUsersQueryParameters, undefined>,
     callback?: RequestCallback<ListUsersResponse>
   ) => Promise<ListUsersResponse>;
+  
+  /**
+   * GET /users/me
+   */
   getCurrentUser: (
     options: RequestOptions<GetCurrentUserQueryParameters, undefined>,
     callback?: RequestCallback<GetCurrentUserResponse>
   ) => Promise<GetCurrentUserResponse>;
+  
+  /**
+   * POST /users
+   */
   addUser: (
     options: RequestOptions<undefined, AddUserBody>,
     callback?: RequestCallback<AddUserResponse>
   ) => Promise<AddUserResponse>;
+  
+  /**
+   * POST /users?sendEmail=true
+   */
   addUserAndSendEmail: (
     options: RequestOptions<undefined, AddUserBody>,
     callback?: RequestCallback<AddUserResponse>
   ) => Promise<AddUserResponse>;
+  
+  /**
+   * PUT /users/{userId}
+   */
   updateUser: (
     options: UpdateUserOptions,
     callback?: RequestCallback<UpdateUserResponse>
   ) => Promise<UpdateUserResponse>;
+  
+  /**
+   * DELETE /users/{userId}
+   */
   removeUser: (
     options: RemoveUserOptions,
     callback?: RequestCallback<BaseResponseStatus>
   ) => Promise<BaseResponseStatus>;
+  
+  /**
+   * POST /users/{userId}/deactivate
+   */
   deactivateUser: (
     options: DeactivateUserOptions,
     callback?: RequestCallback<BaseResponseStatus>
   ) => Promise<BaseResponseStatus>;
+  
+  /**
+   * POST /users/{userId}/reactivate
+   */
   reactivateUser: (
     options: ReactivateUserOptions,
     callback?: RequestCallback<BaseResponseStatus>
   ) => Promise<BaseResponseStatus>;
+  
+  /**
+   * POST /users/{userId}/profileimage
+   */
   addProfileImage: (
     options: AddProfileImageOptions,
     callback?: RequestCallback<AddProfileImageResponse>
   ) => Promise<AddProfileImageResponse>;
+  
+  /**
+   * POST /users/{userId}/plans/{planId}/upgrade
+   */
   upgradeUser: (
     options: UpgradeUserOptions,
     callback?: RequestCallback<BaseResponseStatus>
   ) => Promise<BaseResponseStatus>;
+  
+  /**
+   * POST /users/{userId}/plans/{planId}/downgrade
+   */
   downgradeUser: (
     options: DowngradeUserOptions,
     callback?: RequestCallback<BaseResponseStatus>
   ) => Promise<BaseResponseStatus>;
+  
+  /**
+   * GET /users/{userId}/plans
+   */
   listUserPlans: (
     options: ListUserPlansOptions,
     callback?: RequestCallback<ListUserPlansResponse>
   ) => Promise<ListUserPlansResponse>;
+  
+  /**
+   * DELETE /users/{userId}/plans/{planId}
+   */
   removeUserFromPlan: (
     options: RemoveUserFromPlanOptions,
     callback?: RequestCallback<BaseResponseStatus>

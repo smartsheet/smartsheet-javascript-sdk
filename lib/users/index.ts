@@ -25,8 +25,9 @@ import type {
 } from './types';
 
 import * as alternateEmails from './alternateemails';
+import type { AlternateEmailsApi } from './alternateemails_types';
 
-export function create(options: CreateOptions): UsersApi {
+export function create(options: CreateOptions): UsersApi | AlternateEmailsApi {
   const requestor = options.requestor;
 
   const optionsToSend = {
@@ -137,7 +138,7 @@ export function create(options: CreateOptions): UsersApi {
   const buildListUserPlansUrl = (urlOptions: { userId: number }) =>
     options.apiUrls.users + '/' + urlOptions.userId + '/plans';
 
-  const userObject: UsersApi = {
+  const userObject = {
     getUser: getUser,
     listAllUsers: listAllUsers,
     getCurrentUser: getCurrentUser,
@@ -155,5 +156,5 @@ export function create(options: CreateOptions): UsersApi {
   };
 
   // Extend with alternate emails functionality
-  return { ...userObject, ...alternateEmails.create(options) };
+  return { ...userObject, ...alternateEmails.create(options) } as UsersApi;
 }

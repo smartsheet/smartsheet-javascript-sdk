@@ -8,26 +8,41 @@ import type { AlternateEmail } from './types';
 // ============================================================================
 
 export interface AlternateEmailsApi {
+  /**
+   * POST /users/{userId}/alternateemails
+   */
   addAlternateEmail(
     options: AddAlternateEmailOptions,
     callback?: RequestCallback<AddAlternateEmailResponse>
   ): Promise<AddAlternateEmailResponse>;
 
+  /**
+   * GET /users/{userId}/alternateemails/{alternateEmailId}
+   */
   getAlternateEmail(
     options: GetAlternateEmailOptions,
     callback?: RequestCallback<AlternateEmail>
   ): Promise<AlternateEmail>;
 
+  /**
+   * GET /users/{userId}/alternateemails
+   */
   listAlternateEmails(
     options: ListAlternateEmailsOptions,
     callback?: RequestCallback<ListAlternateEmailsResponse>
   ): Promise<ListAlternateEmailsResponse>;
 
+  /**
+   * POST /users/{userId}/alternateemails/{alternateEmailId}/makeprimary
+   */
   makeAlternateEmailPrimary(
     options: MakeAlternateEmailPrimaryOptions,
     callback?: RequestCallback<MakeAlternateEmailPrimaryResponse>
   ): Promise<MakeAlternateEmailPrimaryResponse>;
 
+  /**
+   * DELETE /users/{userId}/alternateemails/{alternateEmailId}
+   */
   deleteAlternateEmail(
     options: DeleteAlternateEmailOptions,
     callback?: RequestCallback<BaseResponseStatus>
