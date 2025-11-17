@@ -37,7 +37,7 @@ describe('Users - getUser endpoint tests', function () {
     const role = 'Senior Developer';
     const salesforceAdmin = false;
     const salesforceUser = false;
-    const timeZone = 'US/Pacicfic';
+    const timeZone = 'US/Pacific';
     const title = 'Senior Software Engineer';
     const workPhone = TEST_MOBILE_PHONE;
     const admin = true;
