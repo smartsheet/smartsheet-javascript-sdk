@@ -61,6 +61,8 @@ describe('Users - addProfileImage endpoint tests', function () {
             }
         };
         const response = await client.users.addProfileImage(options);
+        const matchedRequest = await findWireMockRequest(requestId);
+        
         assert.ok(response);
         assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
@@ -75,6 +77,7 @@ describe('Users - addProfileImage endpoint tests', function () {
         assert.strictEqual(response.data[0].profileImage.imageId, imageId);
         assert.strictEqual(response.data[0].profileImage.height, height);
         assert.strictEqual(response.data[0].profileImage.width, width);
+        assert.strictEqual(matchedRequest.body.includes('fake-image-data'), true);
     });
 
     it('addProfileImage error 500 response', async function () {
