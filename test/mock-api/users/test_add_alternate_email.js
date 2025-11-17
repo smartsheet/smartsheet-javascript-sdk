@@ -32,8 +32,6 @@ describe('Users - addAlternateEmail endpoint tests', function () {
         const matchedRequest = await findWireMockRequest(requestId);
 
         assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/alternateemails`));
-        let body = JSON.parse(matchedRequest.body);
-        assert.deepStrictEqual(body, TEST_BODY);
     });
 
     it('addAlternateEmail all response body properties', async function () {
@@ -47,6 +45,8 @@ describe('Users - addAlternateEmail endpoint tests', function () {
             }
         };
         const response = await client.users.addAlternateEmail(options);
+        const matchedRequest = await findWireMockRequest(requestId);
+        
         assert.ok(response);
         assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
@@ -55,6 +55,9 @@ describe('Users - addAlternateEmail endpoint tests', function () {
         assert.strictEqual(response.data[0].id, TEST_ALTERNATE_EMAIL_ID);
         assert.strictEqual(response.data[0].confirmed, TEST_CONFIRMED);
         assert.strictEqual(response.data[0].email, TEST_EMAIL);
+        
+        let body = JSON.parse(matchedRequest.body);
+        assert.deepStrictEqual(body, TEST_BODY);
     });
 
     it('addAlternateEmail error 500 response', async function () {

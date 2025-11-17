@@ -56,14 +56,6 @@ describe('Users - updateUser endpoint tests', function () {
         const matchedRequest = await findWireMockRequest(requestId);
 
         assert.ok(matchedRequest.url.includes(`/2.0/users/${TEST_USER_ID}`));
-        let body = JSON.parse(matchedRequest.body);
-        assert.strictEqual(body.email, email);
-        assert.strictEqual(body.firstName, firstName);
-        assert.strictEqual(body.lastName, lastName);
-        assert.strictEqual(body.admin, admin);
-        assert.strictEqual(body.licensedSheetCreator, licensedSheetCreator);
-        assert.strictEqual(body.groupAdmin, groupAdmin);
-        assert.strictEqual(body.resourceViewer, resourceViewer);
     });
 
     it('updateUser all response body properties', async function () {
@@ -77,6 +69,8 @@ describe('Users - updateUser endpoint tests', function () {
             }
         };
         const response = await client.users.updateUser(options);
+        const matchedRequest = await findWireMockRequest(requestId);
+        
         assert.ok(response);
         assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
@@ -88,6 +82,15 @@ describe('Users - updateUser endpoint tests', function () {
         assert.strictEqual(response.data[0].profileImage.imageId, profileImageId);
         assert.strictEqual(response.data[0].profileImage.height, profileImageHeight);
         assert.strictEqual(response.data[0].profileImage.width, profileImageWidth);
+        
+        let body = JSON.parse(matchedRequest.body);
+        assert.strictEqual(body.email, email);
+        assert.strictEqual(body.firstName, firstName);
+        assert.strictEqual(body.lastName, lastName);
+        assert.strictEqual(body.admin, admin);
+        assert.strictEqual(body.licensedSheetCreator, licensedSheetCreator);
+        assert.strictEqual(body.groupAdmin, groupAdmin);
+        assert.strictEqual(body.resourceViewer, resourceViewer);
     });
 
     it('updateUser required response body properties', async function () {
@@ -101,6 +104,8 @@ describe('Users - updateUser endpoint tests', function () {
             }
         };
         const response = await client.users.updateUser(options);
+        const matchedRequest = await findWireMockRequest(requestId);
+        
         assert.ok(response);
         assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
@@ -110,6 +115,15 @@ describe('Users - updateUser endpoint tests', function () {
         assert.strictEqual(response.data[0].lastName, lastName);
         assert.strictEqual(response.data[0].name, name);
         assert.strictEqual(response.data[0].profileImage, undefined);
+        
+        let body = JSON.parse(matchedRequest.body);
+        assert.strictEqual(body.email, email);
+        assert.strictEqual(body.firstName, firstName);
+        assert.strictEqual(body.lastName, lastName);
+        assert.strictEqual(body.admin, admin);
+        assert.strictEqual(body.licensedSheetCreator, licensedSheetCreator);
+        assert.strictEqual(body.groupAdmin, groupAdmin);
+        assert.strictEqual(body.resourceViewer, resourceViewer);
     });
 
     it('updateUser error 500 response', async function () {

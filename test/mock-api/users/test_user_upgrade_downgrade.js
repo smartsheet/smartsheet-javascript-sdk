@@ -34,8 +34,6 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         const matchedRequest = await findWireMockRequest(requestId);
 
         assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}/upgrade`));
-        let body = JSON.parse(matchedRequest.body);
-        assert.deepStrictEqual(body, TEST_UPGRADE_BODY);
     });
 
     it('upgradeUser all response body properties', async function () {
@@ -50,9 +48,14 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
             }
         };
         const response = await client.users.upgradeUser(options);
+        const matchedRequest = await findWireMockRequest(requestId);
+        
         assert.ok(response);
         assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
+        
+        let body = JSON.parse(matchedRequest.body);
+        assert.deepStrictEqual(body, TEST_UPGRADE_BODY);
     });
 
     it('upgradeUser no seat type passed', async function () {
@@ -125,8 +128,6 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         await client.users.downgradeUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
         assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}/downgrade`));
-        let body = JSON.parse(matchedRequest.body);
-        assert.deepStrictEqual(body, TEST_DOWNGRADE_BODY);
     });
 
     it('downgradeUser all response body properties', async function () {
@@ -141,9 +142,14 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
             }
         };
         const response = await client.users.downgradeUser(options);
+        const matchedRequest = await findWireMockRequest(requestId);
+        
         assert.ok(response);
         assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
+        
+        let body = JSON.parse(matchedRequest.body);
+        assert.deepStrictEqual(body, TEST_DOWNGRADE_BODY);
     });
 
     it('downgradeUser error 500 response', async function () {

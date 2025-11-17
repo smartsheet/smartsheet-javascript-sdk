@@ -70,15 +70,6 @@ describe('Users - addUser endpoint tests', function () {
         const matchedRequest = await findWireMockRequest(requestId);
 
         assert.ok(matchedRequest.url.includes('/2.0/users'));
-        let body = JSON.parse(matchedRequest.body);
-        assert.strictEqual(body.email, email);
-        assert.strictEqual(body.firstName, firstName);
-        assert.strictEqual(body.lastName, lastName);
-        assert.strictEqual(body.admin, admin);
-        assert.strictEqual(body.licensedSheetCreator, licensedSheetCreator);
-        assert.strictEqual(body.groupAdmin, groupAdmin);
-        assert.strictEqual(body.resourceViewer, resourceViewer);
-        assert.strictEqual(body.status, status);
     });
     it('addUserAndSendEmail generated url is correct', async function () {
         const requestId = crypto.randomUUID();
@@ -99,15 +90,6 @@ describe('Users - addUser endpoint tests', function () {
         const queryParams = matchedRequest.queryParams;
         const sendEmailActual = queryParams.sendEmail.values[0];
         assert.strictEqual(sendEmailActual, 'true');
-        let body = JSON.parse(matchedRequest.body);
-        assert.strictEqual(body.email, email);
-        assert.strictEqual(body.firstName, firstName);
-        assert.strictEqual(body.lastName, lastName);
-        assert.strictEqual(body.admin, admin);
-        assert.strictEqual(body.licensedSheetCreator, licensedSheetCreator);
-        assert.strictEqual(body.groupAdmin, groupAdmin);
-        assert.strictEqual(body.resourceViewer, resourceViewer);
-        assert.strictEqual(body.status, status);
     });
 
 
@@ -121,6 +103,8 @@ describe('Users - addUser endpoint tests', function () {
             }
         };
         const response = await client.users.addUser(options);
+        const matchedRequest = await findWireMockRequest(requestId);
+        
         assert.ok(response);
         assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
@@ -144,6 +128,16 @@ describe('Users - addUser endpoint tests', function () {
         assert.strictEqual(response.result.seatTypeLastChangedAt, seatTypeLastChangedAt);
         assert.strictEqual(response.result.sheetCount, sheetCount);
         assert.strictEqual(response.result.status, status);
+        
+        let body = JSON.parse(matchedRequest.body);
+        assert.strictEqual(body.email, email);
+        assert.strictEqual(body.firstName, firstName);
+        assert.strictEqual(body.lastName, lastName);
+        assert.strictEqual(body.admin, admin);
+        assert.strictEqual(body.licensedSheetCreator, licensedSheetCreator);
+        assert.strictEqual(body.groupAdmin, groupAdmin);
+        assert.strictEqual(body.resourceViewer, resourceViewer);
+        assert.strictEqual(body.status, status);
     });
 
     it('addUser required response body properties', async function () {
@@ -156,6 +150,8 @@ describe('Users - addUser endpoint tests', function () {
             }
         };
         const response = await client.users.addUser(options);
+        const matchedRequest = await findWireMockRequest(requestId);
+        
         assert.ok(response);
         assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
@@ -177,6 +173,16 @@ describe('Users - addUser endpoint tests', function () {
         assert.strictEqual(response.result.seatTypeLastChangedAt, undefined);
         assert.strictEqual(response.result.sheetCount, undefined);
         assert.strictEqual(response.result.status, status);
+        
+        let body = JSON.parse(matchedRequest.body);
+        assert.strictEqual(body.email, email);
+        assert.strictEqual(body.firstName, firstName);
+        assert.strictEqual(body.lastName, lastName);
+        assert.strictEqual(body.admin, admin);
+        assert.strictEqual(body.licensedSheetCreator, licensedSheetCreator);
+        assert.strictEqual(body.groupAdmin, groupAdmin);
+        assert.strictEqual(body.resourceViewer, resourceViewer);
+        assert.strictEqual(body.status, status);
     });
 
     it('addUser error 500 response', async function () {
