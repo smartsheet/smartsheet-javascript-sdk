@@ -1,15 +1,24 @@
 const assert = require('assert');
 const crypto = require('crypto');
 const { createClient, findWireMockRequest } = require('../utils/utils.js');
-const { TEST_USER_ID, TEST_PLAN_ID } = require('./common_test_constants.js');
+const {
+    TEST_USER_ID,
+    TEST_PLAN_ID,
+    TEST_SEAT_TYPE_LAST_CHANGED_AT,
+    ERROR_500_STATUS_CODE,
+    ERROR_500_MESSAGE,
+    ERROR_400_STATUS_CODE,
+    ERROR_400_MESSAGE,
+    TEST_PROVISIONAL_EXPIRATION_DATE
+} = require('./common_test_constants.js');
 
 describe('Users - listUserPlans endpoint tests', function () {
     const client = createClient();
     const lastKey = '12345678901234569';
     const maxItems = 100;
     const seatType = 'MEMBER';
-    const seatTypeLastChangedAt = '2025-01-01T00:00:00.123456789Z';
-    const provisionalExpirationDate = '2026-12-13T12:17:52.525696Z';
+    const seatTypeLastChangedAt = TEST_SEAT_TYPE_LAST_CHANGED_AT;
+    const provisionalExpirationDate = TEST_PROVISIONAL_EXPIRATION_DATE;
     const isInternalTrue = false;
 
     it('listUserPlans generated url is correct', async function () {
@@ -92,8 +101,8 @@ describe('Users - listUserPlans endpoint tests', function () {
             await client.users.listUserPlans(options);
             assert.fail('Expected an error to be thrown');
         } catch (error) {
-            assert.strictEqual(error.statusCode, 500);
-            assert.strictEqual(error.message, 'Internal Server Error');
+            assert.strictEqual(error.statusCode, ERROR_500_STATUS_CODE);
+            assert.strictEqual(error.message, ERROR_500_MESSAGE);
         }
     });
 
@@ -110,8 +119,8 @@ describe('Users - listUserPlans endpoint tests', function () {
             await client.users.listUserPlans(options);
             assert.fail('Expected an error to be thrown');
         } catch (error) {
-            assert.strictEqual(error.statusCode, 400);
-            assert.strictEqual(error.message, 'Malformed Request');
+            assert.strictEqual(error.statusCode, ERROR_400_STATUS_CODE);
+            assert.strictEqual(error.message, ERROR_400_MESSAGE);
         }
     });
 });
