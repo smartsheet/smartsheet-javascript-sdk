@@ -147,7 +147,7 @@ describe('Users - getUser endpoint tests', function () {
         assert.strictEqual(response.role, role);
         assert.strictEqual(response.salesforceAdmin, salesforceAdmin);
         assert.strictEqual(response.salesforceUser, salesforceUser);
-        assert.strictEqual(response.timeZone, 'US/Pacific');
+        assert.strictEqual(response.timeZone, timeZone);
         assert.strictEqual(response.title, title);
         assert.strictEqual(response.workPhone, workPhone);
 
