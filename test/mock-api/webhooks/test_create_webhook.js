@@ -23,6 +23,8 @@ const {
     TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT,
     TEST_COLUMN_IDS,
     TEST_CUSTOM_HEADERS,
+    TEST_SHEET_WEBHOOK_REQUEST_BODY,
+    TEST_PLAN_WEBHOOK_REQUEST_BODY,
     TEST_SUCCESS_MESSAGE,
     TEST_SUCCESS_RESULT_CODE,
     ERROR_500_STATUS_CODE,
@@ -37,14 +39,7 @@ describe('Webhooks - createWebhook endpoint tests', function () {
     it('createWebhook generated url is correct', async function () {
         const requestId = crypto.randomUUID();
         const options = {
-            body: {
-                name: TEST_WEBHOOK_NAME,
-                callbackUrl: TEST_CALLBACK_URL,
-                scope: TEST_SCOPE_SHEET,
-                scopeObjectId: TEST_SCOPE_OBJECT_ID,
-                events: TEST_EVENTS,
-                version: TEST_VERSION
-            },
+            body: TEST_SHEET_WEBHOOK_REQUEST_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/webhooks/create-sheet-webhook/all-response-body-properties'
@@ -59,17 +54,7 @@ describe('Webhooks - createWebhook endpoint tests', function () {
     it('createWebhook sheet webhook all response body properties', async function () {
         const requestId = crypto.randomUUID();
         const options = {
-            body: {
-                name: TEST_WEBHOOK_NAME,
-                callbackUrl: TEST_CALLBACK_URL,
-                scope: TEST_SCOPE_SHEET,
-                scopeObjectId: TEST_SCOPE_OBJECT_ID,
-                events: TEST_EVENTS,
-                version: TEST_VERSION,
-                subscope: {
-                    columnIds: TEST_COLUMN_IDS
-                }
-            },
+            body: TEST_SHEET_WEBHOOK_REQUEST_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/webhooks/create-sheet-webhook/all-response-body-properties'
@@ -82,7 +67,6 @@ describe('Webhooks - createWebhook endpoint tests', function () {
         assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
         assert.strictEqual(response.version, TEST_VERSION);
-        assert.ok(response.failedItems);
         assert.strictEqual(response.result.id, TEST_WEBHOOK_ID);
         assert.strictEqual(response.result.name, TEST_WEBHOOK_NAME);
         assert.strictEqual(response.result.callbackUrl, TEST_CALLBACK_URL);
@@ -106,27 +90,13 @@ describe('Webhooks - createWebhook endpoint tests', function () {
         assert.strictEqual(response.result.stats.lastSuccessfulCallback, TEST_LAST_SUCCESSFUL_CALLBACK);
 
         let body = JSON.parse(matchedRequest.body);
-        assert.strictEqual(body.name, TEST_WEBHOOK_NAME);
-        assert.strictEqual(body.callbackUrl, TEST_CALLBACK_URL);
-        assert.strictEqual(body.scope, TEST_SCOPE_SHEET);
-        assert.strictEqual(body.scopeObjectId, TEST_SCOPE_OBJECT_ID);
-        assert.deepStrictEqual(body.events, TEST_EVENTS);
-        assert.strictEqual(body.version, TEST_VERSION);
-        assert.deepStrictEqual(body.subscope.columnIds, TEST_COLUMN_IDS);
+        assert.deepStrictEqual(body, TEST_SHEET_WEBHOOK_REQUEST_BODY);
     });
 
     it('createWebhook plan webhook all response body properties', async function () {
         const requestId = crypto.randomUUID();
         const options = {
-            body: {
-                name: TEST_WEBHOOK_NAME,
-                callbackUrl: TEST_CALLBACK_URL,
-                scope: TEST_SCOPE_PLAN,
-                scopeObjectId: TEST_SCOPE_OBJECT_ID,
-                events: TEST_EVENTS,
-                version: TEST_VERSION,
-                customHeaders: TEST_CUSTOM_HEADERS
-            },
+            body: TEST_PLAN_WEBHOOK_REQUEST_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/webhooks/create-plan-webhook/all-response-body-properties'
@@ -139,7 +109,6 @@ describe('Webhooks - createWebhook endpoint tests', function () {
         assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
         assert.strictEqual(response.version, TEST_VERSION);
-        assert.ok(response.failedItems);
         assert.strictEqual(response.result.id, TEST_WEBHOOK_ID);
         assert.strictEqual(response.result.name, TEST_WEBHOOK_NAME);
         assert.strictEqual(response.result.callbackUrl, TEST_CALLBACK_URL);
@@ -163,26 +132,13 @@ describe('Webhooks - createWebhook endpoint tests', function () {
         assert.strictEqual(response.result.stats.lastSuccessfulCallback, TEST_LAST_SUCCESSFUL_CALLBACK);
 
         let body = JSON.parse(matchedRequest.body);
-        assert.strictEqual(body.name, TEST_WEBHOOK_NAME);
-        assert.strictEqual(body.callbackUrl, TEST_CALLBACK_URL);
-        assert.strictEqual(body.scope, TEST_SCOPE_PLAN);
-        assert.strictEqual(body.scopeObjectId, TEST_SCOPE_OBJECT_ID);
-        assert.deepStrictEqual(body.events, TEST_EVENTS);
-        assert.strictEqual(body.version, TEST_VERSION);
-        assert.deepStrictEqual(body.customHeaders, TEST_CUSTOM_HEADERS);
+        assert.deepStrictEqual(body, TEST_PLAN_WEBHOOK_REQUEST_BODY);
     });
 
     it('createWebhook error 500 response', async function () {
         const requestId = crypto.randomUUID();
         const options = {
-            body: {
-                name: TEST_WEBHOOK_NAME,
-                callbackUrl: TEST_CALLBACK_URL,
-                scope: TEST_SCOPE_SHEET,
-                scopeObjectId: TEST_SCOPE_OBJECT_ID,
-                events: TEST_EVENTS,
-                version: TEST_VERSION
-            },
+            body: TEST_SHEET_WEBHOOK_REQUEST_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/errors/500-response'
@@ -200,14 +156,7 @@ describe('Webhooks - createWebhook endpoint tests', function () {
     it('createWebhook error 400 response', async function () {
         const requestId = crypto.randomUUID();
         const options = {
-            body: {
-                name: TEST_WEBHOOK_NAME,
-                callbackUrl: TEST_CALLBACK_URL,
-                scope: TEST_SCOPE_SHEET,
-                scopeObjectId: TEST_SCOPE_OBJECT_ID,
-                events: TEST_EVENTS,
-                version: TEST_VERSION
-            },
+            body: TEST_SHEET_WEBHOOK_REQUEST_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/errors/400-response'

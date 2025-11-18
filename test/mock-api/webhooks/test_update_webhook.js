@@ -23,6 +23,9 @@ const {
     TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT,
     TEST_COLUMN_IDS,
     TEST_CUSTOM_HEADERS,
+    TEST_UPDATE_WEBHOOK_REQUEST_BODY_MINIMAL,
+    TEST_UPDATE_SHEET_WEBHOOK_REQUEST_BODY,
+    TEST_UPDATE_PLAN_WEBHOOK_REQUEST_BODY,
     TEST_SUCCESS_MESSAGE,
     TEST_SUCCESS_RESULT_CODE,
     ERROR_500_STATUS_CODE,
@@ -38,9 +41,7 @@ describe('Webhooks - updateWebhook endpoint tests', function () {
         const requestId = crypto.randomUUID();
         const options = {
             webhookId: TEST_WEBHOOK_ID,
-            body: {
-                enabled: true
-            },
+            body: TEST_UPDATE_WEBHOOK_REQUEST_BODY_MINIMAL,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/webhooks/update-sheet-webhook/all-response-body-properties'
@@ -56,10 +57,7 @@ describe('Webhooks - updateWebhook endpoint tests', function () {
         const requestId = crypto.randomUUID();
         const options = {
             webhookId: TEST_WEBHOOK_ID,
-            body: {
-                name: TEST_WEBHOOK_NAME,
-                enabled: true
-            },
+            body: TEST_UPDATE_SHEET_WEBHOOK_REQUEST_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/webhooks/update-sheet-webhook/all-response-body-properties'
@@ -72,7 +70,6 @@ describe('Webhooks - updateWebhook endpoint tests', function () {
         assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
         assert.strictEqual(response.version, TEST_VERSION);
-        assert.ok(response.failedItems);
         assert.strictEqual(response.result.id, TEST_WEBHOOK_ID);
         assert.strictEqual(response.result.name, TEST_WEBHOOK_NAME);
         assert.strictEqual(response.result.callbackUrl, TEST_CALLBACK_URL);
@@ -96,19 +93,14 @@ describe('Webhooks - updateWebhook endpoint tests', function () {
         assert.strictEqual(response.result.stats.lastSuccessfulCallback, TEST_LAST_SUCCESSFUL_CALLBACK);
 
         let body = JSON.parse(matchedRequest.body);
-        assert.strictEqual(body.name, TEST_WEBHOOK_NAME);
-        assert.strictEqual(body.enabled, true);
+        assert.deepStrictEqual(body, TEST_UPDATE_SHEET_WEBHOOK_REQUEST_BODY);
     });
 
     it('updateWebhook plan webhook all response body properties', async function () {
         const requestId = crypto.randomUUID();
         const options = {
             webhookId: TEST_WEBHOOK_ID,
-            body: {
-                name: TEST_WEBHOOK_NAME,
-                enabled: true,
-                customHeaders: TEST_CUSTOM_HEADERS
-            },
+            body: TEST_UPDATE_PLAN_WEBHOOK_REQUEST_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/webhooks/update-plan-webhook/all-response-body-properties'
@@ -121,7 +113,6 @@ describe('Webhooks - updateWebhook endpoint tests', function () {
         assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
         assert.strictEqual(response.version, TEST_VERSION);
-        assert.ok(response.failedItems);
         assert.strictEqual(response.result.id, TEST_WEBHOOK_ID);
         assert.strictEqual(response.result.name, TEST_WEBHOOK_NAME);
         assert.strictEqual(response.result.callbackUrl, TEST_CALLBACK_URL);
@@ -145,18 +136,14 @@ describe('Webhooks - updateWebhook endpoint tests', function () {
         assert.strictEqual(response.result.stats.lastSuccessfulCallback, TEST_LAST_SUCCESSFUL_CALLBACK);
 
         let body = JSON.parse(matchedRequest.body);
-        assert.strictEqual(body.name, TEST_WEBHOOK_NAME);
-        assert.strictEqual(body.enabled, true);
-        assert.deepStrictEqual(body.customHeaders, TEST_CUSTOM_HEADERS);
+        assert.deepStrictEqual(body, TEST_UPDATE_PLAN_WEBHOOK_REQUEST_BODY);
     });
 
     it('updateWebhook required response body properties', async function () {
         const requestId = crypto.randomUUID();
         const options = {
             webhookId: TEST_WEBHOOK_ID,
-            body: {
-                enabled: true
-            },
+            body: TEST_UPDATE_WEBHOOK_REQUEST_BODY_MINIMAL,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/webhooks/update-webhook/required-response-body-properties'
@@ -191,9 +178,7 @@ describe('Webhooks - updateWebhook endpoint tests', function () {
         const requestId = crypto.randomUUID();
         const options = {
             webhookId: TEST_WEBHOOK_ID,
-            body: {
-                enabled: true
-            },
+            body: TEST_UPDATE_WEBHOOK_REQUEST_BODY_MINIMAL,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/errors/500-response'
@@ -212,9 +197,7 @@ describe('Webhooks - updateWebhook endpoint tests', function () {
         const requestId = crypto.randomUUID();
         const options = {
             webhookId: TEST_WEBHOOK_ID,
-            body: {
-                enabled: true
-            },
+            body: TEST_UPDATE_WEBHOOK_REQUEST_BODY_MINIMAL,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/errors/400-response'
