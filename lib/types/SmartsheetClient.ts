@@ -5,6 +5,7 @@ import type { SharingApi } from '../sharing';
 import type { SightsApi } from '../sights/types';
 import type { AlternateEmailsApi } from '../users/alternateemails_types';
 import type { UsersApi } from '../users/types';
+import type { WebhooksApi } from '../webhooks/types';
 
 export interface SmartsheetClient {
   constants: any;
@@ -25,6 +26,6 @@ export interface SmartsheetClient {
   templates: any;
   tokens: any;
   users: UsersApi & AlternateEmailsApi;
-  webhooks: any;
+  webhooks: WebhooksApi;
   workspaces: any;
 }
