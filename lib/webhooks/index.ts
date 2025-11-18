@@ -22,7 +22,10 @@ export function create(options: CreateOptions): WebhooksApi {
     ...options.clientOptions,
   };
 
-  const createWebhook = (postOptions: RequestOptions<undefined, CreateWebhookBody>, callback?: RequestCallback<CreateWebhookResponse>) => {
+  const createWebhook = (
+    postOptions: RequestOptions<undefined, CreateWebhookBody>,
+    callback?: RequestCallback<CreateWebhookResponse>
+  ) => {
     const urlOptions = { url: buildUrl() };
     return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
   };
@@ -42,7 +45,10 @@ export function create(options: CreateOptions): WebhooksApi {
     return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
 
-  const listWebhooks = (getOptions: RequestOptions<ListWebhooksQueryParameters, undefined>, callback?: RequestCallback<ListWebhooksResponse>) => {
+  const listWebhooks = (
+    getOptions: RequestOptions<ListWebhooksQueryParameters, undefined>,
+    callback?: RequestCallback<ListWebhooksResponse>
+  ) => {
     const urlOptions = { url: buildUrl() };
     return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
