@@ -15,7 +15,8 @@ const {
     ERROR_500_STATUS_CODE,
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
-    ERROR_400_MESSAGE
+    ERROR_400_MESSAGE,
+    ADD_PROFILE_IMAGE_REQUEST_BODY
 } = require('./common_test_constants.js');
 
 describe('Users - addProfileImage endpoint tests', function () {
@@ -30,12 +31,9 @@ describe('Users - addProfileImage endpoint tests', function () {
 
     it('addProfileImage generated url is correct', async function () {
         const requestId = crypto.randomUUID();
-        const mockImageBuffer = Buffer.from('fake-image-data');
         const options = {
             userId: TEST_USER_ID,
-            body: {
-                file: mockImageBuffer
-            },
+            fileStream: ADD_PROFILE_IMAGE_REQUEST_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/users/add-profile-image/all-response-body-properties'
@@ -49,12 +47,9 @@ describe('Users - addProfileImage endpoint tests', function () {
 
     it('addProfileImage all response body properties', async function () {
         const requestId = crypto.randomUUID();
-        const mockImageBuffer = Buffer.from('fake-image-data');
         const options = {
             userId: TEST_USER_ID,
-            body: {
-                file: mockImageBuffer
-            },
+            fileStream: ADD_PROFILE_IMAGE_REQUEST_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/users/add-profile-image/all-response-body-properties'
@@ -62,7 +57,7 @@ describe('Users - addProfileImage endpoint tests', function () {
         };
         const response = await client.users.addProfileImage(options);
         const matchedRequest = await findWireMockRequest(requestId);
-        
+
         assert.ok(response);
         assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
@@ -77,17 +72,16 @@ describe('Users - addProfileImage endpoint tests', function () {
         assert.strictEqual(response.data[0].profileImage.imageId, imageId);
         assert.strictEqual(response.data[0].profileImage.height, height);
         assert.strictEqual(response.data[0].profileImage.width, width);
-        assert.strictEqual(matchedRequest.body.includes('fake-image-data'), true);
+        
+        const expectedBody = ADD_PROFILE_IMAGE_REQUEST_BODY.toString();
+        assert.deepStrictEqual(matchedRequest.body, expectedBody);
     });
 
     it('addProfileImage error 500 response', async function () {
         const requestId = crypto.randomUUID();
-        const mockImageBuffer = Buffer.from('fake-image-data');
         const options = {
             userId: TEST_USER_ID,
-            body: {
-                file: mockImageBuffer
-            },
+            fileStream: ADD_PROFILE_IMAGE_REQUEST_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/errors/500-response'
@@ -104,12 +98,9 @@ describe('Users - addProfileImage endpoint tests', function () {
 
     it('addProfileImage error 400 response', async function () {
         const requestId = crypto.randomUUID();
-        const mockImageBuffer = Buffer.from('fake-image-data');
         const options = {
             userId: TEST_USER_ID,
-            body: {
-                file: mockImageBuffer
-            },
+            fileStream: ADD_PROFILE_IMAGE_REQUEST_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/errors/400-response'
