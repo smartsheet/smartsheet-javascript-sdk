@@ -46,6 +46,8 @@ const ERROR_500_MESSAGE = 'Internal Server Error';
 const ERROR_400_STATUS_CODE = 400;
 const ERROR_400_MESSAGE = 'Malformed Request';
 
+const ADD_PROFILE_IMAGE_REQUEST_BODY = Buffer.from('fake-image-data');
+
 module.exports = {
   TEST_USER_ID,
   TEST_PLAN_ID,
@@ -74,5 +76,6 @@ module.exports = {
   ERROR_500_STATUS_CODE,
   ERROR_500_MESSAGE,
   ERROR_400_STATUS_CODE,
-  ERROR_400_MESSAGE
+  ERROR_400_MESSAGE,
+  ADD_PROFILE_IMAGE_REQUEST_BODY
 };
