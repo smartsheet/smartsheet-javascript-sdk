@@ -1,30 +1,47 @@
 const assert = require('assert');
 const crypto = require('crypto');
 const { createClient, findWireMockRequest } = require('../utils/utils.js');
-const { TEST_PLAN_ID } = require('./common_test_constants.js');
+const {
+    TEST_PLAN_ID,
+    TEST_EMAIL,
+    TEST_FIRST_NAME,
+    TEST_LAST_NAME,
+    TEST_NAME,
+    TEST_CUSTOM_WELCOME_SCREEN_VIEWED,
+    TEST_LAST_LOGIN,
+    TEST_SEAT_TYPE_LAST_CHANGED_AT,
+    TEST_PAGE_NUMBER,
+    TEST_PAGE_SIZE,
+    TEST_SHEET_COUNT,
+    ERROR_500_STATUS_CODE,
+    ERROR_500_MESSAGE,
+    ERROR_400_STATUS_CODE,
+    ERROR_400_MESSAGE,
+    TEST_PROVISIONAL_EXPIRATION_DATE
+} = require('./common_test_constants.js');
 
 describe('Users - listAllUsers endpoint tests', function () {
     let client = createClient();
-    const emails = 'test.user@smartsheet.com';
+    const emails = TEST_EMAIL;
     const seatType = 'MEMBER';
-    const page = 1;
-    const pageSize = 100;
+    const page = TEST_PAGE_NUMBER;
+    const pageSize = TEST_PAGE_SIZE;
     const includeAll = false;
-    const seatTypeLastChangedAt = '2025-06-14T09:55:30Z';
-    const provisionalExpirationDate = '2026-12-13T12:17:52.525696Z';
+    const seatTypeLastChangedAt = TEST_SEAT_TYPE_LAST_CHANGED_AT;
+    const provisionalExpirationDate = TEST_PROVISIONAL_EXPIRATION_DATE;
     const isInternal = true;
-    const firstName = 'Test';
-    const lastName = 'User';
-    const name = 'Test User';
-    const email = 'test.user@smartsheet.com';
+    const firstName = TEST_FIRST_NAME;
+    const lastName = TEST_LAST_NAME;
+    const name = TEST_NAME;
+    const email = TEST_EMAIL;
     const admin = true;
     const licensedSheetCreator = true;
     const resourceViewer = true;
     const groupAdmin = true;
     const status = 'ACTIVE';
-    const sheetCount = -1;
-    const lastLogin = '2020-10-04T18:32:47Z';
-    const customWelcomeScreenViewed = '2020-08-25T12:15:47Z';
+    const sheetCount = TEST_SHEET_COUNT;
+    const lastLogin = TEST_LAST_LOGIN;
+    const customWelcomeScreenViewed = TEST_CUSTOM_WELCOME_SCREEN_VIEWED;
 
     it('listUsers generated url is correct', async function () {
         const requestId = crypto.randomUUID();
@@ -139,8 +156,8 @@ describe('Users - listAllUsers endpoint tests', function () {
             await client.users.listAllUsers(options);
             assert.fail('Expected an error to be thrown');
         } catch (error) {
-            assert.strictEqual(error.statusCode, 500);
-            assert.strictEqual(error.message, 'Internal Server Error');
+            assert.strictEqual(error.statusCode, ERROR_500_STATUS_CODE);
+            assert.strictEqual(error.message, ERROR_500_MESSAGE);
         }
     });
 
@@ -159,8 +176,8 @@ describe('Users - listAllUsers endpoint tests', function () {
             await client.users.listAllUsers(options);
             assert.fail('Expected an error to be thrown');
         } catch (error) {
-            assert.strictEqual(error.statusCode, 400);
-            assert.strictEqual(error.message, 'Malformed Request');
+            assert.strictEqual(error.statusCode, ERROR_400_STATUS_CODE);
+            assert.strictEqual(error.message, ERROR_400_MESSAGE);
         }
     });
 });

@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const { createClient, findWireMockRequest } = require('../utils/utils.js');
 const {
     TEST_USER_ID,
-    TEST_PLAN_ID,
+    TEST_ALTERNATE_EMAIL_ID,
     TEST_SUCCESS_MESSAGE,
     TEST_SUCCESS_RESULT_CODE,
     ERROR_500_STATUS_CODE,
@@ -12,53 +12,53 @@ const {
     ERROR_400_MESSAGE
 } = require('./common_test_constants.js');
 
-describe('Users - removeUserFromPlan endpoint tests', function () {
+describe('Users - deleteAlternateEmail endpoint tests', function () {
     let client = createClient();
 
-    it('removeUserFromPlan generated url is correct', async function () {
+    it('deleteAlternateEmail generated url is correct', async function () {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
-            planId: TEST_PLAN_ID,
+            alternateEmailId: TEST_ALTERNATE_EMAIL_ID,
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/users/remove-user-from-plan/all-response-body-properties'
+                'x-test-name': '/users/alternate-emails/delete-alternate-email/all-response-body-properties'
             }
         };
-        await client.users.removeUserFromPlan(options);
+        await client.users.deleteAlternateEmail(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
-        assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}`));
+        assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/alternateemails/${TEST_ALTERNATE_EMAIL_ID}`));
     });
 
-    it('removeUserFromPlan all response body properties', async function () {
+    it('deleteAlternateEmail all response body properties', async function () {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
-            planId: TEST_PLAN_ID,
+            alternateEmailId: TEST_ALTERNATE_EMAIL_ID,
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/users/remove-user-from-plan/all-response-body-properties'
+                'x-test-name': '/users/alternate-emails/delete-alternate-email/all-response-body-properties'
             }
         };
-        const response = await client.users.removeUserFromPlan(options);
+        const response = await client.users.deleteAlternateEmail(options);
         assert.ok(response);
         assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
     });
 
-    it('removeUserFromPlan error 500 response', async function () {
+    it('deleteAlternateEmail error 500 response', async function () {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
-            planId: TEST_PLAN_ID,
+            alternateEmailId: TEST_ALTERNATE_EMAIL_ID,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/errors/500-response'
             }
         };
         try {
-            await client.users.removeUserFromPlan(options);
+            await client.users.deleteAlternateEmail(options);
             assert.fail('Expected an error to be thrown');
         } catch (error) {
             assert.strictEqual(error.statusCode, ERROR_500_STATUS_CODE);
@@ -66,18 +66,18 @@ describe('Users - removeUserFromPlan endpoint tests', function () {
         }
     });
 
-    it('removeUserFromPlan error 400 response', async function () {
+    it('deleteAlternateEmail error 400 response', async function () {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
-            planId: TEST_PLAN_ID,
+            alternateEmailId: TEST_ALTERNATE_EMAIL_ID,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/errors/400-response'
             }
         };
         try {
-            await client.users.removeUserFromPlan(options);
+            await client.users.deleteAlternateEmail(options);
             assert.fail('Expected an error to be thrown');
         } catch (error) {
             assert.strictEqual(error.statusCode, ERROR_400_STATUS_CODE);
