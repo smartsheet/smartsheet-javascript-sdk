@@ -1,14 +1,13 @@
-var sinon = require('sinon');
-var should = require('should');
-var assert = require('assert');
-var helpers = require('./helpers');
-
+import sinon from 'sinon';
+import should from 'should';
+import assert from 'assert';
+import * as helpers from './helpers.js';
 
 describe('Mock API SDK Tests', function() {
-  var client = helpers.setupClient();
+  const client = helpers.setupClient();
 
   describe('#Sheets', function() {
-    var scenarios = [
+  const scenarios = [
       {
         "name": "List Sheets - No Params",
         "method": client.sheets.listSheets,

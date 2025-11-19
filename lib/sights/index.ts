@@ -1,5 +1,4 @@
-import type { CreateOptions } from '../types';
-// Use any type for CommonJS module
+import type { CreateOptions } from '../types/CreateOptions.js';
 import shareModule from '../share/share.js';
 import type {
   CopySight,
@@ -11,7 +10,7 @@ import type {
   SetSightPublishStatus,
   SightsApi,
   UpdateSight,
-} from './types';
+} from './types.js';
 
 export const createSights = (options: CreateOptions): SightsApi => {
   const requestor = options.requestor;

@@ -1,12 +1,12 @@
-var sinon = require('sinon');
-var should = require('should');
-
-var smartsheet = null;
+import sinon from 'sinon';
+import should from 'should';
+import * as smartsheetModule from '../../dist/index.js';
+let smartsheet = null;
 
 describe('Client Unit Tests', function() {
+
   beforeEach(function() {
-    client = require('../../');
-    smartsheet = client.createClient({accessToken:'1234'});
+    smartsheet = smartsheetModule.createClient({accessToken:'1234'});
   });
 
   afterEach(function() {
@@ -15,15 +15,15 @@ describe('Client Unit Tests', function() {
 
   describe('#Constants', function() {
     it('should have Constants object', function() {
-      Object.keys(smartsheet.constants).should.be.length(7);
       smartsheet.should.have.property('constants');
-      smartsheet.constants.should.have.property('maxRetryDurationMillis');
-      smartsheet.constants.should.have.property('accessLevel');
-      smartsheet.constants.should.have.property('accessScope');
-      smartsheet.constants.should.have.property('types');
-      smartsheet.constants.should.have.property('paperSize');
-      smartsheet.constants.should.have.property('acceptHeaders');
-      smartsheet.constants.should.have.property('sheet');
+      Object.keys(smartsheet.constants).should.be.length(7);
+      should(smartsheet.constants).have.property('maxRetryDurationMillis');
+      should(smartsheet.constants).have.property('accessLevel');
+      should(smartsheet.constants).have.property('accessScope');
+      should(smartsheet.constants).have.property('types');
+      should(smartsheet.constants).have.property('paperSize');
+      should(smartsheet.constants).have.property('acceptHeaders');
+      should(smartsheet.constants).have.property('sheet');
     });
   });
 

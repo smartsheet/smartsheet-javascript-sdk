@@ -1,4 +1,4 @@
-const smartsheet = require('../');
+import * as smartsheet from '../dist/index.js';
 
 // Test that the sharing module is properly exported
 console.log('Testing sharing module exports...');

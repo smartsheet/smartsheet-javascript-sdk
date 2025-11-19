@@ -1,5 +1,5 @@
-import type { RequestCallback } from '../types/RequestCallback';
-import type { RequestOptions } from '../types/RequestOptions';
+import type { RequestCallback } from '../types/RequestCallback.js';
+import type { RequestOptions } from '../types/RequestOptions.js';
 
 export interface ContactsApi {
   getContact: (options: RequestOptions<undefined, undefined>, callback?: RequestCallback<Contact>) => Promise<Contact>;

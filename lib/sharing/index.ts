@@ -1,4 +1,6 @@
-import type { CreateOptions, RequestCallback, RequestOptions } from '../types';
+import type { RequestCallback } from '../types/RequestCallback.js';
+import type { RequestOptions } from '../types/RequestOptions.js';
+import type { CreateOptions } from '../types/CreateOptions.js';
 
 /**
  * Asset types supported by the Sharing API

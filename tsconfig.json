@@ -7,7 +7,7 @@
     "declaration": true,
     "moduleResolution": "node16",
     "resolveJsonModule": true,
-    "module": "Node16"
+    "module": "nodenext"
   },
   "include": ["./lib/**/*", "./index.ts", "./package.json"]
 }

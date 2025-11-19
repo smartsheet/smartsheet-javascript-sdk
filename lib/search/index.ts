@@ -1,6 +1,7 @@
-import type { CreateOptions, RequestCallback } from '../types';
-import { apiUrls } from '../utils/apis';
-import type { SearchAllOptions, SearchApi, SearchResponse, SearchSheetOptions } from './types';
+import type { RequestCallback } from '../types/RequestCallback.js';
+import type { CreateOptions } from '../types/CreateOptions.js';
+import { apiUrls } from '../utils/apis.js';
+import type { SearchAllOptions, SearchApi, SearchResponse, SearchSheetOptions } from './types.js';
 
 export const createSearch = (options: CreateOptions): SearchApi => {
   const requestor = options.requestor;

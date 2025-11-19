@@ -1,7 +1,7 @@
-import type { CreateOptions } from '../types/CreateOptions';
-import type { RequestCallback } from '../types/RequestCallback';
-import type { BaseResponseStatus } from '../types/BaseResponseStatus';
-import type { AlternateEmail } from './types';
+import type { CreateOptions } from '../types/CreateOptions.js';
+import type { RequestCallback } from '../types/RequestCallback.js';
+import type { BaseResponseStatus } from '../types/BaseResponseStatus.js';
+import type { AlternateEmail } from './types.js';
 import type {
   AlternateEmailsApi,
   AddAlternateEmailOptions,
@@ -12,7 +12,7 @@ import type {
   MakeAlternateEmailPrimaryOptions,
   MakeAlternateEmailPrimaryResponse,
   DeleteAlternateEmailOptions,
-} from './alternateemails_types';
+} from './alternateemails_types.js';
 
 export function create(options: CreateOptions): AlternateEmailsApi {
   const requestor = options.requestor;

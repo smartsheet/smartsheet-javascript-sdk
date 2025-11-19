@@ -1,6 +1,6 @@
-var sinon = require('sinon');
-const { smartSheetURIs } = require('../../..');
-var createRequestLogger = require('../../../lib/utils/requestLogger').create;
+import sinon from 'sinon';
+import { smartSheetURIs } from '../../../dist/index.js';
+import { create as createRequestLogger } from '../../../lib/utils/requestLogger.js';
 
 describe('#RequestLogger', function () {
     var requestLogger;

@@ -5,10 +5,11 @@
 // test with an actual method (such as client.sheets.listSheets) and set path ids before
 // running the tests.
 
-var _ = require('underscore');
-var fs = require('fs');
+import _ from 'underscore';
+import fs from 'fs';
+import yargs from 'yargs';
 
-var argv = require('yargs')
+const argv = yargs
     .alias('s', 'scenarios')
     .describe('s', 'Path to the JSON file containing new scenarios')
     .alias('o', 'output')

@@ -1,4 +1,7 @@
-import type { BaseResponseStatus, CreateOptions, RequestCallback, RequestOptions } from '../types';
+import type { BaseResponseStatus } from '../types/BaseResponseStatus.js';
+import type { CreateOptions } from '../types/CreateOptions.js';
+import type { RequestCallback } from '../types/RequestCallback.js';
+import type { RequestOptions } from '../types/RequestOptions.js';
 import type {
   UsersApi,
   ListUsersQueryParameters,
@@ -22,12 +25,12 @@ import type {
   AddUserResponse,
   RemoveUserOptions,
   AddProfileImageResponse,
-} from './types';
+} from './types.js';
 
-import * as alternateEmails from './alternateemails';
-import type { AlternateEmailsApi } from './alternateemails_types';
+import * as alternateEmails from './alternateemails.js';
+import type { AlternateEmailsApi } from './alternateemails_types.js';
 
-export function create(options: CreateOptions): UsersApi | AlternateEmailsApi {
+export function create(options: CreateOptions): UsersApi & AlternateEmailsApi {
   const requestor = options.requestor;
 
   const optionsToSend = {
@@ -156,5 +159,5 @@ export function create(options: CreateOptions): UsersApi | AlternateEmailsApi {
   };
 
   // Extend with alternate emails functionality
-  return { ...userObject, ...alternateEmails.create(options) } as UsersApi;
+  return { ...userObject, ...alternateEmails.create(options) } as UsersApi & AlternateEmailsApi;
 }

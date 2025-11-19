@@ -1,12 +1,17 @@
-var sinon = require('sinon');
-var Promise = require('bluebird');
-var _ = require('underscore');
-var packageJson = require('../../package.json');
-var fs = require('fs');
-const { smartSheetURIs } = require('../..');
-var axios = require('axios');
+import { createRequire } from 'module';
+import sinon from 'sinon';
+import Promise from 'bluebird';
+import _ from 'underscore';
+import fs from 'fs';
+import { smartSheetURIs } from '../../dist/index.js';
+import axios from 'axios';
+import { create as createRequestor } from '../../lib/utils/httpRequestor.js';
+import * as httpRequestor from '../../lib/utils/httpRequestor.js';
 
-var requestor = require('../../lib/utils/httpRequestor').create({request: axios});
+const require = createRequire(import.meta.url);
+const packageJson = require('../../package.json');
+
+const requestor = createRequestor({request: axios});
 
 var sample = {
   name : 'name'
@@ -214,8 +219,12 @@ describe('Utils Unit Tests', function() {
   describe('#GET', function() {
     describe('#Successful request', function() {
       var requestStub = null;
-      var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: () => ({ content: true })});
+      var stubbedRequestor = null;
+
+      before(() => {
+        
+        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({ content: true })});
+      });
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'get');
@@ -249,9 +258,13 @@ describe('Utils Unit Tests', function() {
 
     describe('#Error on request', function() {
       var requestStub = null;
-      var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: () => ({ content: true })});
+      var stubbedRequestor = null;
       var mockBody;
+
+      before(() => {
+        
+        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({ content: true })});
+      });
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'get');
@@ -323,9 +336,13 @@ describe('Utils Unit Tests', function() {
     describe('#Retry', function() {
       var requestStub = null;
       var handleResponseStub = sinon.stub();
-      var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: handleResponseStub});
+      var stubbedRequestor = null;
       var sampleRequestForRetry = null;
+
+      before(() => {
+        
+        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
+      });
 
       function givenGetReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
@@ -394,9 +411,12 @@ describe('Utils Unit Tests', function() {
   describe('#POST', function() {
     describe('#Successful request', function() {
       var requestStub = null;
+      var stubbedRequestor = null;
 
-      var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: () => ({content: true})});
+      before(() => {
+        
+        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
+      });
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'post');
@@ -430,9 +450,12 @@ describe('Utils Unit Tests', function() {
     describe('#Error on request', function() {
       var requestStub = null;
       var mockBody = {error:true};
+      var stubbedRequestor = null;
 
-      var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: () => ({content: true})});
+      before(() => {
+        
+        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
+      });
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'post');
@@ -502,11 +525,13 @@ describe('Utils Unit Tests', function() {
     describe('#Retry', function() {
       var requestStub = null;
       var handleResponseStub = sinon.stub();
-
-      var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: handleResponseStub});
-
+      var stubbedRequestor = null;
       var sampleRequestForRetry;
+
+      before(() => {
+        
+        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
+      });
 
       function givenPostReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
@@ -576,9 +601,12 @@ describe('Utils Unit Tests', function() {
   describe('#PUT', function() {
     describe('#Successful request', function() {
       var requestStub = null;
+      var stubbedRequestor = null;
 
-      var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: () => ({content: true})});
+      before(() => {
+        
+        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
+      });
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'put');
@@ -614,9 +642,12 @@ describe('Utils Unit Tests', function() {
     describe('#Error on request', function() {
       var stub = null;
       var mockBody = {error: true};
+      var stubbedRequestor = null;
 
-      var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: () => ({content: true})});
+      before(() => {
+        
+        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
+      });
 
       beforeEach(() => {
         stub = sinon.stub(axios, 'put');
@@ -692,11 +723,13 @@ describe('Utils Unit Tests', function() {
     describe('#Retry', function() {
       var requestStub = null;
       var handleResponseStub = sinon.stub();
-
-      var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: handleResponseStub});
-
+      var stubbedRequestor = null;
       var sampleRequestForRetry = null;
+
+      before(() => {
+        
+        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
+      });
 
       function givenPutReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
@@ -766,9 +799,12 @@ describe('Utils Unit Tests', function() {
   describe('#DELETE', function() {
     describe('#Successful request', function() {
       var requestStub = null;
+      var stubbedRequestor = null;
 
-      var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: () => ({content: true})});
+      before(() => {
+        
+        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
+      });
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'delete');
@@ -805,9 +841,12 @@ describe('Utils Unit Tests', function() {
       var requestStub = null;
       var handleResponseStub = null;
       var mockBody = {error: true};
+      var stubbedRequestor = null;
 
-      var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: () => ({content: true})});
+      before(() => {
+        
+        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
+      });
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'delete');
@@ -878,11 +917,13 @@ describe('Utils Unit Tests', function() {
     describe('#Retry', function() {
       var requestStub = null;
       var handleResponseStub = sinon.stub();
-
-      var stubbedRequestor = require('../../lib/utils/httpRequestor')
-        .create({request: axios, handleResponse: handleResponseStub});
-
+      var stubbedRequestor = null;
       var sampleRequestForRetry;
+
+      before(() => {
+        
+        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
+      });
 
       function givenDeleteReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));

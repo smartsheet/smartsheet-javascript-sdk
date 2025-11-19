@@ -1,21 +1,21 @@
-var should = require('should');
-var assert = require('assert');
-var _ = require('underscore');
-var smartsheet = require('../..');
-var sinon = require("sinon");
-var axios = require("axios");
+import should from 'should';
+import assert from 'assert';
+import _ from 'underscore';
+import * as smartsheet from '../../dist/index.js';
+import sinon from "sinon";
+import axios from "axios";
 
-exports.setupClient = function() {
+export function setupClient() {
     return smartsheet.createClient({accessToken:'1234', baseUrl: "http://localhost:8082/"});
-};
+}
 
-exports.defineMockApiTests = function(scenarios) {
+export function defineMockApiTests(scenarios) {
     _.each(scenarios, function (scenario) {
         defineMockApiTest(scenario)
     });
-};
+}
 
-var defineMockApiTest = function(scenario) {
+function defineMockApiTest(scenario) {
     describe('#' + scenario.name, function () {
         var postStub;
         var putStub;

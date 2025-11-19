@@ -1,6 +1,6 @@
-const smartsheet = require('../');
-const fs = require('fs');
-const path = require('path');
+import * as smartsheet from '../../dist/index.js';
+import fs from 'fs';
+import path from 'path';
 
 // Load API key from environment variable or a local .env file
 let accessToken = process.env.SMARTSHEET_ACCESS_TOKEN;

@@ -2,6 +2,7 @@
   "name": "smartsheet",
   "version": "4.8.0",
   "description": "Smartsheet JavaScript client SDK",
+  "type": "module",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {

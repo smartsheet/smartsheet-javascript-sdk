@@ -1,6 +1,6 @@
-import type { RequestCallback } from '../types/RequestCallback';
-import type { RequestOptions } from '../types/RequestOptions';
-import type { BaseResponseStatus } from '../types/BaseResponseStatus';
+import type { RequestCallback } from '../types/RequestCallback.js';
+import type { RequestOptions } from '../types/RequestOptions.js';
+import type { BaseResponseStatus } from '../types/BaseResponseStatus.js';
 
 // ============================================================================
 // Users API Interface

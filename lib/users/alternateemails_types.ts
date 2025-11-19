@@ -1,7 +1,7 @@
-import type { RequestOptions } from '../types/RequestOptions';
-import type { RequestCallback } from '../types/RequestCallback';
-import type { BaseResponseStatus } from '../types/BaseResponseStatus';
-import type { AlternateEmail } from './types';
+import type { RequestOptions } from '../types/RequestOptions.js';
+import type { RequestCallback } from '../types/RequestCallback.js';
+import type { BaseResponseStatus } from '../types/BaseResponseStatus.js';
+import type { AlternateEmail } from './types.js';
 
 // ============================================================================
 // Alternate Emails API Interface

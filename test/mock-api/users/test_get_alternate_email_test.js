@@ -1,14 +1,14 @@
-const assert = require('assert');
-const crypto = require('crypto');
-const { createClient, findWireMockRequest } = require('../utils/utils.js');
-const {
+import assert from 'assert';
+import crypto from 'crypto';
+import { createClient, findWireMockRequest } from '../utils/utils.js';
+import {
     TEST_USER_ID,
     TEST_ALTERNATE_EMAIL_ID,
     ERROR_500_STATUS_CODE,
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE
-} = require('./common_test_constants.js');
+} from './common_test_constants.js';
 
 describe('Users - getAlternateEmail endpoint tests', function () {
     let client = createClient();

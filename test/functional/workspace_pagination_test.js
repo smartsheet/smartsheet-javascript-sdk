@@ -1,6 +1,7 @@
-var should = require('should');
-var _ = require('underscore');
-var sinon = require('sinon');
+import should from 'should';
+import _ from 'underscore';
+import sinon from 'sinon';
+import * as SmartsheetClient from '../../dist/index.js';
 
 describe('Workspace Pagination Tests', function() {
   var client;
@@ -39,7 +40,6 @@ describe('Workspace Pagination Tests', function() {
       }
     };
 
-    var SmartsheetClient = require('../../dist/index.js');
     client = SmartsheetClient.createClient({
       accessToken: 'test_token',
       requestor: requestorStub

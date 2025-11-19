@@ -1,7 +1,7 @@
-const assert = require('assert');
-const crypto = require('crypto');
-const { createClient, findWireMockRequest } = require('../utils/utils.js');
-const {
+import assert from 'assert';
+import crypto from 'crypto';
+import { createClient, findWireMockRequest } from '../utils/utils.js';
+import {
     TEST_PLAN_ID,
     TEST_EMAIL,
     TEST_FIRST_NAME,
@@ -18,7 +18,7 @@ const {
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE,
     TEST_PROVISIONAL_EXPIRATION_DATE
-} = require('./common_test_constants.js');
+} from './common_test_constants.js';
 
 describe('Users - listAllUsers endpoint tests', function () {
     let client = createClient();

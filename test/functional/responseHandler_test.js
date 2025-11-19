@@ -1,14 +1,14 @@
-var should = require('should');
-var Promise = require('bluebird');
-var _ = require('underscore');
-
-var handleResponse = require('../../lib/utils/responseHandler');
+import should from 'should';
+import Promise from 'bluebird';
+import _ from 'underscore';
+import handleResponse from '../../lib/utils/responseHandler.js';
 
 describe('Utils Unit Tests', function() {
   describe('#responseHandler', function() {
     describe('#handleResponse', function() {
       var mockResponse = null;
       var mockBody = null;
+      var mockBodyError = null;
 
       beforeEach(() => {
         mockBody = {

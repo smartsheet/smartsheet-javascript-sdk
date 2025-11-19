@@ -1,17 +1,17 @@
-const axios = require('axios');
-var smartsheet = require('../../../');
+import axios from 'axios';
+import * as smartsheet from '../../../dist/index.js';
 
 const baseUrl = 'http://127.0.0.1:8082/2.0/';
 const wiremockUrl = 'http://127.0.0.1:8082';
 
-exports.createClient = function () {
-    return client = smartsheet.createClient({
+export function createClient() {
+    return smartsheet.createClient({
         accessToken: 'test_token',
         baseUrl: baseUrl
     });
 }
 
-exports.findWireMockRequest = async function findWireMockRequest(requestId) {
+export async function findWireMockRequest(requestId) {
     const requestBody = {
         headers: {
             'x-request-id': {
