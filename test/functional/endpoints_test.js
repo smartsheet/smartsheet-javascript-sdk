@@ -1,5 +1,4 @@
 import sinon from 'sinon';
-import should from 'should';
 import { create as createRequestor } from '../../lib/utils/httpRequestor';
 import * as constants from '../../lib/utils/constants';
 import _ from 'underscore';

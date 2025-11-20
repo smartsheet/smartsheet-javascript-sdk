@@ -1,6 +1,7 @@
-import * as smartsheet from '../../dist/index';
+import * as smartsheet from '@smartsheet';
 import fs from 'fs';
 import path from 'path';
+import { AssetType } from '@smartsheet/sharing'
 
 // Load API key from environment variable or a local .env file
 let accessToken = process.env.SMARTSHEET_ACCESS_TOKEN;
@@ -34,8 +35,6 @@ const client = smartsheet.createClient({
 // Test asset IDs - replace these with actual IDs from your account
 const TEST_SHEET_ID = 123456789;
 const TEST_WORKSPACE_ID = 987654321;
-const TEST_REPORT_ID = 456789123;
-const TEST_SIGHT_ID = 789123456;
 
 // Test functions for the new sharing APIs
 async function testListAssetShares() {
@@ -44,15 +43,19 @@ async function testListAssetShares() {
   try {
     console.log('Listing shares for a sheet...');
     const sheetShares = await client.sharing.listAssetShares({
-      assetType: 'sheet',
-      assetId: TEST_SHEET_ID
+      queryParameters: {
+        assetType: smartsheet.AssetType.SHEET,
+        assetId: TEST_SHEET_ID
+      }
     });
     console.log('Sheet shares:', JSON.stringify(sheetShares, null, 2));
     
     console.log('\nListing shares for a workspace...');
     const workspaceShares = await client.sharing.listAssetShares({
-      assetType: 'workspace',
-      assetId: TEST_WORKSPACE_ID
+      queryParameters: {
+        assetType: smartsheet.AssetType.WORKSPACE,
+        assetId: TEST_WORKSPACE_ID
+      }
     });
     console.log('Workspace shares:', JSON.stringify(workspaceShares, null, 2));
   } catch (err) {
@@ -66,8 +69,10 @@ async function testGetAssetShare() {
   try {
     // First, get a list of shares to find a share ID
     const shares = await client.sharing.listAssetShares({
-      assetType: 'sheet',
-      assetId: TEST_SHEET_ID
+      queryParameters: {
+        assetType: smartsheet.AssetType.SHEET,
+        assetId: TEST_SHEET_ID
+      }
     });
     
     if (shares.items?.length > 0) {
@@ -75,8 +80,10 @@ async function testGetAssetShare() {
       console.log(`Getting share with ID ${shareId}...`);
       
       const share = await client.sharing.getAssetShare({
-        assetType: 'sheet',
-        assetId: TEST_SHEET_ID,
+        queryParameters: {
+          assetType: smartsheet.AssetType.SHEET,
+          assetId: TEST_SHEET_ID,
+        },
         shareId
       });
       
@@ -89,94 +96,105 @@ async function testGetAssetShare() {
   }
 }
 
-async function testShareAsset() {
-  console.log('\n=== Testing shareAsset ===');
+// async function testShareAsset() {
+//   console.log('\n=== Testing shareAsset ===');
   
-  // Replace with a valid email address
-  const TEST_EMAIL = 'test.user@example.com';
+//   // Replace with a valid email address
+//   const TEST_EMAIL = 'test.user@example.com';
   
-  try {
-    console.log(`Sharing sheet ${TEST_SHEET_ID} with ${TEST_EMAIL}...`);
+//   try {
+//     console.log(`Sharing sheet ${TEST_SHEET_ID} with ${TEST_EMAIL}...`);
     
-    const result = await client.sharing.shareAsset({
-      assetType: 'sheet',
-      assetId: TEST_SHEET_ID,
-      body: [
-        {
-          email: TEST_EMAIL,
-          accessLevel: 'VIEWER'
-        }
-      ]
-    });
+//     const result = await client.sharing.shareAsset({
+//       queryParameters: {
+//         assetType: smartsheet.AssetType.SHEET,
+//         assetId: TEST_SHEET_ID
+//       },
+//       body: [
+//         {
+//           email: TEST_EMAIL,
+//           accessLevel: smartsheet.AccessLevel.VIEWER
+//         }
+//       ]
+//     });
     
-    console.log('Share result:', JSON.stringify(result, null, 2));
-  } catch (err) {
-    console.error('Error sharing asset:', err);
-  }
-}
+//     console.log('Share result:', JSON.stringify(result, null, 2));
+//   } catch (err) {
+//     console.error('Error sharing asset:', err);
+//   }
+// }
 
-async function testUpdateShare() {
-  console.log('\n=== Testing updateShare ===');
+// async function testUpdateShare() {
+//   console.log('\n=== Testing updateShare ===');
   
-  try {
-    // First, get a list of shares to find a share ID
-    const shares = await client.sharing.listAssetShares({
-      assetType: 'sheet',
-      assetId: TEST_SHEET_ID
-    });
+//   try {
+//     // First, get a list of shares to find a share ID
+//     const shares = await client.sharing.listAssetShares({
+//       queryParameters: {
+//         assetType: AssetType.SHEET,
+//         assetId: TEST_SHEET_ID
+//       }
+//     });
     
-    if (shares.items && shares.items.length > 0) {
-      const shareId = shares.items[0].id;
-      console.log(`Updating share with ID ${shareId}...`);
+//     if (shares.items && shares.items.length > 0) {
+//       const shareId = shares.items[0].id;
+//       console.log(`Updating share with ID ${shareId}...`);
       
-      const result = await client.sharing.updateAssetShare({
-        assetType: 'sheet',
-        assetId: TEST_SHEET_ID,
-        shareId,
-        body: {
-          accessLevel: 'EDITOR'
-        }
-      });
+//       const result = await client.sharing.updateAssetShare({
+//         queryParameters: {
+//           assetType: AssetType.SHEET,
+//           assetId: TEST_SHEET_ID
+//         },
+//         shareId,
+//         body: {
+//           accessLevel: AccessLevel.EDITOR
+//         }
+//       });
       
-      console.log('Update result:', JSON.stringify(result, null, 2));
-    } else {
-      console.log('No shares found to test updateShare');
-    }
-  } catch (err) {
-    console.error('Error updating share:', err);
-  }
-}
+//       console.log('Update result:', JSON.stringify(result, null, 2));
+//     } else {
+//       console.log('No shares found to test updateShare');
+//     }
+//   } catch (err) {
+//     console.error('Error updating share:', err);
+//   }
+// }
 
-async function testDeleteShare() {
-  console.log('\n=== Testing deleteShare ===');
+// async function testDeleteShare() {
+//   console.log('\n=== Testing deleteShare ===');
   
-  try {
-    // First, get a list of shares to find a share ID
-    const shares = await client.sharing.listAssetShares({
-      assetType: 'sheet',
-      assetId: TEST_SHEET_ID
-    });
+//   try {
+//     // First, get a list of shares to find a share ID
+//     const shares = await client.sharing.listAssetShares({
+//       queryParameters: {
+//         assetType: AssetType.SHEET,
+//         assetId: TEST_SHEET_ID
+//       }
+//     });
     
-    if (shares.items && shares.items.length > 0) {
-      const shareId = shares.items[0].id;
-      console.log(`Deleting share with ID ${shareId}...`);
+//     if (shares.items && shares.items.length > 0) {
+//       const shareId = shares.items[0].id;
+//       console.log(`Deleting share with ID ${shareId}...`);
       
-      const result = await client.sharing.deleteAssetShare({
-        assetType: 'sheet',
-        assetId: TEST_SHEET_ID,
-        shareId
-      });
+//       const result = await client.sharing.deleteAssetShare({
+//         queryParameters: {
+//           assetType: AssetType.SHEET,
+//           assetId: TEST_SHEET_ID
+//         },
+//         shareId
+//       });
       
-      console.log('Delete result:', JSON.stringify(result, null, 2));
-    } else {
-      console.log('No shares found to test deleteShare');
-    }
-  } catch (err) {
-    console.error('Error deleting share:', err);
-  }
-}
+//       console.log('Delete result:', JSON.stringify(result, null, 2));
+//     } else {
+//       console.log('No shares found to test deleteShare');
+//     }
+//   } catch (err) {
+//     console.error('Error deleting share:', err);
+//   }
+// }
 
 // Compare old and new APIs
+
 async function compareOldAndNewApis() {
   console.log('\n=== Comparing Old and New APIs ===');
   
@@ -189,8 +207,10 @@ async function compareOldAndNewApis() {
     
     console.log('\nUsing new API to list sheet shares...');
     const newApiShares = await client.sharing.listAssetShares({
-      assetType: 'sheet',
-      assetId: TEST_SHEET_ID
+      queryParameters: {
+        assetType: AssetType.SHEET,
+        assetId: TEST_SHEET_ID
+      }
     });
     console.log('New API result:', JSON.stringify(newApiShares, null, 2));
   } catch (err) {

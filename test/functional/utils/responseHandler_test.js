@@ -1,5 +1,3 @@
-import should from 'should';
-import sinon from 'sinon';
 import responseHandler from '../../../lib/utils/responseHandler';
 
 describe('responseHandler', () => {

@@ -19,11 +19,6 @@ var sampleRequest = {
   accessToken:'TOKEN'
 };
 
-var sampleRequestNoContentType = {
-  accessToken: 'TOKEN',
-  body: sample
-};
-
 var sampleRequestWithQueryParameters = {
   accessToken: 'TOKEN',
   contentType: 'application/json',
@@ -247,7 +242,7 @@ describe('Utils Unit Tests', function() {
 
       it('request should call callback as true', function(done) {
         stubbedRequestor.get(sampleRequest, function(err, data) {
-          data.should.be.true;
+          data.should.be(true);
           done();
         })
       });
@@ -265,12 +260,6 @@ describe('Utils Unit Tests', function() {
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'get');
-        var mockResponse = {
-          statusCode: 403,
-          headers: {
-            'content-type':'application/json;charset=UTF-8'
-          }
-        };
         mockBody = {error:true};
         requestStub.returns(Promise.reject(mockBody));
       });
@@ -287,8 +276,8 @@ describe('Utils Unit Tests', function() {
       it('request should error as false, using callbacks', (done) => {
         stubbedRequestor
           .get(sampleRequest,
-               (err, data) => {
-                 err.content.should.be.true
+               (err, _) => {
+                 err.content.should.be(true)
                  done();
                 });
       });
@@ -377,14 +366,14 @@ describe('Utils Unit Tests', function() {
         givenGetReturnsSuccess();
         return stubbedRequestor
           .get(sampleRequestForRetry)
-          .then(data => requestStub.callCount.should.equal(1));
+          .then(_ => requestStub.callCount.should.equal(1));
       });
 
       it('get retried on error', () => {
         givenGetReturnsError();
         return stubbedRequestor
           .get(sampleRequestForRetry)
-          .catch(err => requestStub.callCount.should.be.above(1));
+          .catch(_ => requestStub.callCount.should.be.above(1));
       });
 
       it('get stops retrying when receiving a negative backoff', () => {
@@ -392,7 +381,7 @@ describe('Utils Unit Tests', function() {
         givenEarlyExitBackoff();
         return stubbedRequestor
           .get(sampleRequestForRetry)
-          .catch(err => requestStub.callCount.should.equal(2));
+          .catch(_ => requestStub.callCount.should.equal(2));
       });
 
       it('get passes the causing error to the backoff function', () => {
@@ -400,7 +389,7 @@ describe('Utils Unit Tests', function() {
         givenBackoffDependsOnError();
         return stubbedRequestor
           .get(sampleRequestForRetry)
-          .catch(err => requestStub.callCount.should.equal(2));
+          .catch(_ => requestStub.callCount.should.equal(2));
       });
     });
   });
@@ -438,7 +427,7 @@ describe('Utils Unit Tests', function() {
 
       it('request should call callback as true', (done) => {
         stubbedRequestor.post(sampleRequest, function(err, data) {
-          data.should.be.true;
+          data.should.be(true);
           done();
         });
       });
@@ -471,8 +460,8 @@ describe('Utils Unit Tests', function() {
       it('request should error as false', (done) => {
         stubbedRequestor
           .post(sampleRequest,
-                (err, data) => {
-                  err.content.should.be.true
+                (err, _) => {
+                  err.content.should.be(true);
                   done();
                 });
       });
@@ -567,14 +556,14 @@ describe('Utils Unit Tests', function() {
         givenPostReturnsSuccess();
         return stubbedRequestor
           .post(sampleRequestForRetry)
-          .then(data => requestStub.callCount.should.equal(1));
+          .then(_ => requestStub.callCount.should.equal(1));
       });
 
       it('post retried on error', () => {
         givenPostReturnsError();
         return stubbedRequestor
           .post(sampleRequestForRetry)
-          .catch(err => requestStub.callCount.should.be.above(1));
+          .catch(_ => requestStub.callCount.should.be.above(1));
       });
 
       it('post stops retrying when receiving a negative backoff', () => {
@@ -582,7 +571,7 @@ describe('Utils Unit Tests', function() {
         givenEarlyExitBackoff();
         return stubbedRequestor
           .post(sampleRequestForRetry)
-          .catch(err => requestStub.callCount.should.equal(2));
+          .catch(_ => requestStub.callCount.should.equal(2));
       });
 
       it('post passes the causing error to the backoff function', () => {
@@ -590,7 +579,7 @@ describe('Utils Unit Tests', function() {
         givenBackoffDependsOnError();
         return stubbedRequestor
           .post(sampleRequestForRetry)
-          .catch(err => requestStub.callCount.should.equal(2));
+          .catch(_ => requestStub.callCount.should.equal(2));
       });
     });
   });
@@ -630,7 +619,7 @@ describe('Utils Unit Tests', function() {
         stubbedRequestor
           .put(sampleRequest,
                (err, data) => {
-                 data.should.be.true;
+                 data.should.be(true);
                  done();
                 });
       });
@@ -648,12 +637,6 @@ describe('Utils Unit Tests', function() {
 
       beforeEach(() => {
         stub = sinon.stub(axios, 'put');
-        var mockResponse = {
-          statusCode: 403,
-          headers: {
-            'content-type':'application/json;charset=UTF-8'
-          }
-        };
         stub.returns(Promise.reject(mockBody));
       });
 
@@ -669,8 +652,8 @@ describe('Utils Unit Tests', function() {
       it('request should error as false', (done) => {
         stubbedRequestor
           .put(sampleRequest,
-               (err, data) => {
-                 err.content.should.be.true
+               (err, _) => {
+                 err.content.should.be(true);
                  done();
                 });
       });
@@ -765,14 +748,14 @@ describe('Utils Unit Tests', function() {
         givenPutReturnsSuccess();
         return stubbedRequestor
           .put(sampleRequestForRetry)
-          .then(data => requestStub.callCount.should.equal(1));
+          .then(_ => requestStub.callCount.should.equal(1));
       });
 
       it('put retried on error', () => {
         givenPutReturnsError();
         return stubbedRequestor
           .put(sampleRequestForRetry)
-          .catch(err => requestStub.callCount.should.be.above(1));
+          .catch(_ => requestStub.callCount.should.be.above(1));
       });
 
       it('put stops retrying when receiving a negative backoff', () => {
@@ -780,7 +763,7 @@ describe('Utils Unit Tests', function() {
         givenEarlyExitBackoff();
         return stubbedRequestor
           .put(sampleRequestForRetry)
-          .catch(err => requestStub.callCount.should.equal(2));
+          .catch(_ => requestStub.callCount.should.equal(2));
       });
 
       it('put passes the causing error to the backoff function', () => {
@@ -788,7 +771,7 @@ describe('Utils Unit Tests', function() {
         givenBackoffDependsOnError();
         return stubbedRequestor
           .put(sampleRequestForRetry)
-          .catch(err => requestStub.callCount.should.equal(2));
+          .catch(_ => requestStub.callCount.should.equal(2));
       });
     });
   });
@@ -828,7 +811,7 @@ describe('Utils Unit Tests', function() {
         stubbedRequestor
           .delete(sampleRequest,
                   (err, data) => {
-                    data.should.be.true;
+                    data.should.be(true);
                     done();
                   });
       });
@@ -836,7 +819,6 @@ describe('Utils Unit Tests', function() {
 
     describe('#Error on request', function() {
       var requestStub = null;
-      var handleResponseStub = null;
       var mockBody = {error: true};
       var stubbedRequestor = null;
 
@@ -847,12 +829,6 @@ describe('Utils Unit Tests', function() {
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'delete');
-        var mockResponse = {
-          statusCode: 403,
-          headers: {
-            'content-type':'application/json;charset=UTF-8'
-          }
-        };
         requestStub.returns(Promise.reject(mockBody));
       });
 
@@ -868,8 +844,8 @@ describe('Utils Unit Tests', function() {
       it('request should error as false', (done) => {
         stubbedRequestor
           .delete(sampleRequest,
-                  (err, data) => {
-                    err.content.should.be.true;
+                  (err, _) => {
+                    err.content.should.be(true);
                     done();
                   });
       });
@@ -959,14 +935,14 @@ describe('Utils Unit Tests', function() {
         givenDeleteReturnsSuccess();
         return stubbedRequestor
           .delete(sampleRequestForRetry)
-          .then(data => requestStub.callCount.should.equal(1));
+          .then(_ => requestStub.callCount.should.equal(1));
       });
 
       it('delete retried on error', () => {
         givenDeleteReturnsError();
         return stubbedRequestor
           .delete(sampleRequestForRetry)
-          .catch(err => requestStub.callCount.should.be.above(1));
+          .catch(_ => requestStub.callCount.should.be.above(1));
       });
 
       it('delete stops retrying when receiving a negative backoff', () => {
@@ -974,7 +950,7 @@ describe('Utils Unit Tests', function() {
         givenEarlyExitBackoff();
         return stubbedRequestor
           .delete(sampleRequestForRetry)
-          .catch(err => requestStub.callCount.should.equal(2));
+          .catch(_ => requestStub.callCount.should.equal(2));
       });
 
       it('delete passes the causing error to the backoff function', () => {
@@ -982,7 +958,7 @@ describe('Utils Unit Tests', function() {
         givenBackoffDependsOnError();
         return stubbedRequestor
           .delete(sampleRequestForRetry)
-          .catch(err => requestStub.callCount.should.equal(2));
+          .catch(_ => requestStub.callCount.should.equal(2));
       });
     });
   });

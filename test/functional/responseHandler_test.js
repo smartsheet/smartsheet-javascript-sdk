@@ -1,5 +1,3 @@
-import should from 'should';
-import Promise from 'bluebird';
 import _ from 'underscore';
 import handleResponse from '../../lib/utils/responseHandler';
 

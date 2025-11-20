@@ -1,4 +1,4 @@
-import * as smartsheet from '../dist/index';
+import * as smartsheet from '@smartsheet';
 
 // Test that the sharing module is properly exported
 console.log('Testing sharing module exports...');
@@ -27,8 +27,8 @@ const expectedMethods = [
   'listAssetShares',
   'getAssetShare',
   'shareAsset',
-  'updateShare',
-  'deleteShare'
+  'updateAssetShare',
+  'deleteAssetShare'
 ];
 
 const missingMethods = expectedMethods.filter(method => typeof sharingModule[method] !== 'function');
@@ -55,8 +55,8 @@ if (typeof workspaces.getWorkspaceShares !== 'function') {
 }
 
 const sights = client.sights;
-if (typeof sights.getSightShares !== 'function') {
-  console.warn('WARNING: sights.getSightShares method is not available');
+if (typeof sights.listShares !== 'function') {
+  console.warn('WARNING: sights.listShares method is not available');
 }
 
 console.log('SUCCESS: Sharing module is properly exported and has all expected methods');
