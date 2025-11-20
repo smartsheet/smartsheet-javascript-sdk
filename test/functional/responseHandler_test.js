@@ -1,7 +1,7 @@
 import should from 'should';
 import Promise from 'bluebird';
 import _ from 'underscore';
-import handleResponse from '../../lib/utils/responseHandler.js';
+import handleResponse from '../../lib/utils/responseHandler';
 
 describe('Utils Unit Tests', function() {
   describe('#responseHandler', function() {

@@ -1,6 +1,6 @@
 import should from 'should';
 import sinon from 'sinon';
-import responseHandler from '../../../lib/utils/responseHandler.js';
+import responseHandler from '../../../lib/utils/responseHandler';
 
 describe('responseHandler', () => {
   describe('with successful response', () => {

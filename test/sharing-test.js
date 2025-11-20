@@ -1,4 +1,4 @@
-import * as smartsheet from '../../dist/index.js';
+import * as smartsheet from '../../dist/index';
 import fs from 'fs';
 import path from 'path';
 

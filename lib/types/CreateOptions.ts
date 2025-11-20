@@ -1,5 +1,5 @@
-import type { ApiUrls } from './ApiUrls.js';
-import type { CreateClientOptions } from './CreateClientOptions.js';
+import type { ApiUrls } from './ApiUrls';
+import type { CreateClientOptions } from './CreateClientOptions';
 
 export type ClientOptions = Pick<CreateClientOptions, 'accessToken' | 'userAgent' | 'baseUrl'>;
 

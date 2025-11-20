@@ -1,5 +1,5 @@
-import type { CreateOptions } from '../types/CreateOptions.js';
-import shareModule from '../share/share.js';
+import type { CreateOptions } from '../types/CreateOptions';
+import shareModule from '../share/share';
 import type {
   CopySight,
   DeleteSight,
@@ -10,7 +10,7 @@ import type {
   SetSightPublishStatus,
   SightsApi,
   UpdateSight,
-} from './types.js';
+} from './types';
 
 export const createSights = (options: CreateOptions): SightsApi => {
   const requestor = options.requestor;

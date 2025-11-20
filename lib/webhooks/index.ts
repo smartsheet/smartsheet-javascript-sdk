@@ -1,6 +1,6 @@
-import type { CreateOptions } from '../types/CreateOptions.js';
-import type { RequestCallback } from '../types/RequestCallback.js';
-import type { RequestOptions } from '../types/RequestOptions.js';
+import type { CreateOptions } from '../types/CreateOptions';
+import type { RequestCallback } from '../types/RequestCallback';
+import type { RequestOptions } from '../types/RequestOptions';
 import type {
   WebhooksApi,
   CreateWebhookResponse,
@@ -15,7 +15,7 @@ import type {
   CreateWebhookBody,
   Webhook,
   ListWebhooksQueryParameters,
-} from './types.js';
+} from './types';
 
 export function create(options: CreateOptions): WebhooksApi {
   const requestor = options.requestor;

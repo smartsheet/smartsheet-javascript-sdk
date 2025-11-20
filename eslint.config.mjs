@@ -6,13 +6,14 @@ import tsdoc from 'eslint-plugin-tsdoc';
 
 export default tseslint.config(
   {
-    ignores: ['**/dist/**', '**/test/**', '**/smartsheet-sdk-tests/**'],
+    ignores: ['**/dist/**', '**/smartsheet-sdk-tests/**'],
   },
   {
     languageOptions: {
       globals: {
         ...globals.browser,
         ...globals.node,
+        ...globals.mocha,
       },
     },
   },

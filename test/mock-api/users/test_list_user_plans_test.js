@@ -1,6 +1,6 @@
 import assert from 'assert';
 import crypto from 'crypto';
-import { createClient, findWireMockRequest } from '../utils/utils.js';
+import { createClient, findWireMockRequest } from '../utils/utils';
 import {
     TEST_USER_ID,
     TEST_PLAN_ID,
@@ -10,7 +10,7 @@ import {
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE,
     TEST_PROVISIONAL_EXPIRATION_DATE
-} from './common_test_constants.js';
+} from './common_test_constants';
 
 describe('Users - listUserPlans endpoint tests', function () {
     const client = createClient();

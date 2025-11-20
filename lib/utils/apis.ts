@@ -1,4 +1,4 @@
-import type { ApiUrls } from '../types/ApiUrls.js';
+import type { ApiUrls } from '../types/ApiUrls';
 
 export const apiUrls: ApiUrls = {
   contacts: 'contacts',

@@ -1,6 +1,6 @@
 import sinon from 'sinon';
-import { smartSheetURIs } from '../../../dist/index.js';
-import { create as createRequestLogger } from '../../../lib/utils/requestLogger.js';
+import { smartSheetURIs } from '@smartsheet';
+import { create as createRequestLogger } from '../../../lib/utils/requestLogger';
 
 describe('#RequestLogger', function () {
     var requestLogger;

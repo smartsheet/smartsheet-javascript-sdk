@@ -1,7 +1,7 @@
-import type { RequestCallback } from '../types/RequestCallback.js';
-import type { RequestOptions } from '../types/RequestOptions.js';
-import type { BaseResponseStatus } from '../types/BaseResponseStatus.js';
-import type { ApiError } from '../types/ApiError.js';
+import type { RequestCallback } from '../types/RequestCallback';
+import type { RequestOptions } from '../types/RequestOptions';
+import type { BaseResponseStatus } from '../types/BaseResponseStatus';
+import type { ApiError } from '../types/ApiError';
 
 // ============================================================================
 // Webhooks API Interface
@@ -171,7 +171,10 @@ export interface WebhooksApi {
 /**
  * Webhook scope types
  */
-export type WebhookScope = 'sheet' | 'plan';
+export enum WebhookScope {
+  SHEET = 'sheet',
+  PLAN = 'plan',
+}
 
 /**
  * Webhook status types

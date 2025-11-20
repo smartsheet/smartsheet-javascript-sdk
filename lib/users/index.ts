@@ -1,7 +1,7 @@
-import type { BaseResponseStatus } from '../types/BaseResponseStatus.js';
-import type { CreateOptions } from '../types/CreateOptions.js';
-import type { RequestCallback } from '../types/RequestCallback.js';
-import type { RequestOptions } from '../types/RequestOptions.js';
+import type { BaseResponseStatus } from '../types/BaseResponseStatus';
+import type { CreateOptions } from '../types/CreateOptions';
+import type { RequestCallback } from '../types/RequestCallback';
+import type { RequestOptions } from '../types/RequestOptions';
 import type {
   UsersApi,
   ListUsersQueryParameters,
@@ -25,10 +25,10 @@ import type {
   AddUserResponse,
   RemoveUserOptions,
   AddProfileImageResponse,
-} from './types.js';
+} from './types';
 
-import * as alternateEmails from './alternateemails.js';
-import type { AlternateEmailsApi } from './alternateemails_types.js';
+import * as alternateEmails from './alternateemails';
+import type { AlternateEmailsApi } from './alternateemails_types';
 
 export function create(options: CreateOptions): UsersApi & AlternateEmailsApi {
   const requestor = options.requestor;
@@ -59,13 +59,13 @@ export function create(options: CreateOptions): UsersApi & AlternateEmailsApi {
     return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
 
-  const addUser = (postOptions: RequestOptions<undefined, AddUserBody>, callback?: RequestCallback<AddUserResponse>) =>
+  const addUser = (postOptions: RequestOptions<AddUserQueryParameters, AddUserBody>, callback?: RequestCallback<AddUserResponse>) =>
     requestor.post({ ...optionsToSend, ...postOptions }, callback);
 
   const addUserAndSendEmail = (
-    postOptions: RequestOptions<AddUserQueryParameters, AddUserBody>,
+    postOptions: RequestOptions<undefined, AddUserBody>,
     callback?: RequestCallback<AddUserResponse>
-  ) => requestor.post({ ...optionsToSend, ...postOptions }, callback);
+  ) => addUser({ ...optionsToSend, ...postOptions, queryParameters: { sendEmail: true } }, callback);
 
   const updateUser = (putOptions: UpdateUserOptions, callback?: RequestCallback<UpdateUserResponse>) => {
     const urlOptions = { url: options.apiUrls.users + '/' + putOptions.userId };

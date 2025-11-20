@@ -1,7 +1,4 @@
-import sinon from 'sinon';
-import should from 'should';
-import assert from 'assert';
-import * as helpers from './helpers.js';
+import * as helpers from './helpers';
 
 describe('Mock API SDK Tests - Folder Endpoints', function() {
   var client = helpers.setupClient();

@@ -5,10 +5,10 @@ import type {
   GetContactOptions,
   ListContactsOptions,
   ListContactsResponse,
-} from './types.js';
-import type { CreateOptions } from '../types/CreateOptions.js';
-import type { RequestCallback } from '../types/RequestCallback.js';
-import type { RequestOptions } from './../types/RequestOptions.js';
+} from './types';
+import type { CreateOptions } from '../types/CreateOptions';
+import type { RequestCallback } from '../types/RequestCallback';
+import type { RequestOptions } from './../types/RequestOptions';
 
 export function createContacts(options: CreateOptions): ContactsApi {
   const requestor = options.requestor;

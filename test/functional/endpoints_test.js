@@ -1,9 +1,9 @@
 import sinon from 'sinon';
 import should from 'should';
-import { create as createRequestor } from '../../lib/utils/httpRequestor.js';
-import * as constants from '../../lib/utils/constants.js';
+import { create as createRequestor } from '../../lib/utils/httpRequestor';
+import * as constants from '../../lib/utils/constants';
 import _ from 'underscore';
-import * as smartsheet from '../../dist/index.js';
+import * as smartsheet from '@smartsheet';
 
 const requestor = createRequestor({});
 

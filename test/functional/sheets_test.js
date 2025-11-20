@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 import should from 'should';
-import { create as createRequestor } from '../../lib/utils/httpRequestor.js';
-import * as client from '../../dist/index.js';
+import { create as createRequestor } from '../../lib/utils/httpRequestor';
+import * as client from '@smartsheet';
 
 let requestor = null;
 let smartsheet = null;

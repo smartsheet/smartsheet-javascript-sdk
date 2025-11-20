@@ -1,6 +1,5 @@
-import sinon from 'sinon';
 import should from 'should';
-import * as smartsheetModule from '../../dist/index.js';
+import * as smartsheetModule from '@smartsheet';
 let smartsheet = null;
 
 describe('Client Unit Tests', function() {

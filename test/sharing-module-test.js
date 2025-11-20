@@ -1,4 +1,4 @@
-import * as smartsheet from '../dist/index.js';
+import * as smartsheet from '../dist/index';
 
 // Test that the sharing module is properly exported
 console.log('Testing sharing module exports...');

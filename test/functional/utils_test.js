@@ -1,15 +1,12 @@
-import { createRequire } from 'module';
 import sinon from 'sinon';
 import Promise from 'bluebird';
 import _ from 'underscore';
 import fs from 'fs';
-import { smartSheetURIs } from '../../dist/index.js';
+import { smartSheetURIs } from '@smartsheet';
 import axios from 'axios';
-import { create as createRequestor } from '../../lib/utils/httpRequestor.js';
-import * as httpRequestor from '../../lib/utils/httpRequestor.js';
-
-const require = createRequire(import.meta.url);
-const packageJson = require('../../package.json');
+import { create as createRequestor } from '../../lib/utils/httpRequestor';
+import * as httpRequestor from '../../lib/utils/httpRequestor';
+import packageJson from '../../package.json';
 
 const requestor = createRequestor({request: axios});
 

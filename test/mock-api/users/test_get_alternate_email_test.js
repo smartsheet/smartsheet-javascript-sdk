@@ -1,6 +1,6 @@
 import assert from 'assert';
 import crypto from 'crypto';
-import { createClient, findWireMockRequest } from '../utils/utils.js';
+import { createClient, findWireMockRequest } from '../utils/utils';
 import {
     TEST_USER_ID,
     TEST_ALTERNATE_EMAIL_ID,
@@ -8,7 +8,7 @@ import {
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE
-} from './common_test_constants.js';
+} from './common_test_constants';
 
 describe('Users - getAlternateEmail endpoint tests', function () {
     let client = createClient();

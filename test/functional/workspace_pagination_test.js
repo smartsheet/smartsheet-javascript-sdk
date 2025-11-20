@@ -1,7 +1,7 @@
 import should from 'should';
 import _ from 'underscore';
 import sinon from 'sinon';
-import * as SmartsheetClient from '../../dist/index.js';
+import * as SmartsheetClient from '@smartsheet';
 
 describe('Workspace Pagination Tests', function() {
   var client;

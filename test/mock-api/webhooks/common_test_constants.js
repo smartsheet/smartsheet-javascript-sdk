@@ -1,3 +1,5 @@
+import { WebhookScope } from "@smartsheet/webhooks/types";
+
 // Common Webhook IDs
 export const TEST_WEBHOOK_ID = 4012345678901234;
 export const TEST_SCOPE_OBJECT_ID = 3285357287499652;
@@ -5,8 +7,8 @@ export const TEST_SCOPE_OBJECT_ID = 3285357287499652;
 // Common Webhook Properties
 export const TEST_WEBHOOK_NAME = 'Test Webhook';
 export const TEST_CALLBACK_URL = 'https://www.myApp.com/webhooks';
-export const TEST_SCOPE_SHEET = 'sheet';
-export const TEST_SCOPE_PLAN = 'plan';
+export const TEST_SCOPE_SHEET = WebhookScope.SHEET;
+export const TEST_SCOPE_PLAN = WebhookScope.PLAN;
 export const TEST_EVENTS = ['*.*'];
 export const TEST_VERSION = 1;
 export const TEST_ENABLED = false;

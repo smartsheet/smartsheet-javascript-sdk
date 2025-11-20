@@ -2,19 +2,18 @@
   "name": "smartsheet",
   "version": "4.8.0",
   "description": "Smartsheet JavaScript client SDK",
-  "type": "module",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "test": "tsc && mocha \"test/**/*{_test.js,*.spec.js,*.spec.ts}\"",
-    "test-functional": "tsc && mocha \"test/functional/**/*_test.js\"",
-    "test-mock-api": "tsc && mocha \"test/mock-api/**/*_test.js\"",
-    "coverage": "tsc && nyc --reporter=text --reporter=lcov mocha \"test/**/*_test.js\""
+    "test": "mocha \"test/**/*{_test.js,*.spec.js,*.spec.ts}\"",
+    "test-functional": "mocha \"test/functional/**/*_test.js\"",
+    "test-mock-api": "mocha \"test/mock-api/**/*_test.js\"",
+    "coverage": "nyc --reporter=text --reporter=lcov mocha \"test/**/*_test.js\""
   },
   "repository": {
     "type": "git",
@@ -45,6 +44,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
+    "@types/mocha": "^10.0.10",
     "@types/node": "^22.13.4",
     "coveralls": "^3.1.1",
     "eslint": "^9.23.0",
@@ -53,15 +53,17 @@
     "globals": "^16.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.0",
-    "mocha": "^10.2.0",
+    "mocha": "^11.7.4",
     "mocha-lcov-reporter": "^1.3.0",
     "mock": "^0.1.1",
     "nyc": "^15.1.0",
     "prettier": "^3.5.3",
     "should": "^13.2.3",
     "sinon": "^15.0.2",
-    "typescript": "^5.8.2",
-    "typescript-eslint": "^8.28.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.47.0",
     "yargs": "^17.7.1"
   },
   "directories": {

@@ -1,7 +1,7 @@
 import should from 'should';
 import assert from 'assert';
 import _ from 'underscore';
-import * as smartsheet from '../../dist/index.js';
+import * as smartsheet from '@smartsheet';
 import sinon from "sinon";
 import axios from "axios";
 
@@ -38,7 +38,7 @@ function defineMockApiTest(scenario) {
 
         it('makes request', function () {
             if(_.has(scenario, 'skip')) {
-              this.skip(scenario.skip);
+              this.skip();
             }
 
             scenario.options.apiScenario = scenario.name;

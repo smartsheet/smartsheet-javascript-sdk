@@ -1,6 +1,6 @@
 import assert from 'assert';
 import crypto from 'crypto';
-import { createClient, findWireMockRequest } from '../utils/utils.js';
+import { createClient, findWireMockRequest } from '../utils/utils';
 import {
     TEST_USER_ID,
     TEST_EMAIL,
@@ -17,7 +17,7 @@ import {
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE,
     ADD_PROFILE_IMAGE_REQUEST_BODY
-} from './common_test_constants.js';
+} from './common_test_constants';
 
 describe('Users - addProfileImage endpoint tests', function () {
     let client = createClient();

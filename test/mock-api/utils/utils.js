@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as smartsheet from '../../../dist/index.js';
+import * as smartsheet from '@smartsheet';
 
 const baseUrl = 'http://127.0.0.1:8082/2.0/';
 const wiremockUrl = 'http://127.0.0.1:8082';

@@ -1,30 +1,30 @@
-import type { CreateClient } from './lib/types/CreateClient.js';
-import type { CreateOptions } from './lib/types/CreateOptions.js';
-import { apiUrls } from './lib/utils/apis.js';
-import { createContacts } from './lib/contacts/index.js';
-import { createEvents } from './lib/events/index.js';
-import { createSearch } from './lib/search/index.js';
-import { createSharing } from './lib/sharing/index.js';
-import { createSights } from './lib/sights/index.js';
-import { create as createHttpRequestor } from './lib/utils/httpRequestor.js';
-import * as constants from './lib/utils/constants.js';
-import { create as createFavorites } from './lib/favorites/index.js';
-import { create as createFolders } from './lib/folders/index.js';
-import { create as createGroups } from './lib/groups/index.js';
-import { create as createHome } from './lib/home/index.js';
-import { create as createImages } from './lib/images/index.js';
-import { create as createReports } from './lib/reports/index.js';
-import { create as createRequest } from './lib/request/index.js';
-import { create as createServer } from './lib/server/index.js';
-import { create as createSheets } from './lib/sheets/index.js';
-import { create as createTemplates } from './lib/templates/index.js';
-import { create as createTokens } from './lib/tokens/index.js';
-import { create as createUsers } from './lib/users/index.js';
-import { create as createWebhooks } from './lib/webhooks/index.js';
-import { create as createWorkspaces } from './lib/workspaces/index.js';
+import type { CreateClient } from './lib/types/CreateClient';
+import type { CreateOptions } from './lib/types/CreateOptions';
+import { apiUrls } from './lib/utils/apis';
+import { createContacts } from './lib/contacts/index';
+import { createEvents } from './lib/events/index';
+import { createSearch } from './lib/search/index';
+import { createSharing } from './lib/sharing/index';
+import { createSights } from './lib/sights/index';
+import { create as createHttpRequestor } from './lib/utils/httpRequestor';
+import * as constants from './lib/utils/constants';
+import { create as createFavorites } from './lib/favorites/index';
+import { create as createFolders } from './lib/folders/index';
+import { create as createGroups } from './lib/groups/index';
+import { create as createHome } from './lib/home/index';
+import { create as createImages } from './lib/images/index';
+import { create as createReports } from './lib/reports/index';
+import { create as createRequest } from './lib/request/index';
+import { create as createServer } from './lib/server/index';
+import { create as createSheets } from './lib/sheets/index';
+import { create as createTemplates } from './lib/templates/index';
+import { create as createTokens } from './lib/tokens/index';
+import { create as createUsers } from './lib/users/index';
+import { create as createWebhooks } from './lib/webhooks/index';
+import { create as createWorkspaces } from './lib/workspaces/index';
 
 import _ from 'underscore';
-import winston from 'winston';
+import * as winston from 'winston';
 
 // Possible TODO: Namespace parameters for different subcomponents
 // E.g. clientOptions.requestor.instance OR
@@ -147,8 +147,8 @@ export const smartSheetURIs = {
   euBaseURI: 'https://api.smartsheet.eu/2.0/',
 };
 
-export { CreateClient } from './lib/types/CreateClient.js';
-export { CreateClientOptions } from './lib/types/CreateClientOptions.js';
-export { SmartsheetClient } from './lib/types/SmartsheetClient.js';
-export * from './lib/events/types.js';
-export * from './lib/sharing/index.js';
+export { CreateClient } from './lib/types/CreateClient';
+export { CreateClientOptions } from './lib/types/CreateClientOptions';
+export { SmartsheetClient } from './lib/types/SmartsheetClient';
+export * from './lib/events/types';
+export * from './lib/sharing/index';
