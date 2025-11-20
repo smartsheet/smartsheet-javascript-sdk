@@ -1,4 +1,5 @@
 import sinon from 'sinon';
+import __ from 'should';
 import Promise from 'bluebird';
 import _ from 'underscore';
 import fs from 'fs';
@@ -211,12 +212,7 @@ describe('Utils Unit Tests', function() {
   describe('#GET', function() {
     describe('#Successful request', function() {
       var requestStub = null;
-      var stubbedRequestor = null;
-
-      before(() => {
-        
-        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({ content: true })});
-      });
+      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({ content: true })});
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'get');
@@ -242,7 +238,8 @@ describe('Utils Unit Tests', function() {
 
       it('request should call callback as true', function(done) {
         stubbedRequestor.get(sampleRequest, function(err, data) {
-          data.should.be(true);
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+          data.should.be.true;
           done();
         })
       });
@@ -250,13 +247,8 @@ describe('Utils Unit Tests', function() {
 
     describe('#Error on request', function() {
       var requestStub = null;
-      var stubbedRequestor = null;
+      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({ content: true })});
       var mockBody;
-
-      before(() => {
-        
-        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({ content: true })});
-      });
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'get');
@@ -277,7 +269,8 @@ describe('Utils Unit Tests', function() {
         stubbedRequestor
           .get(sampleRequest,
                (err, _) => {
-                 err.content.should.be(true)
+                 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                 err.content.should.be.true
                  done();
                 });
       });
@@ -322,13 +315,8 @@ describe('Utils Unit Tests', function() {
     describe('#Retry', function() {
       var requestStub = null;
       var handleResponseStub = sinon.stub();
-      var stubbedRequestor = null;
+      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
       var sampleRequestForRetry = null;
-
-      before(() => {
-        
-        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
-      });
 
       function givenGetReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
@@ -397,12 +385,7 @@ describe('Utils Unit Tests', function() {
   describe('#POST', function() {
     describe('#Successful request', function() {
       var requestStub = null;
-      var stubbedRequestor = null;
-
-      before(() => {
-        
-        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
-      });
+      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'post');
@@ -427,7 +410,8 @@ describe('Utils Unit Tests', function() {
 
       it('request should call callback as true', (done) => {
         stubbedRequestor.post(sampleRequest, function(err, data) {
-          data.should.be(true);
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+          data.should.be.true;
           done();
         });
       });
@@ -436,12 +420,7 @@ describe('Utils Unit Tests', function() {
     describe('#Error on request', function() {
       var requestStub = null;
       var mockBody = {error:true};
-      var stubbedRequestor = null;
-
-      before(() => {
-        
-        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
-      });
+      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'post');
@@ -461,7 +440,8 @@ describe('Utils Unit Tests', function() {
         stubbedRequestor
           .post(sampleRequest,
                 (err, _) => {
-                  err.content.should.be(true);
+                  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                  err.content.should.be.true;
                   done();
                 });
       });
@@ -511,13 +491,8 @@ describe('Utils Unit Tests', function() {
     describe('#Retry', function() {
       var requestStub = null;
       var handleResponseStub = sinon.stub();
-      var stubbedRequestor = null;
+      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
       var sampleRequestForRetry;
-
-      before(() => {
-        
-        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
-      });
 
       function givenPostReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
@@ -587,12 +562,7 @@ describe('Utils Unit Tests', function() {
   describe('#PUT', function() {
     describe('#Successful request', function() {
       var requestStub = null;
-      var stubbedRequestor = null;
-
-      before(() => {
-        
-        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
-      });
+      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'put');
@@ -619,7 +589,8 @@ describe('Utils Unit Tests', function() {
         stubbedRequestor
           .put(sampleRequest,
                (err, data) => {
-                 data.should.be(true);
+                 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                 data.should.be.true;
                  done();
                 });
       });
@@ -628,12 +599,7 @@ describe('Utils Unit Tests', function() {
     describe('#Error on request', function() {
       var stub = null;
       var mockBody = {error: true};
-      var stubbedRequestor = null;
-
-      before(() => {
-        
-        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
-      });
+      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
         stub = sinon.stub(axios, 'put');
@@ -653,7 +619,8 @@ describe('Utils Unit Tests', function() {
         stubbedRequestor
           .put(sampleRequest,
                (err, _) => {
-                 err.content.should.be(true);
+                 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                 err.content.should.be.true;
                  done();
                 });
       });
@@ -703,13 +670,8 @@ describe('Utils Unit Tests', function() {
     describe('#Retry', function() {
       var requestStub = null;
       var handleResponseStub = sinon.stub();
-      var stubbedRequestor = null;
+      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
       var sampleRequestForRetry = null;
-
-      before(() => {
-        
-        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
-      });
 
       function givenPutReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
@@ -779,12 +741,7 @@ describe('Utils Unit Tests', function() {
   describe('#DELETE', function() {
     describe('#Successful request', function() {
       var requestStub = null;
-      var stubbedRequestor = null;
-
-      before(() => {
-        
-        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
-      });
+      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'delete');
@@ -811,7 +768,8 @@ describe('Utils Unit Tests', function() {
         stubbedRequestor
           .delete(sampleRequest,
                   (err, data) => {
-                    data.should.be(true);
+                    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                    data.should.be.true;
                     done();
                   });
       });
@@ -820,12 +778,7 @@ describe('Utils Unit Tests', function() {
     describe('#Error on request', function() {
       var requestStub = null;
       var mockBody = {error: true};
-      var stubbedRequestor = null;
-
-      before(() => {
-        
-        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
-      });
+      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'delete');
@@ -845,7 +798,8 @@ describe('Utils Unit Tests', function() {
         stubbedRequestor
           .delete(sampleRequest,
                   (err, _) => {
-                    err.content.should.be(true);
+                    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                    err.content.should.be.true;
                     done();
                   });
       });
@@ -890,13 +844,8 @@ describe('Utils Unit Tests', function() {
     describe('#Retry', function() {
       var requestStub = null;
       var handleResponseStub = sinon.stub();
-      var stubbedRequestor = null;
+      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
       var sampleRequestForRetry;
-
-      before(() => {
-        
-        stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
-      });
 
       function givenDeleteReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
