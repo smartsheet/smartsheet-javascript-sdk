@@ -12,7 +12,7 @@
     "rootDir": ".",
     "paths": {
       "@smartsheet": ["./index.ts"],
-      "@smartsheet/*": ["./lib/*"],
+      "@smartsheet/*": ["./lib/*"]
     }
   },
   "include": ["./lib/**/*", "./index.ts", "./package.json", "./test/**/*"],

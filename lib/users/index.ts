@@ -59,8 +59,10 @@ export function create(options: CreateOptions): UsersApi & AlternateEmailsApi {
     return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
 
-  const addUser = (postOptions: RequestOptions<AddUserQueryParameters, AddUserBody>, callback?: RequestCallback<AddUserResponse>) =>
-    requestor.post({ ...optionsToSend, ...postOptions }, callback);
+  const addUser = (
+    postOptions: RequestOptions<AddUserQueryParameters, AddUserBody>,
+    callback?: RequestCallback<AddUserResponse>
+  ) => requestor.post({ ...optionsToSend, ...postOptions }, callback);
 
   const addUserAndSendEmail = (
     postOptions: RequestOptions<undefined, AddUserBody>,
