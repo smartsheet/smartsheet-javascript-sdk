@@ -9,20 +9,19 @@ import { create as createRequestor } from '../../lib/utils/httpRequestor';
 import * as httpRequestor from '../../lib/utils/httpRequestor';
 import packageJson from '../../package.json';
 
-
 describe('Utils Unit Tests', function() {
   const requestor = createRequestor({request: axios});
-  
-  var sample = {
+
+  const sample = {
     name : 'name'
   };
-  
-  var sampleRequest = {
+
+  const sampleRequest = {
     url:'URL',
     accessToken:'TOKEN'
   };
-  
-  var sampleRequestWithQueryParameters = {
+
+  const sampleRequestWithQueryParameters = {
     accessToken: 'TOKEN',
     contentType: 'application/json',
     body: sample,
@@ -31,8 +30,9 @@ describe('Utils Unit Tests', function() {
       parameter2:''
     }
   };
-  
-  var EXPECTED_VERSION = packageJson.version;
+
+  const EXPECTED_VERSION = packageJson.version;
+
   describe('#HttpRequestor', function() {
     it('should have GET method', () => requestor.should.have.property('get'));
 
@@ -45,7 +45,7 @@ describe('Utils Unit Tests', function() {
     it('should have DELETE method', () => requestor.should.have.property('delete'));
 
     describe('#buildUrl', function() {
-      var host = null;
+      let host = null;
 
       beforeEach(() => {
         host = process.env.SMARTSHEET_API_HOST = 'host/';
@@ -57,55 +57,55 @@ describe('Utils Unit Tests', function() {
       });
 
       it('should return the set HOST with URL appended', () => {
-        var url = 'test';
-        var builtUrl = requestor.internal.buildUrl({url:url});
+        const url = 'test';
+        const builtUrl = requestor.internal.buildUrl({url:url});
         builtUrl.should.equal(host + url);
       });
 
       it('url should equal default base url', () => {
         process.env.SMARTSHEET_API_HOST = '';
-        var builtUrl = requestor.internal.buildUrl({});
+        const builtUrl = requestor.internal.buildUrl({});
         builtUrl.should.equal(smartSheetURIs.defaultBaseURI);
       });
 
       it('url should equal gov url', () => {
-        var builtUrl = requestor.internal.buildUrl({baseUrl:smartSheetURIs.govBaseURI});
+        const builtUrl = requestor.internal.buildUrl({baseUrl:smartSheetURIs.govBaseURI});
         builtUrl.should.equal(smartSheetURIs.govBaseURI);
       });
 
       it('url should equal eu url', () => {
-        var builtUrl = requestor.internal.buildUrl({baseUrl:smartSheetURIs.euBaseURI});
+        const builtUrl = requestor.internal.buildUrl({baseUrl:smartSheetURIs.euBaseURI});
         builtUrl.should.equal(smartSheetURIs.euBaseURI);
       });
 
       it('prefers baseUrl over env var', () => {
-        var builtUrl = requestor.internal.buildUrl({baseUrl: 'base url'});
+        const builtUrl = requestor.internal.buildUrl({baseUrl: 'base url'});
         builtUrl.should.equal('base url');
       });
 
       it('prefers baseUrl over default', () => {
         process.env.SMARTSHEET_API_HOST = '';
-        var builtUrl = requestor.internal.buildUrl({baseUrl: 'base url'});
+        const builtUrl = requestor.internal.buildUrl({baseUrl: 'base url'});
         builtUrl.should.equal('base url');
       });
 
       it('url should contain the host + url', () => {
-        var builtUrl = requestor.internal.buildUrl({url: 'url/'});
+        const builtUrl = requestor.internal.buildUrl({url: 'url/'});
         builtUrl.should.equal(host + 'url/');
       });
 
       it('url should contain the ID', () => {
-        var builtUrl = requestor.internal.buildUrl({url: 'url/', id: '123'});
+        const builtUrl = requestor.internal.buildUrl({url: 'url/', id: '123'});
         builtUrl.should.equal(host + 'url/123');
       });
     });
 
     describe('#buildHeaders', function() {
-      var newType = 'text/xml';
-      var applicationJson = 'application/json';
-      var textCsv = 'text/csv'
-      var docType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-      var fsStub = null;
+      const newType = 'text/xml';
+      const applicationJson = 'application/json';
+      const textCsv = 'text/csv'
+      const docType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      let fsStub = null;
 
       beforeEach(() => {
         fsStub = sinon.stub(fs, 'statSync');
@@ -117,92 +117,92 @@ describe('Utils Unit Tests', function() {
       });
 
       it('authorization header should have token', () => {
-        var headers = requestor.internal.buildHeaders({accessToken: 'token'});
+        const headers = requestor.internal.buildHeaders({accessToken: 'token'});
         headers.Authorization.should.equal('Bearer token');
       });
 
       it('accept header should equal ' + applicationJson, () => {
-        var headers = requestor.internal.buildHeaders({});
+        const headers = requestor.internal.buildHeaders({});
         headers.Accept.should.equal(applicationJson);
       });
 
       it('accept header should equal ' + newType, () => {
-        var headers = requestor.internal.buildHeaders({accept: newType});
+        const headers = requestor.internal.buildHeaders({accept: newType});
         headers.Accept.should.equal(newType);
       });
 
       it('content-type header should ' + applicationJson, () => {
-        var headers = requestor.internal.buildHeaders({contentType: applicationJson});
+        const headers = requestor.internal.buildHeaders({contentType: applicationJson});
         headers['Content-Type'].should.equal(applicationJson);
       });
 
       it('content-type header should equal ' + newType, () => {
-        var headers = requestor.internal.buildHeaders({contentType: newType});
+        const headers = requestor.internal.buildHeaders({contentType: newType});
         headers['Content-Type'].should.equal(newType);
       });
 
       it('Content-Type should equal ' + textCsv, () => {
-        var headers = requestor.internal.buildHeaders({fileName: 'test.csv'});
+        const headers = requestor.internal.buildHeaders({fileName: 'test.csv'});
         headers['Content-Type'].should.equal(textCsv);
       });
 
       it('Content-Type should equal ' + docType, () => {
-        var headers = requestor.internal.buildHeaders({fileName: 'test.docx'});
+        const headers = requestor.internal.buildHeaders({fileName: 'test.docx'});
         headers['Content-Type'].should.equal(docType);
       });
 
       it('Content-Type should equal ' + applicationJson, () => {
-        var headers = requestor.internal.buildHeaders({fileName: 'test'});
+        const headers = requestor.internal.buildHeaders({fileName: 'test'});
         headers['Content-Type'].should.equal(applicationJson);
       });
 
       it('Content-Disposition should equal filename', () => {
-        var headers = requestor.internal.buildHeaders({fileName: 'test'});
+        const headers = requestor.internal.buildHeaders({fileName: 'test'});
         headers['Content-Disposition'].should.equal('attachment; filename="test"');
       });
 
       it('Should set Content-Disposition to contentDisposition', () => {
-        var headers = requestor.internal.buildHeaders({contentDisposition: 'some content disposition'});
+        const headers = requestor.internal.buildHeaders({contentDisposition: 'some content disposition'});
         headers['Content-Disposition'].should.equal('some content disposition');
       });
 
       it('Should prefer contentDisposition to fileName', () => {
-        var headers = requestor.internal.buildHeaders({fileName: 'test', contentDisposition: 'something else'});
+        const headers = requestor.internal.buildHeaders({fileName: 'test', contentDisposition: 'something else'});
         headers['Content-Disposition'].should.equal('something else');
       });
 
       it('Should set Content-Length to fileSize', () => {
-        var headers = requestor.internal.buildHeaders({fileName: 'test',   fileSize: 123});
+        const headers = requestor.internal.buildHeaders({fileName: 'test',   fileSize: 123});
         headers['Content-Length'].should.equal(123);
       });
 
       it('Should set Content-Length from file size when path is specified', () => {
-        var headers = requestor.internal.buildHeaders({fileName: 'test',   path: "somePath"});
+        const headers = requestor.internal.buildHeaders({fileName: 'test',   path: "somePath"});
         headers['Content-Length'].should.equal(234);
       });
 
       it('Should prefer path over fileSize for Content-Length', () => {
-        var headers = requestor.internal.buildHeaders({fileName: 'test',   path: "somePath", fileSize: 123});
+        const headers = requestor.internal.buildHeaders({fileName: 'test',   path: "somePath", fileSize: 123});
         headers['Content-Length'].should.equal(234);
       });
 
       it('Assume-User should equal URI encoded email', () => {
-        var headers = requestor.internal.buildHeaders({assumeUser: 'john.doe@smartsheet.com'});
+        const headers = requestor.internal.buildHeaders({assumeUser: 'john.doe@smartsheet.com'});
         headers['Assume-User'].should.equal('john.doe%40smartsheet.com');
       });
 
       it('Should set the user agent string based on the version', () => {
-        var headers = requestor.internal.buildHeaders({});
+        const headers = requestor.internal.buildHeaders({});
         headers['User-Agent'].should.equal(`smartsheet-javascript-sdk/${packageJson.version}`);
       });
 
       it('Should used a passed in value for the user agent string', () => {
-        var headers = requestor.internal.buildHeaders({userAgent: 'someAgentString'});
+        const headers = requestor.internal.buildHeaders({userAgent: 'someAgentString'});
         headers['User-Agent'].should.equal(`smartsheet-javascript-sdk/${packageJson.version}/someAgentString`);
       });
 
       it('Custom properties should be allowed', () => {
-        var headers = requestor.internal.buildHeaders({customProperties: {custom1: 'value', custom2: 'value2'}});
+        const headers = requestor.internal.buildHeaders({customProperties: {custom1: 'value', custom2: 'value2'}});
         headers['custom1'].should.equal(`value`);
         headers['custom2'].should.equal(`value2`);
       });
@@ -211,12 +211,12 @@ describe('Utils Unit Tests', function() {
 
   describe('#GET', function() {
     describe('#Successful request', function() {
-      var requestStub = null;
-      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({ content: true })});
+      let requestStub = null;
+      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({ content: true })});
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'get');
-        var mockResponse = {
+        const mockResponse = {
           status: 200,
           headers: {
             'content-type':'application/json;charset=UTF-8'
@@ -246,9 +246,9 @@ describe('Utils Unit Tests', function() {
     });
 
     describe('#Error on request', function() {
-      var requestStub = null;
-      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({ content: true })});
-      var mockBody;
+      let requestStub = null;
+      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({ content: true })});
+      let mockBody;
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'get');
@@ -277,7 +277,7 @@ describe('Utils Unit Tests', function() {
     });
 
     describe('#Arguments', function() {
-      var spyGet;
+      let spyGet;
 
       beforeEach(() => {
         spyGet = sinon.spy(axios, 'get');
@@ -288,7 +288,7 @@ describe('Utils Unit Tests', function() {
       });
 
       it('headers sent as part of request should match given', () => {
-        var sampleHeaders = {
+        const sampleHeaders = {
           Authorization: 'Bearer TOKEN',
           Accept: 'application/json',
           'Content-Type': 'application/json',
@@ -313,10 +313,10 @@ describe('Utils Unit Tests', function() {
     });
 
     describe('#Retry', function() {
-      var requestStub = null;
-      var handleResponseStub = sinon.stub();
-      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
-      var sampleRequestForRetry = null;
+      let requestStub = null;
+      const handleResponseStub = sinon.stub();
+      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
+      let sampleRequestForRetry = null;
 
       function givenGetReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
@@ -384,18 +384,18 @@ describe('Utils Unit Tests', function() {
 
   describe('#POST', function() {
     describe('#Successful request', function() {
-      var requestStub = null;
-      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
+      let requestStub = null;
+      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'post');
-        var mockResponse = {
+        const mockResponse = {
           statusCode: 200,
           headers: {
             'content-type':'application/json;charset=UTF-8'
           }
         };
-        var mockBody = '{"hello":"world"}';
+        const mockBody = '{"hello":"world"}';
         requestStub.returns(Promise.resolve([mockResponse, mockBody]));
       });
 
@@ -418,9 +418,9 @@ describe('Utils Unit Tests', function() {
     });
 
     describe('#Error on request', function() {
-      var requestStub = null;
-      var mockBody = {error:true};
-      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
+      let requestStub = null;
+      const mockBody = {error:true};
+      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'post');
@@ -448,7 +448,7 @@ describe('Utils Unit Tests', function() {
     });
 
     describe('#Arguments', function() {
-      var spyPost;
+      let spyPost;
 
       beforeEach(() => {
         spyPost = sinon.spy(axios, 'post');
@@ -459,7 +459,7 @@ describe('Utils Unit Tests', function() {
       });
 
       it('headers sent as part of request should match given', () => {
-        var sampleHeaders = {
+        const sampleHeaders = {
           Authorization: 'Bearer TOKEN',
           Accept: 'application/json',
           'Content-Type': 'application/json',
@@ -489,10 +489,10 @@ describe('Utils Unit Tests', function() {
     });
 
     describe('#Retry', function() {
-      var requestStub = null;
-      var handleResponseStub = sinon.stub();
-      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
-      var sampleRequestForRetry;
+      let requestStub = null;
+      const handleResponseStub = sinon.stub();
+      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
+      let sampleRequestForRetry;
 
       function givenPostReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
@@ -561,18 +561,18 @@ describe('Utils Unit Tests', function() {
 
   describe('#PUT', function() {
     describe('#Successful request', function() {
-      var requestStub = null;
-      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
+      let requestStub = null;
+      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'put');
-        var mockResponse = {
+        const mockResponse = {
           statusCode: 200,
           headers: {
             'content-type':'application/json;charset=UTF-8'
           }
         };
-        var mockBody = '{"hello":"world"}';
+        const mockBody = '{"hello":"world"}';
         requestStub.returns(Promise.resolve([mockResponse, mockBody]));
       });
 
@@ -597,9 +597,9 @@ describe('Utils Unit Tests', function() {
     });
 
     describe('#Error on request', function() {
-      var stub = null;
-      var mockBody = {error: true};
-      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
+      let stub = null;
+      const mockBody = {error: true};
+      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
         stub = sinon.stub(axios, 'put');
@@ -627,7 +627,7 @@ describe('Utils Unit Tests', function() {
     });
 
     describe('#Arguments', function() {
-      var spyPut;
+      let spyPut;
 
       beforeEach(() => {
         spyPut = sinon.spy(axios, 'put');
@@ -638,7 +638,7 @@ describe('Utils Unit Tests', function() {
       });
 
       it('headers sent as part of request should match given', () => {
-        var sampleHeaders = {
+        const sampleHeaders = {
           Authorization: 'Bearer TOKEN',
           Accept: 'application/json',
           'Content-Type': 'application/json',
@@ -668,10 +668,10 @@ describe('Utils Unit Tests', function() {
     });
 
     describe('#Retry', function() {
-      var requestStub = null;
-      var handleResponseStub = sinon.stub();
-      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
-      var sampleRequestForRetry = null;
+      let requestStub = null;
+      const handleResponseStub = sinon.stub();
+      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
+      let sampleRequestForRetry = null;
 
       function givenPutReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));
@@ -740,18 +740,18 @@ describe('Utils Unit Tests', function() {
 
   describe('#DELETE', function() {
     describe('#Successful request', function() {
-      var requestStub = null;
-      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
+      let requestStub = null;
+      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'delete');
-        var mockResponse = {
+        const mockResponse = {
           statusCode: 200,
           headers: {
             'content-type':'application/json;charset=UTF-8'
           }
         };
-        var mockBody = '{"hello":"world"}';
+        const mockBody = '{"hello":"world"}';
         requestStub.returns(Promise.resolve([mockResponse, mockBody]));
       });
 
@@ -776,9 +776,9 @@ describe('Utils Unit Tests', function() {
     });
 
     describe('#Error on request', function() {
-      var requestStub = null;
-      var mockBody = {error: true};
-      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
+      let requestStub = null;
+      const mockBody = {error: true};
+      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
         requestStub = sinon.stub(axios, 'delete');
@@ -806,7 +806,7 @@ describe('Utils Unit Tests', function() {
     });
 
     describe('#Arguments', function() {
-      var spyPut;
+      let spyPut;
 
       beforeEach(() => {
         spyPut = sinon.spy(axios, 'delete');
@@ -817,7 +817,7 @@ describe('Utils Unit Tests', function() {
       });
 
       it('headers sent as part of request should match given', () => {
-        var sampleHeaders = {
+        const sampleHeaders = {
           Authorization: 'Bearer TOKEN',
           Accept: 'application/json',
           'Content-Type': 'application/json',
@@ -842,10 +842,10 @@ describe('Utils Unit Tests', function() {
     });
 
     describe('#Retry', function() {
-      var requestStub = null;
-      var handleResponseStub = sinon.stub();
-      var stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
-      var sampleRequestForRetry;
+      let requestStub = null;
+      const handleResponseStub = sinon.stub();
+      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
+      let sampleRequestForRetry;
 
       function givenDeleteReturnsError() {
         requestStub.returns(Promise.resolve([{}, {}]));

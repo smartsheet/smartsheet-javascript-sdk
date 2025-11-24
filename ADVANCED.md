@@ -66,7 +66,7 @@ The SDK can be directed to point at a different base URL, which can be helpful f
 When creating the Smartsheet client, set the base URL by passing it into the constructor arguments:
 
 ```javascript
-var smartsheet = require('smartsheet').createClient({
+const smartsheet = require('smartsheet').createClient({
   baseUrl: smartsheet.smartSheetURIs.defaultBaseURI
 });
 ```
@@ -76,7 +76,7 @@ If you need to access Smartsheetgov you will need to specify the Smartsheetgov A
 
 Invoke the SmartsheetBuilder with the base URI pointing to Smartsheetgov:
 ```javascript
-var smartsheet = require('smartsheet').createClient({
+const smartsheet = require('smartsheet').createClient({
   baseUrl: smartsheet.smartSheetURIs.govBaseURI
 });
 ```
@@ -87,7 +87,7 @@ If you need to access Smartsheet.eu you will need to specify the Smartsheet.eu A
 
 Invoke the SmartsheetBuilder with the base URI pointing to Smartsheet.eu:
 ```javascript
-var smartsheet = require('smartsheet').createClient({
+const smartsheet = require('smartsheet').createClient({
   baseUrl: smartsheet.smartSheetURIs.euBaseURI
 });
 ```
@@ -212,7 +212,7 @@ The `...Options` parameter takes the normal set of parameters taken by other sim
 The following example shows how to POST data to `https://api.smartsheet.com/2.0/sheets` using the passthrough method:
 
 ```javascript
-var payload = {
+const payload = {
   name: 'my new sheet',
   columns: [
     {
@@ -228,7 +228,7 @@ var payload = {
   ]
 };
 
-var responsePromise = smartsheet.request.post({
+const responsePromise = smartsheet.request.post({
   url: 'sheets',
   body: payload
 });
@@ -248,8 +248,8 @@ Many events have additional information available as a part of the event. That i
 
 ```javascript
 // Initialize the client
-var client = require('smartsheet');
-var smartsheet = client.createClient({
+const client = require('smartsheet');
+const smartsheet = client.createClient({
   accessToken: 'JKlMNOpQ12RStUVwxYZAbcde3F5g6hijklM789',
   logLevel: 'info'
 });

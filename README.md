@@ -28,8 +28,8 @@ The following is a brief sample using promises that shows you how to:
 
 ```javascript
 // Initialize the client
-var client = require('smartsheet');
-var smartsheet = client.createClient({
+const client = require('smartsheet');
+const smartsheet = client.createClient({
   accessToken: '<access_token>', // Replace <access_token> with your API token
   logLevel: 'info'
 });
@@ -37,7 +37,7 @@ var smartsheet = client.createClient({
 // The `smartsheet` variable now contains access to all of the APIs
 
 // Set queryParameters for `include` and pagination
-var options = {
+const options = {
   queryParameters: {
     include: "attachments",
     includeAll: true
@@ -47,7 +47,7 @@ var options = {
 // List all sheets
 smartsheet.sheets.listSheets(options)
   .then(function (result) {
-    var sheetId = result.data[0].id;  // Choose the first sheet
+    const sheetId = result.data[0].id;  // Choose the first sheet
 
     // Load one sheet
     smartsheet.sheets.getSheet({id: sheetId})

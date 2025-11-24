@@ -35,7 +35,7 @@ describe('responseHandler', () => {
         data: body
       };
 
-      var responseError = responseHandler(response);
+      const responseError = responseHandler(response);
       responseError.should.have.properties(['statusCode', 'headers', 'errorCode', 'message', 'refId', 'detail']);
       responseError.statusCode.should.equal(response.status);
       responseError.headers.should.equal(response.headers);
@@ -53,7 +53,7 @@ describe('responseHandler', () => {
         data: body
       };
 
-      var responseError = responseHandler(response);
+      const responseError = responseHandler(response);
       responseError.should.have.properties(['statusCode', 'headers', 'message']);
       responseError.statusCode.should.equal(response.status);
       responseError.headers.should.equal(response.headers);
