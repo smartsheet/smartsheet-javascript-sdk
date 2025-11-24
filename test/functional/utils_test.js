@@ -9,30 +9,30 @@ import { create as createRequestor } from '../../lib/utils/httpRequestor';
 import * as httpRequestor from '../../lib/utils/httpRequestor';
 import packageJson from '../../package.json';
 
-const requestor = createRequestor({request: axios});
-
-var sample = {
-  name : 'name'
-};
-
-var sampleRequest = {
-  url:'URL',
-  accessToken:'TOKEN'
-};
-
-var sampleRequestWithQueryParameters = {
-  accessToken: 'TOKEN',
-  contentType: 'application/json',
-  body: sample,
-  queryParameters: {
-    parameter1:'',
-    parameter2:''
-  }
-};
-
-var EXPECTED_VERSION = packageJson.version;
 
 describe('Utils Unit Tests', function() {
+  const requestor = createRequestor({request: axios});
+  
+  var sample = {
+    name : 'name'
+  };
+  
+  var sampleRequest = {
+    url:'URL',
+    accessToken:'TOKEN'
+  };
+  
+  var sampleRequestWithQueryParameters = {
+    accessToken: 'TOKEN',
+    contentType: 'application/json',
+    body: sample,
+    queryParameters: {
+      parameter1:'',
+      parameter2:''
+    }
+  };
+  
+  var EXPECTED_VERSION = packageJson.version;
   describe('#HttpRequestor', function() {
     it('should have GET method', () => requestor.should.have.property('get'));
 

@@ -1,8 +1,8 @@
 import should from 'should';
 import * as smartsheetModule from '@smartsheet';
-let smartsheet = null;
 
 describe('Client Unit Tests', function() {
+  let smartsheet = null;
 
   beforeEach(function() {
     smartsheet = smartsheetModule.createClient({accessToken:'1234'});

@@ -3,10 +3,9 @@ import should from 'should';
 import { create as createRequestor } from '../../lib/utils/httpRequestor';
 import * as client from '@smartsheet';
 
-let requestor = null;
-let smartsheet = null;
-
 describe('Client Unit Tests', function() {
+  let requestor = null;
+  let smartsheet = null;
 
   beforeEach(function() {
     requestor = createRequestor({});

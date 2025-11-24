@@ -4,10 +4,9 @@ import * as constants from '../../lib/utils/constants';
 import _ from 'underscore';
 import * as smartsheet from '@smartsheet';
 
-const requestor = createRequestor({});
-
-
 describe('Method Unit Tests', function () {
+    const requestor = createRequestor({});
+    
     var testGroups = [
         {
             name: 'contacts',
