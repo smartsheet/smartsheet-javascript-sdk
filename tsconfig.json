@@ -7,7 +7,14 @@
     "declaration": true,
     "moduleResolution": "node16",
     "resolveJsonModule": true,
-    "module": "Node16"
+    "module": "node16",
+    "types": ["mocha", "node"],
+    "rootDir": ".",
+    "paths": {
+      "@smartsheet": ["./index.ts"],
+      "@smartsheet/*": ["./lib/*"]
+    }
   },
-  "include": ["./lib/**/*", "./index.ts", "./package.json"]
+  "include": ["./lib/**/*", "./index.ts", "./package.json", "./test/**/*"],
+  "exclude": ["./dist/**/*", "./node_modules/**/*"]
 }

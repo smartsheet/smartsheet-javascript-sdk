@@ -104,7 +104,7 @@ export interface UsersApi {
    * ```
    */
   addUser: (
-    options: RequestOptions<undefined, AddUserBody>,
+    options: RequestOptions<AddUserQueryParameters, AddUserBody>,
     callback?: RequestCallback<AddUserResponse>
   ) => Promise<AddUserResponse>;
 

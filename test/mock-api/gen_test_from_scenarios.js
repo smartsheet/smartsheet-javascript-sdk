@@ -5,10 +5,11 @@
 // test with an actual method (such as client.sheets.listSheets) and set path ids before
 // running the tests.
 
-var _ = require('underscore');
-var fs = require('fs');
+import _ from 'underscore';
+import fs from 'fs';
+import yargs from 'yargs';
 
-var argv = require('yargs')
+const argv = yargs
     .alias('s', 'scenarios')
     .describe('s', 'Path to the JSON file containing new scenarios')
     .alias('o', 'output')
@@ -18,12 +19,12 @@ var argv = require('yargs')
 
 
 // load scenarios
-scenarios = JSON.parse(fs.readFileSync(argv.scenarios));
+const scenarios = JSON.parse(fs.readFileSync(argv.scenarios, 'utf8'));
 
 // create tests
-tests = [];
+const tests = [];
 _.each(scenarios, function (scenario) {
-    test = {};
+    const test = {};
     test.name = scenario['scenario'];
     test.method = 'TODO_METHOD';
     test.shouldError = (scenario['response']['status'] !== undefined && scenario['response']['status'] != 200);

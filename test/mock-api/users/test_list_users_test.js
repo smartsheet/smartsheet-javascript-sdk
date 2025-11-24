@@ -1,7 +1,7 @@
-const assert = require('assert');
-const crypto = require('crypto');
-const { createClient, findWireMockRequest } = require('../utils/utils.js');
-const {
+import assert from 'assert';
+import crypto from 'crypto';
+import { createClient, findWireMockRequest } from '../utils/utils';
+import {
     TEST_PLAN_ID,
     TEST_EMAIL,
     TEST_FIRST_NAME,
@@ -18,12 +18,13 @@ const {
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE,
     TEST_PROVISIONAL_EXPIRATION_DATE
-} = require('./common_test_constants.js');
+} from './common_test_constants';
+import { SeatTypes, UserStatus } from '@smartsheet/users/types';
 
 describe('Users - listAllUsers endpoint tests', function () {
     let client = createClient();
     const emails = TEST_EMAIL;
-    const seatType = 'MEMBER';
+    const seatType = SeatTypes.MEMBER;
     const page = TEST_PAGE_NUMBER;
     const pageSize = TEST_PAGE_SIZE;
     const includeAll = false;
@@ -38,7 +39,7 @@ describe('Users - listAllUsers endpoint tests', function () {
     const licensedSheetCreator = true;
     const resourceViewer = true;
     const groupAdmin = true;
-    const status = 'ACTIVE';
+    const status = UserStatus.ACTIVE;
     const sheetCount = TEST_SHEET_COUNT;
     const lastLogin = TEST_LAST_LOGIN;
     const customWelcomeScreenViewed = TEST_CUSTOM_WELCOME_SCREEN_VIEWED;

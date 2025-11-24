@@ -1,7 +1,7 @@
-const assert = require('assert');
-const crypto = require('crypto');
-const { createClient, findWireMockRequest } = require('../utils/utils.js');
-const {
+import assert from 'assert';
+import crypto from 'crypto';
+import { createClient, findWireMockRequest } from '../utils/utils';
+import {
     TEST_EMAIL,
     TEST_FIRST_NAME,
     TEST_LAST_NAME,
@@ -21,7 +21,8 @@ const {
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE,
     TEST_USER_ID
-} = require('./common_test_constants.js');
+} from './common_test_constants';
+import { SeatTypes, UserStatus } from '@smartsheet/users/types';
 
 describe('Users - addUser endpoint tests', function () {
     let client = createClient();
@@ -34,7 +35,7 @@ describe('Users - addUser endpoint tests', function () {
     const licensedSheetCreator = true;
     const groupAdmin = false;
     const resourceViewer = false;
-    const status = 'ACTIVE';
+    const status = UserStatus.ACTIVE;
     const customWelcomeScreenViewed = TEST_CUSTOM_WELCOME_SCREEN_VIEWED;
     const lastLogin = TEST_LAST_LOGIN;
     const isInternal = true;
@@ -42,7 +43,7 @@ describe('Users - addUser endpoint tests', function () {
     const profileImageHeight = TEST_PROFILE_IMAGE_HEIGHT;
     const profileImageWidth = TEST_PROFILE_IMAGE_WIDTH;
     const provisionalExpirationDate = TEST_PROVISIONAL_EXPIRATION_DATE;
-    const seatType = 'MEMBER';
+    const seatType = SeatTypes.MEMBER;
     const seatTypeLastChangedAt = TEST_SEAT_TYPE_LAST_CHANGED_AT;
     const sheetCount = TEST_SHEET_COUNT;
 
@@ -61,6 +62,9 @@ describe('Users - addUser endpoint tests', function () {
         const requestId = crypto.randomUUID();
         const options = {
             body: testUserBody,
+            queryParameters: {
+                sendEmail: true
+            },
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/users/add-user/all-response-body-properties'
@@ -75,9 +79,6 @@ describe('Users - addUser endpoint tests', function () {
         const requestId = crypto.randomUUID();
         const options = {
             body: testUserBody,
-            queryParameters: {
-                sendEmail: true
-            },
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/users/add-user/all-response-body-properties'

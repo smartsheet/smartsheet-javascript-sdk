@@ -1,14 +1,15 @@
-var sinon = require('sinon');
-var should = require('should');
-
-var requestor = null;
-var smartsheet = null;
+import sinon from 'sinon';
+import should from 'should';
+import { create as createRequestor } from '../../lib/utils/httpRequestor';
+import * as client from '@smartsheet';
 
 describe('Client Unit Tests', function() {
+  let requestor = null;
+  let smartsheet = null;
+
   beforeEach(function() {
-    requestor = require('../../lib/utils/httpRequestor.js').create({});
+    requestor = createRequestor({});
     sinon.spy(requestor, 'get');
-    var client = require('../..');
     smartsheet = client.createClient({accessToken:'1234', requestor: requestor});
   });
 

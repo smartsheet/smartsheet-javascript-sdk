@@ -1,4 +1,5 @@
-import type { CreateOptions, RequestCallback } from '../types';
+import type { RequestCallback } from '../types/RequestCallback';
+import type { CreateOptions } from '../types/CreateOptions';
 import { apiUrls } from '../utils/apis';
 import type { SearchAllOptions, SearchApi, SearchResponse, SearchSheetOptions } from './types';
 

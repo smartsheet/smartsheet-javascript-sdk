@@ -1,7 +1,7 @@
-const assert = require('assert');
-const crypto = require('crypto');
-const { createClient, findWireMockRequest } = require('../utils/utils.js');
-const {
+import assert from 'assert';
+import crypto from 'crypto';
+import { createClient, findWireMockRequest } from '../utils/utils';
+import {
     TEST_USER_ID,
     TEST_PLAN_ID,
     TEST_SUCCESS_MESSAGE,
@@ -10,12 +10,13 @@ const {
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE
-} = require('./common_test_constants.js');
+} from './common_test_constants';
+import { SeatTypes } from '@smartsheet/users/types';
 
 describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
     let client = createClient();
-    const TEST_UPGRADE_SEAT_TYPE = 'MEMBER';
-    const TEST_DOWNGRADE_SEAT_TYPE = 'VIEWER';
+    const TEST_UPGRADE_SEAT_TYPE = SeatTypes.MEMBER;
+    const TEST_DOWNGRADE_SEAT_TYPE = SeatTypes.VIEWER;
     const TEST_UPGRADE_BODY = { seatType: TEST_UPGRADE_SEAT_TYPE };
     const TEST_DOWNGRADE_BODY = { seatType: TEST_DOWNGRADE_SEAT_TYPE };
 

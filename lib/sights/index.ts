@@ -1,6 +1,5 @@
-import type { CreateOptions } from '../types';
-// Use any type for CommonJS module
-import shareModule from '../share/share.js';
+import type { CreateOptions } from '../types/CreateOptions';
+import shareModule from '../share/share';
 import type {
   CopySight,
   DeleteSight,

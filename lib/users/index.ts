@@ -1,4 +1,7 @@
-import type { BaseResponseStatus, CreateOptions, RequestCallback, RequestOptions } from '../types';
+import type { BaseResponseStatus } from '../types/BaseResponseStatus';
+import type { CreateOptions } from '../types/CreateOptions';
+import type { RequestCallback } from '../types/RequestCallback';
+import type { RequestOptions } from '../types/RequestOptions';
 import type {
   UsersApi,
   ListUsersQueryParameters,
@@ -27,7 +30,7 @@ import type {
 import * as alternateEmails from './alternateemails';
 import type { AlternateEmailsApi } from './alternateemails_types';
 
-export function create(options: CreateOptions): UsersApi | AlternateEmailsApi {
+export function create(options: CreateOptions): UsersApi & AlternateEmailsApi {
   const requestor = options.requestor;
 
   const optionsToSend = {
@@ -56,13 +59,15 @@ export function create(options: CreateOptions): UsersApi | AlternateEmailsApi {
     return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
 
-  const addUser = (postOptions: RequestOptions<undefined, AddUserBody>, callback?: RequestCallback<AddUserResponse>) =>
-    requestor.post({ ...optionsToSend, ...postOptions }, callback);
-
-  const addUserAndSendEmail = (
+  const addUser = (
     postOptions: RequestOptions<AddUserQueryParameters, AddUserBody>,
     callback?: RequestCallback<AddUserResponse>
   ) => requestor.post({ ...optionsToSend, ...postOptions }, callback);
+
+  const addUserAndSendEmail = (
+    postOptions: RequestOptions<undefined, AddUserBody>,
+    callback?: RequestCallback<AddUserResponse>
+  ) => addUser({ ...optionsToSend, ...postOptions, queryParameters: { sendEmail: true } }, callback);
 
   const updateUser = (putOptions: UpdateUserOptions, callback?: RequestCallback<UpdateUserResponse>) => {
     const urlOptions = { url: options.apiUrls.users + '/' + putOptions.userId };
@@ -156,5 +161,5 @@ export function create(options: CreateOptions): UsersApi | AlternateEmailsApi {
   };
 
   // Extend with alternate emails functionality
-  return { ...userObject, ...alternateEmails.create(options) } as UsersApi;
+  return { ...userObject, ...alternateEmails.create(options) } as UsersApi & AlternateEmailsApi;
 }

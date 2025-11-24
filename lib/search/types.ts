@@ -1,4 +1,4 @@
-import type { RequestCallback } from '../types';
+import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 
 export enum ParentResultType {

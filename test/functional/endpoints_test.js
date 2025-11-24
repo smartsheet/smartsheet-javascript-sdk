@@ -1,12 +1,12 @@
-var sinon = require('sinon');
-var should = require('should');
-var requestor = require('../../lib/utils/httpRequestor.js').create({});
-var constants = require('../../lib/utils/constants.js');
-var _ = require('underscore');
-var smartsheet = require('../../dist/index.js');
-
+import sinon from 'sinon';
+import { create as createRequestor } from '../../lib/utils/httpRequestor';
+import * as constants from '../../lib/utils/constants';
+import _ from 'underscore';
+import * as smartsheet from '@smartsheet';
 
 describe('Method Unit Tests', function () {
+    const requestor = createRequestor({});
+    
     var testGroups = [
         {
             name: 'contacts',

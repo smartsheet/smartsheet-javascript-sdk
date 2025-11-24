@@ -171,7 +171,10 @@ export interface WebhooksApi {
 /**
  * Webhook scope types
  */
-export type WebhookScope = 'sheet' | 'plan';
+export enum WebhookScope {
+  SHEET = 'sheet',
+  PLAN = 'plan',
+}
 
 /**
  * Webhook status types

@@ -1,13 +1,10 @@
-var sinon = require("sinon");
-var should = require("should");
-var assert = require("assert");
-var helpers = require("./helpers");
+import * as helpers from './helpers';
 
 describe("Mock API SDK Tests", function() {
-  var client = helpers.setupClient();
+  const client = helpers.setupClient();
 
   describe("#User", function() {
-    var scenarios = [
+    const scenarios = [
       {
         name: "Deactivate user",
         method: client.users.deactivateUser,

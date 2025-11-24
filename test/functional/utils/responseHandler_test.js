@@ -1,5 +1,4 @@
-const should = require('should');
-const responseHandler = require('../../../lib/utils/responseHandler');
+import responseHandler from '../../../lib/utils/responseHandler';
 
 describe('responseHandler', () => {
   describe('with successful response', () => {

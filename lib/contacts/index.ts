@@ -6,7 +6,7 @@ import type {
   ListContactsOptions,
   ListContactsResponse,
 } from './types';
-import type { CreateOptions } from '../types';
+import type { CreateOptions } from '../types/CreateOptions';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from './../types/RequestOptions';
 
