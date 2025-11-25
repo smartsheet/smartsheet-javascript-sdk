@@ -17,10 +17,10 @@ export function defineMockApiTests(scenarios) {
 
 function defineMockApiTest(scenario) {
     describe('#' + scenario.name, function () {
-        var postStub;
-        var putStub;
-        var getStub;
-        var deleteStub;
+        let postStub;
+        let putStub;
+        let getStub;
+        let deleteStub;
 
         this.beforeAll(() => {
             postStub = sinon.stub(axios, 'post').resolves({ status: 200, data: true });

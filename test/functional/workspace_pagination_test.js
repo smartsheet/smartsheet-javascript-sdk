@@ -4,15 +4,15 @@ import sinon from 'sinon';
 import * as SmartsheetClient from '@smartsheet';
 
 describe('Workspace Pagination Tests', function() {
-  var client;
-  var requestorStub;
+  let client;
+  let requestorStub;
 
   beforeEach(function() {
     // Mock requestor
     requestorStub = {
       get: function(options, callback) {
         // Mock different responses based on pagination parameters
-        var mockResponse = {
+        const mockResponse = {
           statusCode: 200,
           headers: {'content-type': 'application/json'},
           content: null
@@ -97,7 +97,7 @@ describe('Workspace Pagination Tests', function() {
   });
 
   describe('#listWorkspaces validation warnings', function() {
-    var consoleWarnStub;
+    let consoleWarnStub;
 
     beforeEach(function() {
       consoleWarnStub = sinon.stub(console, 'warn');

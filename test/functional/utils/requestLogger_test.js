@@ -3,9 +3,9 @@ import { smartSheetURIs } from '@smartsheet';
 import { create as createRequestLogger } from '../../../lib/utils/requestLogger';
 
 describe('#RequestLogger', function () {
-    var requestLogger;
-    var loggerFakes;
-    var clock;
+    let requestLogger;
+    let loggerFakes;
+    let clock;
 
     beforeEach(() => {
         clock = sinon.useFakeTimers();
@@ -62,7 +62,7 @@ describe('#RequestLogger', function () {
             smartSheetURIs.euBaseURI
         ].forEach(url => {
             it('should info log the request url and query params', () => {
-                var request = createRequest({
+                const request = createRequest({
                     url,
                     qs: {
                         queryKey: "queryVal",
@@ -75,7 +75,7 @@ describe('#RequestLogger', function () {
         });
 
         it('should not silly log any request headers when none are present', () => {
-            var request = createRequest({
+            const request = createRequest({
                 headers: {}
             });
 
@@ -85,7 +85,7 @@ describe('#RequestLogger', function () {
         });
 
         it('should silly log the request headers when present', () => {
-            var request = createRequest({
+            const request = createRequest({
                 headers: { someHeader: "someHeaderValue", anotherHeader: 123 }
             });
 
@@ -95,7 +95,7 @@ describe('#RequestLogger', function () {
         });
 
         it('should censor the authorization request header', () => {
-            var request = createRequest({
+            const request = createRequest({
                 headers: { authorization: "SuperSecret" }
             });
 
@@ -106,7 +106,7 @@ describe('#RequestLogger', function () {
         });
 
         it('should not censor an empty authorization request header', () => {
-            var request = createRequest({
+            const request = createRequest({
                 headers: { authorization: "" }
             });
 
@@ -116,7 +116,7 @@ describe('#RequestLogger', function () {
         });
 
         it('should not debug nor verbose log any payload if none exists on the request', () => {
-            var request = createRequest({
+            const request = createRequest({
                 body: '',
             });
 
@@ -127,7 +127,7 @@ describe('#RequestLogger', function () {
         });
 
         it('should debug log the full request payload', () => {
-            var request = createRequest({
+            const request = createRequest({
                 body: 'This is the request payload!',
             });
 
@@ -137,9 +137,9 @@ describe('#RequestLogger', function () {
         });
 
         it('should verbose log the full request payload if it does not exceed 1024 characters', () => {
-            var shortPayload = Array(1024).fill("0").join("");
+            const shortPayload = Array(1024).fill("0").join("");
 
-            var request = createRequest({
+            const request = createRequest({
                 body: shortPayload,
             });
 
@@ -149,9 +149,9 @@ describe('#RequestLogger', function () {
         });
 
         it('should verbose log a truncated request payload if it exceeds 1024 characters', () => {
-            var longPayload = Array(2048).fill("0").join("");
+            const longPayload = Array(2048).fill("0").join("");
 
-            var request = createRequest({
+            const request = createRequest({
                 body: longPayload,
             });
 
@@ -159,7 +159,7 @@ describe('#RequestLogger', function () {
 
             loggerFakes.verbose.args[0][0].should.equal('%s Payload (preview): %s');
             loggerFakes.verbose.args[0][1].should.equal('Request');
-            var preview = loggerFakes.verbose.args[0][2];
+            const preview = loggerFakes.verbose.args[0][2];
             preview.endsWith('...').should.equal(true);
             preview.length.should.equal(1024 + '...'.length);
         });
@@ -172,15 +172,15 @@ describe('#RequestLogger', function () {
             smartSheetURIs.euBaseURI
         ].forEach(url => {
             it('should warn log the attempt and request url and query params', () => {
-                var request = createRequest({
+                const request = createRequest({
                     url,
                     qs: {
                         queryKey: "queryVal",
                         "key that has spaces": "value that has spaces",
                     }
                 });
-                var error = "some error";
-                var attemptNum = 3;
+                const error = "some error";
+                const attemptNum = 3;
 
                 requestLogger.logRetryAttempt(request.verb, request.requestOptions, error, attemptNum);
 
@@ -192,8 +192,8 @@ describe('#RequestLogger', function () {
 
     describe('#logRetryFailure', function () {
         it('should error log the failure and attempt number', () => {
-            var request = createRequest();
-            var attemptNum = 3;
+            const request = createRequest();
+            const attemptNum = 3;
 
             requestLogger.logRetryFailure(request.verb, request.requestOptions, attemptNum);
 
@@ -203,7 +203,7 @@ describe('#RequestLogger', function () {
 
     describe('#logSuccessfulResponse', function () {
         it('should info log the success and response status code', () => {
-            var response = createResponse({
+            const response = createResponse({
                 statusCode: 201,
             });
 
@@ -213,7 +213,7 @@ describe('#RequestLogger', function () {
         });
 
         it('should not silly log any response headers when none are present', () => {
-            var response = createResponse({
+            const response = createResponse({
                 headers: {}
             });
 
@@ -223,7 +223,7 @@ describe('#RequestLogger', function () {
         });
 
         it('should silly log the response headers when present', () => {
-            var response = createResponse({
+            const response = createResponse({
                 headers: { someHeader: "someHeaderValue", anotherHeader: 123 }
             });
 
@@ -233,7 +233,7 @@ describe('#RequestLogger', function () {
         });
 
         it('should censor the authorization response header', () => {
-            var response = createResponse({
+            const response = createResponse({
                 headers: { authorization: "SuperSecret" }
             });
 
@@ -244,7 +244,7 @@ describe('#RequestLogger', function () {
         });
 
         it('should not censor an empty authorization response header', () => {
-            var response = createResponse({
+            const response = createResponse({
                 headers: { authorization: "" }
             });
 
@@ -254,7 +254,7 @@ describe('#RequestLogger', function () {
         });
 
         it('should not log an empty response payload', () => {
-            var response = createResponse({
+            const response = createResponse({
                 content: {},
             });
 
@@ -265,7 +265,7 @@ describe('#RequestLogger', function () {
         });
 
         it('should debug log the full response payload', () => {
-            var response = createResponse({
+            const response = createResponse({
                 content: { body: 'This is the request payload!' },
             });
 
@@ -275,9 +275,9 @@ describe('#RequestLogger', function () {
         });
 
         it('should verbose log the full response payload if it does not exceed 1024 characters', () => {
-            var shortPayload = Array(512).fill("0").join("");
+            const shortPayload = Array(512).fill("0").join("");
 
-            var response = createResponse({
+            const response = createResponse({
                 content: { body: shortPayload },
             });
 
@@ -287,9 +287,9 @@ describe('#RequestLogger', function () {
         });
 
         it('should verbose log a truncated response payload if it exceeds 1024 characters', () => {
-            var longPayload = Array(1024).fill("0").join("");
+            const longPayload = Array(1024).fill("0").join("");
 
-            var response = createResponse({
+            const response = createResponse({
                 content: { body: longPayload },
             });
 
@@ -297,7 +297,7 @@ describe('#RequestLogger', function () {
 
             loggerFakes.verbose.args[0][0].should.equal('%s Payload (preview): %s');
             loggerFakes.verbose.args[0][1].should.equal('Response');
-            var preview = loggerFakes.verbose.args[0][2];
+            const preview = loggerFakes.verbose.args[0][2];
             preview.endsWith('...').should.equal(true);
             preview.length.should.equal(1024 + '...'.length);
         });
@@ -307,7 +307,7 @@ describe('#RequestLogger', function () {
             'refresh_token',
         ].forEach(token => {
             it(`should censor the ${token} token on the response payload`, () => {
-                var response = createResponse({
+                const response = createResponse({
                     content: { [token]: 'SuperSecret' },
                 });
 
@@ -326,14 +326,14 @@ describe('#RequestLogger', function () {
             smartSheetURIs.euBaseURI
         ].forEach(url => {
             it('should error log the request url and query params and the error response', () => {
-                var request = createRequest({
+                const request = createRequest({
                     url,
                     qs: {
                         queryKey: "queryVal",
                         "key that has spaces": "value that has spaces",
                     }
                 });
-                var error = {
+                const error = {
                     statusCode: 500,
                     errorCode: 4001,
                     message: 'An error message',
@@ -348,13 +348,13 @@ describe('#RequestLogger', function () {
         });
 
         it('should not silly log any response headers when none are present', () => {
-            var request = createRequest({
+            const request = createRequest({
                 qs: {
                     queryKey: "queryVal",
                     "key that has spaces": "value that has spaces",
                 }
             });
-            var error = {
+            const error = {
                 statusCode: 500,
                 errorCode: 4001,
                 message: 'An error message',
@@ -368,13 +368,13 @@ describe('#RequestLogger', function () {
         });
 
         it('should silly log the response headers when present', () => {
-            var request = createRequest({
+            const request = createRequest({
                 qs: {
                     queryKey: "queryVal",
                     "key that has spaces": "value that has spaces",
                 }
             });
-            var error = {
+            const error = {
                 statusCode: 500,
                 errorCode: 4001,
                 message: 'An error message',
@@ -388,13 +388,13 @@ describe('#RequestLogger', function () {
         });
 
         it('should censor the authorization response header', () => {
-            var request = createRequest({
+            const request = createRequest({
                 qs: {
                     queryKey: "queryVal",
                     "key that has spaces": "value that has spaces",
                 }
             });
-            var error = {
+            const error = {
                 statusCode: 500,
                 errorCode: 4001,
                 message: 'An error message',
@@ -409,13 +409,13 @@ describe('#RequestLogger', function () {
         });
 
         it('should not censor an empty authorization response header', () => {
-            var request = createRequest({
+            const request = createRequest({
                 qs: {
                     queryKey: "queryVal",
                     "key that has spaces": "value that has spaces",
                 }
             });
-            var error = {
+            const error = {
                 statusCode: 500,
                 errorCode: 4001,
                 message: 'An error message',
@@ -441,9 +441,9 @@ describe('#RequestLogger', function () {
         it('should add formatLog to logger.filters', () => {
             loggerFakes.filters.length.should.equal(1);
 
-            var formatLog = loggerFakes.filters[0];
-            var fakeDateTime = new Date(0).toISOString();
-            var levelDisplay = level.toUpperCase().padStart(7);
+            const formatLog = loggerFakes.filters[0];
+            const fakeDateTime = new Date(0).toISOString();
+            const levelDisplay = level.toUpperCase().padStart(7);
 
             formatLog(level, 'message').should.equal(`${fakeDateTime}[${levelDisplay}] message`);
         });

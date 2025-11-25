@@ -1,10 +1,10 @@
 import * as helpers from './helpers';
 
 describe("Mock API SDK Tests", function() {
-  var client = helpers.setupClient();
+  const client = helpers.setupClient();
 
   describe("#Misc", function() {
-    var scenarios = [
+    const scenarios = [
       {
         name: "Move row to another sheet",
         method: client.sheets.moveRowToAnotherSheet,

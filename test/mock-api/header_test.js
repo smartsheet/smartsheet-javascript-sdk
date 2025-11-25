@@ -1,10 +1,10 @@
 import * as helpers from './helpers';
 
 describe("Mock API SDK Tests", function() {
-  var client = helpers.setupClient();
+  const client = helpers.setupClient();
   
   describe("#Header", function() {
-    var scenarios = [
+    const scenarios = [
         {
           "name": "Change Agent Header - Can Be Passed",
           "method": client.sheets.createSheet,

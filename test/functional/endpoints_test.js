@@ -7,7 +7,7 @@ import * as smartsheet from '@smartsheet';
 describe('Method Unit Tests', function () {
     const requestor = createRequestor({});
     
-    var testGroups = [
+    const testGroups = [
         {
             name: 'contacts',
             methods: [
@@ -337,9 +337,9 @@ describe('Method Unit Tests', function () {
         describe('#' + testGroup.name, function () {
             _.each(testGroup.methods, function (method) {
                 describe('#' + method.name, function () {
-                    var stub;
-                    var client;
-                    var originalOptions = (method.options === undefined) ? undefined : JSON.parse(JSON.stringify(method.options));
+                    let stub;
+                    let client;
+                    const originalOptions = (method.options === undefined) ? undefined : JSON.parse(JSON.stringify(method.options));
 
                     beforeEach(function () {
                         stub = sinon.stub(requestor, method.stub);
@@ -361,7 +361,7 @@ describe('Method Unit Tests', function () {
                     });
 
                     it('allows arbitrary options', function () {
-                        var optionsWithArbitraryOption = _.extend({somethingArbitrary: 123}, method.options);
+                        const optionsWithArbitraryOption = _.extend({somethingArbitrary: 123}, method.options);
                         client[testGroup.name][method.name](optionsWithArbitraryOption);
                         stub.args[0][0].should.have.properties({somethingArbitrary: 123});
                     });
@@ -395,7 +395,7 @@ describe('Method Unit Tests', function () {
                             return;
                         }
 
-                        var beforeOptions = JSON.stringify(originalOptions);
+                        const beforeOptions = JSON.stringify(originalOptions);
                         client[testGroup.name][method.name](method.options);
                         beforeOptions.should.equal(JSON.stringify(method.options));
                     });
