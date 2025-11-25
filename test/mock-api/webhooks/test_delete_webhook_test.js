@@ -12,10 +12,10 @@ import {
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Webhooks - deleteWebhook endpoint tests', function () {
+describe('Webhooks - deleteWebhook endpoint tests', () => {
     let client = createClient();
 
-    it('deleteWebhook generated url is correct', async function () {
+    it('deleteWebhook generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             webhookId: TEST_WEBHOOK_ID,
@@ -30,7 +30,7 @@ describe('Webhooks - deleteWebhook endpoint tests', function () {
         assert.ok(matchedRequest.url.includes(`/webhooks/${TEST_WEBHOOK_ID}`));
     });
 
-    it('deleteWebhook all response body properties', async function () {
+    it('deleteWebhook all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             webhookId: TEST_WEBHOOK_ID,
@@ -48,7 +48,7 @@ describe('Webhooks - deleteWebhook endpoint tests', function () {
         assert.ok(response.failedItems);
     });
 
-    it('deleteWebhook error 500 response', async function () {
+    it('deleteWebhook error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             webhookId: TEST_WEBHOOK_ID,
@@ -66,7 +66,7 @@ describe('Webhooks - deleteWebhook endpoint tests', function () {
         }
     });
 
-    it('deleteWebhook error 400 response', async function () {
+    it('deleteWebhook error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             webhookId: TEST_WEBHOOK_ID,

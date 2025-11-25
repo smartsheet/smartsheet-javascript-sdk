@@ -12,13 +12,13 @@ import {
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Users - addAlternateEmail endpoint tests', function () {
+describe('Users - addAlternateEmail endpoint tests', () => {
     let client = createClient();
     const TEST_EMAIL = 'alternate.email@smartsheet.com';
     const TEST_CONFIRMED = false;
     const TEST_BODY = [{ email: TEST_EMAIL }];
 
-    it('addAlternateEmail generated url is correct', async function () {
+    it('addAlternateEmail generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -34,7 +34,7 @@ describe('Users - addAlternateEmail endpoint tests', function () {
         assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/alternateemails`));
     });
 
-    it('addAlternateEmail all response body properties', async function () {
+    it('addAlternateEmail all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -60,7 +60,7 @@ describe('Users - addAlternateEmail endpoint tests', function () {
         assert.deepStrictEqual(body, TEST_BODY);
     });
 
-    it('addAlternateEmail error 500 response', async function () {
+    it('addAlternateEmail error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -79,7 +79,7 @@ describe('Users - addAlternateEmail endpoint tests', function () {
         }
     });
 
-    it('addAlternateEmail error 400 response', async function () {
+    it('addAlternateEmail error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,

@@ -1,9 +1,9 @@
 import * as helpers from './helpers';
 
-describe('Mock API SDK Tests - List Workspaces', function() {
+describe('Mock API SDK Tests - List Workspaces', () => {
   const client = helpers.setupClient();
 
-  describe('#Workspaces', function() {
+  describe('#Workspaces', () => {
     const scenarios = [
       {
         "name": "List Workspaces - First Page with Pagination",

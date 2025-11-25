@@ -34,10 +34,10 @@ import {
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Webhooks - updateWebhook endpoint tests', function () {
+describe('Webhooks - updateWebhook endpoint tests', () => {
     let client = createClient();
 
-    it('updateWebhook generated url is correct', async function () {
+    it('updateWebhook generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             webhookId: TEST_WEBHOOK_ID,
@@ -53,93 +53,99 @@ describe('Webhooks - updateWebhook endpoint tests', function () {
         assert.ok(matchedRequest.url.includes(`/webhooks/${TEST_WEBHOOK_ID}`));
     });
 
-    it('updateWebhook sheet webhook all response body properties', async function () {
-        const requestId = crypto.randomUUID();
-        const options = {
-            webhookId: TEST_WEBHOOK_ID,
-            body: TEST_UPDATE_SHEET_WEBHOOK_REQUEST_BODY,
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/webhooks/update-sheet-webhook/all-response-body-properties'
-            }
-        };
-        const response = await client.webhooks.updateWebhook(options);
-        const matchedRequest = await findWireMockRequest(requestId);
+    it(
+        'updateWebhook sheet webhook all response body properties',
+        async () => {
+            const requestId = crypto.randomUUID();
+            const options = {
+                webhookId: TEST_WEBHOOK_ID,
+                body: TEST_UPDATE_SHEET_WEBHOOK_REQUEST_BODY,
+                customProperties: {
+                    'x-request-id': requestId,
+                    'x-test-name': '/webhooks/update-sheet-webhook/all-response-body-properties'
+                }
+            };
+            const response = await client.webhooks.updateWebhook(options);
+            const matchedRequest = await findWireMockRequest(requestId);
 
-        assert.ok(response);
-        assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
-        assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
-        assert.strictEqual(response.version, TEST_VERSION);
-        assert.strictEqual(response.result.id, TEST_WEBHOOK_ID);
-        assert.strictEqual(response.result.name, TEST_WEBHOOK_NAME);
-        assert.strictEqual(response.result.callbackUrl, TEST_CALLBACK_URL);
-        assert.strictEqual(response.result.scope, TEST_SCOPE_SHEET);
-        assert.strictEqual(response.result.scopeObjectId, TEST_SCOPE_OBJECT_ID);
-        assert.deepStrictEqual(response.result.events, TEST_EVENTS);
-        assert.strictEqual(response.result.version, TEST_VERSION);
-        assert.ok(response.result.subscope);
-        assert.deepStrictEqual(response.result.subscope.columnIds, TEST_COLUMN_IDS);
-        assert.strictEqual(response.result.enabled, TEST_ENABLED);
-        assert.strictEqual(response.result.status, TEST_STATUS);
-        assert.strictEqual(response.result.sharedSecret, TEST_SHARED_SECRET);
-        assert.strictEqual(response.result.createdAt, TEST_CREATED_AT);
-        assert.strictEqual(response.result.modifiedAt, TEST_MODIFIED_AT);
-        assert.strictEqual(response.result.disabledDetails, TEST_DISABLED_DETAILS);
-        assert.strictEqual(response.result.apiClientId, TEST_API_CLIENT_ID);
-        assert.strictEqual(response.result.apiClientName, TEST_API_CLIENT_NAME);
-        assert.ok(response.result.stats);
-        assert.strictEqual(response.result.stats.lastCallbackAttempt, TEST_LAST_CALLBACK_ATTEMPT);
-        assert.strictEqual(response.result.stats.lastCallbackAttemptRetryCount, TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT);
-        assert.strictEqual(response.result.stats.lastSuccessfulCallback, TEST_LAST_SUCCESSFUL_CALLBACK);
+            assert.ok(response);
+            assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
+            assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
+            assert.strictEqual(response.version, TEST_VERSION);
+            assert.strictEqual(response.result.id, TEST_WEBHOOK_ID);
+            assert.strictEqual(response.result.name, TEST_WEBHOOK_NAME);
+            assert.strictEqual(response.result.callbackUrl, TEST_CALLBACK_URL);
+            assert.strictEqual(response.result.scope, TEST_SCOPE_SHEET);
+            assert.strictEqual(response.result.scopeObjectId, TEST_SCOPE_OBJECT_ID);
+            assert.deepStrictEqual(response.result.events, TEST_EVENTS);
+            assert.strictEqual(response.result.version, TEST_VERSION);
+            assert.ok(response.result.subscope);
+            assert.deepStrictEqual(response.result.subscope.columnIds, TEST_COLUMN_IDS);
+            assert.strictEqual(response.result.enabled, TEST_ENABLED);
+            assert.strictEqual(response.result.status, TEST_STATUS);
+            assert.strictEqual(response.result.sharedSecret, TEST_SHARED_SECRET);
+            assert.strictEqual(response.result.createdAt, TEST_CREATED_AT);
+            assert.strictEqual(response.result.modifiedAt, TEST_MODIFIED_AT);
+            assert.strictEqual(response.result.disabledDetails, TEST_DISABLED_DETAILS);
+            assert.strictEqual(response.result.apiClientId, TEST_API_CLIENT_ID);
+            assert.strictEqual(response.result.apiClientName, TEST_API_CLIENT_NAME);
+            assert.ok(response.result.stats);
+            assert.strictEqual(response.result.stats.lastCallbackAttempt, TEST_LAST_CALLBACK_ATTEMPT);
+            assert.strictEqual(response.result.stats.lastCallbackAttemptRetryCount, TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT);
+            assert.strictEqual(response.result.stats.lastSuccessfulCallback, TEST_LAST_SUCCESSFUL_CALLBACK);
 
-        let body = JSON.parse(matchedRequest.body);
-        assert.deepStrictEqual(body, TEST_UPDATE_SHEET_WEBHOOK_REQUEST_BODY);
-    });
+            let body = JSON.parse(matchedRequest.body);
+            assert.deepStrictEqual(body, TEST_UPDATE_SHEET_WEBHOOK_REQUEST_BODY);
+        }
+    );
 
-    it('updateWebhook plan webhook all response body properties', async function () {
-        const requestId = crypto.randomUUID();
-        const options = {
-            webhookId: TEST_WEBHOOK_ID,
-            body: TEST_UPDATE_PLAN_WEBHOOK_REQUEST_BODY,
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/webhooks/update-plan-webhook/all-response-body-properties'
-            }
-        };
-        const response = await client.webhooks.updateWebhook(options);
-        const matchedRequest = await findWireMockRequest(requestId);
+    it(
+        'updateWebhook plan webhook all response body properties',
+        async () => {
+            const requestId = crypto.randomUUID();
+            const options = {
+                webhookId: TEST_WEBHOOK_ID,
+                body: TEST_UPDATE_PLAN_WEBHOOK_REQUEST_BODY,
+                customProperties: {
+                    'x-request-id': requestId,
+                    'x-test-name': '/webhooks/update-plan-webhook/all-response-body-properties'
+                }
+            };
+            const response = await client.webhooks.updateWebhook(options);
+            const matchedRequest = await findWireMockRequest(requestId);
 
-        assert.ok(response);
-        assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
-        assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
-        assert.strictEqual(response.version, TEST_VERSION);
-        assert.strictEqual(response.result.id, TEST_WEBHOOK_ID);
-        assert.strictEqual(response.result.name, TEST_WEBHOOK_NAME);
-        assert.strictEqual(response.result.callbackUrl, TEST_CALLBACK_URL);
-        assert.strictEqual(response.result.scope, TEST_SCOPE_PLAN);
-        assert.strictEqual(response.result.scopeObjectId, TEST_SCOPE_OBJECT_ID);
-        assert.deepStrictEqual(response.result.events, TEST_EVENTS);
-        assert.strictEqual(response.result.version, TEST_VERSION);
-        assert.ok(response.result.customHeaders);
-        assert.deepStrictEqual(response.result.customHeaders, TEST_CUSTOM_HEADERS);
-        assert.strictEqual(response.result.enabled, TEST_ENABLED);
-        assert.strictEqual(response.result.status, TEST_STATUS);
-        assert.strictEqual(response.result.sharedSecret, TEST_SHARED_SECRET);
-        assert.strictEqual(response.result.createdAt, TEST_CREATED_AT);
-        assert.strictEqual(response.result.modifiedAt, TEST_MODIFIED_AT);
-        assert.strictEqual(response.result.disabledDetails, TEST_DISABLED_DETAILS);
-        assert.strictEqual(response.result.apiClientId, TEST_API_CLIENT_ID);
-        assert.strictEqual(response.result.apiClientName, TEST_API_CLIENT_NAME);
-        assert.ok(response.result.stats);
-        assert.strictEqual(response.result.stats.lastCallbackAttempt, TEST_LAST_CALLBACK_ATTEMPT);
-        assert.strictEqual(response.result.stats.lastCallbackAttemptRetryCount, TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT);
-        assert.strictEqual(response.result.stats.lastSuccessfulCallback, TEST_LAST_SUCCESSFUL_CALLBACK);
+            assert.ok(response);
+            assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
+            assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
+            assert.strictEqual(response.version, TEST_VERSION);
+            assert.strictEqual(response.result.id, TEST_WEBHOOK_ID);
+            assert.strictEqual(response.result.name, TEST_WEBHOOK_NAME);
+            assert.strictEqual(response.result.callbackUrl, TEST_CALLBACK_URL);
+            assert.strictEqual(response.result.scope, TEST_SCOPE_PLAN);
+            assert.strictEqual(response.result.scopeObjectId, TEST_SCOPE_OBJECT_ID);
+            assert.deepStrictEqual(response.result.events, TEST_EVENTS);
+            assert.strictEqual(response.result.version, TEST_VERSION);
+            assert.ok(response.result.customHeaders);
+            assert.deepStrictEqual(response.result.customHeaders, TEST_CUSTOM_HEADERS);
+            assert.strictEqual(response.result.enabled, TEST_ENABLED);
+            assert.strictEqual(response.result.status, TEST_STATUS);
+            assert.strictEqual(response.result.sharedSecret, TEST_SHARED_SECRET);
+            assert.strictEqual(response.result.createdAt, TEST_CREATED_AT);
+            assert.strictEqual(response.result.modifiedAt, TEST_MODIFIED_AT);
+            assert.strictEqual(response.result.disabledDetails, TEST_DISABLED_DETAILS);
+            assert.strictEqual(response.result.apiClientId, TEST_API_CLIENT_ID);
+            assert.strictEqual(response.result.apiClientName, TEST_API_CLIENT_NAME);
+            assert.ok(response.result.stats);
+            assert.strictEqual(response.result.stats.lastCallbackAttempt, TEST_LAST_CALLBACK_ATTEMPT);
+            assert.strictEqual(response.result.stats.lastCallbackAttemptRetryCount, TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT);
+            assert.strictEqual(response.result.stats.lastSuccessfulCallback, TEST_LAST_SUCCESSFUL_CALLBACK);
 
-        let body = JSON.parse(matchedRequest.body);
-        assert.deepStrictEqual(body, TEST_UPDATE_PLAN_WEBHOOK_REQUEST_BODY);
-    });
+            let body = JSON.parse(matchedRequest.body);
+            assert.deepStrictEqual(body, TEST_UPDATE_PLAN_WEBHOOK_REQUEST_BODY);
+        }
+    );
 
-    it('updateWebhook required response body properties', async function () {
+    it('updateWebhook required response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             webhookId: TEST_WEBHOOK_ID,
@@ -174,7 +180,7 @@ describe('Webhooks - updateWebhook endpoint tests', function () {
         assert.strictEqual(response.result.stats, undefined);
     });
 
-    it('updateWebhook error 500 response', async function () {
+    it('updateWebhook error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             webhookId: TEST_WEBHOOK_ID,
@@ -193,7 +199,7 @@ describe('Webhooks - updateWebhook endpoint tests', function () {
         }
     });
 
-    it('updateWebhook error 400 response', async function () {
+    it('updateWebhook error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             webhookId: TEST_WEBHOOK_ID,

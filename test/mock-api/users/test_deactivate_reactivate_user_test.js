@@ -11,10 +11,10 @@ import {
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Users - deactivateUser & reactivateUser endpoint tests', function () {
+describe('Users - deactivateUser & reactivateUser endpoint tests', () => {
     let client = createClient();
 
-    it('deactivateUser generated url is correct', async function () {
+    it('deactivateUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -29,7 +29,7 @@ describe('Users - deactivateUser & reactivateUser endpoint tests', function () {
         assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/deactivate`));
     });
 
-    it('deactivateUser all response body properties', async function () {
+    it('deactivateUser all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -44,7 +44,7 @@ describe('Users - deactivateUser & reactivateUser endpoint tests', function () {
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
     });
 
-    it('deactivateUser error 500 response', async function () {
+    it('deactivateUser error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -62,7 +62,7 @@ describe('Users - deactivateUser & reactivateUser endpoint tests', function () {
         }
     });
 
-    it('deactivateUser error 400 response', async function () {
+    it('deactivateUser error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -80,7 +80,7 @@ describe('Users - deactivateUser & reactivateUser endpoint tests', function () {
         }
     });
 
-    it('reactivateUser generated url is correct', async function () {
+    it('reactivateUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -95,7 +95,7 @@ describe('Users - deactivateUser & reactivateUser endpoint tests', function () {
         assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/reactivate`));
     });
 
-    it('reactivateUser all response body properties', async function () {
+    it('reactivateUser all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -110,7 +110,7 @@ describe('Users - deactivateUser & reactivateUser endpoint tests', function () {
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
     });
 
-    it('reactivateUser error 500 response', async function () {
+    it('reactivateUser error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -128,7 +128,7 @@ describe('Users - deactivateUser & reactivateUser endpoint tests', function () {
         }
     });
 
-    it('reactivateUser error 400 response', async function () {
+    it('reactivateUser error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,

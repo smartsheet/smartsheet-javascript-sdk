@@ -1,459 +1,459 @@
-import should from 'should';
 import * as smartsheetModule from '@smartsheet';
+import { expect, describe, beforeEach, afterEach, it } from '@jest/globals';
 
-describe('Client Unit Tests', function() {
+describe('Client Unit Tests', () => {
   let smartsheet = null;
 
-  beforeEach(function() {
+  beforeEach(() => {
     smartsheet = smartsheetModule.createClient({accessToken:'1234'});
   });
 
-  afterEach(function() {
+  afterEach(() => {
     smartsheet = null;
   });
 
-  describe('#Constants', function() {
-    it('should have Constants object', function() {
-      smartsheet.should.have.property('constants');
-      Object.keys(smartsheet.constants).should.be.length(7);
-      should(smartsheet.constants).have.property('maxRetryDurationMillis');
-      should(smartsheet.constants).have.property('accessLevel');
-      should(smartsheet.constants).have.property('accessScope');
-      should(smartsheet.constants).have.property('types');
-      should(smartsheet.constants).have.property('paperSize');
-      should(smartsheet.constants).have.property('acceptHeaders');
-      should(smartsheet.constants).have.property('sheet');
+  describe('#Constants', () => {
+    it('should have Constants object', () => {
+      expect(smartsheet).toHaveProperty('constants');
+      expect(Object.keys(smartsheet.constants)).toHaveLength(7);
+      expect(smartsheet.constants).toHaveProperty('maxRetryDurationMillis');
+      expect(smartsheet.constants).toHaveProperty('accessLevel');
+      expect(smartsheet.constants).toHaveProperty('accessScope');
+      expect(smartsheet.constants).toHaveProperty('types');
+      expect(smartsheet.constants).toHaveProperty('paperSize');
+      expect(smartsheet.constants).toHaveProperty('acceptHeaders');
+      expect(smartsheet.constants).toHaveProperty('sheet');
     });
   });
 
-  describe('#Contacts', function() {
-    it('should have Contacts object', function() {
-      smartsheet.should.have.property('contacts');
-      Object.keys(smartsheet.contacts).should.be.length(2);
+  describe('#Contacts', () => {
+    it('should have Contacts object', () => {
+      expect(smartsheet).toHaveProperty('contacts');
+      expect(Object.keys(smartsheet.contacts)).toHaveLength(2);
     });
 
-    it('should have Contacts GET methods', function() {
-      smartsheet.contacts.should.have.property('getContact');
-      smartsheet.contacts.should.have.property('listContacts');
+    it('should have Contacts GET methods', () => {
+      expect(smartsheet.contacts).toHaveProperty('getContact');
+      expect(smartsheet.contacts).toHaveProperty('listContacts');
     });
   });
 
-  describe('#Events', function() {
-    it('should have Events object', function() {
-      smartsheet.should.have.property('events');
-      Object.keys(smartsheet.events).should.be.length(1);
+  describe('#Events', () => {
+    it('should have Events object', () => {
+      expect(smartsheet).toHaveProperty('events');
+      expect(Object.keys(smartsheet.events)).toHaveLength(1);
     });
 
-    it('should have Events GET methods', function() {
-      smartsheet.events.should.have.property('getEvents');
+    it('should have Events GET methods', () => {
+      expect(smartsheet.events).toHaveProperty('getEvents');
     });
   });
 
-  describe('#Favorites', function() {
-    it('should have Favorites object',function(){
-      smartsheet.should.have.property('favorites');
+  describe('#Favorites', () => {
+    it('should have Favorites object', () => {
+      expect(smartsheet).toHaveProperty('favorites');
     });
 
-    it('should have get methods', function() {
-      smartsheet.favorites.should.have.property('listFavorites');
+    it('should have get methods', () => {
+      expect(smartsheet.favorites).toHaveProperty('listFavorites');
     });
 
-    it('should have create methods', function() {
-      smartsheet.favorites.should.have.property('addItemsToFavorites');
-      smartsheet.favorites.should.have.property('addSheetToFavorites');
-      smartsheet.favorites.should.have.property('addFolderToFavorites');
-      smartsheet.favorites.should.have.property('addReportToFavorites');
-      smartsheet.favorites.should.have.property('addTemplateToFavorites');
-      smartsheet.favorites.should.have.property('addSightToFavorites');
-      smartsheet.favorites.should.have.property('addWorkspaceToFavorites');
+    it('should have create methods', () => {
+      expect(smartsheet.favorites).toHaveProperty('addItemsToFavorites');
+      expect(smartsheet.favorites).toHaveProperty('addSheetToFavorites');
+      expect(smartsheet.favorites).toHaveProperty('addFolderToFavorites');
+      expect(smartsheet.favorites).toHaveProperty('addReportToFavorites');
+      expect(smartsheet.favorites).toHaveProperty('addTemplateToFavorites');
+      expect(smartsheet.favorites).toHaveProperty('addSightToFavorites');
+      expect(smartsheet.favorites).toHaveProperty('addWorkspaceToFavorites');
     });
 
-    it('should have delete methods', function() {
-      smartsheet.favorites.should.have.property('removeSheetFromFavorites');
-      smartsheet.favorites.should.have.property('removeSightFromFavorites');
-      smartsheet.favorites.should.have.property('removeWorkspaceFromFavorites');
-      smartsheet.favorites.should.have.property('removeFolderFromFavorites');
-      smartsheet.favorites.should.have.property('removeTemplateFromFavorites');
-      smartsheet.favorites.should.have.property('removeReportFromFavorites');
-      smartsheet.favorites.should.have.property('removeSheetsFromFavorites');
-      smartsheet.favorites.should.have.property('removeSightsFromFavorites');
-      smartsheet.favorites.should.have.property('removeWorkspacesFromFavorites');
-      smartsheet.favorites.should.have.property('removeFoldersFromFavorites');
-      smartsheet.favorites.should.have.property('removeTemplatesFromFavorites');
-      smartsheet.favorites.should.have.property('removeReportsFromFavorites');
+    it('should have delete methods', () => {
+      expect(smartsheet.favorites).toHaveProperty('removeSheetFromFavorites');
+      expect(smartsheet.favorites).toHaveProperty('removeSightFromFavorites');
+      expect(smartsheet.favorites).toHaveProperty('removeWorkspaceFromFavorites');
+      expect(smartsheet.favorites).toHaveProperty('removeFolderFromFavorites');
+      expect(smartsheet.favorites).toHaveProperty('removeTemplateFromFavorites');
+      expect(smartsheet.favorites).toHaveProperty('removeReportFromFavorites');
+      expect(smartsheet.favorites).toHaveProperty('removeSheetsFromFavorites');
+      expect(smartsheet.favorites).toHaveProperty('removeSightsFromFavorites');
+      expect(smartsheet.favorites).toHaveProperty('removeWorkspacesFromFavorites');
+      expect(smartsheet.favorites).toHaveProperty('removeFoldersFromFavorites');
+      expect(smartsheet.favorites).toHaveProperty('removeTemplatesFromFavorites');
+      expect(smartsheet.favorites).toHaveProperty('removeReportsFromFavorites');
     });
   });
 
-  describe('#folders', function() {
-    it('should have folders object',function(){
-      smartsheet.should.have.property('folders');
-      Object.keys(smartsheet.folders).should.be.length(9);
+  describe('#folders', () => {
+    it('should have folders object', () => {
+      expect(smartsheet).toHaveProperty('folders');
+      expect(Object.keys(smartsheet.folders)).toHaveLength(9);
     });
 
-    it('should have get methods', function() {
-      smartsheet.folders.should.have.property('getFolder');
-      smartsheet.folders.should.have.property('getFolderMetadata');
-      smartsheet.folders.should.have.property('getFolderChildren');
-      smartsheet.folders.should.have.property('listChildFolders');
+    it('should have get methods', () => {
+      expect(smartsheet.folders).toHaveProperty('getFolder');
+      expect(smartsheet.folders).toHaveProperty('getFolderMetadata');
+      expect(smartsheet.folders).toHaveProperty('getFolderChildren');
+      expect(smartsheet.folders).toHaveProperty('listChildFolders');
     });
 
-    it('should have create methods', function() {
-      smartsheet.folders.should.have.property('createChildFolder');
-      smartsheet.folders.should.have.property('copyFolder');
+    it('should have create methods', () => {
+      expect(smartsheet.folders).toHaveProperty('createChildFolder');
+      expect(smartsheet.folders).toHaveProperty('copyFolder');
     });
 
-    it('should have update methods', function() {
-      smartsheet.folders.should.have.property('updateFolder');
-      smartsheet.folders.should.have.property('moveFolder');
+    it('should have update methods', () => {
+      expect(smartsheet.folders).toHaveProperty('updateFolder');
+      expect(smartsheet.folders).toHaveProperty('moveFolder');
     });
 
-    it('should have delete methods', function() {
-      smartsheet.folders.should.have.property('deleteFolder');
+    it('should have delete methods', () => {
+      expect(smartsheet.folders).toHaveProperty('deleteFolder');
     });
   });
 
-  describe('#groups', function() {
-    it('should have groups object',function(){
-      smartsheet.should.have.property('groups');
-      Object.keys(smartsheet.groups).should.be.length(7);
+  describe('#groups', () => {
+    it('should have groups object', () => {
+      expect(smartsheet).toHaveProperty('groups');
+      expect(Object.keys(smartsheet.groups)).toHaveLength(7);
     });
 
-    it('should have get methods', function() {
-      smartsheet.groups.should.have.property('listGroups');
-      smartsheet.groups.should.have.property('getGroup');
+    it('should have get methods', () => {
+      expect(smartsheet.groups).toHaveProperty('listGroups');
+      expect(smartsheet.groups).toHaveProperty('getGroup');
     });
 
-    it('should have create methods', function() {
-      smartsheet.groups.should.have.property('createGroup');
-      smartsheet.groups.should.have.property('addGroupMembers');
+    it('should have create methods', () => {
+      expect(smartsheet.groups).toHaveProperty('createGroup');
+      expect(smartsheet.groups).toHaveProperty('addGroupMembers');
     });
 
-    it('should have update methods', function() {
-      smartsheet.groups.should.have.property('updateGroup');
+    it('should have update methods', () => {
+      expect(smartsheet.groups).toHaveProperty('updateGroup');
     });
 
-    it('should have delete methods', function() {
-      smartsheet.groups.should.have.property('deleteGroup');
-      smartsheet.groups.should.have.property('removeGroupMember');
+    it('should have delete methods', () => {
+      expect(smartsheet.groups).toHaveProperty('deleteGroup');
+      expect(smartsheet.groups).toHaveProperty('removeGroupMember');
     });
   });
 
-  describe('#home', function() {
-    it('should have home object',function(){
-      smartsheet.should.have.property('home');
-      Object.keys(smartsheet.home).should.be.length(3);
+  describe('#home', () => {
+    it('should have home object', () => {
+      expect(smartsheet).toHaveProperty('home');
+      expect(Object.keys(smartsheet.home)).toHaveLength(3);
     });
 
-    it('should have get methods', function() {
-      smartsheet.home.should.have.property('listContents');
-      smartsheet.home.should.have.property('listFolders');
+    it('should have get methods', () => {
+      expect(smartsheet.home).toHaveProperty('listContents');
+      expect(smartsheet.home).toHaveProperty('listFolders');
     });
 
-    it('should have create methods', function() {
-      smartsheet.home.should.have.property('createFolder');
+    it('should have create methods', () => {
+      expect(smartsheet.home).toHaveProperty('createFolder');
     });
   });
 
-  describe('#images', function() {
-    it('should have image object', function(){
-      smartsheet.should.have.property('images');
-      Object.keys(smartsheet.images).should.be.length(1);
+  describe('#images', () => {
+    it('should have image object', () => {
+      expect(smartsheet).toHaveProperty('images');
+      expect(Object.keys(smartsheet.images)).toHaveLength(1);
     });
 
-    it('should have get methods', function() {
-      smartsheet.images.should.have.property('listImageUrls');
+    it('should have get methods', () => {
+      expect(smartsheet.images).toHaveProperty('listImageUrls');
     });
   });
 
-  describe('#search', function () {
-    it('should have search object', function () {
-      smartsheet.should.have.property('search');
-      Object.keys(smartsheet.search).should.be.length(2);
+  describe('#search', () => {
+    it('should have search object', () => {
+      expect(smartsheet).toHaveProperty('search');
+      expect(Object.keys(smartsheet.search)).toHaveLength(2);
     });
 
-    it('should have get methods', function () {
-      smartsheet.search.should.have.property('searchAll');
-      smartsheet.search.should.have.property('searchSheet');
+    it('should have get methods', () => {
+      expect(smartsheet.search).toHaveProperty('searchAll');
+      expect(smartsheet.search).toHaveProperty('searchSheet');
     });
   });
 
-  describe('#reports', function() {
-    it('should have reports object', function() {
-      smartsheet.should.have.property('reports');
-      Object.keys(smartsheet.reports).should.be.length(12);
+  describe('#reports', () => {
+    it('should have reports object', () => {
+      expect(smartsheet).toHaveProperty('reports');
+      expect(Object.keys(smartsheet.reports)).toHaveLength(12);
     });
 
-    it('should have get methods', function () {
-      smartsheet.reports.should.have.property('listReports');
-      smartsheet.reports.should.have.property('getReport');
-      smartsheet.reports.should.have.property('getReportAsExcel');
-      smartsheet.reports.should.have.property('getReportAsCSV');
-      smartsheet.reports.should.have.property('getReportPublishStatus');
+    it('should have get methods', () => {
+      expect(smartsheet.reports).toHaveProperty('listReports');
+      expect(smartsheet.reports).toHaveProperty('getReport');
+      expect(smartsheet.reports).toHaveProperty('getReportAsExcel');
+      expect(smartsheet.reports).toHaveProperty('getReportAsCSV');
+      expect(smartsheet.reports).toHaveProperty('getReportPublishStatus');
     });
 
-    it('should have update methods', function () {
-      smartsheet.reports.should.have.property('setReportPublishStatus');
-      smartsheet.reports.should.have.property('sendReportViaEmail');
+    it('should have update methods', () => {
+      expect(smartsheet.reports).toHaveProperty('setReportPublishStatus');
+      expect(smartsheet.reports).toHaveProperty('sendReportViaEmail');
     });
   });
 
-  describe('#server', function () {
-    it('should have server object', function () {
-      smartsheet.should.have.property('server');
-      Object.keys(smartsheet.server).should.be.length(1);
+  describe('#server', () => {
+    it('should have server object', () => {
+      expect(smartsheet).toHaveProperty('server');
+      expect(Object.keys(smartsheet.server)).toHaveLength(1);
     });
 
-    it('should have get methods', function () {
-      smartsheet.server.should.have.property('getInfo');
+    it('should have get methods', () => {
+      expect(smartsheet.server).toHaveProperty('getInfo');
     });
   });
 
-  describe('#Sheets', function() {
-    it('should have Sheets object',function(){
-      smartsheet.should.have.property('sheets');
+  describe('#Sheets', () => {
+    it('should have Sheets object', () => {
+      expect(smartsheet).toHaveProperty('sheets');
     });
 
-    it('should have Sheets get methods', function() {
-      smartsheet.sheets.should.have.property('getAttachment');
-      smartsheet.sheets.should.have.property('getCellHistory');
-      smartsheet.sheets.should.have.property('getComment');
-      smartsheet.sheets.should.have.property('getDiscussion');
-      smartsheet.sheets.should.have.property('getDiscussions');
-      smartsheet.sheets.should.have.property('getPublishStatus');
-      smartsheet.sheets.should.have.property('getRowAttachments');
-      smartsheet.sheets.should.have.property('getRowDiscussions');
-      smartsheet.sheets.should.have.property('getShare');
-      smartsheet.sheets.should.have.property('getSheet');
-      smartsheet.sheets.should.have.property('getSheetAsCSV');
-      smartsheet.sheets.should.have.property('getSheetAsExcel');
-      smartsheet.sheets.should.have.property('getSheetAsPDF');
-      smartsheet.sheets.should.have.property('getSheetVersion');
-      smartsheet.sheets.should.have.property('listAttachmentVersions');
-      smartsheet.sheets.should.have.property('listAttachments');
-      smartsheet.sheets.should.have.property('listDiscussionAttachments');
-      smartsheet.sheets.should.have.property('listOrganizationSheets');
-      smartsheet.sheets.should.have.property('listShares');
-      smartsheet.sheets.should.have.property('listSheets');
+    it('should have Sheets get methods', () => {
+      expect(smartsheet.sheets).toHaveProperty('getAttachment');
+      expect(smartsheet.sheets).toHaveProperty('getCellHistory');
+      expect(smartsheet.sheets).toHaveProperty('getComment');
+      expect(smartsheet.sheets).toHaveProperty('getDiscussion');
+      expect(smartsheet.sheets).toHaveProperty('getDiscussions');
+      expect(smartsheet.sheets).toHaveProperty('getPublishStatus');
+      expect(smartsheet.sheets).toHaveProperty('getRowAttachments');
+      expect(smartsheet.sheets).toHaveProperty('getRowDiscussions');
+      expect(smartsheet.sheets).toHaveProperty('getShare');
+      expect(smartsheet.sheets).toHaveProperty('getSheet');
+      expect(smartsheet.sheets).toHaveProperty('getSheetAsCSV');
+      expect(smartsheet.sheets).toHaveProperty('getSheetAsExcel');
+      expect(smartsheet.sheets).toHaveProperty('getSheetAsPDF');
+      expect(smartsheet.sheets).toHaveProperty('getSheetVersion');
+      expect(smartsheet.sheets).toHaveProperty('listAttachmentVersions');
+      expect(smartsheet.sheets).toHaveProperty('listAttachments');
+      expect(smartsheet.sheets).toHaveProperty('listDiscussionAttachments');
+      expect(smartsheet.sheets).toHaveProperty('listOrganizationSheets');
+      expect(smartsheet.sheets).toHaveProperty('listShares');
+      expect(smartsheet.sheets).toHaveProperty('listSheets');
     });
 
-    it('should have Row methods', function () {
-      smartsheet.sheets.should.have.property('addImageToCell');
-      smartsheet.sheets.should.have.property('addRow');
-      smartsheet.sheets.should.have.property('addRows');
-      smartsheet.sheets.should.have.property('addRowFileAttachment');
-      smartsheet.sheets.should.have.property('addRowUrlAttachment');
-      smartsheet.sheets.should.have.property('addRowAttachment');
-      smartsheet.sheets.should.have.property('createRowDiscussion');
-      smartsheet.sheets.should.have.property('getRow');
-      smartsheet.sheets.should.have.property('getRowAttachments');
-      smartsheet.sheets.should.have.property('getRowDiscussions');
-      smartsheet.sheets.should.have.property('updateRow');
-      smartsheet.sheets.should.have.property('sendRows');
+    it('should have Row methods', () => {
+      expect(smartsheet.sheets).toHaveProperty('addImageToCell');
+      expect(smartsheet.sheets).toHaveProperty('addRow');
+      expect(smartsheet.sheets).toHaveProperty('addRows');
+      expect(smartsheet.sheets).toHaveProperty('addRowFileAttachment');
+      expect(smartsheet.sheets).toHaveProperty('addRowUrlAttachment');
+      expect(smartsheet.sheets).toHaveProperty('addRowAttachment');
+      expect(smartsheet.sheets).toHaveProperty('createRowDiscussion');
+      expect(smartsheet.sheets).toHaveProperty('getRow');
+      expect(smartsheet.sheets).toHaveProperty('getRowAttachments');
+      expect(smartsheet.sheets).toHaveProperty('getRowDiscussions');
+      expect(smartsheet.sheets).toHaveProperty('updateRow');
+      expect(smartsheet.sheets).toHaveProperty('sendRows');
     });
 
-    it('should have Column methods', function() {
-      smartsheet.sheets.should.have.property('addColumn');
-      smartsheet.sheets.should.have.property('getColumn');
-      smartsheet.sheets.should.have.property('getColumns');
-      smartsheet.sheets.should.have.property('updateColumn');
+    it('should have Column methods', () => {
+      expect(smartsheet.sheets).toHaveProperty('addColumn');
+      expect(smartsheet.sheets).toHaveProperty('getColumn');
+      expect(smartsheet.sheets).toHaveProperty('getColumns');
+      expect(smartsheet.sheets).toHaveProperty('updateColumn');
     });
 
-    it('should have Sheets create methods', function() {
-      smartsheet.sheets.should.have.property('addCommentFileAttachment');
-      smartsheet.sheets.should.have.property('addCommentUrlAttachment');
-      smartsheet.sheets.should.have.property('addCommentAttachment');
-      smartsheet.sheets.should.have.property('addDiscussionComment');
-      smartsheet.sheets.should.have.property('addFileAttachment');
-      smartsheet.sheets.should.have.property('addUrlAttachment');
-      smartsheet.sheets.should.have.property('addAttachment');
-      smartsheet.sheets.should.have.property('attachNewVersion');
-      smartsheet.sheets.should.have.property('createDiscussion');
-      smartsheet.sheets.should.have.property('createRowDiscussion');
-      smartsheet.sheets.should.have.property('createSheet');
-      smartsheet.sheets.should.have.property('createSheetFromExisting');
-      smartsheet.sheets.should.have.property('createSheetInFolder');
-      smartsheet.sheets.should.have.property('createSheetInWorkspace');
-      smartsheet.sheets.should.have.property('copySheet');
-      smartsheet.sheets.should.have.property('moveSheet');
+    it('should have Sheets create methods', () => {
+      expect(smartsheet.sheets).toHaveProperty('addCommentFileAttachment');
+      expect(smartsheet.sheets).toHaveProperty('addCommentUrlAttachment');
+      expect(smartsheet.sheets).toHaveProperty('addCommentAttachment');
+      expect(smartsheet.sheets).toHaveProperty('addDiscussionComment');
+      expect(smartsheet.sheets).toHaveProperty('addFileAttachment');
+      expect(smartsheet.sheets).toHaveProperty('addUrlAttachment');
+      expect(smartsheet.sheets).toHaveProperty('addAttachment');
+      expect(smartsheet.sheets).toHaveProperty('attachNewVersion');
+      expect(smartsheet.sheets).toHaveProperty('createDiscussion');
+      expect(smartsheet.sheets).toHaveProperty('createRowDiscussion');
+      expect(smartsheet.sheets).toHaveProperty('createSheet');
+      expect(smartsheet.sheets).toHaveProperty('createSheetFromExisting');
+      expect(smartsheet.sheets).toHaveProperty('createSheetInFolder');
+      expect(smartsheet.sheets).toHaveProperty('createSheetInWorkspace');
+      expect(smartsheet.sheets).toHaveProperty('copySheet');
+      expect(smartsheet.sheets).toHaveProperty('moveSheet');
     });
 
-    it('should have Sheets update methods', function() {
-      smartsheet.sheets.should.have.property('updateShare');
-      smartsheet.sheets.should.have.property('updateSheet');
-      smartsheet.sheets.should.have.property('editComment');
+    it('should have Sheets update methods', () => {
+      expect(smartsheet.sheets).toHaveProperty('updateShare');
+      expect(smartsheet.sheets).toHaveProperty('updateSheet');
+      expect(smartsheet.sheets).toHaveProperty('editComment');
     });
 
-    it('should have Sheets delete methods', function() {
-      smartsheet.sheets.should.have.property('deleteAllAttachmentVersions');
-      smartsheet.sheets.should.have.property('deleteAttachment');
-      smartsheet.sheets.should.have.property('deleteColumn');
-      smartsheet.sheets.should.have.property('deleteComment');
-      smartsheet.sheets.should.have.property('deleteDiscussion');
-      smartsheet.sheets.should.have.property('deleteRow');
-      smartsheet.sheets.should.have.property('deleteRows');
-      smartsheet.sheets.should.have.property('deleteShare');
-      smartsheet.sheets.should.have.property('deleteSheet');
+    it('should have Sheets delete methods', () => {
+      expect(smartsheet.sheets).toHaveProperty('deleteAllAttachmentVersions');
+      expect(smartsheet.sheets).toHaveProperty('deleteAttachment');
+      expect(smartsheet.sheets).toHaveProperty('deleteColumn');
+      expect(smartsheet.sheets).toHaveProperty('deleteComment');
+      expect(smartsheet.sheets).toHaveProperty('deleteDiscussion');
+      expect(smartsheet.sheets).toHaveProperty('deleteRow');
+      expect(smartsheet.sheets).toHaveProperty('deleteRows');
+      expect(smartsheet.sheets).toHaveProperty('deleteShare');
+      expect(smartsheet.sheets).toHaveProperty('deleteSheet');
     });
 
-    it('should have update request methods', function() {
-      smartsheet.sheets.should.have.property('createUpdateRequest');
-      smartsheet.sheets.should.have.property('deleteUpdateRequest');
-      smartsheet.sheets.should.have.property('getUpdateRequest');
-      smartsheet.sheets.should.have.property('getAllUpdateRequests');
-      smartsheet.sheets.should.have.property('changeUpdateRequest');
-      smartsheet.sheets.should.have.property('deleteSentUpdateRequest');
-      smartsheet.sheets.should.have.property('getSentUpdateRequest');
-      smartsheet.sheets.should.have.property('getAllSentUpdateRequests');
+    it('should have update request methods', () => {
+      expect(smartsheet.sheets).toHaveProperty('createUpdateRequest');
+      expect(smartsheet.sheets).toHaveProperty('deleteUpdateRequest');
+      expect(smartsheet.sheets).toHaveProperty('getUpdateRequest');
+      expect(smartsheet.sheets).toHaveProperty('getAllUpdateRequests');
+      expect(smartsheet.sheets).toHaveProperty('changeUpdateRequest');
+      expect(smartsheet.sheets).toHaveProperty('deleteSentUpdateRequest');
+      expect(smartsheet.sheets).toHaveProperty('getSentUpdateRequest');
+      expect(smartsheet.sheets).toHaveProperty('getAllSentUpdateRequests');
     });
   });
-  describe('#Sights', function() {
-    it('should have Sights object',function(){
-      smartsheet.should.have.property('sights');
-      Object.keys(smartsheet.sights).should.be.length(13);
+  describe('#Sights', () => {
+    it('should have Sights object', () => {
+      expect(smartsheet).toHaveProperty('sights');
+      expect(Object.keys(smartsheet.sights)).toHaveLength(13);
     });
 
-    it('should have Sights get methods', function() {
-      smartsheet.sights.should.have.property('getSight');
-      smartsheet.sights.should.have.property('listSights');
-      smartsheet.sights.should.have.property('getShare');
-      smartsheet.sights.should.have.property('listShares');
-      smartsheet.sights.should.have.property('getSightPublishStatus');
+    it('should have Sights get methods', () => {
+      expect(smartsheet.sights).toHaveProperty('getSight');
+      expect(smartsheet.sights).toHaveProperty('listSights');
+      expect(smartsheet.sights).toHaveProperty('getShare');
+      expect(smartsheet.sights).toHaveProperty('listShares');
+      expect(smartsheet.sights).toHaveProperty('getSightPublishStatus');
     });
 
-    it('should have Sights update methods', function() {
-      smartsheet.sights.should.have.property('setSightPublishStatus');
-      smartsheet.sights.should.have.property('moveSight');
-      smartsheet.sights.should.have.property('updateSight');
+    it('should have Sights update methods', () => {
+      expect(smartsheet.sights).toHaveProperty('setSightPublishStatus');
+      expect(smartsheet.sights).toHaveProperty('moveSight');
+      expect(smartsheet.sights).toHaveProperty('updateSight');
     });
 
-    it('should have Sight create methods', function() {
-      smartsheet.sights.should.have.property('copySight');
+    it('should have Sight create methods', () => {
+      expect(smartsheet.sights).toHaveProperty('copySight');
     });
 
-    it('should have Sights delete methods', function() {
-      smartsheet.sights.should.have.property('deleteSight');
-      smartsheet.sights.should.have.property('deleteShare');
-    });
-  });
-
-  describe('#templates', function () {
-    it('should have templates object', function () {
-      smartsheet.should.have.property('templates');
-      Object.keys(smartsheet.templates).should.be.length(2);
-    });
-
-    it('should have get methods', function () {
-      smartsheet.templates.should.have.property('listPublicTemplates');
-      smartsheet.templates.should.have.property('listUserCreatedTemplates');
+    it('should have Sights delete methods', () => {
+      expect(smartsheet.sights).toHaveProperty('deleteSight');
+      expect(smartsheet.sights).toHaveProperty('deleteShare');
     });
   });
 
-  describe('#tokens', function() {
-    it('should have a tokens object', function () {
-      smartsheet.should.have.property('tokens');
-      Object.keys(smartsheet.tokens).should.be.length(3);
+  describe('#templates', () => {
+    it('should have templates object', () => {
+      expect(smartsheet).toHaveProperty('templates');
+      expect(Object.keys(smartsheet.templates)).toHaveLength(2);
     });
 
-    it('should have get methods', function () {
-      smartsheet.tokens.should.have.property('getAccessToken');
-      smartsheet.tokens.should.have.property('refreshAccessToken');
-    });
-
-    it('should have delete methods', function () {
-      smartsheet.tokens.should.have.property('revokeAccessToken');
+    it('should have get methods', () => {
+      expect(smartsheet.templates).toHaveProperty('listPublicTemplates');
+      expect(smartsheet.templates).toHaveProperty('listUserCreatedTemplates');
     });
   });
 
-  describe('#users', function () {
-    it('should have user object', function () {
-      smartsheet.should.have.property('users');
-      Object.keys(smartsheet.users).should.be.length(19);
+  describe('#tokens', () => {
+    it('should have a tokens object', () => {
+      expect(smartsheet).toHaveProperty('tokens');
+      expect(Object.keys(smartsheet.tokens)).toHaveLength(3);
     });
 
-    it('should have get methods', function () {
-      smartsheet.users.should.have.property('getCurrentUser');
-      smartsheet.users.should.have.property('listAllUsers');
-      smartsheet.users.should.have.property('getUser');
-      smartsheet.users.should.have.property('getAlternateEmail');
-      smartsheet.users.should.have.property('listAlternateEmails');
+    it('should have get methods', () => {
+      expect(smartsheet.tokens).toHaveProperty('getAccessToken');
+      expect(smartsheet.tokens).toHaveProperty('refreshAccessToken');
     });
 
-    it('should have create methods', function () {
-      smartsheet.users.should.have.property('addUser');
-      smartsheet.users.should.have.property('addUserAndSendEmail');
-      smartsheet.users.should.have.property('addAlternateEmail');
-      smartsheet.users.should.have.property('addProfileImage');
-      smartsheet.users.should.have.property('deactivateUser');
-      smartsheet.users.should.have.property('reactivateUser');
-    });
-
-    it('should have update methods', function () {
-      smartsheet.users.should.have.property('updateUser');
-      smartsheet.users.should.have.property('makeAlternateEmailPrimary');
-    });
-
-    it('should have delete methods', function () {
-      smartsheet.users.should.have.property('removeUser');
-      smartsheet.users.should.have.property('deleteAlternateEmail');
+    it('should have delete methods', () => {
+      expect(smartsheet.tokens).toHaveProperty('revokeAccessToken');
     });
   });
 
-  describe('#webhooks', function () {
-    it('should have webhook object', function () {
-      smartsheet.should.have.property('webhooks');
-      Object.keys(smartsheet.webhooks).should.be.length(6);
+  describe('#users', () => {
+    it('should have user object', () => {
+      expect(smartsheet).toHaveProperty('users');
+      expect(Object.keys(smartsheet.users)).toHaveLength(19);
     });
 
-    it('should have get methods', function () {
-      smartsheet.webhooks.should.have.property('getWebhook');
-      smartsheet.webhooks.should.have.property('listWebhooks');
+    it('should have get methods', () => {
+      expect(smartsheet.users).toHaveProperty('getCurrentUser');
+      expect(smartsheet.users).toHaveProperty('listAllUsers');
+      expect(smartsheet.users).toHaveProperty('getUser');
+      expect(smartsheet.users).toHaveProperty('getAlternateEmail');
+      expect(smartsheet.users).toHaveProperty('listAlternateEmails');
     });
 
-    it('should have post methods', function () {
-      smartsheet.webhooks.should.have.property('createWebhook');
-      smartsheet.webhooks.should.have.property('resetSharedSecret');
+    it('should have create methods', () => {
+      expect(smartsheet.users).toHaveProperty('addUser');
+      expect(smartsheet.users).toHaveProperty('addUserAndSendEmail');
+      expect(smartsheet.users).toHaveProperty('addAlternateEmail');
+      expect(smartsheet.users).toHaveProperty('addProfileImage');
+      expect(smartsheet.users).toHaveProperty('deactivateUser');
+      expect(smartsheet.users).toHaveProperty('reactivateUser');
     });
 
-    it('should have put methods', function () {
-      smartsheet.webhooks.should.have.property('updateWebhook');
+    it('should have update methods', () => {
+      expect(smartsheet.users).toHaveProperty('updateUser');
+      expect(smartsheet.users).toHaveProperty('makeAlternateEmailPrimary');
     });
 
-    it('should have delete methods', function () {
-      smartsheet.webhooks.should.have.property('deleteWebhook');
+    it('should have delete methods', () => {
+      expect(smartsheet.users).toHaveProperty('removeUser');
+      expect(smartsheet.users).toHaveProperty('deleteAlternateEmail');
     });
   });
 
-  describe('#workspaces', function () {
-    it('should have workspaces object', function () {
-      smartsheet.should.have.property('workspaces');
-      Object.keys(smartsheet.workspaces).should.be.length(15);
+  describe('#webhooks', () => {
+    it('should have webhook object', () => {
+      expect(smartsheet).toHaveProperty('webhooks');
+      expect(Object.keys(smartsheet.webhooks)).toHaveLength(6);
     });
 
-    it('should have get methods', function () {
-      smartsheet.workspaces.should.have.property('getShare');
-      smartsheet.workspaces.should.have.property('listShares');
-      smartsheet.workspaces.should.have.property('getWorkspace');
-      smartsheet.workspaces.should.have.property('getWorkspaceMetadata');
-      smartsheet.workspaces.should.have.property('getWorkspaceChildren');
-      smartsheet.workspaces.should.have.property('listWorkspaceFolders');
-      smartsheet.workspaces.should.have.property('listWorkspaces');
+    it('should have get methods', () => {
+      expect(smartsheet.webhooks).toHaveProperty('getWebhook');
+      expect(smartsheet.webhooks).toHaveProperty('listWebhooks');
     });
 
-    it('should have create methods', function () {
-      smartsheet.workspaces.should.have.property('share');
-      smartsheet.workspaces.should.have.property('createWorkspace');
-      smartsheet.workspaces.should.have.property('createFolder');
-      smartsheet.workspaces.should.have.property('copyWorkspace');
+    it('should have post methods', () => {
+      expect(smartsheet.webhooks).toHaveProperty('createWebhook');
+      expect(smartsheet.webhooks).toHaveProperty('resetSharedSecret');
     });
 
-    it('should have update methods', function () {
-      smartsheet.workspaces.should.have.property('updateShare');
-      smartsheet.workspaces.should.have.property('updateWorkspace');
+    it('should have put methods', () => {
+      expect(smartsheet.webhooks).toHaveProperty('updateWebhook');
     });
 
-    it('should have delete methods', function () {
-      smartsheet.workspaces.should.have.property('deleteShare');
-      smartsheet.workspaces.should.have.property('deleteWorkspace');
+    it('should have delete methods', () => {
+      expect(smartsheet.webhooks).toHaveProperty('deleteWebhook');
+    });
+  });
+
+  describe('#workspaces', () => {
+    it('should have workspaces object', () => {
+      expect(smartsheet).toHaveProperty('workspaces');
+      expect(Object.keys(smartsheet.workspaces)).toHaveLength(15);
+    });
+
+    it('should have get methods', () => {
+      expect(smartsheet.workspaces).toHaveProperty('getShare');
+      expect(smartsheet.workspaces).toHaveProperty('listShares');
+      expect(smartsheet.workspaces).toHaveProperty('getWorkspace');
+      expect(smartsheet.workspaces).toHaveProperty('getWorkspaceMetadata');
+      expect(smartsheet.workspaces).toHaveProperty('getWorkspaceChildren');
+      expect(smartsheet.workspaces).toHaveProperty('listWorkspaceFolders');
+      expect(smartsheet.workspaces).toHaveProperty('listWorkspaces');
+    });
+
+    it('should have create methods', () => {
+      expect(smartsheet.workspaces).toHaveProperty('share');
+      expect(smartsheet.workspaces).toHaveProperty('createWorkspace');
+      expect(smartsheet.workspaces).toHaveProperty('createFolder');
+      expect(smartsheet.workspaces).toHaveProperty('copyWorkspace');
+    });
+
+    it('should have update methods', () => {
+      expect(smartsheet.workspaces).toHaveProperty('updateShare');
+      expect(smartsheet.workspaces).toHaveProperty('updateWorkspace');
+    });
+
+    it('should have delete methods', () => {
+      expect(smartsheet.workspaces).toHaveProperty('deleteShare');
+      expect(smartsheet.workspaces).toHaveProperty('deleteWorkspace');
     });
   });
 

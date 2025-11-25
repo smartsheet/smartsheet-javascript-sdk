@@ -8,7 +8,9 @@
     "moduleResolution": "node16",
     "resolveJsonModule": true,
     "module": "node16",
-    "types": ["mocha", "node"],
+    "types": ["node", "jest"],
+    "esModuleInterop": true,
+    "isolatedModules": true,
     "rootDir": ".",
     "paths": {
       "@smartsheet": ["./index.ts"],

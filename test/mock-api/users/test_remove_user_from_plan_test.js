@@ -12,10 +12,10 @@ import {
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Users - removeUserFromPlan endpoint tests', function () {
+describe('Users - removeUserFromPlan endpoint tests', () => {
     let client = createClient();
 
-    it('removeUserFromPlan generated url is correct', async function () {
+    it('removeUserFromPlan generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -31,7 +31,7 @@ describe('Users - removeUserFromPlan endpoint tests', function () {
         assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}`));
     });
 
-    it('removeUserFromPlan all response body properties', async function () {
+    it('removeUserFromPlan all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -47,7 +47,7 @@ describe('Users - removeUserFromPlan endpoint tests', function () {
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
     });
 
-    it('removeUserFromPlan error 500 response', async function () {
+    it('removeUserFromPlan error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -66,7 +66,7 @@ describe('Users - removeUserFromPlan endpoint tests', function () {
         }
     });
 
-    it('removeUserFromPlan error 400 response', async function () {
+    it('removeUserFromPlan error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,

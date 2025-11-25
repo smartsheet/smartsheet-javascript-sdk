@@ -12,7 +12,7 @@ import {
     TEST_PROVISIONAL_EXPIRATION_DATE
 } from './common_test_constants';
 
-describe('Users - listUserPlans endpoint tests', function () {
+describe('Users - listUserPlans endpoint tests', () => {
     const client = createClient();
     const lastKey = '12345678901234569';
     const maxItems = 100;
@@ -21,7 +21,7 @@ describe('Users - listUserPlans endpoint tests', function () {
     const provisionalExpirationDate = TEST_PROVISIONAL_EXPIRATION_DATE;
     const isInternalTrue = false;
 
-    it('listUserPlans generated url is correct', async function () {
+    it('listUserPlans generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -45,7 +45,7 @@ describe('Users - listUserPlans endpoint tests', function () {
         assert.strictEqual(maxItemsActual, maxItems);
     });
 
-    it('listUserPlans all response body properties', async function () {
+    it('listUserPlans all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -69,7 +69,7 @@ describe('Users - listUserPlans endpoint tests', function () {
         assert.strictEqual(response.data[0].isInternal, isInternalTrue);
     });
 
-    it('listUserPlans required response body properties', async function () {
+    it('listUserPlans required response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -88,7 +88,7 @@ describe('Users - listUserPlans endpoint tests', function () {
         assert.strictEqual(response.data[0].isInternal, isInternalTrue);
     });
 
-    it('listUserPlans error 500 response', async function () {
+    it('listUserPlans error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -106,7 +106,7 @@ describe('Users - listUserPlans endpoint tests', function () {
         }
     });
 
-    it('listUserPlans error 400 response', async function () {
+    it('listUserPlans error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,

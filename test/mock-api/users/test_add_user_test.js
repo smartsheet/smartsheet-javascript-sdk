@@ -24,7 +24,7 @@ import {
 } from './common_test_constants';
 import { SeatTypes, UserStatus } from '@smartsheet/users/types';
 
-describe('Users - addUser endpoint tests', function () {
+describe('Users - addUser endpoint tests', () => {
     let client = createClient();
     const newUserId = TEST_USER_ID;
     const email = TEST_EMAIL;
@@ -58,7 +58,7 @@ describe('Users - addUser endpoint tests', function () {
         status: status
     };
 
-    it('addUser generated url is correct', async function () {
+    it('addUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             body: testUserBody,
@@ -75,7 +75,7 @@ describe('Users - addUser endpoint tests', function () {
 
         assert.ok(matchedRequest.url.includes('/2.0/users'));
     });
-    it('addUserAndSendEmail generated url is correct', async function () {
+    it('addUserAndSendEmail generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             body: testUserBody,
@@ -94,7 +94,7 @@ describe('Users - addUser endpoint tests', function () {
     });
 
 
-    it('addUser all response body properties', async function () {
+    it('addUser all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             body: testUserBody,
@@ -141,7 +141,7 @@ describe('Users - addUser endpoint tests', function () {
         assert.strictEqual(body.status, status);
     });
 
-    it('addUser required response body properties', async function () {
+    it('addUser required response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             body: testUserBody,
@@ -186,7 +186,7 @@ describe('Users - addUser endpoint tests', function () {
         assert.strictEqual(body.status, status);
     });
 
-    it('addUser error 500 response', async function () {
+    it('addUser error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             body: testUserBody,
@@ -204,7 +204,7 @@ describe('Users - addUser endpoint tests', function () {
         }
     });
 
-    it('addUser error 400 response', async function () {
+    it('addUser error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             body: testUserBody,

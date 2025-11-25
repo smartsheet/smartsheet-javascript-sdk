@@ -22,7 +22,7 @@ import {
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Users - getUser endpoint tests', function () {
+describe('Users - getUser endpoint tests', () => {
     let client = createClient();
     const accountId = TEST_ACCOUNT_ID;
     const accountName = 'Acme Corporation';
@@ -54,7 +54,7 @@ describe('Users - getUser endpoint tests', function () {
     const resourceViewer = false;
     const sheetCount = TEST_SHEET_COUNT;
 
-    it('getUser generated url is correct', async function () {
+    it('getUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -68,7 +68,7 @@ describe('Users - getUser endpoint tests', function () {
         assert.ok(matchedRequest.url.includes(`/2.0/users/${TEST_USER_ID}`));
     });
 
-    it('getUser all response body properties', async function () {
+    it('getUser all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -119,7 +119,7 @@ describe('Users - getUser endpoint tests', function () {
         assert.strictEqual(response.sheetCount, sheetCount);
     });
 
-    it('getUser required response body properties', async function () {
+    it('getUser required response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -163,7 +163,7 @@ describe('Users - getUser endpoint tests', function () {
         assert.strictEqual(response.sheetCount, undefined);
     });
 
-    it('getUser error 500 response', async function () {
+    it('getUser error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -181,7 +181,7 @@ describe('Users - getUser endpoint tests', function () {
         }
     });
 
-    it('getUser error 400 response', async function () {
+    it('getUser error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,

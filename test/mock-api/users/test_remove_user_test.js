@@ -11,13 +11,13 @@ import {
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Users - removeUser endpoint tests', function () {
+describe('Users - removeUser endpoint tests', () => {
     let client = createClient();
     const transferToUserId = 9876543210987654;
     const transferSheets = true;
     const removeFromSharing = true;
 
-    it('removeUser generated url is correct', async function () {
+    it('removeUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -32,56 +32,40 @@ describe('Users - removeUser endpoint tests', function () {
         assert.ok(matchedRequest.url.includes(`/2.0/users/${TEST_USER_ID}`));
     });
 
-    it('removeUser with query parameters generated url is correct', async function () {
+    it(
+        'removeUser with query parameters generated url is correct',
+        async () => {
+            const requestId = crypto.randomUUID();
+            const options = {
+                userId: TEST_USER_ID,
+                queryParameters: {
+                    transferTo: transferToUserId,
+                    transferSheets: transferSheets,
+                    removeFromSharing: removeFromSharing
+                },
+                customProperties: {
+                    'x-request-id': requestId,
+                    'x-test-name': '/users/remove-user/all-response-body-properties'
+                }
+            };
+            await client.users.removeUser(options);
+            const matchedRequest = await findWireMockRequest(requestId);
+
+            assert.ok(matchedRequest.url.includes(`/2.0/users/${TEST_USER_ID}`));
+            const queryParams = matchedRequest.queryParams;
+            const transferToActual = parseInt(queryParams.transferTo.values[0]);
+            const transferSheetsActual = queryParams.transferSheets.values[0];
+            const removeFromSharingActual = queryParams.removeFromSharing.values[0];
+            assert.strictEqual(transferToActual, transferToUserId);
+            assert.strictEqual(transferSheetsActual, transferSheets.toString());
+            assert.strictEqual(removeFromSharingActual, removeFromSharing.toString());
+        }
+    );
+
+    it('removeUser all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
-            queryParameters: {
-                transferTo: transferToUserId,
-                transferSheets: transferSheets,
-                removeFromSharing: removeFromSharing
-            },
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/users/remove-user/all-response-body-properties'
-            }
-        };
-        await client.users.removeUser(options);
-        const matchedRequest = await findWireMockRequest(requestId);
-
-        assert.ok(matchedRequest.url.includes(`/2.0/users/${TEST_USER_ID}`));
-        const queryParams = matchedRequest.queryParams;
-        const transferToActual = parseInt(queryParams.transferTo.values[0]);
-        const transferSheetsActual = queryParams.transferSheets.values[0];
-        const removeFromSharingActual = queryParams.removeFromSharing.values[0];
-        assert.strictEqual(transferToActual, transferToUserId);
-        assert.strictEqual(transferSheetsActual, transferSheets.toString());
-        assert.strictEqual(removeFromSharingActual, removeFromSharing.toString());
-    });
-
-    it('removeUser all response body properties', async function () {
-        const requestId = crypto.randomUUID();
-        const options = {
-            userId: TEST_USER_ID,
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/users/remove-user/all-response-body-properties'
-            }
-        };
-        const response = await client.users.removeUser(options);
-        assert.ok(response);
-        assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
-        assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
-    });
-
-    it('removeUser with transferTo all response body properties', async function () {
-        const requestId = crypto.randomUUID();
-        const options = {
-            userId: TEST_USER_ID,
-            queryParameters: {
-                transferTo: transferToUserId,
-                transferSheets: transferSheets
-            },
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/users/remove-user/all-response-body-properties'
@@ -93,7 +77,29 @@ describe('Users - removeUser endpoint tests', function () {
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
     });
 
-    it('removeUser error 500 response', async function () {
+    it(
+        'removeUser with transferTo all response body properties',
+        async () => {
+            const requestId = crypto.randomUUID();
+            const options = {
+                userId: TEST_USER_ID,
+                queryParameters: {
+                    transferTo: transferToUserId,
+                    transferSheets: transferSheets
+                },
+                customProperties: {
+                    'x-request-id': requestId,
+                    'x-test-name': '/users/remove-user/all-response-body-properties'
+                }
+            };
+            const response = await client.users.removeUser(options);
+            assert.ok(response);
+            assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
+            assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
+        }
+    );
+
+    it('removeUser error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -111,7 +117,7 @@ describe('Users - removeUser endpoint tests', function () {
         }
     });
 
-    it('removeUser error 400 response', async function () {
+    it('removeUser error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,

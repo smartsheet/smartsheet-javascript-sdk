@@ -1,8 +1,7 @@
-import should from 'should';
 import assert from 'assert';
 import _ from 'underscore';
 import * as smartsheet from '@smartsheet';
-import sinon from "sinon";
+import { expect, jest, describe, it, beforeAll, afterAll } from '@jest/globals';
 import axios from "axios";
 
 export function setupClient() {
@@ -16,27 +15,27 @@ export function defineMockApiTests(scenarios) {
 }
 
 function defineMockApiTest(scenario) {
-    describe('#' + scenario.name, function () {
+    describe('#' + scenario.name, () => {
         let postStub;
         let putStub;
         let getStub;
         let deleteStub;
 
-        this.beforeAll(() => {
-            postStub = sinon.stub(axios, 'post').resolves({ status: 200, data: true });
-            putStub = sinon.stub(axios, 'put').resolves({ status: 200, data: true });
-            getStub = sinon.stub(axios, 'get').resolves({ status: 200, data: true });
-            deleteStub = sinon.stub(axios, 'delete').resolves({ status: 200, data: true });
+        beforeAll(() => {
+            postStub = jest.spyOn(axios, 'post').mockResolvedValue({ status: 200, data: true });
+            putStub = jest.spyOn(axios, 'put').mockResolvedValue({ status: 200, data: true });
+            getStub = jest.spyOn(axios, 'get').mockResolvedValue({ status: 200, data: true });
+            deleteStub = jest.spyOn(axios, 'delete').mockResolvedValue({ status: 200, data: true });
         });
 
-        this.afterAll(() => {
-            postStub.restore();
-            putStub.restore();
-            getStub.restore();
-            deleteStub.restore();
+        afterAll(() => {
+            postStub.mockRestore();
+            putStub.mockRestore();
+            getStub.mockRestore();
+            deleteStub.mockRestore();
         });
 
-        it('makes request', function () {
+        it('makes request', () => {
             if(_.has(scenario, 'skip')) {
               this.skip();
             }
@@ -48,7 +47,7 @@ function defineMockApiTest(scenario) {
                     assert.fail('Expected error response, received success.');
                 }
                 else {
-                    should.exist(response);
+                    expect(response).toBeDefined();
                 }
             })
             .catch(function(error) {
@@ -61,7 +60,7 @@ function defineMockApiTest(scenario) {
             });
         });
     });
-};
+}
 
 function isScenarioError(error) {
     return error.errorCode === 9999;

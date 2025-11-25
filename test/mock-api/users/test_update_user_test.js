@@ -18,7 +18,7 @@ import {
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Users - updateUser endpoint tests', function () {
+describe('Users - updateUser endpoint tests', () => {
     let client = createClient();
     const email = TEST_EMAIL;
     const firstName = TEST_FIRST_NAME;
@@ -42,7 +42,7 @@ describe('Users - updateUser endpoint tests', function () {
         resourceViewer: resourceViewer
     };
 
-    it('updateUser generated url is correct', async function () {
+    it('updateUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -58,7 +58,7 @@ describe('Users - updateUser endpoint tests', function () {
         assert.ok(matchedRequest.url.includes(`/2.0/users/${TEST_USER_ID}`));
     });
 
-    it('updateUser all response body properties', async function () {
+    it('updateUser all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -93,7 +93,7 @@ describe('Users - updateUser endpoint tests', function () {
         assert.strictEqual(body.resourceViewer, resourceViewer);
     });
 
-    it('updateUser required response body properties', async function () {
+    it('updateUser required response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -126,7 +126,7 @@ describe('Users - updateUser endpoint tests', function () {
         assert.strictEqual(body.resourceViewer, resourceViewer);
     });
 
-    it('updateUser error 500 response', async function () {
+    it('updateUser error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -145,7 +145,7 @@ describe('Users - updateUser endpoint tests', function () {
         }
     });
 
-    it('updateUser error 400 response', async function () {
+    it('updateUser error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,

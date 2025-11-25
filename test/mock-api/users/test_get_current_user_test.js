@@ -22,7 +22,7 @@ import {
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Users - getCurrentUser endpoint tests', function () {
+describe('Users - getCurrentUser endpoint tests', () => {
     let client = createClient();
     const userId = TEST_USER_ID;
     const accountId = TEST_ACCOUNT_ID;
@@ -62,7 +62,7 @@ describe('Users - getCurrentUser endpoint tests', function () {
     const groupCreatedAt = '2020-01-15T10:30:00Z';
     const groupModifiedAt = '2020-06-20T14:45:00Z';
 
-    it('getCurrentUser generated url is correct', async function () {
+    it('getCurrentUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             customProperties: {
@@ -76,7 +76,7 @@ describe('Users - getCurrentUser endpoint tests', function () {
         assert.ok(matchedRequest.url.includes('/2.0/users/me'));
     });
 
-    it('getCurrentUser all response body properties', async function () {
+    it('getCurrentUser all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             customProperties: {
@@ -127,7 +127,7 @@ describe('Users - getCurrentUser endpoint tests', function () {
         assert.strictEqual(response.data[0].modifiedAt, groupModifiedAt);
     });
 
-    it('getCurrentUser required response body properties', async function () {
+    it('getCurrentUser required response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             customProperties: {
@@ -166,7 +166,7 @@ describe('Users - getCurrentUser endpoint tests', function () {
         assert.strictEqual(response.data.length, 0);
     });
 
-    it('getCurrentUser error 500 response', async function () {
+    it('getCurrentUser error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             customProperties: {
@@ -183,7 +183,7 @@ describe('Users - getCurrentUser endpoint tests', function () {
         }
     });
 
-    it('getCurrentUser error 400 response', async function () {
+    it('getCurrentUser error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             customProperties: {

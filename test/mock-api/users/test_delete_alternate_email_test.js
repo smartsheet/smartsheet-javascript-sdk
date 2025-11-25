@@ -12,10 +12,10 @@ import {
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Users - deleteAlternateEmail endpoint tests', function () {
+describe('Users - deleteAlternateEmail endpoint tests', () => {
     let client = createClient();
 
-    it('deleteAlternateEmail generated url is correct', async function () {
+    it('deleteAlternateEmail generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -31,7 +31,7 @@ describe('Users - deleteAlternateEmail endpoint tests', function () {
         assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/alternateemails/${TEST_ALTERNATE_EMAIL_ID}`));
     });
 
-    it('deleteAlternateEmail all response body properties', async function () {
+    it('deleteAlternateEmail all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -47,7 +47,7 @@ describe('Users - deleteAlternateEmail endpoint tests', function () {
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
     });
 
-    it('deleteAlternateEmail error 500 response', async function () {
+    it('deleteAlternateEmail error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -66,7 +66,7 @@ describe('Users - deleteAlternateEmail endpoint tests', function () {
         }
     });
 
-    it('deleteAlternateEmail error 400 response', async function () {
+    it('deleteAlternateEmail error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,

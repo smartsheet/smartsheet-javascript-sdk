@@ -12,12 +12,12 @@ import {
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Users - makeAlternateEmailPrimary endpoint tests', function () {
+describe('Users - makeAlternateEmailPrimary endpoint tests', () => {
     let client = createClient();
     const TEST_EMAIL = 'alternate.email@smartsheet.com';
     const TEST_CONFIRMED = true;
 
-    it('makeAlternateEmailPrimary generated url is correct', async function () {
+    it('makeAlternateEmailPrimary generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -33,28 +33,31 @@ describe('Users - makeAlternateEmailPrimary endpoint tests', function () {
         assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/alternateemails/${TEST_ALTERNATE_EMAIL_ID}/makeprimary`));
     });
 
-    it('makeAlternateEmailPrimary all response body properties', async function () {
-        const requestId = crypto.randomUUID();
-        const options = {
-            userId: TEST_USER_ID,
-            alternateEmailId: TEST_ALTERNATE_EMAIL_ID,
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/users/alternate-emails/make-alternate-email-primary/all-response-body-properties'
-            }
-        };
-        const response = await client.users.makeAlternateEmailPrimary(options);
-        assert.ok(response);
-        assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
-        assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
-        assert.ok(Array.isArray(response.data));
-        assert.strictEqual(response.data.length, 1);
-        assert.strictEqual(response.data[0].id, TEST_ALTERNATE_EMAIL_ID);
-        assert.strictEqual(response.data[0].confirmed, TEST_CONFIRMED);
-        assert.strictEqual(response.data[0].email, TEST_EMAIL);
-    });
+    it(
+        'makeAlternateEmailPrimary all response body properties',
+        async () => {
+            const requestId = crypto.randomUUID();
+            const options = {
+                userId: TEST_USER_ID,
+                alternateEmailId: TEST_ALTERNATE_EMAIL_ID,
+                customProperties: {
+                    'x-request-id': requestId,
+                    'x-test-name': '/users/alternate-emails/make-alternate-email-primary/all-response-body-properties'
+                }
+            };
+            const response = await client.users.makeAlternateEmailPrimary(options);
+            assert.ok(response);
+            assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
+            assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
+            assert.ok(Array.isArray(response.data));
+            assert.strictEqual(response.data.length, 1);
+            assert.strictEqual(response.data[0].id, TEST_ALTERNATE_EMAIL_ID);
+            assert.strictEqual(response.data[0].confirmed, TEST_CONFIRMED);
+            assert.strictEqual(response.data[0].email, TEST_EMAIL);
+        }
+    );
 
-    it('makeAlternateEmailPrimary error 500 response', async function () {
+    it('makeAlternateEmailPrimary error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -73,7 +76,7 @@ describe('Users - makeAlternateEmailPrimary endpoint tests', function () {
         }
     });
 
-    it('makeAlternateEmailPrimary error 400 response', async function () {
+    it('makeAlternateEmailPrimary error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,

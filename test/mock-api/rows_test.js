@@ -1,9 +1,9 @@
 import * as helpers from './helpers';
 
-describe('Mock API SDK Tests', function() {
+describe('Mock API SDK Tests', () => {
   const client = helpers.setupClient();
 
-  describe('#Rows', function() {
+  describe('#Rows', () => {
   const scenarios = [
       {
         "name": "Add Rows - Assign Values - String",

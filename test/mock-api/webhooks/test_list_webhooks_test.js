@@ -29,7 +29,7 @@ import {
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Webhooks - listWebhooks endpoint tests', function () {
+describe('Webhooks - listWebhooks endpoint tests', () => {
     let client = createClient();
     const pageNumber = 1;
     const pageSize = 100;
@@ -37,7 +37,7 @@ describe('Webhooks - listWebhooks endpoint tests', function () {
     const totalCount = 2;
     const includeAll = false;
 
-    it('listWebhooks generated url is correct', async function () {
+    it('listWebhooks generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             queryParameters: {
@@ -63,7 +63,7 @@ describe('Webhooks - listWebhooks endpoint tests', function () {
         assert.strictEqual(parseInt(pageSizeActual), pageSize);
     });
 
-    it('listWebhooks all response body properties', async function () {
+    it('listWebhooks all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             customProperties: {
@@ -114,7 +114,7 @@ describe('Webhooks - listWebhooks endpoint tests', function () {
         assert.deepStrictEqual(planWebhook.customHeaders, TEST_CUSTOM_HEADERS);
     });
 
-    it('listWebhooks required response body properties', async function () {
+    it('listWebhooks required response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             customProperties: {
@@ -156,7 +156,7 @@ describe('Webhooks - listWebhooks endpoint tests', function () {
         assert.strictEqual(webhook.customHeaders, undefined);
     });
 
-    it('listWebhooks error 500 response', async function () {
+    it('listWebhooks error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             customProperties: {
@@ -173,7 +173,7 @@ describe('Webhooks - listWebhooks endpoint tests', function () {
         }
     });
 
-    it('listWebhooks error 400 response', async function () {
+    it('listWebhooks error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             customProperties: {

@@ -19,7 +19,7 @@ import {
     ADD_PROFILE_IMAGE_REQUEST_BODY
 } from './common_test_constants';
 
-describe('Users - addProfileImage endpoint tests', function () {
+describe('Users - addProfileImage endpoint tests', () => {
     let client = createClient();
     const imageId = TEST_PROFILE_IMAGE_ID;
     const height = TEST_PROFILE_IMAGE_HEIGHT;
@@ -29,7 +29,7 @@ describe('Users - addProfileImage endpoint tests', function () {
     const firstName = TEST_FIRST_NAME;
     const lastName = TEST_LAST_NAME;
 
-    it('addProfileImage generated url is correct', async function () {
+    it('addProfileImage generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -45,7 +45,7 @@ describe('Users - addProfileImage endpoint tests', function () {
         assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/profileimage`));
     });
 
-    it('addProfileImage all response body properties', async function () {
+    it('addProfileImage all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -77,7 +77,7 @@ describe('Users - addProfileImage endpoint tests', function () {
         assert.deepStrictEqual(matchedRequest.body, expectedBody);
     });
 
-    it('addProfileImage error 500 response', async function () {
+    it('addProfileImage error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -96,7 +96,7 @@ describe('Users - addProfileImage endpoint tests', function () {
         }
     });
 
-    it('addProfileImage error 400 response', async function () {
+    it('addProfileImage error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,

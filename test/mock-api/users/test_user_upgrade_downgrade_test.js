@@ -13,14 +13,14 @@ import {
 } from './common_test_constants';
 import { SeatTypes } from '@smartsheet/users/types';
 
-describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
+describe('Users - upgradeUser & downgradeUser endpoint tests', () => {
     let client = createClient();
     const TEST_UPGRADE_SEAT_TYPE = SeatTypes.MEMBER;
     const TEST_DOWNGRADE_SEAT_TYPE = SeatTypes.VIEWER;
     const TEST_UPGRADE_BODY = { seatType: TEST_UPGRADE_SEAT_TYPE };
     const TEST_DOWNGRADE_BODY = { seatType: TEST_DOWNGRADE_SEAT_TYPE };
 
-    it('upgradeUser generated url is correct', async function () {
+    it('upgradeUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -37,7 +37,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}/upgrade`));
     });
 
-    it('upgradeUser all response body properties', async function () {
+    it('upgradeUser all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -59,7 +59,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         assert.deepStrictEqual(body, TEST_UPGRADE_BODY);
     });
 
-    it('upgradeUser no seat type passed', async function () {
+    it('upgradeUser no seat type passed', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -75,7 +75,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
     });
 
-    it('upgradeUser error 500 response', async function () {
+    it('upgradeUser error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -95,7 +95,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         }
     });
 
-    it('upgradeUser error 400 response', async function () {
+    it('upgradeUser error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -115,7 +115,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         }
     });
 
-    it('downgradeUser generated url is correct', async function () {
+    it('downgradeUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -131,7 +131,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}/downgrade`));
     });
 
-    it('downgradeUser all response body properties', async function () {
+    it('downgradeUser all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -153,7 +153,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         assert.deepStrictEqual(body, TEST_DOWNGRADE_BODY);
     });
 
-    it('downgradeUser error 500 response', async function () {
+    it('downgradeUser error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -173,7 +173,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         }
     });
 
-    it('downgradeUser error 400 response', async function () {
+    it('downgradeUser error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,

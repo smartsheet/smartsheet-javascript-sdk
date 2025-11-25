@@ -10,12 +10,12 @@ import {
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Users - getAlternateEmail endpoint tests', function () {
+describe('Users - getAlternateEmail endpoint tests', () => {
     let client = createClient();
     const TEST_EMAIL = 'alternate.email@smartsheet.com';
     const TEST_CONFIRMED = true;
 
-    it('getAlternateEmail generated url is correct', async function () {
+    it('getAlternateEmail generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -31,7 +31,7 @@ describe('Users - getAlternateEmail endpoint tests', function () {
         assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/alternateemails/${TEST_ALTERNATE_EMAIL_ID}`));
     });
 
-    it('getAlternateEmail all response body properties', async function () {
+    it('getAlternateEmail all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -48,7 +48,7 @@ describe('Users - getAlternateEmail endpoint tests', function () {
         assert.strictEqual(response.email, TEST_EMAIL);
     });
 
-    it('getAlternateEmail error 500 response', async function () {
+    it('getAlternateEmail error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -67,7 +67,7 @@ describe('Users - getAlternateEmail endpoint tests', function () {
         }
     });
 
-    it('getAlternateEmail error 400 response', async function () {
+    it('getAlternateEmail error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,

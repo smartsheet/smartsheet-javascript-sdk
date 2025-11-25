@@ -12,11 +12,11 @@ import {
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Webhooks - resetSharedSecret endpoint tests', function () {
+describe('Webhooks - resetSharedSecret endpoint tests', () => {
     let client = createClient();
     const newSharedSecret = 'new123secret456value789abc012def345ghi678jkl901mno234pqr';
 
-    it('resetSharedSecret generated url is correct', async function () {
+    it('resetSharedSecret generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             webhookId: TEST_WEBHOOK_ID,
@@ -31,7 +31,7 @@ describe('Webhooks - resetSharedSecret endpoint tests', function () {
         assert.ok(matchedRequest.url.includes(`/webhooks/${TEST_WEBHOOK_ID}/resetsharedsecret`));
     });
 
-    it('resetSharedSecret all response body properties', async function () {
+    it('resetSharedSecret all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             webhookId: TEST_WEBHOOK_ID,
@@ -51,7 +51,7 @@ describe('Webhooks - resetSharedSecret endpoint tests', function () {
         assert.strictEqual(response.result.sharedSecret, newSharedSecret);
     });
 
-    it('resetSharedSecret error 500 response', async function () {
+    it('resetSharedSecret error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             webhookId: TEST_WEBHOOK_ID,
@@ -69,7 +69,7 @@ describe('Webhooks - resetSharedSecret endpoint tests', function () {
         }
     });
 
-    it('resetSharedSecret error 400 response', async function () {
+    it('resetSharedSecret error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             webhookId: TEST_WEBHOOK_ID,

@@ -1,13 +1,12 @@
-import should from 'should';
 import _ from 'underscore';
-import sinon from 'sinon';
 import * as SmartsheetClient from '@smartsheet';
+import { expect, jest, describe, beforeEach, afterEach, it } from '@jest/globals';
 
-describe('Workspace Pagination Tests', function() {
+describe('Workspace Pagination Tests', () => {
   let client;
   let requestorStub;
 
-  beforeEach(function() {
+  beforeEach(() => {
     // Mock requestor
     requestorStub = {
       get: function(options, callback) {
@@ -46,139 +45,189 @@ describe('Workspace Pagination Tests', function() {
     });
   });
 
-  describe('#listWorkspaces with pagination', function() {
-    it('should return traditional format when no pagination parameters provided', function(done) {
-      client.workspaces.listWorkspaces({}, function(error, response) {
-        should.not.exist(error);
-        response.should.have.property('content');
-        response.content.should.be.Array();
-        response.content.length.should.equal(3);
-        response.content[0].should.have.property('name', 'Workspace 1');
-        done();
-      });
-    });
+  describe('#listWorkspaces with pagination', () => {
+    it(
+      'should return traditional format when no pagination parameters provided',
+      done => {
+        client.workspaces.listWorkspaces({}, function(error, response) {
+          expect(error).toBeFalsy();
+          expect(response).toHaveProperty('content');
+          expect(Array.isArray(response.content)).toBe(true);
+          expect(response.content.length).toBe(3);
+          expect(response.content[0]).toHaveProperty('name', 'Workspace 1');
+          done();
+        });
+      }
+    );
 
-    it('should return paginated format when lastKey is provided', function(done) {
-      client.workspaces.listWorkspaces({ queryParameters : {paginationType: 'token', lastKey: 'abc123'}}, function(error, response) {
-        should.not.exist(error);
-        response.should.have.property('content');
-        response.content.should.have.property('data');
-        response.content.should.have.property('lastKey');
-        response.content.data.should.be.Array();
-        response.content.data.length.should.equal(2);
-        response.content.lastKey.should.equal('next_page_token_123');
-        done();
-      });
-    });
+    it(
+      'should return paginated format when lastKey is provided',
+      done => {
+        client.workspaces.listWorkspaces({ queryParameters : {paginationType: 'token', lastKey: 'abc123'}}, function(error, response) {
+          expect(error).toBeFalsy();
+          expect(response).toHaveProperty('content');
+          expect(response.content).toHaveProperty('data');
+          expect(response.content).toHaveProperty('lastKey');
+          expect(Array.isArray(response.content.data)).toBe(true);
+          expect(response.content.data.length).toBe(2);
+          expect(response.content.lastKey).toBe('next_page_token_123');
+          done();
+        });
+      }
+    );
 
-    it('should return paginated format when maxItems is provided', function(done) {
-      client.workspaces.listWorkspaces({ queryParameters :{paginationType: 'token', maxItems: 100}}, function(error, response) {
-        should.not.exist(error);
-        response.should.have.property('content');
-        response.content.should.have.property('data');
-        response.content.should.have.property('lastKey');
-        response.content.data.should.be.Array();
-        response.content.lastKey.should.equal('next_page_token_123');
-        done();
-      });
-    });
+    it(
+      'should return paginated format when maxItems is provided',
+      done => {
+        client.workspaces.listWorkspaces({ queryParameters :{paginationType: 'token', maxItems: 100}}, function(error, response) {
+          expect(error).toBeFalsy();
+          expect(response).toHaveProperty('content');
+          expect(response.content).toHaveProperty('data');
+          expect(response.content).toHaveProperty('lastKey');
+          expect(Array.isArray(response.content.data)).toBe(true);
+          expect(response.content.lastKey).toBe('next_page_token_123');
+          done();
+        });
+      }
+    );
 
-    it('should return paginated format when both lastKey and maxItems are provided', function(done) {
-      client.workspaces.listWorkspaces({ queryParameters : {paginationType: 'token', lastKey: 'abc123', maxItems: 500}}, function(error, response) {
-        should.not.exist(error);
-        response.should.have.property('content');
-        response.content.should.have.property('data');
-        response.content.should.have.property('lastKey');
-        response.content.data.should.be.Array();
-        response.content.lastKey.should.equal('next_page_token_123');
-        done();
-      });
-    });
+    it(
+      'should return paginated format when both lastKey and maxItems are provided',
+      done => {
+        client.workspaces.listWorkspaces({ queryParameters : {paginationType: 'token', lastKey: 'abc123', maxItems: 500}}, function(error, response) {
+          expect(error).toBeFalsy();
+          expect(response).toHaveProperty('content');
+          expect(response.content).toHaveProperty('data');
+          expect(response.content).toHaveProperty('lastKey');
+          expect(Array.isArray(response.content.data)).toBe(true);
+          expect(response.content.lastKey).toBe('next_page_token_123');
+          done();
+        });
+      }
+    );
   });
 
-  describe('#listWorkspaces validation warnings', function() {
+  describe('#listWorkspaces validation warnings', () => {
     let consoleWarnStub;
 
-    beforeEach(function() {
-      consoleWarnStub = sinon.stub(console, 'warn');
+    beforeEach(() => {
+      consoleWarnStub = jest.spyOn(console, 'warn').mockImplementation(() => {});
     });
 
-    afterEach(function() {
-      consoleWarnStub.restore();
+    afterEach(() => {
+      consoleWarnStub.mockRestore();
     });
 
-    it('should show deprecation warning when pageSize is used', function(done) {
+    it('should show deprecation warning when pageSize is used', done => {
       client.workspaces.listWorkspaces({ queryParameters : {pageSize: 100}}, function(error) {
-        should.not.exist(error);
-        consoleWarnStub.calledOnce.should.be.true();
-        consoleWarnStub.firstCall.args[0].should.equal('[DEPRECATED] pageSize parameter is deprecated in listWorkspaces. Use paginationType: "token" with maxItems instead.');
+        expect(error).toBeFalsy();
+        expect(consoleWarnStub.mock.calls.length).toBe(1);
+        expect(consoleWarnStub.mock.calls[0][0]).toBe(
+          '[DEPRECATED] pageSize parameter is deprecated in listWorkspaces. Use paginationType: "token" with maxItems instead.'
+        );
         done();
       });
     });
 
-    it('should show deprecation warning when page is used', function(done) {
+    it('should show deprecation warning when page is used', done => {
       client.workspaces.listWorkspaces({ queryParameters : {page: 1}}, function(error) {
-        should.not.exist(error);
-        consoleWarnStub.calledOnce.should.be.true();
-        consoleWarnStub.firstCall.args[0].should.equal('[DEPRECATED] page parameter is deprecated in listWorkspaces. Use paginationType: "token" with lastKey instead.');
+        expect(error).toBeFalsy();
+        expect(consoleWarnStub.mock.calls.length).toBe(1);
+        expect(consoleWarnStub.mock.calls[0][0]).toBe(
+          '[DEPRECATED] page parameter is deprecated in listWorkspaces. Use paginationType: "token" with lastKey instead.'
+        );
         done();
       });
     });
 
-    it('should show deprecation warning when includeAll is used', function(done) {
-      client.workspaces.listWorkspaces({ queryParameters : {includeAll: true}}, function(error) {
-        should.not.exist(error);
-        consoleWarnStub.calledOnce.should.be.true();
-        consoleWarnStub.firstCall.args[0].should.equal('[DEPRECATED] includeAll parameter is deprecated in listWorkspaces. Use paginationType: "token" instead.');
-        done();
-      });
-    });
+    it(
+      'should show deprecation warning when includeAll is used',
+      done => {
+        client.workspaces.listWorkspaces({ queryParameters : {includeAll: true}}, function(error) {
+          expect(error).toBeFalsy();
+          expect(consoleWarnStub.mock.calls.length).toBe(1);
+          expect(consoleWarnStub.mock.calls[0][0]).toBe(
+            '[DEPRECATED] includeAll parameter is deprecated in listWorkspaces. Use paginationType: "token" instead.'
+          );
+          done();
+        });
+      }
+    );
 
-    it('should show validation error when lastKey is used without token pagination', function(done) {
-      client.workspaces.listWorkspaces({ queryParameters : {lastKey: 'abc123'}}, function(error) {
-        should.not.exist(error);
-        consoleWarnStub.calledOnce.should.be.true();
-        consoleWarnStub.firstCall.args[0].should.equal('[VALIDATION ERROR] lastKey parameter can only be used when paginationType is set to "token".');
-        done();
-      });
-    });
+    it(
+      'should show validation error when lastKey is used without token pagination',
+      done => {
+        client.workspaces.listWorkspaces({ queryParameters : {lastKey: 'abc123'}}, function(error) {
+          expect(error).toBeFalsy();
+          expect(consoleWarnStub.mock.calls.length).toBe(1);
+          expect(consoleWarnStub.mock.calls[0][0]).toBe(
+            '[VALIDATION ERROR] lastKey parameter can only be used when paginationType is set to "token".'
+          );
+          done();
+        });
+      }
+    );
 
-    it('should show validation error when maxItems is used without token pagination', function(done) {
-      client.workspaces.listWorkspaces({ queryParameters : {maxItems: 100}}, function(error) {
-        should.not.exist(error);
-        consoleWarnStub.calledOnce.should.be.true();
-        consoleWarnStub.firstCall.args[0].should.equal('[VALIDATION ERROR] maxItems parameter can only be used when paginationType is set to "token".');
-        done();
-      });
-    });
+    it(
+      'should show validation error when maxItems is used without token pagination',
+      done => {
+        client.workspaces.listWorkspaces({ queryParameters : {maxItems: 100}}, function(error) {
+          expect(error).toBeFalsy();
+          expect(consoleWarnStub.mock.calls.length).toBe(1);
+          expect(consoleWarnStub.mock.calls[0][0]).toBe(
+            '[VALIDATION ERROR] maxItems parameter can only be used when paginationType is set to "token".'
+          );
+          done();
+        });
+      }
+    );
 
-    it('should show multiple warnings when multiple deprecated parameters are used', function(done) {
-      client.workspaces.listWorkspaces({ queryParameters : {pageSize: 100, page: 1, includeAll: true}}, function(error) {
-        should.not.exist(error);
-        consoleWarnStub.calledThrice.should.be.true();
-        consoleWarnStub.getCall(0).args[0].should.equal('[DEPRECATED] pageSize parameter is deprecated in listWorkspaces. Use paginationType: "token" with maxItems instead.');
-        consoleWarnStub.getCall(1).args[0].should.equal('[DEPRECATED] page parameter is deprecated in listWorkspaces. Use paginationType: "token" with lastKey instead.');
-        consoleWarnStub.getCall(2).args[0].should.equal('[DEPRECATED] includeAll parameter is deprecated in listWorkspaces. Use paginationType: "token" instead.');
-        done();
-      });
-    });
+    it(
+      'should show multiple warnings when multiple deprecated parameters are used',
+      done => {
+        client.workspaces.listWorkspaces({ queryParameters : {pageSize: 100, page: 1, includeAll: true}}, function(error) {
+          expect(error).toBeFalsy();
+          expect(consoleWarnStub.mock.calls.length).toBe(3);
+          expect(consoleWarnStub.mock.calls[0][0]).toBe(
+            '[DEPRECATED] pageSize parameter is deprecated in listWorkspaces. Use paginationType: "token" with maxItems instead.'
+          );
+          expect(consoleWarnStub.mock.calls[1][0]).toBe(
+            '[DEPRECATED] page parameter is deprecated in listWorkspaces. Use paginationType: "token" with lastKey instead.'
+          );
+          expect(consoleWarnStub.mock.calls[2][0]).toBe(
+            '[DEPRECATED] includeAll parameter is deprecated in listWorkspaces. Use paginationType: "token" instead.'
+          );
+          done();
+        });
+      }
+    );
 
-    it('should show multiple validation errors when lastKey and maxItems are used without token pagination', function(done) {
-      client.workspaces.listWorkspaces({ queryParameters : {lastKey: 'abc123', maxItems: 100}}, function(error) {
-        should.not.exist(error);
-        consoleWarnStub.calledTwice.should.be.true();
-        consoleWarnStub.getCall(0).args[0].should.equal('[VALIDATION ERROR] lastKey parameter can only be used when paginationType is set to "token".');
-        consoleWarnStub.getCall(1).args[0].should.equal('[VALIDATION ERROR] maxItems parameter can only be used when paginationType is set to "token".');
-        done();
-      });
-    });
+    it(
+      'should show multiple validation errors when lastKey and maxItems are used without token pagination',
+      done => {
+        client.workspaces.listWorkspaces({ queryParameters : {lastKey: 'abc123', maxItems: 100}}, function(error) {
+          expect(error).toBeFalsy();
+          expect(consoleWarnStub.mock.calls.length).toBe(2);
+          expect(consoleWarnStub.mock.calls[0][0]).toBe(
+            '[VALIDATION ERROR] lastKey parameter can only be used when paginationType is set to "token".'
+          );
+          expect(consoleWarnStub.mock.calls[1][0]).toBe(
+            '[VALIDATION ERROR] maxItems parameter can only be used when paginationType is set to "token".'
+          );
+          done();
+        });
+      }
+    );
 
-    it('should not show warnings when using token pagination correctly', function(done) {
-      client.workspaces.listWorkspaces({ queryParameters : {paginationType: 'token', lastKey: 'abc123', maxItems: 100} }, function(error) {
-        should.not.exist(error);
-        consoleWarnStub.called.should.be.false();
-        done();
-      });
-    });
+    it(
+      'should not show warnings when using token pagination correctly',
+      done => {
+        client.workspaces.listWorkspaces({ queryParameters : {paginationType: 'token', lastKey: 'abc123', maxItems: 100} }, function(error) {
+          expect(error).toBeFalsy();
+          expect(consoleWarnStub.mock.calls.length).toBe(0);
+          done();
+        });
+      }
+    );
   });
 });

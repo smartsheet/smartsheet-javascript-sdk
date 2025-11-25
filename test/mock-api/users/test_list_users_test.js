@@ -21,7 +21,7 @@ import {
 } from './common_test_constants';
 import { SeatTypes, UserStatus } from '@smartsheet/users/types';
 
-describe('Users - listAllUsers endpoint tests', function () {
+describe('Users - listAllUsers endpoint tests', () => {
     let client = createClient();
     const emails = TEST_EMAIL;
     const seatType = SeatTypes.MEMBER;
@@ -44,7 +44,7 @@ describe('Users - listAllUsers endpoint tests', function () {
     const lastLogin = TEST_LAST_LOGIN;
     const customWelcomeScreenViewed = TEST_CUSTOM_WELCOME_SCREEN_VIEWED;
 
-    it('listUsers generated url is correct', async function () {
+    it('listUsers generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             queryParameters: {
@@ -78,7 +78,7 @@ describe('Users - listAllUsers endpoint tests', function () {
         assert.strictEqual(parseInt(pageSizeActual), pageSize);
     });
 
-    it('listUsers all response body properties', async function () {
+    it('listUsers all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             queryParameters: {
@@ -110,7 +110,7 @@ describe('Users - listAllUsers endpoint tests', function () {
     assert.strictEqual(response.data[0].id, TEST_PLAN_ID);
     });
 
-    it('listUsers required response body properties', async function () {
+    it('listUsers required response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             queryParameters: {
@@ -142,7 +142,7 @@ describe('Users - listAllUsers endpoint tests', function () {
     assert.strictEqual(response.data[0].id, TEST_PLAN_ID);
     });
 
-    it('listUserPlans error 500 response', async function () {
+    it('listUserPlans error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             queryParameters: {
@@ -162,7 +162,7 @@ describe('Users - listAllUsers endpoint tests', function () {
         }
     });
 
-    it('listUserPlans error 400 response', async function () {
+    it('listUserPlans error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             queryParameters: {

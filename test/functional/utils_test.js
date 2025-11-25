@@ -1,5 +1,3 @@
-import sinon from 'sinon';
-import __ from 'should';
 import Promise from 'bluebird';
 import _ from 'underscore';
 import fs from 'fs';
@@ -8,8 +6,9 @@ import axios from 'axios';
 import { create as createRequestor } from '../../lib/utils/httpRequestor';
 import * as httpRequestor from '../../lib/utils/httpRequestor';
 import packageJson from '../../package.json';
+import { expect, jest, describe, beforeEach, afterEach, it } from '@jest/globals';
 
-describe('Utils Unit Tests', function() {
+describe('Utils Unit Tests', () => {
   const requestor = createRequestor({request: axios});
 
   const sample = {
@@ -33,18 +32,24 @@ describe('Utils Unit Tests', function() {
 
   const EXPECTED_VERSION = packageJson.version;
 
-  describe('#HttpRequestor', function() {
-    it('should have GET method', () => requestor.should.have.property('get'));
+  describe('#HttpRequestor', () => {
+    it('should have GET method', () => expect(requestor).toHaveProperty('get'));
 
-    it('should have POST method', () => requestor.should.have.property('post'));
+    it('should have POST method', () => expect(requestor).toHaveProperty('post'));
 
-    it('should have POST file method', () => requestor.should.have.property('postFile'));
+    it(
+      'should have POST file method',
+      () => expect(requestor).toHaveProperty('postFile')
+    );
 
-    it('should have PUT method', () => requestor.should.have.property('put'));
+    it('should have PUT method', () => expect(requestor).toHaveProperty('put'));
 
-    it('should have DELETE method', () => requestor.should.have.property('delete'));
+    it(
+      'should have DELETE method',
+      () => expect(requestor).toHaveProperty('delete')
+    );
 
-    describe('#buildUrl', function() {
+    describe('#buildUrl', () => {
       let host = null;
 
       beforeEach(() => {
@@ -59,48 +64,48 @@ describe('Utils Unit Tests', function() {
       it('should return the set HOST with URL appended', () => {
         const url = 'test';
         const builtUrl = requestor.internal.buildUrl({url:url});
-        builtUrl.should.equal(host + url);
+        expect(builtUrl).toBe(host + url);
       });
 
       it('url should equal default base url', () => {
         process.env.SMARTSHEET_API_HOST = '';
         const builtUrl = requestor.internal.buildUrl({});
-        builtUrl.should.equal(smartSheetURIs.defaultBaseURI);
+        expect(builtUrl).toBe(smartSheetURIs.defaultBaseURI);
       });
 
       it('url should equal gov url', () => {
         const builtUrl = requestor.internal.buildUrl({baseUrl:smartSheetURIs.govBaseURI});
-        builtUrl.should.equal(smartSheetURIs.govBaseURI);
+        expect(builtUrl).toBe(smartSheetURIs.govBaseURI);
       });
 
       it('url should equal eu url', () => {
         const builtUrl = requestor.internal.buildUrl({baseUrl:smartSheetURIs.euBaseURI});
-        builtUrl.should.equal(smartSheetURIs.euBaseURI);
+        expect(builtUrl).toBe(smartSheetURIs.euBaseURI);
       });
 
       it('prefers baseUrl over env var', () => {
         const builtUrl = requestor.internal.buildUrl({baseUrl: 'base url'});
-        builtUrl.should.equal('base url');
+        expect(builtUrl).toBe('base url');
       });
 
       it('prefers baseUrl over default', () => {
         process.env.SMARTSHEET_API_HOST = '';
         const builtUrl = requestor.internal.buildUrl({baseUrl: 'base url'});
-        builtUrl.should.equal('base url');
+        expect(builtUrl).toBe('base url');
       });
 
       it('url should contain the host + url', () => {
         const builtUrl = requestor.internal.buildUrl({url: 'url/'});
-        builtUrl.should.equal(host + 'url/');
+        expect(builtUrl).toBe(host + 'url/');
       });
 
       it('url should contain the ID', () => {
         const builtUrl = requestor.internal.buildUrl({url: 'url/', id: '123'});
-        builtUrl.should.equal(host + 'url/123');
+        expect(builtUrl).toBe(host + 'url/123');
       });
     });
 
-    describe('#buildHeaders', function() {
+    describe('#buildHeaders', () => {
       const newType = 'text/xml';
       const applicationJson = 'application/json';
       const textCsv = 'text/csv'
@@ -108,114 +113,114 @@ describe('Utils Unit Tests', function() {
       let fsStub = null;
 
       beforeEach(() => {
-        fsStub = sinon.stub(fs, 'statSync');
-        fsStub.returns({size: 234});
+        // @ts-expect-error - Mocking with partial Stats object for testing
+        fsStub = jest.spyOn(fs, 'statSync').mockReturnValue({size: 234});
       });
 
       afterEach(() => {
-        fsStub.restore();
+        fsStub.mockRestore();
       });
 
       it('authorization header should have token', () => {
         const headers = requestor.internal.buildHeaders({accessToken: 'token'});
-        headers.Authorization.should.equal('Bearer token');
+        expect(headers.Authorization).toBe('Bearer token');
       });
 
       it('accept header should equal ' + applicationJson, () => {
         const headers = requestor.internal.buildHeaders({});
-        headers.Accept.should.equal(applicationJson);
+        expect(headers.Accept).toBe(applicationJson);
       });
 
       it('accept header should equal ' + newType, () => {
         const headers = requestor.internal.buildHeaders({accept: newType});
-        headers.Accept.should.equal(newType);
+        expect(headers.Accept).toBe(newType);
       });
 
       it('content-type header should ' + applicationJson, () => {
         const headers = requestor.internal.buildHeaders({contentType: applicationJson});
-        headers['Content-Type'].should.equal(applicationJson);
+        expect(headers['Content-Type']).toBe(applicationJson);
       });
 
       it('content-type header should equal ' + newType, () => {
         const headers = requestor.internal.buildHeaders({contentType: newType});
-        headers['Content-Type'].should.equal(newType);
+        expect(headers['Content-Type']).toBe(newType);
       });
 
       it('Content-Type should equal ' + textCsv, () => {
         const headers = requestor.internal.buildHeaders({fileName: 'test.csv'});
-        headers['Content-Type'].should.equal(textCsv);
+        expect(headers['Content-Type']).toBe(textCsv);
       });
 
       it('Content-Type should equal ' + docType, () => {
         const headers = requestor.internal.buildHeaders({fileName: 'test.docx'});
-        headers['Content-Type'].should.equal(docType);
+        expect(headers['Content-Type']).toBe(docType);
       });
 
       it('Content-Type should equal ' + applicationJson, () => {
         const headers = requestor.internal.buildHeaders({fileName: 'test'});
-        headers['Content-Type'].should.equal(applicationJson);
+        expect(headers['Content-Type']).toBe(applicationJson);
       });
 
       it('Content-Disposition should equal filename', () => {
         const headers = requestor.internal.buildHeaders({fileName: 'test'});
-        headers['Content-Disposition'].should.equal('attachment; filename="test"');
+        expect(headers['Content-Disposition']).toBe('attachment; filename="test"');
       });
 
       it('Should set Content-Disposition to contentDisposition', () => {
         const headers = requestor.internal.buildHeaders({contentDisposition: 'some content disposition'});
-        headers['Content-Disposition'].should.equal('some content disposition');
+        expect(headers['Content-Disposition']).toBe('some content disposition');
       });
 
       it('Should prefer contentDisposition to fileName', () => {
         const headers = requestor.internal.buildHeaders({fileName: 'test', contentDisposition: 'something else'});
-        headers['Content-Disposition'].should.equal('something else');
+        expect(headers['Content-Disposition']).toBe('something else');
       });
 
       it('Should set Content-Length to fileSize', () => {
         const headers = requestor.internal.buildHeaders({fileName: 'test',   fileSize: 123});
-        headers['Content-Length'].should.equal(123);
+        expect(headers['Content-Length']).toBe(123);
       });
 
       it('Should set Content-Length from file size when path is specified', () => {
         const headers = requestor.internal.buildHeaders({fileName: 'test',   path: "somePath"});
-        headers['Content-Length'].should.equal(234);
+        expect(headers['Content-Length']).toBe(234);
       });
 
       it('Should prefer path over fileSize for Content-Length', () => {
         const headers = requestor.internal.buildHeaders({fileName: 'test',   path: "somePath", fileSize: 123});
-        headers['Content-Length'].should.equal(234);
+        expect(headers['Content-Length']).toBe(234);
       });
 
       it('Assume-User should equal URI encoded email', () => {
         const headers = requestor.internal.buildHeaders({assumeUser: 'john.doe@smartsheet.com'});
-        headers['Assume-User'].should.equal('john.doe%40smartsheet.com');
+        expect(headers['Assume-User']).toBe('john.doe%40smartsheet.com');
       });
 
       it('Should set the user agent string based on the version', () => {
         const headers = requestor.internal.buildHeaders({});
-        headers['User-Agent'].should.equal(`smartsheet-javascript-sdk/${packageJson.version}`);
+        expect(headers['User-Agent']).toBe(`smartsheet-javascript-sdk/${packageJson.version}`);
       });
 
       it('Should used a passed in value for the user agent string', () => {
         const headers = requestor.internal.buildHeaders({userAgent: 'someAgentString'});
-        headers['User-Agent'].should.equal(`smartsheet-javascript-sdk/${packageJson.version}/someAgentString`);
+        expect(headers['User-Agent']).toBe(`smartsheet-javascript-sdk/${packageJson.version}/someAgentString`);
       });
 
       it('Custom properties should be allowed', () => {
         const headers = requestor.internal.buildHeaders({customProperties: {custom1: 'value', custom2: 'value2'}});
-        headers['custom1'].should.equal(`value`);
-        headers['custom2'].should.equal(`value2`);
+        expect(headers['custom1']).toBe(`value`);
+        expect(headers['custom2']).toBe(`value2`);
       });
     });
   });
 
-  describe('#GET', function() {
-    describe('#Successful request', function() {
+  describe('#GET', () => {
+    describe('#Successful request', () => {
       let requestStub = null;
       const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({ content: true })});
 
       beforeEach(() => {
-        requestStub = sinon.stub(axios, 'get');
+        requestStub = jest.spyOn(axios, 'get');
         const mockResponse = {
           status: 200,
           headers: {
@@ -225,66 +230,63 @@ describe('Utils Unit Tests', function() {
             hello: "world"
           }
         };
-        requestStub.returns(Promise.resolve(mockResponse));
+        requestStub.mockReturnValue(Promise.resolve(mockResponse));
       });
 
       afterEach(() => {
-        requestStub.restore();
+        requestStub.mockRestore();
       });
 
       it('request should resolve promise as true', () =>
-        stubbedRequestor.get(sampleRequest)
-          .should.eventually.be.true);
+        expect(stubbedRequestor.get(sampleRequest)).resolves.toBe(true));
 
-      it('request should call callback as true', function(done) {
+      it('request should call callback as true', done => {
         stubbedRequestor.get(sampleRequest, function(err, data) {
-          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-          data.should.be.true;
+          expect(data).toBe(true);
           done();
         })
       });
     });
 
-    describe('#Error on request', function() {
+    describe('#Error on request', () => {
       let requestStub = null;
       const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({ content: true })});
       let mockBody;
 
       beforeEach(() => {
-        requestStub = sinon.stub(axios, 'get');
+        requestStub = jest.spyOn(axios, 'get');
         mockBody = {error:true};
-        requestStub.returns(Promise.reject(mockBody));
+        requestStub.mockReturnValue(Promise.reject(mockBody));
       });
 
       afterEach(() => {
-        requestStub.restore();
+        requestStub.mockRestore();
       });
 
       it('request should error as false, using promises', () =>
         stubbedRequestor
           .get(sampleRequest)
-          .catch(error => error.content.should.be.true));
+          .catch(error => expect(error.content).toBe(true)));
 
       it('request should error as false, using callbacks', (done) => {
         stubbedRequestor
           .get(sampleRequest,
                (err, _) => {
-                 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                 err.content.should.be.true
+                 expect(err.content).toBe(true)
                  done();
                 });
       });
     });
 
-    describe('#Arguments', function() {
+    describe('#Arguments', () => {
       let spyGet;
 
       beforeEach(() => {
-        spyGet = sinon.spy(axios, 'get');
+        spyGet = jest.spyOn(axios, 'get');
       });
 
       afterEach(() => {
-        spyGet.restore();
+        spyGet.mockRestore();
       });
 
       it('headers sent as part of request should match given', () => {
@@ -295,37 +297,37 @@ describe('Utils Unit Tests', function() {
           'User-Agent': `smartsheet-javascript-sdk/${EXPECTED_VERSION}`
         };
         requestor.get(sampleRequest);
-        spyGet.args[0][1].headers.Authorization.should.equal(sampleHeaders.Authorization);
-        spyGet.args[0][1].headers.Accept.should.equal(sampleHeaders.Accept);
-        spyGet.args[0][1].headers['Content-Type'].should.equal(sampleHeaders['Content-Type']);
-        spyGet.args[0][1].headers['User-Agent'].should.equal(sampleHeaders['User-Agent']);
+        expect(spyGet.mock.calls[0][1].headers.Authorization).toBe(sampleHeaders.Authorization);
+        expect(spyGet.mock.calls[0][1].headers.Accept).toBe(sampleHeaders.Accept);
+        expect(spyGet.mock.calls[0][1].headers['Content-Type']).toBe(sampleHeaders['Content-Type']);
+        expect(spyGet.mock.calls[0][1].headers['User-Agent']).toBe(sampleHeaders['User-Agent']);
       });
 
       it('url sent to request should match given', () => {
         requestor.get(sampleRequest);
-        spyGet.args[0][0].should.equal('https://api.smartsheet.com/2.0/URL');
+        expect(spyGet.mock.calls[0][0]).toBe('https://api.smartsheet.com/2.0/URL');
       });
 
       it('queryString sent to request should match given', () => {
         requestor.get(sampleRequestWithQueryParameters);
-        spyGet.args[0][1].params.should.equal(sampleRequestWithQueryParameters.queryParameters);
+        expect(spyGet.mock.calls[0][1].params).toBe(sampleRequestWithQueryParameters.queryParameters);
       });
     });
 
-    describe('#Retry', function() {
+    describe('#Retry', () => {
       let requestStub = null;
-      const handleResponseStub = sinon.stub();
+      const handleResponseStub = jest.fn();
       const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
       let sampleRequestForRetry = null;
 
       function givenGetReturnsError() {
-        requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns({errorCode: 4001});
+        requestStub.mockReturnValue(Promise.resolve([{}, {}]));
+        handleResponseStub.mockReturnValue({errorCode: 4001});
       }
 
       function givenGetReturnsSuccess() {
-        requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns({content: true});
+        requestStub.mockReturnValue(Promise.resolve([{}, {}]));
+        handleResponseStub.mockReturnValue({content: true});
       }
 
       function givenEarlyExitBackoff() {
@@ -340,28 +342,28 @@ describe('Utils Unit Tests', function() {
       }
 
       beforeEach(() => {
-        requestStub = sinon.stub(axios, 'get');
+        requestStub = jest.spyOn(axios, 'get');
         sampleRequestForRetry = _.extend({}, sampleRequest);
         sampleRequestForRetry.maxRetryDurationMillis = 30;
         sampleRequestForRetry.calcRetryBackoff = function (numRetry) {return Math.pow(3, numRetry);};
       });
 
       afterEach(() => {
-        requestStub.restore();
+        requestStub.mockRestore();
       });
 
       it('get called once on success', () => {
         givenGetReturnsSuccess();
         return stubbedRequestor
           .get(sampleRequestForRetry)
-          .then(_ => requestStub.callCount.should.equal(1));
+          .then(_ => expect(requestStub.mock.calls.length).toBe(1));
       });
 
       it('get retried on error', () => {
         givenGetReturnsError();
         return stubbedRequestor
           .get(sampleRequestForRetry)
-          .catch(_ => requestStub.callCount.should.be.above(1));
+          .catch(_ => expect(requestStub.mock.calls.length).toBeGreaterThan(1));
       });
 
       it('get stops retrying when receiving a negative backoff', () => {
@@ -369,7 +371,7 @@ describe('Utils Unit Tests', function() {
         givenEarlyExitBackoff();
         return stubbedRequestor
           .get(sampleRequestForRetry)
-          .catch(_ => requestStub.callCount.should.equal(2));
+          .catch(_ => expect(requestStub.mock.calls.length).toBe(2));
       });
 
       it('get passes the causing error to the backoff function', () => {
@@ -377,18 +379,18 @@ describe('Utils Unit Tests', function() {
         givenBackoffDependsOnError();
         return stubbedRequestor
           .get(sampleRequestForRetry)
-          .catch(_ => requestStub.callCount.should.equal(2));
+          .catch(_ => expect(requestStub.mock.calls.length).toBe(2));
       });
     });
   });
 
-  describe('#POST', function() {
-    describe('#Successful request', function() {
+  describe('#POST', () => {
+    describe('#Successful request', () => {
       let requestStub = null;
       const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
-        requestStub = sinon.stub(axios, 'post');
+        requestStub = jest.spyOn(axios, 'post');
         const mockResponse = {
           statusCode: 200,
           headers: {
@@ -396,66 +398,64 @@ describe('Utils Unit Tests', function() {
           }
         };
         const mockBody = '{"hello":"world"}';
-        requestStub.returns(Promise.resolve([mockResponse, mockBody]));
+        requestStub.mockReturnValue(Promise.resolve([mockResponse, mockBody]));
       });
 
       afterEach(() => {
-        requestStub.restore();
+        requestStub.mockRestore();
       });
 
       it('request should resolve as true', () =>
         stubbedRequestor
           .post(sampleRequest)
-          .then(data => data.should.be.true));
+          .then(data => expect(data).toBe(true)));
 
       it('request should call callback as true', (done) => {
         stubbedRequestor.post(sampleRequest, function(err, data) {
-          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-          data.should.be.true;
+          expect(data).toBe(true);
           done();
         });
       });
     });
 
-    describe('#Error on request', function() {
+    describe('#Error on request', () => {
       let requestStub = null;
       const mockBody = {error:true};
       const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
-        requestStub = sinon.stub(axios, 'post');
-        requestStub.returns(Promise.reject(mockBody));
+        requestStub = jest.spyOn(axios, 'post');
+        requestStub.mockReturnValue(Promise.reject(mockBody));
       });
 
       afterEach(() => {
-        requestStub.restore();
+        requestStub.mockRestore();
       });
 
       it('request should error as false', () =>
         stubbedRequestor
           .post(sampleRequest)
-          .catch(error => error.content.should.be.true));
+          .catch(error => expect(error.content).toBe(true)));
 
       it('request should error as false', (done) => {
         stubbedRequestor
           .post(sampleRequest,
                 (err, _) => {
-                  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                  err.content.should.be.true;
+                  expect(err.content).toBe(true);
                   done();
                 });
       });
     });
 
-    describe('#Arguments', function() {
+    describe('#Arguments', () => {
       let spyPost;
 
       beforeEach(() => {
-        spyPost = sinon.spy(axios, 'post');
+        spyPost = jest.spyOn(axios, 'post');
       });
 
       afterEach(() => {
-        spyPost.restore();
+        spyPost.mockRestore();
       });
 
       it('headers sent as part of request should match given', () => {
@@ -466,42 +466,42 @@ describe('Utils Unit Tests', function() {
           'User-Agent': `smartsheet-javascript-sdk/${EXPECTED_VERSION}`
         };
         requestor.post(sampleRequest);
-        spyPost.args[0][2].headers.Authorization.should.equal(sampleHeaders.Authorization);
-        spyPost.args[0][2].headers.Accept.should.equal(sampleHeaders.Accept);
-        spyPost.args[0][2].headers['Content-Type'].should.equal(sampleHeaders['Content-Type']);
-        spyPost.args[0][2].headers['User-Agent'].should.equal(sampleHeaders['User-Agent']);
+        expect(spyPost.mock.calls[0][2].headers.Authorization).toBe(sampleHeaders.Authorization);
+        expect(spyPost.mock.calls[0][2].headers.Accept).toBe(sampleHeaders.Accept);
+        expect(spyPost.mock.calls[0][2].headers['Content-Type']).toBe(sampleHeaders['Content-Type']);
+        expect(spyPost.mock.calls[0][2].headers['User-Agent']).toBe(sampleHeaders['User-Agent']);
       });
 
       it('url sent to request should match given', () => {
         requestor.post(sampleRequest);
-        spyPost.args[0][0].should.equal('https://api.smartsheet.com/2.0/URL');
+        expect(spyPost.mock.calls[0][0]).toBe('https://api.smartsheet.com/2.0/URL');
       });
 
       it('queryString sent to request should match given', () => {
         requestor.post(sampleRequestWithQueryParameters);
-        spyPost.args[0][2].params.should.equal(sampleRequestWithQueryParameters.queryParameters);
+        expect(spyPost.mock.calls[0][2].params).toBe(sampleRequestWithQueryParameters.queryParameters);
       });
 
       it('body sent to request should match given', () => {
         requestor.post(sampleRequestWithQueryParameters);
-        spyPost.args[0][1].should.equal(sampleRequestWithQueryParameters.body);
+        expect(spyPost.mock.calls[0][1]).toBe(sampleRequestWithQueryParameters.body);
       });
     });
 
-    describe('#Retry', function() {
+    describe('#Retry', () => {
       let requestStub = null;
-      const handleResponseStub = sinon.stub();
+      const handleResponseStub = jest.fn();
       const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
       let sampleRequestForRetry;
 
       function givenPostReturnsError() {
-        requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns({errorCode: 4001});
+        requestStub.mockReturnValue(Promise.resolve([{}, {}]));
+        handleResponseStub.mockReturnValue({errorCode: 4001});
       }
 
       function givenPostReturnsSuccess() {
-        requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns({content: true});
+        requestStub.mockReturnValue(Promise.resolve([{}, {}]));
+        handleResponseStub.mockReturnValue({content: true});
       }
 
       function givenEarlyExitBackoff() {
@@ -516,7 +516,7 @@ describe('Utils Unit Tests', function() {
       }
 
       beforeEach(() => {
-        requestStub = sinon.stub(axios, 'post');
+        requestStub = jest.spyOn(axios, 'post');
 
         sampleRequestForRetry = _.extend({}, sampleRequest);
         sampleRequestForRetry.maxRetryDurationMillis = 30;
@@ -524,21 +524,21 @@ describe('Utils Unit Tests', function() {
       });
 
       afterEach(() => {
-        requestStub.restore();
+        requestStub.mockRestore();
       });
 
       it('post called once on success', () => {
         givenPostReturnsSuccess();
         return stubbedRequestor
           .post(sampleRequestForRetry)
-          .then(_ => requestStub.callCount.should.equal(1));
+          .then(_ => expect(requestStub.mock.calls.length).toBe(1));
       });
 
       it('post retried on error', () => {
         givenPostReturnsError();
         return stubbedRequestor
           .post(sampleRequestForRetry)
-          .catch(_ => requestStub.callCount.should.be.above(1));
+          .catch(_ => expect(requestStub.mock.calls.length).toBeGreaterThan(1));
       });
 
       it('post stops retrying when receiving a negative backoff', () => {
@@ -546,7 +546,7 @@ describe('Utils Unit Tests', function() {
         givenEarlyExitBackoff();
         return stubbedRequestor
           .post(sampleRequestForRetry)
-          .catch(_ => requestStub.callCount.should.equal(2));
+          .catch(_ => expect(requestStub.mock.calls.length).toBe(2));
       });
 
       it('post passes the causing error to the backoff function', () => {
@@ -554,18 +554,18 @@ describe('Utils Unit Tests', function() {
         givenBackoffDependsOnError();
         return stubbedRequestor
           .post(sampleRequestForRetry)
-          .catch(_ => requestStub.callCount.should.equal(2));
+          .catch(_ => expect(requestStub.mock.calls.length).toBe(2));
       });
     });
   });
 
-  describe('#PUT', function() {
-    describe('#Successful request', function() {
+  describe('#PUT', () => {
+    describe('#Successful request', () => {
       let requestStub = null;
       const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
-        requestStub = sinon.stub(axios, 'put');
+        requestStub = jest.spyOn(axios, 'put');
         const mockResponse = {
           statusCode: 200,
           headers: {
@@ -573,68 +573,66 @@ describe('Utils Unit Tests', function() {
           }
         };
         const mockBody = '{"hello":"world"}';
-        requestStub.returns(Promise.resolve([mockResponse, mockBody]));
+        requestStub.mockReturnValue(Promise.resolve([mockResponse, mockBody]));
       });
 
       afterEach(() => {
-        requestStub.restore();
+        requestStub.mockRestore();
       });
 
       it('request should resolve as true', () =>
         stubbedRequestor
           .put(sampleRequest)
-          .then(data => data.should.be.true));
+          .then(data => expect(data).toBe(true)));
 
       it('request should call callback as true', (done) => {
         stubbedRequestor
           .put(sampleRequest,
                (err, data) => {
-                 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                 data.should.be.true;
+                 expect(data).toBe(true);
                  done();
                 });
       });
     });
 
-    describe('#Error on request', function() {
+    describe('#Error on request', () => {
       let stub = null;
       const mockBody = {error: true};
       const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
-        stub = sinon.stub(axios, 'put');
-        stub.returns(Promise.reject(mockBody));
+        stub = jest.spyOn(axios, 'put');
+        stub.mockReturnValue(Promise.reject(mockBody));
       });
 
       afterEach(() => {
-        stub.restore();
+        stub.mockRestore();
       });
 
       it('request should error as false', () =>
         stubbedRequestor
           .put(sampleRequest)
-          .catch(error => error.content.should.be.true));
+          .catch(error => expect(error.content).toBe(true)));
 
       it('request should error as false', (done) => {
         stubbedRequestor
           .put(sampleRequest,
                (err, _) => {
-                 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                 err.content.should.be.true;
+                 expect(err.content).toBe(true);
                  done();
                 });
       });
     });
 
-    describe('#Arguments', function() {
+    describe('#Arguments', () => {
       let spyPut;
 
       beforeEach(() => {
-        spyPut = sinon.spy(axios, 'put');
+        spyPut = jest.spyOn(axios, 'put');
       });
 
       afterEach(() => {
-        spyPut.restore();
+        spyPut.mockRestore();
       });
 
       it('headers sent as part of request should match given', () => {
@@ -645,42 +643,42 @@ describe('Utils Unit Tests', function() {
           'User-Agent': `smartsheet-javascript-sdk/${EXPECTED_VERSION}`
         };
         requestor.put(sampleRequest);
-        spyPut.args[0][2].headers.Authorization.should.equal(sampleHeaders.Authorization);
-        spyPut.args[0][2].headers.Accept.should.equal(sampleHeaders.Accept);
-        spyPut.args[0][2].headers['Content-Type'].should.equal(sampleHeaders['Content-Type']);
-        spyPut.args[0][2].headers['User-Agent'].should.equal(sampleHeaders['User-Agent']);
+        expect(spyPut.mock.calls[0][2].headers.Authorization).toBe(sampleHeaders.Authorization);
+        expect(spyPut.mock.calls[0][2].headers.Accept).toBe(sampleHeaders.Accept);
+        expect(spyPut.mock.calls[0][2].headers['Content-Type']).toBe(sampleHeaders['Content-Type']);
+        expect(spyPut.mock.calls[0][2].headers['User-Agent']).toBe(sampleHeaders['User-Agent']);
       });
 
       it('url sent to request should match given', () => {
         requestor.put(sampleRequest);
-        spyPut.args[0][0].should.equal('https://api.smartsheet.com/2.0/URL');
+        expect(spyPut.mock.calls[0][0]).toBe('https://api.smartsheet.com/2.0/URL');
       });
 
       it('queryString sent to request should match given', () => {
         requestor.put(sampleRequestWithQueryParameters);
-        spyPut.args[0][2].params.should.equal(sampleRequestWithQueryParameters.queryParameters);
+        expect(spyPut.mock.calls[0][2].params).toBe(sampleRequestWithQueryParameters.queryParameters);
       });
 
       it('body sent to request should match given', () => {
         requestor.put(sampleRequestWithQueryParameters);
-        spyPut.args[0][1].should.equal(sampleRequestWithQueryParameters.body);
+        expect(spyPut.mock.calls[0][1]).toBe(sampleRequestWithQueryParameters.body);
       });
     });
 
-    describe('#Retry', function() {
+    describe('#Retry', () => {
       let requestStub = null;
-      const handleResponseStub = sinon.stub();
+      const handleResponseStub = jest.fn();
       const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
       let sampleRequestForRetry = null;
 
       function givenPutReturnsError() {
-        requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns({errorCode: 4001});
+        requestStub.mockReturnValue(Promise.resolve([{}, {}]));
+        handleResponseStub.mockReturnValue({errorCode: 4001});
       }
 
       function givenPutReturnsSuccess() {
-        requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns({content: true});
+        requestStub.mockReturnValue(Promise.resolve([{}, {}]));
+        handleResponseStub.mockReturnValue({content: true});
       }
 
       function givenEarlyExitBackoff() {
@@ -695,7 +693,7 @@ describe('Utils Unit Tests', function() {
       }
 
       beforeEach(() => {
-        requestStub = sinon.stub(axios, 'put');
+        requestStub = jest.spyOn(axios, 'put');
 
         sampleRequestForRetry = _.extend({}, sampleRequest);
         sampleRequestForRetry.maxRetryDurationMillis = 30;
@@ -703,21 +701,21 @@ describe('Utils Unit Tests', function() {
       });
 
       afterEach(() => {
-        requestStub.restore();
+        requestStub.mockRestore();
       });
 
       it('put called once on success', () => {
         givenPutReturnsSuccess();
         return stubbedRequestor
           .put(sampleRequestForRetry)
-          .then(_ => requestStub.callCount.should.equal(1));
+          .then(_ => expect(requestStub.mock.calls.length).toBe(1));
       });
 
       it('put retried on error', () => {
         givenPutReturnsError();
         return stubbedRequestor
           .put(sampleRequestForRetry)
-          .catch(_ => requestStub.callCount.should.be.above(1));
+          .catch(_ => expect(requestStub.mock.calls.length).toBeGreaterThan(1));
       });
 
       it('put stops retrying when receiving a negative backoff', () => {
@@ -725,7 +723,7 @@ describe('Utils Unit Tests', function() {
         givenEarlyExitBackoff();
         return stubbedRequestor
           .put(sampleRequestForRetry)
-          .catch(_ => requestStub.callCount.should.equal(2));
+          .catch(_ => expect(requestStub.mock.calls.length).toBe(2));
       });
 
       it('put passes the causing error to the backoff function', () => {
@@ -733,18 +731,18 @@ describe('Utils Unit Tests', function() {
         givenBackoffDependsOnError();
         return stubbedRequestor
           .put(sampleRequestForRetry)
-          .catch(_ => requestStub.callCount.should.equal(2));
+          .catch(_ => expect(requestStub.mock.calls.length).toBe(2));
       });
     });
   });
 
-  describe('#DELETE', function() {
-    describe('#Successful request', function() {
+  describe('#DELETE', () => {
+    describe('#Successful request', () => {
       let requestStub = null;
       const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
-        requestStub = sinon.stub(axios, 'delete');
+        requestStub = jest.spyOn(axios, 'delete');
         const mockResponse = {
           statusCode: 200,
           headers: {
@@ -752,68 +750,66 @@ describe('Utils Unit Tests', function() {
           }
         };
         const mockBody = '{"hello":"world"}';
-        requestStub.returns(Promise.resolve([mockResponse, mockBody]));
+        requestStub.mockReturnValue(Promise.resolve([mockResponse, mockBody]));
       });
 
       afterEach(() => {
-        requestStub.restore();
+        requestStub.mockRestore();
       });
 
       it('request should resolve as true', () =>
         stubbedRequestor
           .delete(sampleRequest)
-          .then(data => data.should.be.true));
+          .then(data => expect(data).toBe(true)));
 
       it('request should call callback as true', (done) => {
         stubbedRequestor
           .delete(sampleRequest,
                   (err, data) => {
-                    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                    data.should.be.true;
+                    expect(data).toBe(true);
                     done();
                   });
       });
     });
 
-    describe('#Error on request', function() {
+    describe('#Error on request', () => {
       let requestStub = null;
       const mockBody = {error: true};
       const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
 
       beforeEach(() => {
-        requestStub = sinon.stub(axios, 'delete');
-        requestStub.returns(Promise.reject(mockBody));
+        requestStub = jest.spyOn(axios, 'delete');
+        requestStub.mockReturnValue(Promise.reject(mockBody));
       });
 
       afterEach(() => {
-        requestStub.restore();
+        requestStub.mockRestore();
       });
 
       it('request should error as false', () =>
         stubbedRequestor
           .delete(sampleRequest)
-          .catch(error => error.content.should.be.true));
+          .catch(error => expect(error.content).toBe(true)));
 
       it('request should error as false', (done) => {
         stubbedRequestor
           .delete(sampleRequest,
                   (err, _) => {
-                    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                    err.content.should.be.true;
+                    expect(err.content).toBe(true);
                     done();
                   });
       });
     });
 
-    describe('#Arguments', function() {
+    describe('#Arguments', () => {
       let spyPut;
 
       beforeEach(() => {
-        spyPut = sinon.spy(axios, 'delete');
+        spyPut = jest.spyOn(axios, 'delete');
       });
 
       afterEach(() => {
-        spyPut.restore();
+        spyPut.mockRestore();
       });
 
       it('headers sent as part of request should match given', () => {
@@ -824,37 +820,37 @@ describe('Utils Unit Tests', function() {
           'User-Agent': `smartsheet-javascript-sdk/${EXPECTED_VERSION}`
         };
         requestor.delete(sampleRequest);
-        spyPut.args[0][1].headers.Authorization.should.equal(sampleHeaders.Authorization);
-        spyPut.args[0][1].headers.Accept.should.equal(sampleHeaders.Accept);
-        spyPut.args[0][1].headers['Content-Type'].should.equal(sampleHeaders['Content-Type']);
-        spyPut.args[0][1].headers['User-Agent'].should.equal(sampleHeaders['User-Agent']);
+        expect(spyPut.mock.calls[0][1].headers.Authorization).toBe(sampleHeaders.Authorization);
+        expect(spyPut.mock.calls[0][1].headers.Accept).toBe(sampleHeaders.Accept);
+        expect(spyPut.mock.calls[0][1].headers['Content-Type']).toBe(sampleHeaders['Content-Type']);
+        expect(spyPut.mock.calls[0][1].headers['User-Agent']).toBe(sampleHeaders['User-Agent']);
       });
 
       it('url sent to request should match given', () => {
         requestor.delete(sampleRequest);
-        spyPut.args[0][0].should.equal('https://api.smartsheet.com/2.0/URL');
+        expect(spyPut.mock.calls[0][0]).toBe('https://api.smartsheet.com/2.0/URL');
       });
 
       it('queryString sent to request should match given', () => {
         requestor.delete(sampleRequestWithQueryParameters);
-        spyPut.args[0][1].params.should.equal(sampleRequestWithQueryParameters.queryParameters);
+        expect(spyPut.mock.calls[0][1].params).toBe(sampleRequestWithQueryParameters.queryParameters);
       });
     });
 
-    describe('#Retry', function() {
+    describe('#Retry', () => {
       let requestStub = null;
-      const handleResponseStub = sinon.stub();
+      const handleResponseStub = jest.fn();
       const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: handleResponseStub});
       let sampleRequestForRetry;
 
       function givenDeleteReturnsError() {
-        requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns({errorCode: 4001});
+        requestStub.mockReturnValue(Promise.resolve([{}, {}]));
+        handleResponseStub.mockReturnValue({errorCode: 4001});
       }
 
       function givenDeleteReturnsSuccess() {
-        requestStub.returns(Promise.resolve([{}, {}]));
-        handleResponseStub.returns({content: true});
+        requestStub.mockReturnValue(Promise.resolve([{}, {}]));
+        handleResponseStub.mockReturnValue({content: true});
       }
 
       function givenEarlyExitBackoff() {
@@ -869,7 +865,7 @@ describe('Utils Unit Tests', function() {
       }
 
       beforeEach(() => {
-        requestStub = sinon.stub(axios, 'delete');
+        requestStub = jest.spyOn(axios, 'delete');
 
         sampleRequestForRetry = _.extend({}, sampleRequest);
         sampleRequestForRetry.maxRetryDurationMillis = 30;
@@ -877,21 +873,21 @@ describe('Utils Unit Tests', function() {
       });
 
       afterEach(() => {
-        requestStub.restore();
+        requestStub.mockRestore();
       });
 
       it('delete called once on success', () => {
         givenDeleteReturnsSuccess();
         return stubbedRequestor
           .delete(sampleRequestForRetry)
-          .then(_ => requestStub.callCount.should.equal(1));
+          .then(_ => expect(requestStub.mock.calls.length).toBe(1));
       });
 
       it('delete retried on error', () => {
         givenDeleteReturnsError();
         return stubbedRequestor
           .delete(sampleRequestForRetry)
-          .catch(_ => requestStub.callCount.should.be.above(1));
+          .catch(_ => expect(requestStub.mock.calls.length).toBeGreaterThan(1));
       });
 
       it('delete stops retrying when receiving a negative backoff', () => {
@@ -899,7 +895,7 @@ describe('Utils Unit Tests', function() {
         givenEarlyExitBackoff();
         return stubbedRequestor
           .delete(sampleRequestForRetry)
-          .catch(_ => requestStub.callCount.should.equal(2));
+          .catch(_ => expect(requestStub.mock.calls.length).toBe(2));
       });
 
       it('delete passes the causing error to the backoff function', () => {
@@ -907,7 +903,7 @@ describe('Utils Unit Tests', function() {
         givenBackoffDependsOnError();
         return stubbedRequestor
           .delete(sampleRequestForRetry)
-          .catch(_ => requestStub.callCount.should.equal(2));
+          .catch(_ => expect(requestStub.mock.calls.length).toBe(2));
       });
     });
   });

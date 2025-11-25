@@ -1,35 +1,35 @@
-import sinon from 'sinon';
 import { smartSheetURIs } from '@smartsheet';
 import { create as createRequestLogger } from '../../../lib/utils/requestLogger';
+import { expect, jest, describe, beforeEach, afterEach, it } from '@jest/globals';
 
-describe('#RequestLogger', function () {
+describe('#RequestLogger', () => {
     let requestLogger;
     let loggerFakes;
-    let clock;
 
     beforeEach(() => {
-        clock = sinon.useFakeTimers();
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(0));
         loggerFakes = {
-            log: sinon.fake(),
-            debug: sinon.fake(),
-            verbose: sinon.fake(),
-            silly: sinon.fake(),
-            info: sinon.fake(),
-            warn: sinon.fake(),
-            error: sinon.fake(),
+            log: jest.fn(),
+            debug: jest.fn(),
+            verbose: jest.fn(),
+            silly: jest.fn(),
+            info: jest.fn(),
+            warn: jest.fn(),
+            error: jest.fn(),
             filters: [],
         };
         requestLogger = createRequestLogger(loggerFakes);
     });
 
     afterEach(() => {
-        clock.restore();
+        jest.useRealTimers();
     });
 
-    describe('#log', function () {
+    describe('#log', () => {
         it('should call log on the injected logger', () => {
             requestLogger.log("info", "An info message");
-            loggerFakes.log.args[0].should.deepEqual(["info", "An info message"]);
+            expect(loggerFakes.log.mock.calls[0]).toEqual(["info", "An info message"]);
         });
     });
 
@@ -55,7 +55,7 @@ describe('#RequestLogger', function () {
         };
     }
 
-    describe('#logRequest', function () {
+    describe('#logRequest', () => {
         [
             smartSheetURIs.defaultBaseURI,
             smartSheetURIs.govBaseURI,
@@ -70,7 +70,7 @@ describe('#RequestLogger', function () {
                     }
                 });
                 requestLogger.logRequest(request.verb, request.requestOptions);
-                loggerFakes.log.args[0].should.deepEqual(['info', '%s %s', request.verb, `${url}?queryKey=queryVal&key%20that%20has%20spaces=value%20that%20has%20spaces`]);
+                expect(loggerFakes.log.mock.calls[0]).toEqual(['info', '%s %s', request.verb, `${url}?queryKey=queryVal&key%20that%20has%20spaces=value%20that%20has%20spaces`]);
             });
         });
 
@@ -81,7 +81,7 @@ describe('#RequestLogger', function () {
 
             requestLogger.logRequest(request.verb, request.requestOptions);
 
-            loggerFakes.silly.callCount.should.equal(0);
+            expect(loggerFakes.silly.mock.calls.length).toBe(0);
         });
 
         it('should silly log the request headers when present', () => {
@@ -91,7 +91,7 @@ describe('#RequestLogger', function () {
 
             requestLogger.logRequest(request.verb, request.requestOptions);
 
-            loggerFakes.silly.args[0].should.deepEqual(['%s Headers: %s', 'Request', '{"someHeader":"someHeaderValue","anotherHeader":123}']);
+            expect(loggerFakes.silly.mock.calls[0]).toEqual(['%s Headers: %s', 'Request', '{"someHeader":"someHeaderValue","anotherHeader":123}']);
         });
 
         it('should censor the authorization request header', () => {
@@ -102,7 +102,7 @@ describe('#RequestLogger', function () {
             requestLogger.logRequest(request.verb, request.requestOptions);
 
             // The censor logic leaves the last 4 characters uncensored
-            loggerFakes.silly.args[0].should.deepEqual(['%s Headers: %s', 'Request', '{"authorization":"*******cret"}']);
+            expect(loggerFakes.silly.mock.calls[0]).toEqual(['%s Headers: %s', 'Request', '{"authorization":"*******cret"}']);
         });
 
         it('should not censor an empty authorization request header', () => {
@@ -112,19 +112,22 @@ describe('#RequestLogger', function () {
 
             requestLogger.logRequest(request.verb, request.requestOptions);
 
-            loggerFakes.silly.args[0].should.deepEqual(['%s Headers: %s', 'Request', '{"authorization":""}']);
+            expect(loggerFakes.silly.mock.calls[0]).toEqual(['%s Headers: %s', 'Request', '{"authorization":""}']);
         });
 
-        it('should not debug nor verbose log any payload if none exists on the request', () => {
-            const request = createRequest({
-                body: '',
-            });
+        it(
+            'should not debug nor verbose log any payload if none exists on the request',
+            () => {
+                const request = createRequest({
+                    body: '',
+                });
 
-            requestLogger.logRequest(request.verb, request.requestOptions);
+                requestLogger.logRequest(request.verb, request.requestOptions);
 
-            loggerFakes.debug.callCount.should.equal(0);
-            loggerFakes.verbose.callCount.should.equal(0);
-        });
+                expect(loggerFakes.debug.mock.calls.length).toBe(0);
+                expect(loggerFakes.verbose.mock.calls.length).toBe(0);
+            }
+        );
 
         it('should debug log the full request payload', () => {
             const request = createRequest({
@@ -133,39 +136,45 @@ describe('#RequestLogger', function () {
 
             requestLogger.logRequest(request.verb, request.requestOptions);
 
-            loggerFakes.debug.args[0].should.deepEqual(['%s Payload (full): %s', 'Request', 'This is the request payload!']);
+            expect(loggerFakes.debug.mock.calls[0]).toEqual(['%s Payload (full): %s', 'Request', 'This is the request payload!']);
         });
 
-        it('should verbose log the full request payload if it does not exceed 1024 characters', () => {
-            const shortPayload = Array(1024).fill("0").join("");
+        it(
+            'should verbose log the full request payload if it does not exceed 1024 characters',
+            () => {
+                const shortPayload = Array(1024).fill("0").join("");
 
-            const request = createRequest({
-                body: shortPayload,
-            });
+                const request = createRequest({
+                    body: shortPayload,
+                });
 
-            requestLogger.logRequest(request.verb, request.requestOptions);
+                requestLogger.logRequest(request.verb, request.requestOptions);
 
-            loggerFakes.verbose.args[0].should.deepEqual(['%s Payload (preview): %s', 'Request', shortPayload]);
-        });
+                expect(loggerFakes.verbose.mock.calls[0]).toEqual(['%s Payload (preview): %s', 'Request', shortPayload]);
+            }
+        );
 
-        it('should verbose log a truncated request payload if it exceeds 1024 characters', () => {
-            const longPayload = Array(2048).fill("0").join("");
+        it(
+            'should verbose log a truncated request payload if it exceeds 1024 characters',
+            () => {
+                const longPayload = Array(2048).fill("0").join("");
 
-            const request = createRequest({
-                body: longPayload,
-            });
+                const request = createRequest({
+                    body: longPayload,
+                });
 
-            requestLogger.logRequest(request.verb, request.requestOptions);
+                requestLogger.logRequest(request.verb, request.requestOptions);
 
-            loggerFakes.verbose.args[0][0].should.equal('%s Payload (preview): %s');
-            loggerFakes.verbose.args[0][1].should.equal('Request');
-            const preview = loggerFakes.verbose.args[0][2];
-            preview.endsWith('...').should.equal(true);
-            preview.length.should.equal(1024 + '...'.length);
-        });
+                expect(loggerFakes.verbose.mock.calls[0][0]).toBe('%s Payload (preview): %s');
+                expect(loggerFakes.verbose.mock.calls[0][1]).toBe('Request');
+                const preview = loggerFakes.verbose.mock.calls[0][2];
+                expect(preview.endsWith('...')).toBe(true);
+                expect(preview.length).toBe(1024 + '...'.length);
+            }
+        );
     });
 
-    describe('#logRetryAttempt', function () {
+    describe('#logRetryAttempt', () => {
         [
             smartSheetURIs.defaultBaseURI,
             smartSheetURIs.govBaseURI,
@@ -184,24 +193,24 @@ describe('#RequestLogger', function () {
 
                 requestLogger.logRetryAttempt(request.verb, request.requestOptions, error, attemptNum);
 
-                loggerFakes.warn.args[0].should.deepEqual(['Request failed, performing retry #%d\nCause: ', attemptNum, error]);
-                loggerFakes.log.args[0].should.deepEqual(['warn', '%s %s', request.verb, `${url}?queryKey=queryVal&key%20that%20has%20spaces=value%20that%20has%20spaces`]);
+                expect(loggerFakes.warn.mock.calls[0]).toEqual(['Request failed, performing retry #%d\nCause: ', attemptNum, error]);
+                expect(loggerFakes.log.mock.calls[0]).toEqual(['warn', '%s %s', request.verb, `${url}?queryKey=queryVal&key%20that%20has%20spaces=value%20that%20has%20spaces`]);
             });
         });
     });
 
-    describe('#logRetryFailure', function () {
+    describe('#logRetryFailure', () => {
         it('should error log the failure and attempt number', () => {
             const request = createRequest();
             const attemptNum = 3;
 
             requestLogger.logRetryFailure(request.verb, request.requestOptions, attemptNum);
 
-            loggerFakes.error.args[0].should.deepEqual(['Request failed after %d retries', attemptNum]);
+            expect(loggerFakes.error.mock.calls[0]).toEqual(['Request failed after %d retries', attemptNum]);
         });
     });
 
-    describe('#logSuccessfulResponse', function () {
+    describe('#logSuccessfulResponse', () => {
         it('should info log the success and response status code', () => {
             const response = createResponse({
                 statusCode: 201,
@@ -209,7 +218,7 @@ describe('#RequestLogger', function () {
 
             requestLogger.logSuccessfulResponse(response);
 
-            loggerFakes.info.args[0].should.deepEqual(['Response: Success (HTTP %d)', 201]);
+            expect(loggerFakes.info.mock.calls[0]).toEqual(['Response: Success (HTTP %d)', 201]);
         });
 
         it('should not silly log any response headers when none are present', () => {
@@ -219,7 +228,7 @@ describe('#RequestLogger', function () {
 
             requestLogger.logSuccessfulResponse(response);
 
-            loggerFakes.silly.callCount.should.equal(0);
+            expect(loggerFakes.silly.mock.calls.length).toBe(0);
         });
 
         it('should silly log the response headers when present', () => {
@@ -229,7 +238,7 @@ describe('#RequestLogger', function () {
 
             requestLogger.logSuccessfulResponse(response);
 
-            loggerFakes.silly.args[0].should.deepEqual(['%s Headers: %s', 'Response', '{"someHeader":"someHeaderValue","anotherHeader":123}']);
+            expect(loggerFakes.silly.mock.calls[0]).toEqual(['%s Headers: %s', 'Response', '{"someHeader":"someHeaderValue","anotherHeader":123}']);
         });
 
         it('should censor the authorization response header', () => {
@@ -240,7 +249,7 @@ describe('#RequestLogger', function () {
             requestLogger.logSuccessfulResponse(response);
 
             // The censor logic leaves the last 4 characters uncensored
-            loggerFakes.silly.args[0].should.deepEqual(['%s Headers: %s', 'Response', '{"authorization":"*******cret"}']);
+            expect(loggerFakes.silly.mock.calls[0]).toEqual(['%s Headers: %s', 'Response', '{"authorization":"*******cret"}']);
         });
 
         it('should not censor an empty authorization response header', () => {
@@ -250,7 +259,7 @@ describe('#RequestLogger', function () {
 
             requestLogger.logSuccessfulResponse(response);
 
-            loggerFakes.silly.args[0].should.deepEqual(['%s Headers: %s', 'Response', '{"authorization":""}']);
+            expect(loggerFakes.silly.mock.calls[0]).toEqual(['%s Headers: %s', 'Response', '{"authorization":""}']);
         });
 
         it('should not log an empty response payload', () => {
@@ -260,8 +269,8 @@ describe('#RequestLogger', function () {
 
             requestLogger.logSuccessfulResponse(response);
 
-            loggerFakes.verbose.callCount.should.equal(0);
-            loggerFakes.debug.callCount.should.equal(0);
+            expect(loggerFakes.verbose.mock.calls.length).toBe(0);
+            expect(loggerFakes.debug.mock.calls.length).toBe(0);
         });
 
         it('should debug log the full response payload', () => {
@@ -271,36 +280,42 @@ describe('#RequestLogger', function () {
 
             requestLogger.logSuccessfulResponse(response);
 
-            loggerFakes.debug.args[0].should.deepEqual(['%s Payload (full): %s', 'Response', '{"body":"This is the request payload!"}']);
+            expect(loggerFakes.debug.mock.calls[0]).toEqual(['%s Payload (full): %s', 'Response', '{"body":"This is the request payload!"}']);
         });
 
-        it('should verbose log the full response payload if it does not exceed 1024 characters', () => {
-            const shortPayload = Array(512).fill("0").join("");
+        it(
+            'should verbose log the full response payload if it does not exceed 1024 characters',
+            () => {
+                const shortPayload = Array(512).fill("0").join("");
 
-            const response = createResponse({
-                content: { body: shortPayload },
-            });
+                const response = createResponse({
+                    content: { body: shortPayload },
+                });
 
-            requestLogger.logSuccessfulResponse(response);
+                requestLogger.logSuccessfulResponse(response);
 
-            loggerFakes.verbose.args[0].should.deepEqual(['%s Payload (preview): %s', 'Response', `{"body":"${shortPayload}"}`]);
-        });
+                expect(loggerFakes.verbose.mock.calls[0]).toEqual(['%s Payload (preview): %s', 'Response', `{"body":"${shortPayload}"}`]);
+            }
+        );
 
-        it('should verbose log a truncated response payload if it exceeds 1024 characters', () => {
-            const longPayload = Array(1024).fill("0").join("");
+        it(
+            'should verbose log a truncated response payload if it exceeds 1024 characters',
+            () => {
+                const longPayload = Array(1024).fill("0").join("");
 
-            const response = createResponse({
-                content: { body: longPayload },
-            });
+                const response = createResponse({
+                    content: { body: longPayload },
+                });
 
-            requestLogger.logSuccessfulResponse(response);
+                requestLogger.logSuccessfulResponse(response);
 
-            loggerFakes.verbose.args[0][0].should.equal('%s Payload (preview): %s');
-            loggerFakes.verbose.args[0][1].should.equal('Response');
-            const preview = loggerFakes.verbose.args[0][2];
-            preview.endsWith('...').should.equal(true);
-            preview.length.should.equal(1024 + '...'.length);
-        });
+                expect(loggerFakes.verbose.mock.calls[0][0]).toBe('%s Payload (preview): %s');
+                expect(loggerFakes.verbose.mock.calls[0][1]).toBe('Response');
+                const preview = loggerFakes.verbose.mock.calls[0][2];
+                expect(preview.endsWith('...')).toBe(true);
+                expect(preview.length).toBe(1024 + '...'.length);
+            }
+        );
 
         [
             'access_token',
@@ -314,37 +329,40 @@ describe('#RequestLogger', function () {
                 requestLogger.logSuccessfulResponse(response);
 
                 // The censor logic leaves the last 4 characters uncensored
-                loggerFakes.verbose.args[0].should.deepEqual(['%s Payload (preview): %s', 'Response', `{"${token}":"*******cret"}`]);
+                expect(loggerFakes.verbose.mock.calls[0]).toEqual(['%s Payload (preview): %s', 'Response', `{"${token}":"*******cret"}`]);
             });
         });
     });
 
-    describe('#logErrorResponse', function () {
+    describe('#logErrorResponse', () => {
         [
             smartSheetURIs.defaultBaseURI,
             smartSheetURIs.govBaseURI,
             smartSheetURIs.euBaseURI
         ].forEach(url => {
-            it('should error log the request url and query params and the error response', () => {
-                const request = createRequest({
-                    url,
-                    qs: {
-                        queryKey: "queryVal",
-                        "key that has spaces": "value that has spaces",
-                    }
-                });
-                const error = {
-                    statusCode: 500,
-                    errorCode: 4001,
-                    message: 'An error message',
-                    refId: 123,
-                };
+            it(
+                'should error log the request url and query params and the error response',
+                () => {
+                    const request = createRequest({
+                        url,
+                        qs: {
+                            queryKey: "queryVal",
+                            "key that has spaces": "value that has spaces",
+                        }
+                    });
+                    const error = {
+                        statusCode: 500,
+                        errorCode: 4001,
+                        message: 'An error message',
+                        refId: 123,
+                    };
 
-                requestLogger.logErrorResponse(request.verb, request.requestOptions, error);
+                    requestLogger.logErrorResponse(request.verb, request.requestOptions, error);
 
-                loggerFakes.log.args[0].should.deepEqual(['error', '%s %s', request.verb, `${url}?queryKey=queryVal&key%20that%20has%20spaces=value%20that%20has%20spaces`]);
-                loggerFakes.error.args[0].should.deepEqual(['Response: Failure (HTTP %d)\n\tError Code: %d - %s\n\tRef ID: %s', 500, 4001, 'An error message', 123]);
-            });
+                    expect(loggerFakes.log.mock.calls[0]).toEqual(['error', '%s %s', request.verb, `${url}?queryKey=queryVal&key%20that%20has%20spaces=value%20that%20has%20spaces`]);
+                    expect(loggerFakes.error.mock.calls[0]).toEqual(['Response: Failure (HTTP %d)\n\tError Code: %d - %s\n\tRef ID: %s', 500, 4001, 'An error message', 123]);
+                }
+            );
         });
 
         it('should not silly log any response headers when none are present', () => {
@@ -364,7 +382,7 @@ describe('#RequestLogger', function () {
 
             requestLogger.logErrorResponse(request.verb, request.requestOptions, error);
 
-            loggerFakes.silly.callCount.should.equal(0);
+            expect(loggerFakes.silly.mock.calls.length).toBe(0);
         });
 
         it('should silly log the response headers when present', () => {
@@ -384,7 +402,7 @@ describe('#RequestLogger', function () {
 
             requestLogger.logErrorResponse(request.verb, request.requestOptions, error);
 
-            loggerFakes.silly.args[0].should.deepEqual(['%s Headers: %s', 'Response', '{"someHeader":"someHeaderValue","anotherHeader":123}']);
+            expect(loggerFakes.silly.mock.calls[0]).toEqual(['%s Headers: %s', 'Response', '{"someHeader":"someHeaderValue","anotherHeader":123}']);
         });
 
         it('should censor the authorization response header', () => {
@@ -405,7 +423,7 @@ describe('#RequestLogger', function () {
             requestLogger.logErrorResponse(request.verb, request.requestOptions, error);
 
             // The censor logic leaves the last 4 characters uncensored
-            loggerFakes.silly.args[0].should.deepEqual(['%s Headers: %s', 'Response', '{"authorization":"*******cret"}']);
+            expect(loggerFakes.silly.mock.calls[0]).toEqual(['%s Headers: %s', 'Response', '{"authorization":"*******cret"}']);
         });
 
         it('should not censor an empty authorization response header', () => {
@@ -425,7 +443,7 @@ describe('#RequestLogger', function () {
 
             requestLogger.logErrorResponse(request.verb, request.requestOptions, error);
 
-            loggerFakes.silly.args[0].should.deepEqual(['%s Headers: %s', 'Response', '{"authorization":""}']);
+            expect(loggerFakes.silly.mock.calls[0]).toEqual(['%s Headers: %s', 'Response', '{"authorization":""}']);
         });
     });
 
@@ -439,13 +457,13 @@ describe('#RequestLogger', function () {
         'SuperDuperError'
     ].forEach(level => {
         it('should add formatLog to logger.filters', () => {
-            loggerFakes.filters.length.should.equal(1);
+            expect(loggerFakes.filters.length).toBe(1);
 
             const formatLog = loggerFakes.filters[0];
             const fakeDateTime = new Date(0).toISOString();
             const levelDisplay = level.toUpperCase().padStart(7);
 
-            formatLog(level, 'message').should.equal(`${fakeDateTime}[${levelDisplay}] message`);
+            expect(formatLog(level, 'message')).toBe(`${fakeDateTime}[${levelDisplay}] message`);
         });
     });
 });
