@@ -831,7 +831,7 @@ describe('Utils Unit Tests', () => {
     });
 
     describe('#Arguments', () => {
-      let spyPut;
+      let spyDelete;
       const mockResponse = {
         status: 200,
         headers: {
@@ -841,12 +841,12 @@ describe('Utils Unit Tests', () => {
       };
 
       beforeEach(() => {
-        spyPut = jest.spyOn(axios, 'delete');
-        spyPut.mockReturnValue(Promise.resolve(mockResponse));
+        spyDelete = jest.spyOn(axios, 'delete');
+        spyDelete.mockReturnValue(Promise.resolve(mockResponse));
       });
 
       afterEach(() => {
-        spyPut.mockRestore();
+        spyDelete.mockRestore();
       });
 
       it('headers sent as part of request should match given', async () => {
@@ -857,20 +857,20 @@ describe('Utils Unit Tests', () => {
           'User-Agent': `smartsheet-javascript-sdk/${EXPECTED_VERSION}`
         };
         await requestor.delete(sampleRequest);
-        expect(spyPut.mock.calls[0][1].headers.Authorization).toBe(sampleHeaders.Authorization);
-        expect(spyPut.mock.calls[0][1].headers.Accept).toBe(sampleHeaders.Accept);
-        expect(spyPut.mock.calls[0][1].headers['Content-Type']).toBe(sampleHeaders['Content-Type']);
-        expect(spyPut.mock.calls[0][1].headers['User-Agent']).toBe(sampleHeaders['User-Agent']);
+        expect(spyDelete.mock.calls[0][1].headers.Authorization).toBe(sampleHeaders.Authorization);
+        expect(spyDelete.mock.calls[0][1].headers.Accept).toBe(sampleHeaders.Accept);
+        expect(spyDelete.mock.calls[0][1].headers['Content-Type']).toBe(sampleHeaders['Content-Type']);
+        expect(spyDelete.mock.calls[0][1].headers['User-Agent']).toBe(sampleHeaders['User-Agent']);
       });
 
       it('url sent to request should match given', async () => {
         await requestor.delete(sampleRequest);
-        expect(spyPut.mock.calls[0][0]).toBe('https://api.smartsheet.com/2.0/URL');
+        expect(spyDelete.mock.calls[0][0]).toBe('https://api.smartsheet.com/2.0/URL');
       });
 
       it('queryString sent to request should match given', async () => {
         await requestor.delete(sampleRequestWithQueryParameters);
-        expect(spyPut.mock.calls[0][1].params).toBe(sampleRequestWithQueryParameters.queryParameters);
+        expect(spyDelete.mock.calls[0][1].params).toBe(sampleRequestWithQueryParameters.queryParameters);
       });
     });
 

@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import * as smartsheet from '@smartsheet';
-import { expect, jest, describe, it, beforeAll, afterAll } from '@jest/globals';
+import { expect, jest, describe, it, beforeEach, afterEach } from '@jest/globals';
 import axios from "axios";
 
 export function setupClient() {
@@ -20,14 +20,14 @@ function defineMockApiTest(scenario) {
         let getStub;
         let deleteStub;
 
-        beforeAll(() => {
+        beforeEach(() => {
             postStub = jest.spyOn(axios, 'post').mockResolvedValue({ status: 200, data: true });
             putStub = jest.spyOn(axios, 'put').mockResolvedValue({ status: 200, data: true });
             getStub = jest.spyOn(axios, 'get').mockResolvedValue({ status: 200, data: true });
             deleteStub = jest.spyOn(axios, 'delete').mockResolvedValue({ status: 200, data: true });
         });
 
-        afterAll(() => {
+        afterEach(() => {
             postStub.mockRestore();
             putStub.mockRestore();
             getStub.mockRestore();

@@ -24,6 +24,7 @@ describe('Client Unit Tests', () => {
   afterEach(() => {
     smartsheet = null;
     requestor = null;
+    spyGet.mockRestore();
   });
 
   describe('#Sheets', () => {
