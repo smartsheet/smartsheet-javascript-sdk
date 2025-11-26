@@ -1,15 +1,13 @@
-import Promise from 'bluebird';
 import _ from 'underscore';
 import fs from 'fs';
 import { smartSheetURIs } from '@smartsheet';
 import axios from 'axios';
-import { create as createRequestor } from '../../lib/utils/httpRequestor';
-import * as httpRequestor from '../../lib/utils/httpRequestor';
+import * as httpRequestor from '@smartsheet/utils/httpRequestor';
 import packageJson from '../../package.json';
 import { expect, jest, describe, beforeEach, afterEach, it } from '@jest/globals';
 
 describe('Utils Unit Tests', () => {
-  const requestor = createRequestor({request: axios});
+  const requestor = httpRequestor.create({request: axios});
 
   const sample = {
     name : 'name'
@@ -21,6 +19,7 @@ describe('Utils Unit Tests', () => {
   };
 
   const sampleRequestWithQueryParameters = {
+    url:'URL',
     accessToken: 'TOKEN',
     contentType: 'application/json',
     body: sample,
@@ -237,79 +236,91 @@ describe('Utils Unit Tests', () => {
         requestStub.mockRestore();
       });
 
-      it('request should resolve promise as true', () =>
+      it('request should resolve promise as true', async () =>
         expect(stubbedRequestor.get(sampleRequest)).resolves.toBe(true));
 
-      it('request should call callback as true', done => {
-        stubbedRequestor.get(sampleRequest, function(err, data) {
+      it('request should call callback as true', async () => {
+        await stubbedRequestor.get(sampleRequest, function(err, data) {
           expect(data).toBe(true);
-          done();
-        })
+        });
       });
     });
 
     describe('#Error on request', () => {
       let requestStub = null;
-      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({ content: true })});
-      let mockBody;
+      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: resp => resp});
+      let mockError;
 
       beforeEach(() => {
         requestStub = jest.spyOn(axios, 'get');
-        mockBody = {error:true};
-        requestStub.mockReturnValue(Promise.reject(mockBody));
+        mockError = { response: { error: true } };
+        requestStub.mockReturnValue(Promise.reject(mockError));
       });
 
       afterEach(() => {
         requestStub.mockRestore();
       });
 
-      it('request should error as false, using promises', () =>
-        stubbedRequestor
-          .get(sampleRequest)
-          .catch(error => expect(error.content).toBe(true)));
+      it('request should error as false, using promises', async () =>
+        expect(stubbedRequestor.get(sampleRequest)).rejects.toMatchObject(mockError.response));
 
       it('request should error as false, using callbacks', (done) => {
-        stubbedRequestor
-          .get(sampleRequest,
-               (err, _) => {
-                 expect(err.content).toBe(true)
-                 done();
-                });
+        stubbedRequestor.get(sampleRequest, (err, content) => {
+          if (err) {
+            try {
+              expect(err).toMatchObject(mockError.response);
+              expect(content).toBeUndefined();
+              done();
+            } catch (error) {
+              done(error);
+            }
+            return;
+          }
+          done(new Error('Expected error but got success'));
+        }).catch(() => { /* Prevent unhandled rejection*/ });
       });
     });
 
     describe('#Arguments', () => {
       let spyGet;
+      const mockResponse = {
+        status: 200,
+        headers: {
+          'content-type':'application/json;charset=UTF-8'
+        },
+        data: {}
+      };
 
       beforeEach(() => {
         spyGet = jest.spyOn(axios, 'get');
+        spyGet.mockReturnValue(Promise.resolve(mockResponse));
       });
 
       afterEach(() => {
         spyGet.mockRestore();
       });
 
-      it('headers sent as part of request should match given', () => {
+      it('headers sent as part of request should match given', async () => {
         const sampleHeaders = {
           Authorization: 'Bearer TOKEN',
           Accept: 'application/json',
           'Content-Type': 'application/json',
           'User-Agent': `smartsheet-javascript-sdk/${EXPECTED_VERSION}`
         };
-        requestor.get(sampleRequest);
+        await requestor.get(sampleRequest);
         expect(spyGet.mock.calls[0][1].headers.Authorization).toBe(sampleHeaders.Authorization);
         expect(spyGet.mock.calls[0][1].headers.Accept).toBe(sampleHeaders.Accept);
         expect(spyGet.mock.calls[0][1].headers['Content-Type']).toBe(sampleHeaders['Content-Type']);
         expect(spyGet.mock.calls[0][1].headers['User-Agent']).toBe(sampleHeaders['User-Agent']);
       });
 
-      it('url sent to request should match given', () => {
-        requestor.get(sampleRequest);
+      it('url sent to request should match given', async () => {
+        await requestor.get(sampleRequest);
         expect(spyGet.mock.calls[0][0]).toBe('https://api.smartsheet.com/2.0/URL');
       });
 
-      it('queryString sent to request should match given', () => {
-        requestor.get(sampleRequestWithQueryParameters);
+      it('queryString sent to request should match given', async () => {
+        await requestor.get(sampleRequestWithQueryParameters);
         expect(spyGet.mock.calls[0][1].params).toBe(sampleRequestWithQueryParameters.queryParameters);
       });
     });
@@ -405,85 +416,95 @@ describe('Utils Unit Tests', () => {
         requestStub.mockRestore();
       });
 
-      it('request should resolve as true', () =>
-        stubbedRequestor
-          .post(sampleRequest)
-          .then(data => expect(data).toBe(true)));
+      it('request should resolve as true', async () =>
+        expect(stubbedRequestor.post(sampleRequest)).resolves.toBe(true));
 
-      it('request should call callback as true', (done) => {
-        stubbedRequestor.post(sampleRequest, function(err, data) {
+      it('request should call callback as true', async () => {
+        await stubbedRequestor.post(sampleRequest, function(err, data) {
           expect(data).toBe(true);
-          done();
         });
       });
     });
 
     describe('#Error on request', () => {
       let requestStub = null;
-      const mockBody = {error:true};
-      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
+      const mockError = {response: {error:true}};
+      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: resp => resp });
 
       beforeEach(() => {
         requestStub = jest.spyOn(axios, 'post');
-        requestStub.mockReturnValue(Promise.reject(mockBody));
+        requestStub.mockReturnValue(Promise.reject(mockError));
       });
 
       afterEach(() => {
         requestStub.mockRestore();
       });
 
-      it('request should error as false', () =>
-        stubbedRequestor
-          .post(sampleRequest)
-          .catch(error => expect(error.content).toBe(true)));
+      it('request should error as false, using promises', async () =>
+        expect(stubbedRequestor.post(sampleRequest)).rejects.toMatchObject(mockError.response));
 
-      it('request should error as false', (done) => {
-        stubbedRequestor
-          .post(sampleRequest,
-                (err, _) => {
-                  expect(err.content).toBe(true);
-                  done();
-                });
+      it('request should error as false, using callbacks', done => {
+        stubbedRequestor.post(sampleRequest, (err, content) => {
+          if (err) {
+            try {
+              expect(err).toMatchObject(mockError.response);
+              expect(content).toBeUndefined();
+              done();
+            } catch (error) {
+              done(error);
+            }
+            return;
+          }
+          done(new Error('Expected error but got success'));
+        }).catch(() => { /* Prevent unhandled rejection*/ });
       });
     });
 
     describe('#Arguments', () => {
       let spyPost;
+      const mockResponse = {
+        status: 200,
+        headers: {
+          'content-type':'application/json;charset=UTF-8'
+        },
+        data: {}
+      };
 
       beforeEach(() => {
         spyPost = jest.spyOn(axios, 'post');
+        spyPost.mockReturnValue(Promise.resolve(mockResponse));
       });
 
       afterEach(() => {
         spyPost.mockRestore();
       });
 
-      it('headers sent as part of request should match given', () => {
+      it('headers sent as part of request should match given', async () => {
         const sampleHeaders = {
           Authorization: 'Bearer TOKEN',
           Accept: 'application/json',
           'Content-Type': 'application/json',
           'User-Agent': `smartsheet-javascript-sdk/${EXPECTED_VERSION}`
         };
-        requestor.post(sampleRequest);
+        await requestor.post(sampleRequest);
         expect(spyPost.mock.calls[0][2].headers.Authorization).toBe(sampleHeaders.Authorization);
         expect(spyPost.mock.calls[0][2].headers.Accept).toBe(sampleHeaders.Accept);
         expect(spyPost.mock.calls[0][2].headers['Content-Type']).toBe(sampleHeaders['Content-Type']);
         expect(spyPost.mock.calls[0][2].headers['User-Agent']).toBe(sampleHeaders['User-Agent']);
       });
 
-      it('url sent to request should match given', () => {
-        requestor.post(sampleRequest);
+      it('url sent to request should match given', async () => {
+        await requestor.post(sampleRequest);
         expect(spyPost.mock.calls[0][0]).toBe('https://api.smartsheet.com/2.0/URL');
       });
 
-      it('queryString sent to request should match given', () => {
-        requestor.post(sampleRequestWithQueryParameters);
+      it('queryString sent to request should match given', async () => {
+        await requestor.post(sampleRequestWithQueryParameters);
         expect(spyPost.mock.calls[0][2].params).toBe(sampleRequestWithQueryParameters.queryParameters);
       });
 
-      it('body sent to request should match given', () => {
-        requestor.post(sampleRequestWithQueryParameters);
+      it('body sent to request should match given', async () => {
+        await requestor.post(sampleRequestWithQueryParameters);
         expect(spyPost.mock.calls[0][1]).toBe(sampleRequestWithQueryParameters.body);
       });
     });
@@ -580,87 +601,95 @@ describe('Utils Unit Tests', () => {
         requestStub.mockRestore();
       });
 
-      it('request should resolve as true', () =>
-        stubbedRequestor
-          .put(sampleRequest)
-          .then(data => expect(data).toBe(true)));
+      it('request should resolve as true', async () =>
+        expect(stubbedRequestor.put(sampleRequest)).resolves.toBe(true));
 
-      it('request should call callback as true', (done) => {
-        stubbedRequestor
-          .put(sampleRequest,
-               (err, data) => {
-                 expect(data).toBe(true);
-                 done();
-                });
+      it('request should call callback as true', async () => {
+        await stubbedRequestor.put(sampleRequest, (err, data) => {
+          expect(data).toBe(true);
+        });
       });
     });
 
     describe('#Error on request', () => {
       let stub = null;
-      const mockBody = {error: true};
-      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
+      const mockError = { response: {error: true} };
+      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: resp => resp});
 
       beforeEach(() => {
         stub = jest.spyOn(axios, 'put');
-        stub.mockReturnValue(Promise.reject(mockBody));
+        stub.mockReturnValue(Promise.reject(mockError));
       });
 
       afterEach(() => {
         stub.mockRestore();
       });
 
-      it('request should error as false', () =>
-        stubbedRequestor
-          .put(sampleRequest)
-          .catch(error => expect(error.content).toBe(true)));
+      it('request should error as false', async () =>
+        expect(stubbedRequestor.put(sampleRequest)).rejects.toMatchObject(mockError.response));
 
-      it('request should error as false', (done) => {
-        stubbedRequestor
-          .put(sampleRequest,
-               (err, _) => {
-                 expect(err.content).toBe(true);
-                 done();
-                });
+      it('request should error as false', done => {
+        stubbedRequestor.put(sampleRequest, (err, content) => {
+          if (err) {
+            try {
+              expect(err).toMatchObject(mockError.response);
+              expect(content).toBeUndefined();
+              done();
+            } catch (error) {
+              done(error);
+            }
+            return;
+          }
+          done(new Error('Expected error but got success'));
+        }).catch(() => { /* Prevent unhandled rejection*/ });
       });
     });
 
     describe('#Arguments', () => {
       let spyPut;
+      const mockResponse = {
+        status: 200,
+        headers: {
+          'content-type':'application/json;charset=UTF-8'
+        },
+        data: {}
+      };
 
       beforeEach(() => {
         spyPut = jest.spyOn(axios, 'put');
+        spyPut.mockReturnValue(Promise.resolve(mockResponse));
       });
 
       afterEach(() => {
         spyPut.mockRestore();
       });
 
-      it('headers sent as part of request should match given', () => {
+      it('headers sent as part of request should match given', async () => {
         const sampleHeaders = {
           Authorization: 'Bearer TOKEN',
           Accept: 'application/json',
           'Content-Type': 'application/json',
           'User-Agent': `smartsheet-javascript-sdk/${EXPECTED_VERSION}`
         };
-        requestor.put(sampleRequest);
+        await requestor.put(sampleRequest);
         expect(spyPut.mock.calls[0][2].headers.Authorization).toBe(sampleHeaders.Authorization);
         expect(spyPut.mock.calls[0][2].headers.Accept).toBe(sampleHeaders.Accept);
         expect(spyPut.mock.calls[0][2].headers['Content-Type']).toBe(sampleHeaders['Content-Type']);
         expect(spyPut.mock.calls[0][2].headers['User-Agent']).toBe(sampleHeaders['User-Agent']);
       });
 
-      it('url sent to request should match given', () => {
-        requestor.put(sampleRequest);
+      it('url sent to request should match given', async () => {
+        await requestor.put(sampleRequest);
         expect(spyPut.mock.calls[0][0]).toBe('https://api.smartsheet.com/2.0/URL');
       });
 
-      it('queryString sent to request should match given', () => {
-        requestor.put(sampleRequestWithQueryParameters);
+      it('queryString sent to request should match given', async () => {
+        await requestor.put(sampleRequestWithQueryParameters);
         expect(spyPut.mock.calls[0][2].params).toBe(sampleRequestWithQueryParameters.queryParameters);
       });
 
-      it('body sent to request should match given', () => {
-        requestor.put(sampleRequestWithQueryParameters);
+      it('body sent to request should match given', async () => {
+        await requestor.put(sampleRequestWithQueryParameters);
         expect(spyPut.mock.calls[0][1]).toBe(sampleRequestWithQueryParameters.body);
       });
     });
@@ -757,82 +786,90 @@ describe('Utils Unit Tests', () => {
         requestStub.mockRestore();
       });
 
-      it('request should resolve as true', () =>
-        stubbedRequestor
-          .delete(sampleRequest)
-          .then(data => expect(data).toBe(true)));
+      it('request should resolve as true', async () =>
+        expect(stubbedRequestor.delete(sampleRequest)).resolves.toBe(true));
 
-      it('request should call callback as true', (done) => {
-        stubbedRequestor
-          .delete(sampleRequest,
-                  (err, data) => {
-                    expect(data).toBe(true);
-                    done();
-                  });
+      it('request should call callback as true', async () => {
+        await stubbedRequestor.delete(sampleRequest, (err, data) => {
+          expect(data).toBe(true);
+        });
       });
     });
 
     describe('#Error on request', () => {
       let requestStub = null;
-      const mockBody = {error: true};
-      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: () => ({content: true})});
+      const mockError = {response: { error: true } };
+      const stubbedRequestor = httpRequestor.create({request: axios, handleResponse: resp => resp});
 
       beforeEach(() => {
         requestStub = jest.spyOn(axios, 'delete');
-        requestStub.mockReturnValue(Promise.reject(mockBody));
+        requestStub.mockReturnValue(Promise.reject(mockError));
       });
 
       afterEach(() => {
         requestStub.mockRestore();
       });
 
-      it('request should error as false', () =>
-        stubbedRequestor
-          .delete(sampleRequest)
-          .catch(error => expect(error.content).toBe(true)));
+      it('request should error as false', async () =>
+        expect(stubbedRequestor.delete(sampleRequest)).rejects.toMatchObject(mockError.response));
 
-      it('request should error as false', (done) => {
-        stubbedRequestor
-          .delete(sampleRequest,
-                  (err, _) => {
-                    expect(err.content).toBe(true);
-                    done();
-                  });
+      it('request should error as false', done => {
+        stubbedRequestor.delete(sampleRequest, (err, content) => {
+          if (err) {
+            try {
+              expect(err).toMatchObject(mockError.response);
+              expect(content).toBeUndefined();
+              done();
+            } catch (error) {
+              done(error);
+            }
+            return;
+          }
+          done(new Error('Expected error but got success'));
+        }).catch(() => { /* Prevent unhandled rejection*/ });
       });
     });
 
     describe('#Arguments', () => {
       let spyPut;
+      const mockResponse = {
+        status: 200,
+        headers: {
+          'content-type':'application/json;charset=UTF-8'
+        },
+        data: {}
+      };
 
       beforeEach(() => {
         spyPut = jest.spyOn(axios, 'delete');
+        spyPut.mockReturnValue(Promise.resolve(mockResponse));
       });
 
       afterEach(() => {
         spyPut.mockRestore();
       });
 
-      it('headers sent as part of request should match given', () => {
+      it('headers sent as part of request should match given', async () => {
         const sampleHeaders = {
           Authorization: 'Bearer TOKEN',
           Accept: 'application/json',
           'Content-Type': 'application/json',
           'User-Agent': `smartsheet-javascript-sdk/${EXPECTED_VERSION}`
         };
-        requestor.delete(sampleRequest);
+        await requestor.delete(sampleRequest);
         expect(spyPut.mock.calls[0][1].headers.Authorization).toBe(sampleHeaders.Authorization);
         expect(spyPut.mock.calls[0][1].headers.Accept).toBe(sampleHeaders.Accept);
         expect(spyPut.mock.calls[0][1].headers['Content-Type']).toBe(sampleHeaders['Content-Type']);
         expect(spyPut.mock.calls[0][1].headers['User-Agent']).toBe(sampleHeaders['User-Agent']);
       });
 
-      it('url sent to request should match given', () => {
-        requestor.delete(sampleRequest);
+      it('url sent to request should match given', async () => {
+        await requestor.delete(sampleRequest);
         expect(spyPut.mock.calls[0][0]).toBe('https://api.smartsheet.com/2.0/URL');
       });
 
-      it('queryString sent to request should match given', () => {
-        requestor.delete(sampleRequestWithQueryParameters);
+      it('queryString sent to request should match given', async () => {
+        await requestor.delete(sampleRequestWithQueryParameters);
         expect(spyPut.mock.calls[0][1].params).toBe(sampleRequestWithQueryParameters.queryParameters);
       });
     });
