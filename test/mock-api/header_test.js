@@ -1,9 +1,9 @@
 import * as helpers from './helpers';
 
-describe("Mock API SDK Tests", function() {
+describe("Mock API SDK Tests", () => {
   const client = helpers.setupClient();
   
-  describe("#Header", function() {
+  describe("#Header", () => {
     const scenarios = [
         {
           "name": "Change Agent Header - Can Be Passed",

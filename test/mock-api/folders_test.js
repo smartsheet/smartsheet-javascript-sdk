@@ -1,9 +1,9 @@
 import * as helpers from './helpers';
 
-describe('Mock API SDK Tests - Folder Endpoints', function() {
+describe('Mock API SDK Tests - Folder Endpoints', () => {
   const client = helpers.setupClient();
 
-  describe('#Folders', function() {
+  describe('#Folders', () => {
     const scenarios = [
       {
         "name": "Get Folder Metadata - No Params",

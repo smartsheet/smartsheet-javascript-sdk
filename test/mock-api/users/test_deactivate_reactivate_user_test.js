@@ -1,6 +1,6 @@
-import assert from 'assert';
 import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
+import { expect } from '@jest/globals';
 import {
     TEST_USER_ID,
     TEST_SUCCESS_MESSAGE,
@@ -11,10 +11,10 @@ import {
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Users - deactivateUser & reactivateUser endpoint tests', function () {
+describe('Users - deactivateUser & reactivateUser endpoint tests', () => {
     let client = createClient();
 
-    it('deactivateUser generated url is correct', async function () {
+    it('deactivateUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -26,10 +26,10 @@ describe('Users - deactivateUser & reactivateUser endpoint tests', function () {
         await client.users.deactivateUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
-        assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/deactivate`));
+        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/deactivate`)).toBeTruthy();
     });
 
-    it('deactivateUser all response body properties', async function () {
+    it('deactivateUser all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -39,12 +39,12 @@ describe('Users - deactivateUser & reactivateUser endpoint tests', function () {
             }
         };
         const response = await client.users.deactivateUser(options);
-        assert.ok(response);
-        assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
-        assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
+        expect(response).toBeTruthy();
+        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
+        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
     });
 
-    it('deactivateUser error 500 response', async function () {
+    it('deactivateUser error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -55,14 +55,14 @@ describe('Users - deactivateUser & reactivateUser endpoint tests', function () {
         };
         try {
             await client.users.deactivateUser(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_500_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_500_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
+            expect(error.message).toBe(ERROR_500_MESSAGE);
         }
     });
 
-    it('deactivateUser error 400 response', async function () {
+    it('deactivateUser error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -73,14 +73,14 @@ describe('Users - deactivateUser & reactivateUser endpoint tests', function () {
         };
         try {
             await client.users.deactivateUser(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_400_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_400_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
+            expect(error.message).toBe(ERROR_400_MESSAGE);
         }
     });
 
-    it('reactivateUser generated url is correct', async function () {
+    it('reactivateUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -92,10 +92,10 @@ describe('Users - deactivateUser & reactivateUser endpoint tests', function () {
         await client.users.reactivateUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
-        assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/reactivate`));
+        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/reactivate`)).toBeTruthy();
     });
 
-    it('reactivateUser all response body properties', async function () {
+    it('reactivateUser all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -105,12 +105,12 @@ describe('Users - deactivateUser & reactivateUser endpoint tests', function () {
             }
         };
         const response = await client.users.reactivateUser(options);
-        assert.ok(response);
-        assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
-        assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
+        expect(response).toBeTruthy();
+        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
+        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
     });
 
-    it('reactivateUser error 500 response', async function () {
+    it('reactivateUser error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -121,14 +121,14 @@ describe('Users - deactivateUser & reactivateUser endpoint tests', function () {
         };
         try {
             await client.users.reactivateUser(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_500_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_500_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
+            expect(error.message).toBe(ERROR_500_MESSAGE);
         }
     });
 
-    it('reactivateUser error 400 response', async function () {
+    it('reactivateUser error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -139,10 +139,10 @@ describe('Users - deactivateUser & reactivateUser endpoint tests', function () {
         };
         try {
             await client.users.reactivateUser(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_400_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_400_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
+            expect(error.message).toBe(ERROR_400_MESSAGE);
         }
     });
 });

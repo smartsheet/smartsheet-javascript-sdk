@@ -1,6 +1,6 @@
-import assert from 'assert';
 import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
+import { expect } from '@jest/globals';
 import {
     TEST_USER_ID,
     TEST_ALTERNATE_EMAIL_ID,
@@ -12,12 +12,12 @@ import {
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Users - makeAlternateEmailPrimary endpoint tests', function () {
+describe('Users - makeAlternateEmailPrimary endpoint tests', () => {
     let client = createClient();
     const TEST_EMAIL = 'alternate.email@smartsheet.com';
     const TEST_CONFIRMED = true;
 
-    it('makeAlternateEmailPrimary generated url is correct', async function () {
+    it('makeAlternateEmailPrimary generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -30,31 +30,34 @@ describe('Users - makeAlternateEmailPrimary endpoint tests', function () {
         await client.users.makeAlternateEmailPrimary(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
-        assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/alternateemails/${TEST_ALTERNATE_EMAIL_ID}/makeprimary`));
+        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/alternateemails/${TEST_ALTERNATE_EMAIL_ID}/makeprimary`)).toBeTruthy();
     });
 
-    it('makeAlternateEmailPrimary all response body properties', async function () {
-        const requestId = crypto.randomUUID();
-        const options = {
-            userId: TEST_USER_ID,
-            alternateEmailId: TEST_ALTERNATE_EMAIL_ID,
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/users/alternate-emails/make-alternate-email-primary/all-response-body-properties'
-            }
-        };
-        const response = await client.users.makeAlternateEmailPrimary(options);
-        assert.ok(response);
-        assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
-        assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
-        assert.ok(Array.isArray(response.data));
-        assert.strictEqual(response.data.length, 1);
-        assert.strictEqual(response.data[0].id, TEST_ALTERNATE_EMAIL_ID);
-        assert.strictEqual(response.data[0].confirmed, TEST_CONFIRMED);
-        assert.strictEqual(response.data[0].email, TEST_EMAIL);
-    });
+    it(
+        'makeAlternateEmailPrimary all response body properties',
+        async () => {
+            const requestId = crypto.randomUUID();
+            const options = {
+                userId: TEST_USER_ID,
+                alternateEmailId: TEST_ALTERNATE_EMAIL_ID,
+                customProperties: {
+                    'x-request-id': requestId,
+                    'x-test-name': '/users/alternate-emails/make-alternate-email-primary/all-response-body-properties'
+                }
+            };
+            const response = await client.users.makeAlternateEmailPrimary(options);
+            expect(response).toBeTruthy();
+            expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
+            expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
+            expect(Array.isArray(response.data)).toBeTruthy();
+            expect(response.data.length).toBe(1);
+            expect(response.data[0].id).toBe(TEST_ALTERNATE_EMAIL_ID);
+            expect(response.data[0].confirmed).toBe(TEST_CONFIRMED);
+            expect(response.data[0].email).toBe(TEST_EMAIL);
+        }
+    );
 
-    it('makeAlternateEmailPrimary error 500 response', async function () {
+    it('makeAlternateEmailPrimary error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -66,14 +69,14 @@ describe('Users - makeAlternateEmailPrimary endpoint tests', function () {
         };
         try {
             await client.users.makeAlternateEmailPrimary(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_500_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_500_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
+            expect(error.message).toBe(ERROR_500_MESSAGE);
         }
     });
 
-    it('makeAlternateEmailPrimary error 400 response', async function () {
+    it('makeAlternateEmailPrimary error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -85,10 +88,10 @@ describe('Users - makeAlternateEmailPrimary endpoint tests', function () {
         };
         try {
             await client.users.makeAlternateEmailPrimary(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_400_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_400_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
+            expect(error.message).toBe(ERROR_400_MESSAGE);
         }
     });
 });

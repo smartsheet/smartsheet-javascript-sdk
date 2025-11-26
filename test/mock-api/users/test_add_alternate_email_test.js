@@ -1,6 +1,6 @@
-import assert from 'assert';
 import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
+import { expect } from '@jest/globals';
 import {
     TEST_USER_ID,
     TEST_ALTERNATE_EMAIL_ID,
@@ -12,13 +12,13 @@ import {
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Users - addAlternateEmail endpoint tests', function () {
+describe('Users - addAlternateEmail endpoint tests', () => {
     let client = createClient();
     const TEST_EMAIL = 'alternate.email@smartsheet.com';
     const TEST_CONFIRMED = false;
     const TEST_BODY = [{ email: TEST_EMAIL }];
 
-    it('addAlternateEmail generated url is correct', async function () {
+    it('addAlternateEmail generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -31,10 +31,10 @@ describe('Users - addAlternateEmail endpoint tests', function () {
         await client.users.addAlternateEmail(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
-        assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/alternateemails`));
+        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/alternateemails`)).toBeTruthy();
     });
 
-    it('addAlternateEmail all response body properties', async function () {
+    it('addAlternateEmail all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -47,20 +47,20 @@ describe('Users - addAlternateEmail endpoint tests', function () {
         const response = await client.users.addAlternateEmail(options);
         const matchedRequest = await findWireMockRequest(requestId);
         
-        assert.ok(response);
-        assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
-        assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
-        assert.ok(Array.isArray(response.data));
-        assert.strictEqual(response.data.length, 1);
-        assert.strictEqual(response.data[0].id, TEST_ALTERNATE_EMAIL_ID);
-        assert.strictEqual(response.data[0].confirmed, TEST_CONFIRMED);
-        assert.strictEqual(response.data[0].email, TEST_EMAIL);
+        expect(response).toBeTruthy();
+        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
+        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
+        expect(Array.isArray(response.data)).toBeTruthy();
+        expect(response.data.length).toBe(1);
+        expect(response.data[0].id).toBe(TEST_ALTERNATE_EMAIL_ID);
+        expect(response.data[0].confirmed).toBe(TEST_CONFIRMED);
+        expect(response.data[0].email).toBe(TEST_EMAIL);
         
         let body = JSON.parse(matchedRequest.body);
-        assert.deepStrictEqual(body, TEST_BODY);
+        expect(body).toEqual(TEST_BODY);
     });
 
-    it('addAlternateEmail error 500 response', async function () {
+    it('addAlternateEmail error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -72,14 +72,14 @@ describe('Users - addAlternateEmail endpoint tests', function () {
         };
         try {
             await client.users.addAlternateEmail(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_500_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_500_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
+            expect(error.message).toBe(ERROR_500_MESSAGE);
         }
     });
 
-    it('addAlternateEmail error 400 response', async function () {
+    it('addAlternateEmail error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -91,10 +91,10 @@ describe('Users - addAlternateEmail endpoint tests', function () {
         };
         try {
             await client.users.addAlternateEmail(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_400_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_400_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
+            expect(error.message).toBe(ERROR_400_MESSAGE);
         }
     });
 });

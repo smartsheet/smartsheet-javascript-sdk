@@ -1,6 +1,6 @@
-import assert from 'assert';
 import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
+import { expect } from '@jest/globals';
 import {
     TEST_USER_ID,
     TEST_PLAN_ID,
@@ -13,14 +13,14 @@ import {
 } from './common_test_constants';
 import { SeatTypes } from '@smartsheet/users/types';
 
-describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
+describe('Users - upgradeUser & downgradeUser endpoint tests', () => {
     let client = createClient();
     const TEST_UPGRADE_SEAT_TYPE = SeatTypes.MEMBER;
     const TEST_DOWNGRADE_SEAT_TYPE = SeatTypes.VIEWER;
     const TEST_UPGRADE_BODY = { seatType: TEST_UPGRADE_SEAT_TYPE };
     const TEST_DOWNGRADE_BODY = { seatType: TEST_DOWNGRADE_SEAT_TYPE };
 
-    it('upgradeUser generated url is correct', async function () {
+    it('upgradeUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -34,10 +34,10 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         await client.users.upgradeUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
-        assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}/upgrade`));
+        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}/upgrade`)).toBeTruthy();
     });
 
-    it('upgradeUser all response body properties', async function () {
+    it('upgradeUser all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -51,15 +51,15 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         const response = await client.users.upgradeUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
         
-        assert.ok(response);
-        assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
-        assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
+        expect(response).toBeTruthy();
+        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
+        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
         
         let body = JSON.parse(matchedRequest.body);
-        assert.deepStrictEqual(body, TEST_UPGRADE_BODY);
+        expect(body).toEqual(TEST_UPGRADE_BODY);
     });
 
-    it('upgradeUser no seat type passed', async function () {
+    it('upgradeUser no seat type passed', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -70,12 +70,12 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
             }
         };
         const response = await client.users.upgradeUser(options);
-        assert.ok(response);
-        assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
-        assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
+        expect(response).toBeTruthy();
+        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
+        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
     });
 
-    it('upgradeUser error 500 response', async function () {
+    it('upgradeUser error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -88,14 +88,14 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         };
         try {
             await client.users.upgradeUser(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_500_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_500_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
+            expect(error.message).toBe(ERROR_500_MESSAGE);
         }
     });
 
-    it('upgradeUser error 400 response', async function () {
+    it('upgradeUser error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -108,14 +108,14 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         };
         try {
             await client.users.upgradeUser(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_400_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_400_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
+            expect(error.message).toBe(ERROR_400_MESSAGE);
         }
     });
 
-    it('downgradeUser generated url is correct', async function () {
+    it('downgradeUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -128,10 +128,10 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         };
         await client.users.downgradeUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
-        assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}/downgrade`));
+        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}/downgrade`)).toBeTruthy();
     });
 
-    it('downgradeUser all response body properties', async function () {
+    it('downgradeUser all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -145,15 +145,15 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         const response = await client.users.downgradeUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
         
-        assert.ok(response);
-        assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
-        assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
+        expect(response).toBeTruthy();
+        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
+        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
         
         let body = JSON.parse(matchedRequest.body);
-        assert.deepStrictEqual(body, TEST_DOWNGRADE_BODY);
+        expect(body).toEqual(TEST_DOWNGRADE_BODY);
     });
 
-    it('downgradeUser error 500 response', async function () {
+    it('downgradeUser error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -166,14 +166,14 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         };
         try {
             await client.users.downgradeUser(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_500_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_500_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
+            expect(error.message).toBe(ERROR_500_MESSAGE);
         }
     });
 
-    it('downgradeUser error 400 response', async function () {
+    it('downgradeUser error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
@@ -186,10 +186,10 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', function () {
         };
         try {
             await client.users.downgradeUser(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_400_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_400_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
+            expect(error.message).toBe(ERROR_400_MESSAGE);
         }
     });
 });

@@ -1,10 +1,10 @@
-import sinon from 'sinon';
 import { create as createRequestor } from '../../lib/utils/httpRequestor';
 import * as constants from '../../lib/utils/constants';
 import _ from 'underscore';
 import * as smartsheet from '@smartsheet';
+import { expect, jest, describe, beforeEach, afterEach, it } from '@jest/globals';
 
-describe('Method Unit Tests', function () {
+describe('Method Unit Tests', () => {
     const requestor = createRequestor({});
     
     const testGroups = [
@@ -334,70 +334,75 @@ describe('Method Unit Tests', function () {
     ];
 
     _.each(testGroups, function (testGroup) {
-        describe('#' + testGroup.name, function () {
+        describe('#' + testGroup.name, () => {
             _.each(testGroup.methods, function (method) {
-                describe('#' + method.name, function () {
+                describe('#' + method.name, () => {
                     let stub;
                     let client;
                     const originalOptions = (method.options === undefined) ? undefined : JSON.parse(JSON.stringify(method.options));
 
-                    beforeEach(function () {
-                        stub = sinon.stub(requestor, method.stub);
+                    beforeEach(() => {
+                        stub = jest.spyOn(requestor, method.stub).mockImplementation(() => {});
                         client = smartsheet.createClient({accessToken: "token", requestor: requestor, userAgent: "user agent", baseUrl: "base url"});
                     });
 
-                    afterEach(function () {
-                        stub.restore();
+                    afterEach(() => {
+                        stub.mockRestore();
                     });
 
-                    it('method exists', function () {
-                        client.should.have.property(testGroup.name);
-                        client[testGroup.name].should.have.property(method.name);
+                    it('method exists', () => {
+                        expect(client).toHaveProperty(testGroup.name);
+                        expect(client[testGroup.name]).toHaveProperty(method.name);
                     });
 
-                    it('calls requestor once', function () {
+                    it('calls requestor once', () => {
                         client[testGroup.name][method.name](method.options);
-                        stub.callCount.should.be.equal(1);
+                        expect(stub.mock.calls.length).toBe(1);
                     });
 
-                    it('allows arbitrary options', function () {
+                    it('allows arbitrary options', () => {
                         const optionsWithArbitraryOption = _.extend({somethingArbitrary: 123}, method.options);
                         client[testGroup.name][method.name](optionsWithArbitraryOption);
-                        stub.args[0][0].should.have.properties({somethingArbitrary: 123});
+                        expect(stub.mock.calls[0][0]).toHaveProperty('somethingArbitrary', 123);
                     });
 
-                    it('passes constructor args', function () {
+                    it('passes constructor args', () => {
                         client[testGroup.name][method.name](method.options);
-                        stub.args[0][0].should.have.properties({userAgent: "user agent", baseUrl: "base url"});
+                        expect(stub.mock.calls[0][0]).toHaveProperty('userAgent', "user agent");
+                        expect(stub.mock.calls[0][0]).toHaveProperty('baseUrl', "base url");
                     });
 
                     if (method.noAuth === true) {
-                        it('does not pass access token', function () {
+                        it('does not pass access token', () => {
                             client[testGroup.name][method.name](method.options);
-                            stub.args[0][0].should.not.have.properties({accessToken: "token"});
+                            expect(stub.mock.calls[0][0]).not.toHaveProperty('accessToken', "token");
                         });
                     }
                     else {
-                        it('passes access token', function () {
+                        it('passes access token', () => {
                             client[testGroup.name][method.name](method.options);
-                            stub.args[0][0].should.have.properties({accessToken: "token"});
+                            expect(stub.mock.calls[0][0]).toHaveProperty('accessToken', "token");
                         });
                     }
 
-                    it('multiple requests are correct', function () {
+                    it('multiple requests are correct', () => {
                         client[testGroup.name][method.name](method.options);
                         client[testGroup.name][method.name](method.options);
-                        stub.args[0][0].should.have.properties(method.expectedRequest);
+                        // Check that the request matches expected properties
+                        const actualRequest = stub.mock.calls[0][0];
+                        _.each(method.expectedRequest, (value, key) => {
+                            expect(actualRequest).toHaveProperty(key, value);
+                        });
                     });
 
-                    it('does not mutate options', function () {
+                    it('does not mutate options', () => {
                         if (originalOptions === undefined) {
                             return;
                         }
 
                         const beforeOptions = JSON.stringify(originalOptions);
                         client[testGroup.name][method.name](method.options);
-                        beforeOptions.should.equal(JSON.stringify(method.options));
+                        expect(beforeOptions).toBe(JSON.stringify(method.options));
                     });
                 });
             });

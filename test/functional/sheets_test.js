@@ -1,50 +1,65 @@
-import sinon from 'sinon';
-import should from 'should';
 import { create as createRequestor } from '../../lib/utils/httpRequestor';
 import * as client from '@smartsheet';
+import { expect, jest, describe, beforeEach, afterEach, it } from '@jest/globals';
 
-describe('Client Unit Tests', function() {
+describe('Client Unit Tests', () => {
   let requestor = null;
   let smartsheet = null;
+  let spyGet = null;
+  const mockResponse = {
+    status: 200,
+    headers: {
+      'content-type':'application/json;charset=UTF-8'
+    },
+    data: {}
+  };
 
-  beforeEach(function() {
+  beforeEach(() => {
     requestor = createRequestor({});
-    sinon.spy(requestor, 'get');
+    spyGet = jest.spyOn(requestor, 'get');
+    spyGet.mockReturnValue(Promise.resolve(mockResponse));
     smartsheet = client.createClient({accessToken:'1234', requestor: requestor});
   });
 
-  afterEach(function() {
+  afterEach(() => {
     smartsheet = null;
     requestor = null;
+    spyGet.mockRestore();
   });
 
-  describe('#Sheets', function() {
-    it('should not change base URL when getSheetVersion is called first', function() {
-      // First call to getSheet
-      smartsheet.sheets.getSheet({ id: 100 });
-      should(requestor.get.firstCall.args[0]).have.property('url', 'sheets');
+  describe('#Sheets', () => {
+    it(
+      'should not change base URL when getSheetVersion is called first',
+      async () => {
+        // First call to getSheet
+        await smartsheet.sheets.getSheet({ id: 100 });
+        expect(spyGet.mock.calls[0][0]).toHaveProperty('url', 'sheets');
 
-      // First call to getSheetVersion
-      smartsheet.sheets.getSheetVersion({ sheetId: 100 });
-      should(requestor.get.secondCall.args[0]).have.property('url', 'sheets/100/version');
+        // First call to getSheetVersion
+        await smartsheet.sheets.getSheetVersion({ sheetId: 100 });
+        expect(spyGet.mock.calls[1][0]).toHaveProperty('url', 'sheets/100/version');
 
-      // Second call to getSheet
-      smartsheet.sheets.getSheet({ id: 100 });
-      should(requestor.get.thirdCall.args[0]).have.property('url', 'sheets');
-    });
+        // Second call to getSheet
+        await smartsheet.sheets.getSheet({ id: 100 });
+        expect(spyGet.mock.calls[2][0]).toHaveProperty('url', 'sheets');
+      }
+    );
 
-    it('should not change base URL when getOrganizationSheets is called first', function () {
-      // First call to getSheet
-      smartsheet.sheets.getSheet({ id: 100 });
-      should(requestor.get.firstCall.args[0]).have.property('url', 'sheets');
+    it(
+      'should not change base URL when getOrganizationSheets is called first',
+      async () => {
+        // First call to getSheet
+        await smartsheet.sheets.getSheet({ id: 100 });
+        expect(spyGet.mock.calls[0][0]).toHaveProperty('url', 'sheets');
 
-      // First call to getSheetVersion
-      smartsheet.sheets.listOrganizationSheets();
-      should(requestor.get.secondCall.args[0]).have.property('url', 'users/sheets');
+        // First call to getSheetVersion
+        await smartsheet.sheets.listOrganizationSheets();
+        expect(spyGet.mock.calls[1][0]).toHaveProperty('url', 'users/sheets');
 
-      // Second call to getSheet
-      smartsheet.sheets.getSheet({ id: 100 });
-      should(requestor.get.thirdCall.args[0]).have.property('url', 'sheets');
-    });
+        // Second call to getSheet
+        await smartsheet.sheets.getSheet({ id: 100 });
+        expect(spyGet.mock.calls[2][0]).toHaveProperty('url', 'sheets');
+      }
+    );
   });
 });

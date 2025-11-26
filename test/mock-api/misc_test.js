@@ -1,9 +1,9 @@
 import * as helpers from './helpers';
 
-describe("Mock API SDK Tests", function() {
+describe("Mock API SDK Tests", () => {
   const client = helpers.setupClient();
 
-  describe("#Misc", function() {
+  describe("#Misc", () => {
     const scenarios = [
       {
         name: "Move row to another sheet",

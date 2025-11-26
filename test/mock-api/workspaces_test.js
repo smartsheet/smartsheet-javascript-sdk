@@ -1,9 +1,9 @@
 import * as helpers from './helpers';
 
-describe('Mock API SDK Tests - Workspace Endpoints', function() {
+describe('Mock API SDK Tests - Workspace Endpoints', () => {
   const client = helpers.setupClient();
 
-  describe('#Workspaces', function() {
+  describe('#Workspaces', () => {
     const scenarios = [
       {
         "name": "Get Workspace Metadata - No Params",

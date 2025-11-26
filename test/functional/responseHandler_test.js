@@ -1,9 +1,10 @@
 import _ from 'underscore';
 import handleResponse from '../../lib/utils/responseHandler';
+import { expect, describe, beforeEach, afterEach, it } from '@jest/globals';
 
-describe('Utils Unit Tests', function() {
-  describe('#responseHandler', function() {
-    describe('#handleResponse', function() {
+describe('Utils Unit Tests', () => {
+  describe('#responseHandler', () => {
+    describe('#handleResponse', () => {
       let mockResponse = null;
       let mockBody = null;
       let mockBodyError = null;
@@ -35,23 +36,23 @@ describe('Utils Unit Tests', function() {
         mockResponse.status = 500;
         mockResponse.data = mockBodyError;
         const errResponse = handleResponse(mockResponse);
-        errResponse.statusCode.should.equal(500);
-        errResponse.message.should.equal('EMERGENCY');
-        errResponse.errorCode.should.equal(911);
+        expect(errResponse.statusCode).toBe(500);
+        expect(errResponse.message).toBe('EMERGENCY');
+        expect(errResponse.errorCode).toBe(911);
       });
 
       it('should return parsed JSON body', () => {
         const result = handleResponse(mockResponse);
-        result.content.hello.should.equal(mockBody.hello);
+        expect(result.content.hello).toBe(mockBody.hello);
       });
 
       it('should return the body if content type is not application/json', () => {
         mockResponse.headers['content-type'] = 'application/xml';
         mockResponse.data = mockBody;
         const result = handleResponse(mockResponse);
-        result.headers.should.equal(mockResponse.headers);
-        result.statusCode.should.equal(mockResponse.status);
-        result.content.should.equal(mockBody);
+        expect(result.headers).toBe(mockResponse.headers);
+        expect(result.statusCode).toBe(mockResponse.status);
+        expect(result.content).toBe(mockBody);
       });
     });
   });

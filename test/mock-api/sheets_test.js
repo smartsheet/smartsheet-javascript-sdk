@@ -1,9 +1,9 @@
 import * as helpers from './helpers';
 
-describe('Mock API SDK Tests', function() {
+describe('Mock API SDK Tests', () => {
   const client = helpers.setupClient();
 
-  describe('#Sheets', function() {
+  describe('#Sheets', () => {
   const scenarios = [
       {
         "name": "List Sheets - No Params",

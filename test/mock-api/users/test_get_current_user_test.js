@@ -1,6 +1,6 @@
-import assert from 'assert';
 import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
+import { expect } from '@jest/globals';
 import {
     TEST_USER_ID,
     TEST_ACCOUNT_ID,
@@ -22,7 +22,7 @@ import {
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Users - getCurrentUser endpoint tests', function () {
+describe('Users - getCurrentUser endpoint tests', () => {
     let client = createClient();
     const userId = TEST_USER_ID;
     const accountId = TEST_ACCOUNT_ID;
@@ -62,7 +62,7 @@ describe('Users - getCurrentUser endpoint tests', function () {
     const groupCreatedAt = '2020-01-15T10:30:00Z';
     const groupModifiedAt = '2020-06-20T14:45:00Z';
 
-    it('getCurrentUser generated url is correct', async function () {
+    it('getCurrentUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             customProperties: {
@@ -73,10 +73,10 @@ describe('Users - getCurrentUser endpoint tests', function () {
         await client.users.getCurrentUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
-        assert.ok(matchedRequest.url.includes('/2.0/users/me'));
+        expect(matchedRequest.url.includes('/2.0/users/me')).toBeTruthy();
     });
 
-    it('getCurrentUser all response body properties', async function () {
+    it('getCurrentUser all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             customProperties: {
@@ -85,49 +85,49 @@ describe('Users - getCurrentUser endpoint tests', function () {
             }
         };
         const response = await client.users.getCurrentUser(options);
-        assert.ok(response);
-        assert.strictEqual(response.id, userId);
-        assert.strictEqual(response.account.id, accountId);
-        assert.strictEqual(response.account.name, accountName);
-        assert.strictEqual(response.admin, admin);
-        assert.strictEqual(response.alternateEmails.length, 1);
-        assert.strictEqual(response.alternateEmails[0].id, alternateEmailId);
-        assert.strictEqual(response.alternateEmails[0].confirmed, alternateEmailConfirmed);
-        assert.strictEqual(response.alternateEmails[0].email, alternateEmail);
-        assert.strictEqual(response.company, company);
-        assert.strictEqual(response.customWelcomeScreenViewed, customWelcomeScreenViewed);
-        assert.strictEqual(response.department, department);
-        assert.strictEqual(response.email, email);
-        assert.strictEqual(response.firstName, firstName);
-        assert.strictEqual(response.groupAdmin, groupAdmin);
-        assert.strictEqual(response.jiraAdmin, jiraAdmin);
-        assert.strictEqual(response.lastLogin, lastLogin);
-        assert.strictEqual(response.lastName, lastName);
-        assert.strictEqual(response.licensedSheetCreator, licensedSheetCreator);
-        assert.strictEqual(response.locale, locale);
-        assert.strictEqual(response.mobilePhone, mobilePhone);
-        assert.strictEqual(response.profileImage.imageId, profileImageId);
-        assert.strictEqual(response.profileImage.height, profileImageHeight);
-        assert.strictEqual(response.profileImage.width, profileImageWidth);
-        assert.strictEqual(response.resourceViewer, resourceViewer);
-        assert.strictEqual(response.role, role);
-        assert.strictEqual(response.salesforceAdmin, salesforceAdmin);
-        assert.strictEqual(response.salesforceUser, salesforceUser);
-        assert.strictEqual(response.sheetCount, sheetCount);
-        assert.strictEqual(response.timeZone, timeZone);
-        assert.strictEqual(response.title, title);
-        assert.strictEqual(response.workPhone, workPhone);
-        assert.strictEqual(response.data.length, 1);
-        assert.strictEqual(response.data[0].id, groupId);
-        assert.strictEqual(response.data[0].name, groupName);
-        assert.strictEqual(response.data[0].description, groupDescription);
-        assert.strictEqual(response.data[0].owner, groupOwner);
-        assert.strictEqual(response.data[0].ownerId, groupOwnerId);
-        assert.strictEqual(response.data[0].createdAt, groupCreatedAt);
-        assert.strictEqual(response.data[0].modifiedAt, groupModifiedAt);
+        expect(response).toBeTruthy();
+        expect(response.id).toBe(userId);
+        expect(response.account.id).toBe(accountId);
+        expect(response.account.name).toBe(accountName);
+        expect(response.admin).toBe(admin);
+        expect(response.alternateEmails.length).toBe(1);
+        expect(response.alternateEmails[0].id).toBe(alternateEmailId);
+        expect(response.alternateEmails[0].confirmed).toBe(alternateEmailConfirmed);
+        expect(response.alternateEmails[0].email).toBe(alternateEmail);
+        expect(response.company).toBe(company);
+        expect(response.customWelcomeScreenViewed).toBe(customWelcomeScreenViewed);
+        expect(response.department).toBe(department);
+        expect(response.email).toBe(email);
+        expect(response.firstName).toBe(firstName);
+        expect(response.groupAdmin).toBe(groupAdmin);
+        expect(response.jiraAdmin).toBe(jiraAdmin);
+        expect(response.lastLogin).toBe(lastLogin);
+        expect(response.lastName).toBe(lastName);
+        expect(response.licensedSheetCreator).toBe(licensedSheetCreator);
+        expect(response.locale).toBe(locale);
+        expect(response.mobilePhone).toBe(mobilePhone);
+        expect(response.profileImage.imageId).toBe(profileImageId);
+        expect(response.profileImage.height).toBe(profileImageHeight);
+        expect(response.profileImage.width).toBe(profileImageWidth);
+        expect(response.resourceViewer).toBe(resourceViewer);
+        expect(response.role).toBe(role);
+        expect(response.salesforceAdmin).toBe(salesforceAdmin);
+        expect(response.salesforceUser).toBe(salesforceUser);
+        expect(response.sheetCount).toBe(sheetCount);
+        expect(response.timeZone).toBe(timeZone);
+        expect(response.title).toBe(title);
+        expect(response.workPhone).toBe(workPhone);
+        expect(response.data.length).toBe(1);
+        expect(response.data[0].id).toBe(groupId);
+        expect(response.data[0].name).toBe(groupName);
+        expect(response.data[0].description).toBe(groupDescription);
+        expect(response.data[0].owner).toBe(groupOwner);
+        expect(response.data[0].ownerId).toBe(groupOwnerId);
+        expect(response.data[0].createdAt).toBe(groupCreatedAt);
+        expect(response.data[0].modifiedAt).toBe(groupModifiedAt);
     });
 
-    it('getCurrentUser required response body properties', async function () {
+    it('getCurrentUser required response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             customProperties: {
@@ -136,37 +136,37 @@ describe('Users - getCurrentUser endpoint tests', function () {
             }
         };
         const response = await client.users.getCurrentUser(options);
-        assert.ok(response);
-        assert.strictEqual(response.id, userId);
-        assert.strictEqual(response.account.id, accountId);
-        assert.strictEqual(response.account.name, accountName);
-        assert.strictEqual(response.admin, admin);
-        assert.strictEqual(response.alternateEmails, undefined);
-        assert.strictEqual(response.company, company);
-        assert.strictEqual(response.customWelcomeScreenViewed, undefined);
-        assert.strictEqual(response.department, department);
-        assert.strictEqual(response.email, email);
-        assert.strictEqual(response.firstName, firstName);
-        assert.strictEqual(response.groupAdmin, groupAdmin);
-        assert.strictEqual(response.jiraAdmin, jiraAdmin);
-        assert.strictEqual(response.lastLogin, undefined);
-        assert.strictEqual(response.lastName, lastName);
-        assert.strictEqual(response.licensedSheetCreator, licensedSheetCreator);
-        assert.strictEqual(response.locale, locale);
-        assert.strictEqual(response.mobilePhone, mobilePhone);
-        assert.strictEqual(response.profileImage, undefined);
-        assert.strictEqual(response.resourceViewer, resourceViewer);
-        assert.strictEqual(response.role, role);
-        assert.strictEqual(response.salesforceAdmin, salesforceAdmin);
-        assert.strictEqual(response.salesforceUser, salesforceUser);
-        assert.strictEqual(response.sheetCount, sheetCount);
-        assert.strictEqual(response.timeZone, timeZone);
-        assert.strictEqual(response.title, title);
-        assert.strictEqual(response.workPhone, workPhone);
-        assert.strictEqual(response.data.length, 0);
+        expect(response).toBeTruthy();
+        expect(response.id).toBe(userId);
+        expect(response.account.id).toBe(accountId);
+        expect(response.account.name).toBe(accountName);
+        expect(response.admin).toBe(admin);
+        expect(response.alternateEmails).toBe(undefined);
+        expect(response.company).toBe(company);
+        expect(response.customWelcomeScreenViewed).toBe(undefined);
+        expect(response.department).toBe(department);
+        expect(response.email).toBe(email);
+        expect(response.firstName).toBe(firstName);
+        expect(response.groupAdmin).toBe(groupAdmin);
+        expect(response.jiraAdmin).toBe(jiraAdmin);
+        expect(response.lastLogin).toBe(undefined);
+        expect(response.lastName).toBe(lastName);
+        expect(response.licensedSheetCreator).toBe(licensedSheetCreator);
+        expect(response.locale).toBe(locale);
+        expect(response.mobilePhone).toBe(mobilePhone);
+        expect(response.profileImage).toBe(undefined);
+        expect(response.resourceViewer).toBe(resourceViewer);
+        expect(response.role).toBe(role);
+        expect(response.salesforceAdmin).toBe(salesforceAdmin);
+        expect(response.salesforceUser).toBe(salesforceUser);
+        expect(response.sheetCount).toBe(sheetCount);
+        expect(response.timeZone).toBe(timeZone);
+        expect(response.title).toBe(title);
+        expect(response.workPhone).toBe(workPhone);
+        expect(response.data.length).toBe(0);
     });
 
-    it('getCurrentUser error 500 response', async function () {
+    it('getCurrentUser error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             customProperties: {
@@ -176,14 +176,14 @@ describe('Users - getCurrentUser endpoint tests', function () {
         };
         try {
             await client.users.getCurrentUser(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_500_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_500_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
+            expect(error.message).toBe(ERROR_500_MESSAGE);
         }
     });
 
-    it('getCurrentUser error 400 response', async function () {
+    it('getCurrentUser error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             customProperties: {
@@ -193,10 +193,10 @@ describe('Users - getCurrentUser endpoint tests', function () {
         };
         try {
             await client.users.getCurrentUser(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_400_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_400_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
+            expect(error.message).toBe(ERROR_400_MESSAGE);
         }
     });
 });

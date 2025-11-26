@@ -8,18 +8,19 @@
 import _ from 'underscore';
 import fs from 'fs';
 import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
-const argv = yargs
+const argv = yargs(hideBin(process.argv))
     .alias('s', 'scenarios')
     .describe('s', 'Path to the JSON file containing new scenarios')
     .alias('o', 'output')
     .describe('o', 'File to output the new tests to')
     .demandOption(['scenarios', 'output'])
-    .argv;
+    .parseSync();
 
 
 // load scenarios
-const scenarios = JSON.parse(fs.readFileSync(argv.scenarios, 'utf8'));
+const scenarios = JSON.parse(fs.readFileSync(String(argv.scenarios), 'utf8'));
 
 // create tests
 const tests = [];
@@ -42,4 +43,4 @@ _.each(scenarios, function (scenario) {
 });
 
 // save to file
-fs.writeFileSync(argv.output, JSON.stringify(tests, null, 2));
+fs.writeFileSync(String(argv.output), JSON.stringify(tests, null, 2));
