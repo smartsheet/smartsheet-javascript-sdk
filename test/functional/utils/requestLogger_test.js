@@ -1,23 +1,13 @@
 import { smartSheetURIs } from '@smartsheet';
 import { create as createRequestLogger } from '../../../lib/utils/requestLogger';
-import { expect, jest, describe, beforeEach, it, beforeAll, afterAll } from '@jest/globals';
+import { expect, jest, describe, beforeEach, afterEach, it } from '@jest/globals';
 
 describe('#RequestLogger', () => {
     let requestLogger;
     let loggerFakes;
 
-    beforeAll(() => {
-        jest.useFakeTimers({ 
-            now: new Date(0),
-            doNotFake: ['performance']
-        });
-    });
-
-    afterAll(() => {
-        jest.useRealTimers();
-    });
-
     beforeEach(() => {
+        jest.useFakeTimers();
         jest.setSystemTime(new Date(0));
         loggerFakes = {
             log: jest.fn(),
@@ -30,6 +20,10 @@ describe('#RequestLogger', () => {
             filters: [],
         };
         requestLogger = createRequestLogger(loggerFakes);
+    });
+
+    afterEach(() => {
+        jest.useRealTimers();
     });
 
     describe('#log', () => {
