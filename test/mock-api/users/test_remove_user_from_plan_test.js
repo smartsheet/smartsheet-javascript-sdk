@@ -1,6 +1,6 @@
-import assert from 'assert';
 import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
+import { expect } from '@jest/globals';
 import {
     TEST_USER_ID,
     TEST_PLAN_ID,
@@ -28,7 +28,7 @@ describe('Users - removeUserFromPlan endpoint tests', () => {
         await client.users.removeUserFromPlan(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
-        assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}`));
+        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}`)).toBeTruthy();
     });
 
     it('removeUserFromPlan all response body properties', async () => {
@@ -42,9 +42,9 @@ describe('Users - removeUserFromPlan endpoint tests', () => {
             }
         };
         const response = await client.users.removeUserFromPlan(options);
-        assert.ok(response);
-        assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
-        assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
+        expect(response).toBeTruthy();
+        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
+        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
     });
 
     it('removeUserFromPlan error 500 response', async () => {
@@ -59,10 +59,10 @@ describe('Users - removeUserFromPlan endpoint tests', () => {
         };
         try {
             await client.users.removeUserFromPlan(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_500_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_500_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
+            expect(error.message).toBe(ERROR_500_MESSAGE);
         }
     });
 
@@ -78,10 +78,10 @@ describe('Users - removeUserFromPlan endpoint tests', () => {
         };
         try {
             await client.users.removeUserFromPlan(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_400_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_400_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
+            expect(error.message).toBe(ERROR_400_MESSAGE);
         }
     });
 });

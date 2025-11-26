@@ -1,4 +1,3 @@
-import assert from 'assert';
 import _ from 'underscore';
 import * as smartsheet from '@smartsheet';
 import { expect, jest, describe, it, beforeAll, afterAll } from '@jest/globals';
@@ -44,7 +43,7 @@ function defineMockApiTest(scenario) {
             return scenario.method(scenario.options)
             .then(function(response) {
                 if (scenario.shouldError) {
-                    assert.fail('Expected error response, received success.');
+                    expect(true).toBe(false); // Expected error response, received success
                 }
                 else {
                     expect(response).toBeDefined();

@@ -1,6 +1,6 @@
-import assert from 'assert';
 import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
+import { expect } from '@jest/globals';
 import {
     TEST_USER_ID,
     TEST_PLAN_ID,
@@ -40,9 +40,9 @@ describe('Users - listUserPlans endpoint tests', () => {
         const lastKeyActual = queryParams.lastKey.values[0];
         const maxItemsActual = parseInt(queryParams.maxItems.values[0]);
         
-        assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans`));
-        assert.strictEqual(lastKeyActual, lastKey);
-        assert.strictEqual(maxItemsActual, maxItems);
+        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans`)).toBeTruthy();
+        expect(lastKeyActual).toBe(lastKey);
+        expect(maxItemsActual).toBe(maxItems);
     });
 
     it('listUserPlans all response body properties', async () => {
@@ -60,13 +60,13 @@ describe('Users - listUserPlans endpoint tests', () => {
         };
         const response = await client.users.listUserPlans(options);
         
-        assert.ok(response);
-        assert.strictEqual(response.lastKey, lastKey);
-        assert.strictEqual(response.data[0].planId, TEST_PLAN_ID);
-        assert.strictEqual(response.data[0].seatType, seatType);
-        assert.strictEqual(response.data[0].seatTypeLastChangedAt, seatTypeLastChangedAt);
-        assert.strictEqual(response.data[0].provisionalExpirationDate, provisionalExpirationDate);
-        assert.strictEqual(response.data[0].isInternal, isInternalTrue);
+        expect(response).toBeTruthy();
+        expect(response.lastKey).toBe(lastKey);
+        expect(response.data[0].planId).toBe(TEST_PLAN_ID);
+        expect(response.data[0].seatType).toBe(seatType);
+        expect(response.data[0].seatTypeLastChangedAt).toBe(seatTypeLastChangedAt);
+        expect(response.data[0].provisionalExpirationDate).toBe(provisionalExpirationDate);
+        expect(response.data[0].isInternal).toBe(isInternalTrue);
     });
 
     it('listUserPlans required response body properties', async () => {
@@ -80,12 +80,12 @@ describe('Users - listUserPlans endpoint tests', () => {
         };
         const response = await client.users.listUserPlans(options);
         
-        assert.ok(response);
-        assert.strictEqual(response.data[0].planId, TEST_PLAN_ID);
-        assert.strictEqual(response.data[0].seatType, seatType);
-        assert.strictEqual(response.data[0].seatTypeLastChangedAt, undefined);
-        assert.strictEqual(response.data[0].provisionalExpirationDate, undefined);
-        assert.strictEqual(response.data[0].isInternal, isInternalTrue);
+        expect(response).toBeTruthy();
+        expect(response.data[0].planId).toBe(TEST_PLAN_ID);
+        expect(response.data[0].seatType).toBe(seatType);
+        expect(response.data[0].seatTypeLastChangedAt).toBe(undefined);
+        expect(response.data[0].provisionalExpirationDate).toBe(undefined);
+        expect(response.data[0].isInternal).toBe(isInternalTrue);
     });
 
     it('listUserPlans error 500 response', async () => {
@@ -99,10 +99,10 @@ describe('Users - listUserPlans endpoint tests', () => {
         };
         try {
             await client.users.listUserPlans(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_500_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_500_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
+            expect(error.message).toBe(ERROR_500_MESSAGE);
         }
     });
 
@@ -117,10 +117,10 @@ describe('Users - listUserPlans endpoint tests', () => {
         };
         try {
             await client.users.listUserPlans(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_400_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_400_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
+            expect(error.message).toBe(ERROR_400_MESSAGE);
         }
     });
 });

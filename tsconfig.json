@@ -10,7 +10,6 @@
     "module": "node16",
     "types": ["node", "jest"],
     "esModuleInterop": true,
-    "isolatedModules": true,
     "rootDir": ".",
     "paths": {
       "@smartsheet": ["./index.ts"],

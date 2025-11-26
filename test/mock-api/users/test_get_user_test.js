@@ -1,6 +1,6 @@
-import assert from 'assert';
 import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
+import { expect } from '@jest/globals';
 import {
     TEST_USER_ID,
     TEST_ACCOUNT_ID,
@@ -65,7 +65,7 @@ describe('Users - getUser endpoint tests', () => {
         };
         await client.users.getUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
-        assert.ok(matchedRequest.url.includes(`/2.0/users/${TEST_USER_ID}`));
+        expect(matchedRequest.url.includes(`/2.0/users/${TEST_USER_ID}`)).toBeTruthy();
     });
 
     it('getUser all response body properties', async () => {
@@ -80,43 +80,43 @@ describe('Users - getUser endpoint tests', () => {
         const response = await client.users.getUser(options);
         
         // Verify required properties
-        assert.ok(response);
-        assert.strictEqual(response.id, TEST_USER_ID);
-        assert.ok(response.account);
-        assert.strictEqual(response.account.id, accountId);
-        assert.strictEqual(response.account.name, accountName);
-        assert.strictEqual(response.company, company);
-        assert.strictEqual(response.department, department);
-        assert.strictEqual(response.email, email);
-        assert.strictEqual(response.firstName, firstName);
-        assert.strictEqual(response.jiraAdmin, jiraAdmin);
-        assert.strictEqual(response.lastName, lastName);
-        assert.strictEqual(response.locale, locale);
-        assert.strictEqual(response.mobilePhone, mobilePhone);
-        assert.strictEqual(response.role, role);
-        assert.strictEqual(response.salesforceAdmin, salesforceAdmin);
-        assert.strictEqual(response.salesforceUser, salesforceUser);
-        assert.strictEqual(response.timeZone, timeZone);
-        assert.strictEqual(response.title, title);
-        assert.strictEqual(response.workPhone, workPhone);
+        expect(response).toBeTruthy();
+        expect(response.id).toBe(TEST_USER_ID);
+        expect(response.account).toBeTruthy();
+        expect(response.account.id).toBe(accountId);
+        expect(response.account.name).toBe(accountName);
+        expect(response.company).toBe(company);
+        expect(response.department).toBe(department);
+        expect(response.email).toBe(email);
+        expect(response.firstName).toBe(firstName);
+        expect(response.jiraAdmin).toBe(jiraAdmin);
+        expect(response.lastName).toBe(lastName);
+        expect(response.locale).toBe(locale);
+        expect(response.mobilePhone).toBe(mobilePhone);
+        expect(response.role).toBe(role);
+        expect(response.salesforceAdmin).toBe(salesforceAdmin);
+        expect(response.salesforceUser).toBe(salesforceUser);
+        expect(response.timeZone).toBe(timeZone);
+        expect(response.title).toBe(title);
+        expect(response.workPhone).toBe(workPhone);
 
         // Verify optional properties
-        assert.strictEqual(response.admin, admin);
-        assert.ok(response.alternateEmails);
-        assert.strictEqual(response.alternateEmails.length, 1);
-        assert.strictEqual(response.alternateEmails[0].id, alternateEmailId);
-        assert.strictEqual(response.alternateEmails[0].confirmed, alternateEmailConfirmed);
-        assert.strictEqual(response.alternateEmails[0].email, alternateEmailAddress);
-        assert.strictEqual(response.customWelcomeScreenViewed, customWelcomeScreenViewed);
-        assert.strictEqual(response.groupAdmin, groupAdmin);
-        assert.strictEqual(response.lastLogin, lastLogin);
-        assert.strictEqual(response.licensedSheetCreator, licensedSheetCreator);
-        assert.ok(response.profileImage);
-        assert.strictEqual(response.profileImage.imageId, profileImageId);
-        assert.strictEqual(response.profileImage.height, profileImageHeight);
-        assert.strictEqual(response.profileImage.width, profileImageWidth);
-        assert.strictEqual(response.resourceViewer, resourceViewer);
-        assert.strictEqual(response.sheetCount, sheetCount);
+        expect(response.admin).toBe(admin);
+        expect(response.alternateEmails).toBeTruthy();
+        expect(response.alternateEmails.length).toBe(1);
+        expect(response.alternateEmails[0].id).toBe(alternateEmailId);
+        expect(response.alternateEmails[0].confirmed).toBe(alternateEmailConfirmed);
+        expect(response.alternateEmails[0].email).toBe(alternateEmailAddress);
+        expect(response.customWelcomeScreenViewed).toBe(customWelcomeScreenViewed);
+        expect(response.groupAdmin).toBe(groupAdmin);
+        expect(response.lastLogin).toBe(lastLogin);
+        expect(response.licensedSheetCreator).toBe(licensedSheetCreator);
+        expect(response.profileImage).toBeTruthy();
+        expect(response.profileImage.imageId).toBe(profileImageId);
+        expect(response.profileImage.height).toBe(profileImageHeight);
+        expect(response.profileImage.width).toBe(profileImageWidth);
+        expect(response.resourceViewer).toBe(resourceViewer);
+        expect(response.sheetCount).toBe(sheetCount);
     });
 
     it('getUser required response body properties', async () => {
@@ -131,36 +131,36 @@ describe('Users - getUser endpoint tests', () => {
         const response = await client.users.getUser(options);
         
         // Verify required properties
-        assert.ok(response);
-        assert.strictEqual(response.id, TEST_USER_ID);
-        assert.ok(response.account);
-        assert.strictEqual(response.account.id, accountId);
-        assert.strictEqual(response.account.name, accountName);
-        assert.strictEqual(response.company, company);
-        assert.strictEqual(response.department, department);
-        assert.strictEqual(response.email, email);
-        assert.strictEqual(response.firstName, firstName);
-        assert.strictEqual(response.jiraAdmin, jiraAdmin);
-        assert.strictEqual(response.lastName, lastName);
-        assert.strictEqual(response.locale, locale);
-        assert.strictEqual(response.mobilePhone, mobilePhone);
-        assert.strictEqual(response.role, role);
-        assert.strictEqual(response.salesforceAdmin, salesforceAdmin);
-        assert.strictEqual(response.salesforceUser, salesforceUser);
-        assert.strictEqual(response.timeZone, timeZone);
-        assert.strictEqual(response.title, title);
-        assert.strictEqual(response.workPhone, workPhone);
+        expect(response).toBeTruthy();
+        expect(response.id).toBe(TEST_USER_ID);
+        expect(response.account).toBeTruthy();
+        expect(response.account.id).toBe(accountId);
+        expect(response.account.name).toBe(accountName);
+        expect(response.company).toBe(company);
+        expect(response.department).toBe(department);
+        expect(response.email).toBe(email);
+        expect(response.firstName).toBe(firstName);
+        expect(response.jiraAdmin).toBe(jiraAdmin);
+        expect(response.lastName).toBe(lastName);
+        expect(response.locale).toBe(locale);
+        expect(response.mobilePhone).toBe(mobilePhone);
+        expect(response.role).toBe(role);
+        expect(response.salesforceAdmin).toBe(salesforceAdmin);
+        expect(response.salesforceUser).toBe(salesforceUser);
+        expect(response.timeZone).toBe(timeZone);
+        expect(response.title).toBe(title);
+        expect(response.workPhone).toBe(workPhone);
 
         // Verify optional properties are undefined
-        assert.strictEqual(response.admin, undefined);
-        assert.strictEqual(response.alternateEmails, undefined);
-        assert.strictEqual(response.customWelcomeScreenViewed, undefined);
-        assert.strictEqual(response.groupAdmin, undefined);
-        assert.strictEqual(response.lastLogin, undefined);
-        assert.strictEqual(response.licensedSheetCreator, undefined);
-        assert.strictEqual(response.profileImage, undefined);
-        assert.strictEqual(response.resourceViewer, undefined);
-        assert.strictEqual(response.sheetCount, undefined);
+        expect(response.admin).toBe(undefined);
+        expect(response.alternateEmails).toBe(undefined);
+        expect(response.customWelcomeScreenViewed).toBe(undefined);
+        expect(response.groupAdmin).toBe(undefined);
+        expect(response.lastLogin).toBe(undefined);
+        expect(response.licensedSheetCreator).toBe(undefined);
+        expect(response.profileImage).toBe(undefined);
+        expect(response.resourceViewer).toBe(undefined);
+        expect(response.sheetCount).toBe(undefined);
     });
 
     it('getUser error 500 response', async () => {
@@ -174,10 +174,10 @@ describe('Users - getUser endpoint tests', () => {
         };
         try {
             await client.users.getUser(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_500_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_500_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
+            expect(error.message).toBe(ERROR_500_MESSAGE);
         }
     });
 
@@ -192,10 +192,10 @@ describe('Users - getUser endpoint tests', () => {
         };
         try {
             await client.users.getUser(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_400_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_400_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
+            expect(error.message).toBe(ERROR_400_MESSAGE);
         }
     });
 });

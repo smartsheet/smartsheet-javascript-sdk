@@ -1,6 +1,6 @@
-import assert from 'assert';
 import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
+import { expect } from '@jest/globals';
 import {
     TEST_WEBHOOK_ID,
     TEST_WEBHOOK_NAME,
@@ -44,7 +44,7 @@ describe('Webhooks - getWebhook endpoint tests', () => {
         await client.webhooks.getWebhook(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
-        assert.ok(matchedRequest.url.includes(`/webhooks/${TEST_WEBHOOK_ID}`));
+        expect(matchedRequest.url.includes(`/webhooks/${TEST_WEBHOOK_ID}`)).toBeTruthy();
     });
 
     it(
@@ -60,28 +60,28 @@ describe('Webhooks - getWebhook endpoint tests', () => {
             };
             const response = await client.webhooks.getWebhook(options);
 
-            assert.ok(response);
-            assert.strictEqual(response.id, TEST_WEBHOOK_ID);
-            assert.strictEqual(response.name, TEST_WEBHOOK_NAME);
-            assert.strictEqual(response.callbackUrl, TEST_CALLBACK_URL);
-            assert.strictEqual(response.scope, TEST_SCOPE_SHEET);
-            assert.strictEqual(response.scopeObjectId, TEST_SCOPE_OBJECT_ID);
-            assert.deepStrictEqual(response.events, TEST_EVENTS);
-            assert.strictEqual(response.version, TEST_VERSION);
-            assert.ok(response.subscope);
-            assert.deepStrictEqual(response.subscope.columnIds, TEST_COLUMN_IDS);
-            assert.strictEqual(response.enabled, TEST_ENABLED);
-            assert.strictEqual(response.status, TEST_STATUS);
-            assert.strictEqual(response.sharedSecret, TEST_SHARED_SECRET);
-            assert.strictEqual(response.createdAt, TEST_CREATED_AT);
-            assert.strictEqual(response.modifiedAt, TEST_MODIFIED_AT);
-            assert.strictEqual(response.disabledDetails, TEST_DISABLED_DETAILS);
-            assert.strictEqual(response.apiClientId, TEST_API_CLIENT_ID);
-            assert.strictEqual(response.apiClientName, TEST_API_CLIENT_NAME);
-            assert.ok(response.stats);
-            assert.strictEqual(response.stats.lastCallbackAttempt, TEST_LAST_CALLBACK_ATTEMPT);
-            assert.strictEqual(response.stats.lastCallbackAttemptRetryCount, TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT);
-            assert.strictEqual(response.stats.lastSuccessfulCallback, TEST_LAST_SUCCESSFUL_CALLBACK);
+            expect(response).toBeTruthy();
+            expect(response.id).toBe(TEST_WEBHOOK_ID);
+            expect(response.name).toBe(TEST_WEBHOOK_NAME);
+            expect(response.callbackUrl).toBe(TEST_CALLBACK_URL);
+            expect(response.scope).toBe(TEST_SCOPE_SHEET);
+            expect(response.scopeObjectId).toBe(TEST_SCOPE_OBJECT_ID);
+            expect(response.events).toEqual(TEST_EVENTS);
+            expect(response.version).toBe(TEST_VERSION);
+            expect(response.subscope).toBeTruthy();
+            expect(response.subscope.columnIds).toEqual(TEST_COLUMN_IDS);
+            expect(response.enabled).toBe(TEST_ENABLED);
+            expect(response.status).toBe(TEST_STATUS);
+            expect(response.sharedSecret).toBe(TEST_SHARED_SECRET);
+            expect(response.createdAt).toBe(TEST_CREATED_AT);
+            expect(response.modifiedAt).toBe(TEST_MODIFIED_AT);
+            expect(response.disabledDetails).toBe(TEST_DISABLED_DETAILS);
+            expect(response.apiClientId).toBe(TEST_API_CLIENT_ID);
+            expect(response.apiClientName).toBe(TEST_API_CLIENT_NAME);
+            expect(response.stats).toBeTruthy();
+            expect(response.stats.lastCallbackAttempt).toBe(TEST_LAST_CALLBACK_ATTEMPT);
+            expect(response.stats.lastCallbackAttemptRetryCount).toBe(TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT);
+            expect(response.stats.lastSuccessfulCallback).toBe(TEST_LAST_SUCCESSFUL_CALLBACK);
         }
     );
 
@@ -98,28 +98,28 @@ describe('Webhooks - getWebhook endpoint tests', () => {
             };
             const response = await client.webhooks.getWebhook(options);
 
-            assert.ok(response);
-            assert.strictEqual(response.id, TEST_WEBHOOK_ID);
-            assert.strictEqual(response.name, TEST_WEBHOOK_NAME);
-            assert.strictEqual(response.callbackUrl, TEST_CALLBACK_URL);
-            assert.strictEqual(response.scope, TEST_SCOPE_PLAN);
-            assert.strictEqual(response.scopeObjectId, TEST_SCOPE_OBJECT_ID);
-            assert.deepStrictEqual(response.events, TEST_EVENTS);
-            assert.strictEqual(response.version, TEST_VERSION);
-            assert.ok(response.customHeaders);
-            assert.deepStrictEqual(response.customHeaders, TEST_CUSTOM_HEADERS);
-            assert.strictEqual(response.enabled, TEST_ENABLED);
-            assert.strictEqual(response.status, TEST_STATUS);
-            assert.strictEqual(response.sharedSecret, TEST_SHARED_SECRET);
-            assert.strictEqual(response.createdAt, TEST_CREATED_AT);
-            assert.strictEqual(response.modifiedAt, TEST_MODIFIED_AT);
-            assert.strictEqual(response.disabledDetails, TEST_DISABLED_DETAILS);
-            assert.strictEqual(response.apiClientId, TEST_API_CLIENT_ID);
-            assert.strictEqual(response.apiClientName, TEST_API_CLIENT_NAME);
-            assert.ok(response.stats);
-            assert.strictEqual(response.stats.lastCallbackAttempt, TEST_LAST_CALLBACK_ATTEMPT);
-            assert.strictEqual(response.stats.lastCallbackAttemptRetryCount, TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT);
-            assert.strictEqual(response.stats.lastSuccessfulCallback, TEST_LAST_SUCCESSFUL_CALLBACK);
+            expect(response).toBeTruthy();
+            expect(response.id).toBe(TEST_WEBHOOK_ID);
+            expect(response.name).toBe(TEST_WEBHOOK_NAME);
+            expect(response.callbackUrl).toBe(TEST_CALLBACK_URL);
+            expect(response.scope).toBe(TEST_SCOPE_PLAN);
+            expect(response.scopeObjectId).toBe(TEST_SCOPE_OBJECT_ID);
+            expect(response.events).toEqual(TEST_EVENTS);
+            expect(response.version).toBe(TEST_VERSION);
+            expect(response.customHeaders).toBeTruthy();
+            expect(response.customHeaders).toEqual(TEST_CUSTOM_HEADERS);
+            expect(response.enabled).toBe(TEST_ENABLED);
+            expect(response.status).toBe(TEST_STATUS);
+            expect(response.sharedSecret).toBe(TEST_SHARED_SECRET);
+            expect(response.createdAt).toBe(TEST_CREATED_AT);
+            expect(response.modifiedAt).toBe(TEST_MODIFIED_AT);
+            expect(response.disabledDetails).toBe(TEST_DISABLED_DETAILS);
+            expect(response.apiClientId).toBe(TEST_API_CLIENT_ID);
+            expect(response.apiClientName).toBe(TEST_API_CLIENT_NAME);
+            expect(response.stats).toBeTruthy();
+            expect(response.stats.lastCallbackAttempt).toBe(TEST_LAST_CALLBACK_ATTEMPT);
+            expect(response.stats.lastCallbackAttemptRetryCount).toBe(TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT);
+            expect(response.stats.lastSuccessfulCallback).toBe(TEST_LAST_SUCCESSFUL_CALLBACK);
         }
     );
 
@@ -134,25 +134,25 @@ describe('Webhooks - getWebhook endpoint tests', () => {
         };
         const response = await client.webhooks.getWebhook(options);
 
-        assert.ok(response);
-        assert.strictEqual(response.name, TEST_WEBHOOK_NAME);
-        assert.strictEqual(response.callbackUrl, TEST_CALLBACK_URL);
-        assert.strictEqual(response.scope, TEST_SCOPE_SHEET);
-        assert.strictEqual(response.scopeObjectId, TEST_SCOPE_OBJECT_ID);
-        assert.deepStrictEqual(response.events, TEST_EVENTS);
-        assert.strictEqual(response.version, TEST_VERSION);
-        assert.strictEqual(response.id, undefined);
-        assert.strictEqual(response.subscope, undefined);
-        assert.strictEqual(response.customHeaders, undefined);
-        assert.strictEqual(response.enabled, undefined);
-        assert.strictEqual(response.status, undefined);
-        assert.strictEqual(response.sharedSecret, undefined);
-        assert.strictEqual(response.createdAt, undefined);
-        assert.strictEqual(response.modifiedAt, undefined);
-        assert.strictEqual(response.disabledDetails, undefined);
-        assert.strictEqual(response.apiClientId, undefined);
-        assert.strictEqual(response.apiClientName, undefined);
-        assert.strictEqual(response.stats, undefined);
+        expect(response).toBeTruthy();
+        expect(response.name).toBe(TEST_WEBHOOK_NAME);
+        expect(response.callbackUrl).toBe(TEST_CALLBACK_URL);
+        expect(response.scope).toBe(TEST_SCOPE_SHEET);
+        expect(response.scopeObjectId).toBe(TEST_SCOPE_OBJECT_ID);
+        expect(response.events).toEqual(TEST_EVENTS);
+        expect(response.version).toBe(TEST_VERSION);
+        expect(response.id).toBe(undefined);
+        expect(response.subscope).toBe(undefined);
+        expect(response.customHeaders).toBe(undefined);
+        expect(response.enabled).toBe(undefined);
+        expect(response.status).toBe(undefined);
+        expect(response.sharedSecret).toBe(undefined);
+        expect(response.createdAt).toBe(undefined);
+        expect(response.modifiedAt).toBe(undefined);
+        expect(response.disabledDetails).toBe(undefined);
+        expect(response.apiClientId).toBe(undefined);
+        expect(response.apiClientName).toBe(undefined);
+        expect(response.stats).toBe(undefined);
     });
 
     it('getWebhook error 500 response', async () => {
@@ -166,10 +166,10 @@ describe('Webhooks - getWebhook endpoint tests', () => {
         };
         try {
             await client.webhooks.getWebhook(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_500_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_500_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
+            expect(error.message).toBe(ERROR_500_MESSAGE);
         }
     });
 
@@ -184,10 +184,10 @@ describe('Webhooks - getWebhook endpoint tests', () => {
         };
         try {
             await client.webhooks.getWebhook(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_400_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_400_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
+            expect(error.message).toBe(ERROR_400_MESSAGE);
         }
     });
 });

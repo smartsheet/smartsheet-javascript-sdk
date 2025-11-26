@@ -1,6 +1,6 @@
-import assert from 'assert';
 import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
+import { expect } from '@jest/globals';
 import {
     TEST_PLAN_ID,
     TEST_EMAIL,
@@ -69,13 +69,13 @@ describe('Users - listAllUsers endpoint tests', () => {
         const includeAllActual = queryParams.includeAll.values[0];
         const pageActual = queryParams.page.values[0];
         const pageSizeActual = queryParams.pageSize.values[0];
-        assert.ok(matchedRequest.url.includes(`/2.0/users`));
-        assert.strictEqual(emailsActual, emails);
-        assert.strictEqual(planIdActual, TEST_PLAN_ID);
-        assert.strictEqual(seatTypeActual, seatType);
-        assert.strictEqual(includeAllActual, includeAll.toString());
-        assert.strictEqual(parseInt(pageActual), page);
-        assert.strictEqual(parseInt(pageSizeActual), pageSize);
+        expect(matchedRequest.url.includes(`/2.0/users`)).toBeTruthy();
+        expect(emailsActual).toBe(emails);
+        expect(planIdActual).toBe(TEST_PLAN_ID);
+        expect(seatTypeActual).toBe(seatType);
+        expect(includeAllActual).toBe(includeAll.toString());
+        expect(parseInt(pageActual)).toBe(page);
+        expect(parseInt(pageSizeActual)).toBe(pageSize);
     });
 
     it('listUsers all response body properties', async () => {
@@ -90,24 +90,24 @@ describe('Users - listAllUsers endpoint tests', () => {
             }
         };
         const response = await client.users.listAllUsers(options);
-    assert.ok(response);
-    assert.strictEqual(response.data[0].seatType, seatType);
-    assert.strictEqual(response.data[0].seatTypeLastChangedAt, seatTypeLastChangedAt);
-    assert.strictEqual(response.data[0].provisionalExpirationDate, provisionalExpirationDate);
-    assert.strictEqual(response.data[0].isInternal, isInternal);
-    assert.strictEqual(response.data[0].firstName, firstName);
-    assert.strictEqual(response.data[0].lastName, lastName);
-    assert.strictEqual(response.data[0].name, name);
-    assert.strictEqual(response.data[0].email, email);
-    assert.strictEqual(response.data[0].admin, admin);
-    assert.strictEqual(response.data[0].licensedSheetCreator, licensedSheetCreator);
-    assert.strictEqual(response.data[0].resourceViewer, resourceViewer);
-    assert.strictEqual(response.data[0].groupAdmin, groupAdmin);
-    assert.strictEqual(response.data[0].status, status);
-    assert.strictEqual(response.data[0].sheetCount, sheetCount);
-    assert.strictEqual(response.data[0].lastLogin, lastLogin);
-    assert.strictEqual(response.data[0].customWelcomeScreenViewed, customWelcomeScreenViewed);
-    assert.strictEqual(response.data[0].id, TEST_PLAN_ID);
+    expect(response).toBeTruthy();
+    expect(response.data[0].seatType).toBe(seatType);
+    expect(response.data[0].seatTypeLastChangedAt).toBe(seatTypeLastChangedAt);
+    expect(response.data[0].provisionalExpirationDate).toBe(provisionalExpirationDate);
+    expect(response.data[0].isInternal).toBe(isInternal);
+    expect(response.data[0].firstName).toBe(firstName);
+    expect(response.data[0].lastName).toBe(lastName);
+    expect(response.data[0].name).toBe(name);
+    expect(response.data[0].email).toBe(email);
+    expect(response.data[0].admin).toBe(admin);
+    expect(response.data[0].licensedSheetCreator).toBe(licensedSheetCreator);
+    expect(response.data[0].resourceViewer).toBe(resourceViewer);
+    expect(response.data[0].groupAdmin).toBe(groupAdmin);
+    expect(response.data[0].status).toBe(status);
+    expect(response.data[0].sheetCount).toBe(sheetCount);
+    expect(response.data[0].lastLogin).toBe(lastLogin);
+    expect(response.data[0].customWelcomeScreenViewed).toBe(customWelcomeScreenViewed);
+    expect(response.data[0].id).toBe(TEST_PLAN_ID);
     });
 
     it('listUsers required response body properties', async () => {
@@ -122,24 +122,24 @@ describe('Users - listAllUsers endpoint tests', () => {
             }
         };
         const response = await client.users.listAllUsers(options);
-    assert.ok(response);
-    assert.strictEqual(response.data[0].seatType, seatType);
-    assert.strictEqual(response.data[0].seatTypeLastChangedAt, undefined);
-    assert.strictEqual(response.data[0].provisionalExpirationDate, undefined);
-    assert.strictEqual(response.data[0].isInternal, isInternal);
-    assert.strictEqual(response.data[0].firstName, firstName);
-    assert.strictEqual(response.data[0].lastName, lastName);
-    assert.strictEqual(response.data[0].name, name);
-    assert.strictEqual(response.data[0].email, email);
-    assert.strictEqual(response.data[0].admin, admin);
-    assert.strictEqual(response.data[0].licensedSheetCreator, licensedSheetCreator);
-    assert.strictEqual(response.data[0].resourceViewer, resourceViewer);
-    assert.strictEqual(response.data[0].groupAdmin, groupAdmin);
-    assert.strictEqual(response.data[0].status, status);
-    assert.strictEqual(response.data[0].sheetCount, sheetCount);
-    assert.strictEqual(response.data[0].lastLogin, undefined);
-    assert.strictEqual(response.data[0].customWelcomeScreenViewed, undefined);
-    assert.strictEqual(response.data[0].id, TEST_PLAN_ID);
+    expect(response).toBeTruthy();
+    expect(response.data[0].seatType).toBe(seatType);
+    expect(response.data[0].seatTypeLastChangedAt).toBe(undefined);
+    expect(response.data[0].provisionalExpirationDate).toBe(undefined);
+    expect(response.data[0].isInternal).toBe(isInternal);
+    expect(response.data[0].firstName).toBe(firstName);
+    expect(response.data[0].lastName).toBe(lastName);
+    expect(response.data[0].name).toBe(name);
+    expect(response.data[0].email).toBe(email);
+    expect(response.data[0].admin).toBe(admin);
+    expect(response.data[0].licensedSheetCreator).toBe(licensedSheetCreator);
+    expect(response.data[0].resourceViewer).toBe(resourceViewer);
+    expect(response.data[0].groupAdmin).toBe(groupAdmin);
+    expect(response.data[0].status).toBe(status);
+    expect(response.data[0].sheetCount).toBe(sheetCount);
+    expect(response.data[0].lastLogin).toBe(undefined);
+    expect(response.data[0].customWelcomeScreenViewed).toBe(undefined);
+    expect(response.data[0].id).toBe(TEST_PLAN_ID);
     });
 
     it('listUserPlans error 500 response', async () => {
@@ -155,10 +155,10 @@ describe('Users - listAllUsers endpoint tests', () => {
         };
         try {
             await client.users.listAllUsers(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_500_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_500_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
+            expect(error.message).toBe(ERROR_500_MESSAGE);
         }
     });
 
@@ -175,10 +175,10 @@ describe('Users - listAllUsers endpoint tests', () => {
         };
         try {
             await client.users.listAllUsers(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_400_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_400_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
+            expect(error.message).toBe(ERROR_400_MESSAGE);
         }
     });
 });

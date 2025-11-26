@@ -1,6 +1,6 @@
-import assert from 'assert';
 import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
+import { expect } from '@jest/globals';
 import {
     TEST_USER_ID,
     TEST_EMAIL,
@@ -42,7 +42,7 @@ describe('Users - addProfileImage endpoint tests', () => {
         await client.users.addProfileImage(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
-        assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/profileimage`));
+        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/profileimage`)).toBeTruthy();
     });
 
     it('addProfileImage all response body properties', async () => {
@@ -58,23 +58,23 @@ describe('Users - addProfileImage endpoint tests', () => {
         const response = await client.users.addProfileImage(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
-        assert.ok(response);
-        assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
-        assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
-        assert.ok(response.data);
-        assert.strictEqual(response.data.length, 1);
-        assert.strictEqual(response.data[0].id, TEST_USER_ID);
-        assert.strictEqual(response.data[0].email, email);
-        assert.strictEqual(response.data[0].name, name);
-        assert.strictEqual(response.data[0].firstName, firstName);
-        assert.strictEqual(response.data[0].lastName, lastName);
-        assert.ok(response.data[0].profileImage);
-        assert.strictEqual(response.data[0].profileImage.imageId, imageId);
-        assert.strictEqual(response.data[0].profileImage.height, height);
-        assert.strictEqual(response.data[0].profileImage.width, width);
+        expect(response).toBeTruthy();
+        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
+        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
+        expect(response.data).toBeTruthy();
+        expect(response.data.length).toBe(1);
+        expect(response.data[0].id).toBe(TEST_USER_ID);
+        expect(response.data[0].email).toBe(email);
+        expect(response.data[0].name).toBe(name);
+        expect(response.data[0].firstName).toBe(firstName);
+        expect(response.data[0].lastName).toBe(lastName);
+        expect(response.data[0].profileImage).toBeTruthy();
+        expect(response.data[0].profileImage.imageId).toBe(imageId);
+        expect(response.data[0].profileImage.height).toBe(height);
+        expect(response.data[0].profileImage.width).toBe(width);
         
         const expectedBody = ADD_PROFILE_IMAGE_REQUEST_BODY.toString();
-        assert.deepStrictEqual(matchedRequest.body, expectedBody);
+        expect(matchedRequest.body).toEqual(expectedBody);
     });
 
     it('addProfileImage error 500 response', async () => {
@@ -89,10 +89,10 @@ describe('Users - addProfileImage endpoint tests', () => {
         };
         try {
             await client.users.addProfileImage(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_500_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_500_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
+            expect(error.message).toBe(ERROR_500_MESSAGE);
         }
     });
 
@@ -108,10 +108,10 @@ describe('Users - addProfileImage endpoint tests', () => {
         };
         try {
             await client.users.addProfileImage(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_400_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_400_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
+            expect(error.message).toBe(ERROR_400_MESSAGE);
         }
     });
 });

@@ -1,6 +1,6 @@
-import assert from 'assert';
 import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
+import { expect } from '@jest/globals';
 import {
     TEST_EMAIL,
     TEST_FIRST_NAME,
@@ -73,7 +73,7 @@ describe('Users - addUser endpoint tests', () => {
         await client.users.addUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
-        assert.ok(matchedRequest.url.includes('/2.0/users'));
+        expect(matchedRequest.url.includes('/2.0/users')).toBeTruthy();
     });
     it('addUserAndSendEmail generated url is correct', async () => {
         const requestId = crypto.randomUUID();
@@ -87,10 +87,10 @@ describe('Users - addUser endpoint tests', () => {
         await client.users.addUserAndSendEmail(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
-        assert.ok(matchedRequest.url.includes('/2.0/users'));
+        expect(matchedRequest.url.includes('/2.0/users')).toBeTruthy();
         const queryParams = matchedRequest.queryParams;
         const sendEmailActual = queryParams.sendEmail.values[0];
-        assert.strictEqual(sendEmailActual, 'true');
+        expect(sendEmailActual).toBe('true');
     });
 
 
@@ -106,39 +106,39 @@ describe('Users - addUser endpoint tests', () => {
         const response = await client.users.addUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
         
-        assert.ok(response);
-        assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
-        assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
-        assert.strictEqual(response.result.id, newUserId);
-        assert.strictEqual(response.result.admin, admin);
-        assert.strictEqual(response.result.customWelcomeScreenViewed, customWelcomeScreenViewed);
-        assert.strictEqual(response.result.email, email);
-        assert.strictEqual(response.result.firstName, firstName);
-        assert.strictEqual(response.result.groupAdmin, groupAdmin);
-        assert.strictEqual(response.result.isInternal, isInternal);
-        assert.strictEqual(response.result.lastLogin, lastLogin);
-        assert.strictEqual(response.result.lastName, lastName);
-        assert.strictEqual(response.result.licensedSheetCreator, licensedSheetCreator);
-        assert.strictEqual(response.result.name, name);
-        assert.strictEqual(response.result.profileImage.imageId, profileImageId);
-        assert.strictEqual(response.result.profileImage.height, profileImageHeight);
-        assert.strictEqual(response.result.profileImage.width, profileImageWidth);
-        assert.strictEqual(response.result.provisionalExpirationDate, provisionalExpirationDate);
-        assert.strictEqual(response.result.resourceViewer, resourceViewer);
-        assert.strictEqual(response.result.seatType, seatType);
-        assert.strictEqual(response.result.seatTypeLastChangedAt, seatTypeLastChangedAt);
-        assert.strictEqual(response.result.sheetCount, sheetCount);
-        assert.strictEqual(response.result.status, status);
+        expect(response).toBeTruthy();
+        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
+        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
+        expect(response.result.id).toBe(newUserId);
+        expect(response.result.admin).toBe(admin);
+        expect(response.result.customWelcomeScreenViewed).toBe(customWelcomeScreenViewed);
+        expect(response.result.email).toBe(email);
+        expect(response.result.firstName).toBe(firstName);
+        expect(response.result.groupAdmin).toBe(groupAdmin);
+        expect(response.result.isInternal).toBe(isInternal);
+        expect(response.result.lastLogin).toBe(lastLogin);
+        expect(response.result.lastName).toBe(lastName);
+        expect(response.result.licensedSheetCreator).toBe(licensedSheetCreator);
+        expect(response.result.name).toBe(name);
+        expect(response.result.profileImage.imageId).toBe(profileImageId);
+        expect(response.result.profileImage.height).toBe(profileImageHeight);
+        expect(response.result.profileImage.width).toBe(profileImageWidth);
+        expect(response.result.provisionalExpirationDate).toBe(provisionalExpirationDate);
+        expect(response.result.resourceViewer).toBe(resourceViewer);
+        expect(response.result.seatType).toBe(seatType);
+        expect(response.result.seatTypeLastChangedAt).toBe(seatTypeLastChangedAt);
+        expect(response.result.sheetCount).toBe(sheetCount);
+        expect(response.result.status).toBe(status);
         
         let body = JSON.parse(matchedRequest.body);
-        assert.strictEqual(body.email, email);
-        assert.strictEqual(body.firstName, firstName);
-        assert.strictEqual(body.lastName, lastName);
-        assert.strictEqual(body.admin, admin);
-        assert.strictEqual(body.licensedSheetCreator, licensedSheetCreator);
-        assert.strictEqual(body.groupAdmin, groupAdmin);
-        assert.strictEqual(body.resourceViewer, resourceViewer);
-        assert.strictEqual(body.status, status);
+        expect(body.email).toBe(email);
+        expect(body.firstName).toBe(firstName);
+        expect(body.lastName).toBe(lastName);
+        expect(body.admin).toBe(admin);
+        expect(body.licensedSheetCreator).toBe(licensedSheetCreator);
+        expect(body.groupAdmin).toBe(groupAdmin);
+        expect(body.resourceViewer).toBe(resourceViewer);
+        expect(body.status).toBe(status);
     });
 
     it('addUser required response body properties', async () => {
@@ -153,37 +153,37 @@ describe('Users - addUser endpoint tests', () => {
         const response = await client.users.addUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
         
-        assert.ok(response);
-        assert.strictEqual(response.message, TEST_SUCCESS_MESSAGE);
-        assert.strictEqual(response.resultCode, TEST_SUCCESS_RESULT_CODE);
-        assert.strictEqual(response.result.id, newUserId);
-        assert.strictEqual(response.result.admin, undefined);
-        assert.strictEqual(response.result.customWelcomeScreenViewed, undefined);
-        assert.strictEqual(response.result.email, email);
-        assert.strictEqual(response.result.firstName, firstName);
-        assert.strictEqual(response.result.groupAdmin, undefined);
-        assert.strictEqual(response.result.isInternal, undefined);
-        assert.strictEqual(response.result.lastLogin, undefined);
-        assert.strictEqual(response.result.lastName, lastName);
-        assert.strictEqual(response.result.licensedSheetCreator, undefined);
-        assert.strictEqual(response.result.name, name);
-        assert.strictEqual(response.result.profileImage, undefined);
-        assert.strictEqual(response.result.provisionalExpirationDate, undefined);
-        assert.strictEqual(response.result.resourceViewer, undefined);
-        assert.strictEqual(response.result.seatType, undefined);
-        assert.strictEqual(response.result.seatTypeLastChangedAt, undefined);
-        assert.strictEqual(response.result.sheetCount, undefined);
-        assert.strictEqual(response.result.status, status);
+        expect(response).toBeTruthy();
+        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
+        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
+        expect(response.result.id).toBe(newUserId);
+        expect(response.result.admin).toBe(undefined);
+        expect(response.result.customWelcomeScreenViewed).toBe(undefined);
+        expect(response.result.email).toBe(email);
+        expect(response.result.firstName).toBe(firstName);
+        expect(response.result.groupAdmin).toBe(undefined);
+        expect(response.result.isInternal).toBe(undefined);
+        expect(response.result.lastLogin).toBe(undefined);
+        expect(response.result.lastName).toBe(lastName);
+        expect(response.result.licensedSheetCreator).toBe(undefined);
+        expect(response.result.name).toBe(name);
+        expect(response.result.profileImage).toBe(undefined);
+        expect(response.result.provisionalExpirationDate).toBe(undefined);
+        expect(response.result.resourceViewer).toBe(undefined);
+        expect(response.result.seatType).toBe(undefined);
+        expect(response.result.seatTypeLastChangedAt).toBe(undefined);
+        expect(response.result.sheetCount).toBe(undefined);
+        expect(response.result.status).toBe(status);
         
         let body = JSON.parse(matchedRequest.body);
-        assert.strictEqual(body.email, email);
-        assert.strictEqual(body.firstName, firstName);
-        assert.strictEqual(body.lastName, lastName);
-        assert.strictEqual(body.admin, admin);
-        assert.strictEqual(body.licensedSheetCreator, licensedSheetCreator);
-        assert.strictEqual(body.groupAdmin, groupAdmin);
-        assert.strictEqual(body.resourceViewer, resourceViewer);
-        assert.strictEqual(body.status, status);
+        expect(body.email).toBe(email);
+        expect(body.firstName).toBe(firstName);
+        expect(body.lastName).toBe(lastName);
+        expect(body.admin).toBe(admin);
+        expect(body.licensedSheetCreator).toBe(licensedSheetCreator);
+        expect(body.groupAdmin).toBe(groupAdmin);
+        expect(body.resourceViewer).toBe(resourceViewer);
+        expect(body.status).toBe(status);
     });
 
     it('addUser error 500 response', async () => {
@@ -197,10 +197,10 @@ describe('Users - addUser endpoint tests', () => {
         };
         try {
             await client.users.addUser(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_500_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_500_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
+            expect(error.message).toBe(ERROR_500_MESSAGE);
         }
     });
 
@@ -215,10 +215,10 @@ describe('Users - addUser endpoint tests', () => {
         };
         try {
             await client.users.addUser(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_400_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_400_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
+            expect(error.message).toBe(ERROR_400_MESSAGE);
         }
     });
 });

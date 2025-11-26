@@ -1,6 +1,6 @@
-import assert from 'assert';
 import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
+import { expect } from '@jest/globals';
 import {
     TEST_USER_ID,
     TEST_ALTERNATE_EMAIL_ID,
@@ -32,7 +32,7 @@ describe('Users - listAlternateEmails endpoint tests', () => {
         await client.users.listAlternateEmails(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
-        assert.ok(matchedRequest.url.includes(`/users/${TEST_USER_ID}/alternateemails`));
+        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/alternateemails`)).toBeTruthy();
     });
 
     it('listAlternateEmails all response body properties', async () => {
@@ -45,15 +45,15 @@ describe('Users - listAlternateEmails endpoint tests', () => {
             }
         };
         const response = await client.users.listAlternateEmails(options);
-        assert.ok(response);
-        assert.strictEqual(response.pageNumber, TEST_PAGE_NUMBER);
-        assert.strictEqual(response.pageSize, TEST_PAGE_SIZE);
-        assert.strictEqual(response.totalPages, TEST_TOTAL_PAGES);
-        assert.strictEqual(response.totalCount, TEST_TOTAL_COUNT);
-        assert.strictEqual(response.data.length, 1);
-        assert.strictEqual(response.data[0].id, TEST_ALTERNATE_EMAIL_ID_1);
-        assert.strictEqual(response.data[0].confirmed, TEST_CONFIRMED_1);
-        assert.strictEqual(response.data[0].email, TEST_EMAIL_1);
+        expect(response).toBeTruthy();
+        expect(response.pageNumber).toBe(TEST_PAGE_NUMBER);
+        expect(response.pageSize).toBe(TEST_PAGE_SIZE);
+        expect(response.totalPages).toBe(TEST_TOTAL_PAGES);
+        expect(response.totalCount).toBe(TEST_TOTAL_COUNT);
+        expect(response.data.length).toBe(1);
+        expect(response.data[0].id).toBe(TEST_ALTERNATE_EMAIL_ID_1);
+        expect(response.data[0].confirmed).toBe(TEST_CONFIRMED_1);
+        expect(response.data[0].email).toBe(TEST_EMAIL_1);
     });
 
     it('listAlternateEmails error 500 response', async () => {
@@ -67,10 +67,10 @@ describe('Users - listAlternateEmails endpoint tests', () => {
         };
         try {
             await client.users.listAlternateEmails(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_500_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_500_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
+            expect(error.message).toBe(ERROR_500_MESSAGE);
         }
     });
 
@@ -85,10 +85,10 @@ describe('Users - listAlternateEmails endpoint tests', () => {
         };
         try {
             await client.users.listAlternateEmails(options);
-            assert.fail('Expected an error to be thrown');
+            expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
-            assert.strictEqual(error.statusCode, ERROR_400_STATUS_CODE);
-            assert.strictEqual(error.message, ERROR_400_MESSAGE);
+            expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
+            expect(error.message).toBe(ERROR_400_MESSAGE);
         }
     });
 });
