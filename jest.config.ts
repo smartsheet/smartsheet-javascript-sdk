@@ -1,4 +1,6 @@
-module.exports = {
+import type { Config } from 'jest';
+
+const config: Config = {
   preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
   testMatch: ['**/test/**/*.spec.ts'],
@@ -6,6 +8,7 @@ module.exports = {
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
   extensionsToTreatAsEsm: ['.ts'],
+  reporters: [['github-actions', { silent: false }], 'summary'],
   moduleNameMapper: {
     '^@smartsheet$': '<rootDir>/index.ts',
     '^@smartsheet/(.*)$': '<rootDir>/lib/$1',
@@ -20,3 +23,5 @@ module.exports = {
     ],
   },
 };
+
+export default config;
