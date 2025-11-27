@@ -3,7 +3,7 @@ import type { Config } from 'jest';
 const config: Config = {
   preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
-  testMatch: ['**/test/**/*.spec.ts'],
+  testMatch: ['**/test/**/*.spec.ts', '**/test/**/*.spec.js'],
   collectCoverageFrom: ['lib/**/*.{js,ts}', '!lib/**/*.d.ts'],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
