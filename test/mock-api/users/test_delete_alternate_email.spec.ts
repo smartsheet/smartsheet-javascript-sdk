@@ -13,7 +13,7 @@ import {
 } from './common_test_constants';
 
 describe('Users - deleteAlternateEmail endpoint tests', () => {
-    let client = createClient();
+    const client = createClient();
 
     it('deleteAlternateEmail generated url is correct', async () => {
         const requestId = crypto.randomUUID();

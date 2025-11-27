@@ -2,64 +2,66 @@ import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
 import { expect } from '@jest/globals';
 import {
-    TEST_USER_ID,
-    TEST_ALTERNATE_EMAIL_ID,
+    TEST_WEBHOOK_ID,
+    TEST_SUCCESS_MESSAGE,
+    TEST_SUCCESS_RESULT_CODE,
+    TEST_VERSION,
     ERROR_500_STATUS_CODE,
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE
 } from './common_test_constants';
 
-describe('Users - getAlternateEmail endpoint tests', () => {
-    let client = createClient();
-    const TEST_EMAIL = 'alternate.email@smartsheet.com';
-    const TEST_CONFIRMED = true;
+describe('Webhooks - resetSharedSecret endpoint tests', () => {
+    const client = createClient();
+    const newSharedSecret = 'new123secret456value789abc012def345ghi678jkl901mno234pqr';
 
-    it('getAlternateEmail generated url is correct', async () => {
+    it('resetSharedSecret generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
-            userId: TEST_USER_ID,
-            alternateEmailId: TEST_ALTERNATE_EMAIL_ID,
+            webhookId: TEST_WEBHOOK_ID,
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/users/alternate-emails/get-alternate-email/all-response-body-properties'
+                'x-test-name': '/webhooks/reset-shared-secret/all-response-body-properties'
             }
         };
-        await client.users.getAlternateEmail(options);
+        await client.webhooks.resetSharedSecret(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
-        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/alternateemails/${TEST_ALTERNATE_EMAIL_ID}`)).toBeTruthy();
+        expect(matchedRequest.url.includes(`/webhooks/${TEST_WEBHOOK_ID}/resetsharedsecret`)).toBeTruthy();
     });
 
-    it('getAlternateEmail all response body properties', async () => {
+    it('resetSharedSecret all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
-            userId: TEST_USER_ID,
-            alternateEmailId: TEST_ALTERNATE_EMAIL_ID,
+            webhookId: TEST_WEBHOOK_ID,
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/users/alternate-emails/get-alternate-email/all-response-body-properties'
+                'x-test-name': '/webhooks/reset-shared-secret/all-response-body-properties'
             }
         };
-        const response = await client.users.getAlternateEmail(options);
+        const response = await client.webhooks.resetSharedSecret(options);
+
         expect(response).toBeTruthy();
-        expect(response.id).toBe(TEST_ALTERNATE_EMAIL_ID);
-        expect(response.confirmed).toBe(TEST_CONFIRMED);
-        expect(response.email).toBe(TEST_EMAIL);
+        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
+        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
+        expect(response.version).toBe(TEST_VERSION);
+        expect(response.failedItems).toBeTruthy();
+        expect(response.result).toBeTruthy();
+        expect(response.result.sharedSecret).toBe(newSharedSecret);
     });
 
-    it('getAlternateEmail error 500 response', async () => {
+    it('resetSharedSecret error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
-            userId: TEST_USER_ID,
-            alternateEmailId: TEST_ALTERNATE_EMAIL_ID,
+            webhookId: TEST_WEBHOOK_ID,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/errors/500-response'
             }
         };
         try {
-            await client.users.getAlternateEmail(options);
+            await client.webhooks.resetSharedSecret(options);
             expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
             expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
@@ -67,18 +69,17 @@ describe('Users - getAlternateEmail endpoint tests', () => {
         }
     });
 
-    it('getAlternateEmail error 400 response', async () => {
+    it('resetSharedSecret error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
-            userId: TEST_USER_ID,
-            alternateEmailId: TEST_ALTERNATE_EMAIL_ID,
+            webhookId: TEST_WEBHOOK_ID,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/errors/400-response'
             }
         };
         try {
-            await client.users.getAlternateEmail(options);
+            await client.webhooks.resetSharedSecret(options);
             expect(true).toBe(false); // Expected an error to be thrown
         } catch (error) {
             expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
