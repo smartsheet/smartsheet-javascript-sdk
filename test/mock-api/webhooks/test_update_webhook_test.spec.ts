@@ -35,7 +35,7 @@ import {
 } from './common_test_constants';
 
 describe('Webhooks - updateWebhook endpoint tests', () => {
-    let client = createClient();
+    const client = createClient();
 
     it('updateWebhook generated url is correct', async () => {
         const requestId = crypto.randomUUID();
@@ -94,7 +94,7 @@ describe('Webhooks - updateWebhook endpoint tests', () => {
             expect(response.result.stats.lastCallbackAttemptRetryCount).toBe(TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT);
             expect(response.result.stats.lastSuccessfulCallback).toBe(TEST_LAST_SUCCESSFUL_CALLBACK);
 
-            let body = JSON.parse(matchedRequest.body);
+            const body = JSON.parse(matchedRequest.body);
             expect(body).toEqual(TEST_UPDATE_SHEET_WEBHOOK_REQUEST_BODY);
         }
     );
@@ -140,7 +140,7 @@ describe('Webhooks - updateWebhook endpoint tests', () => {
             expect(response.result.stats.lastCallbackAttemptRetryCount).toBe(TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT);
             expect(response.result.stats.lastSuccessfulCallback).toBe(TEST_LAST_SUCCESSFUL_CALLBACK);
 
-            let body = JSON.parse(matchedRequest.body);
+            const body = JSON.parse(matchedRequest.body);
             expect(body).toEqual(TEST_UPDATE_PLAN_WEBHOOK_REQUEST_BODY);
         }
     );

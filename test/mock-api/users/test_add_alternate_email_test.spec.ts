@@ -13,7 +13,7 @@ import {
 } from './common_test_constants';
 
 describe('Users - addAlternateEmail endpoint tests', () => {
-    let client = createClient();
+    const client = createClient();
     const TEST_EMAIL = 'alternate.email@smartsheet.com';
     const TEST_CONFIRMED = false;
     const TEST_BODY = [{ email: TEST_EMAIL }];
@@ -56,7 +56,7 @@ describe('Users - addAlternateEmail endpoint tests', () => {
         expect(response.data[0].confirmed).toBe(TEST_CONFIRMED);
         expect(response.data[0].email).toBe(TEST_EMAIL);
         
-        let body = JSON.parse(matchedRequest.body);
+        const body = JSON.parse(matchedRequest.body);
         expect(body).toEqual(TEST_BODY);
     });
 

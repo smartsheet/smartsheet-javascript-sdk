@@ -19,7 +19,7 @@ import {
 } from './common_test_constants';
 
 describe('Users - updateUser endpoint tests', () => {
-    let client = createClient();
+    const client = createClient();
     const email = TEST_EMAIL;
     const firstName = TEST_FIRST_NAME;
     const lastName = TEST_LAST_NAME;
@@ -83,7 +83,7 @@ describe('Users - updateUser endpoint tests', () => {
         expect(response.data[0].profileImage.height).toBe(profileImageHeight);
         expect(response.data[0].profileImage.width).toBe(profileImageWidth);
         
-        let body = JSON.parse(matchedRequest.body);
+        const body = JSON.parse(matchedRequest.body);
         expect(body.email).toBe(email);
         expect(body.firstName).toBe(firstName);
         expect(body.lastName).toBe(lastName);
@@ -116,7 +116,7 @@ describe('Users - updateUser endpoint tests', () => {
         expect(response.data[0].name).toBe(name);
         expect(response.data[0].profileImage).toBe(undefined);
         
-        let body = JSON.parse(matchedRequest.body);
+        const body = JSON.parse(matchedRequest.body);
         expect(body.email).toBe(email);
         expect(body.firstName).toBe(firstName);
         expect(body.lastName).toBe(lastName);

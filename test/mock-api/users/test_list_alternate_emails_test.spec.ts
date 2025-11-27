@@ -16,7 +16,7 @@ import {
 } from './common_test_constants';
 
 describe('Users - listAlternateEmails endpoint tests', () => {
-    let client = createClient();
+    const client = createClient();
     const TEST_ALTERNATE_EMAIL_ID_1 = TEST_ALTERNATE_EMAIL_ID;
     const TEST_EMAIL_1 = TEST_ALTERNATE_EMAIL;
     const TEST_CONFIRMED_1 = true;

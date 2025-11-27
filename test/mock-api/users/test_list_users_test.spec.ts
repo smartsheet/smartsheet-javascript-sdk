@@ -22,7 +22,7 @@ import {
 import { SeatTypes, UserStatus } from '@smartsheet/users/types';
 
 describe('Users - listAllUsers endpoint tests', () => {
-    let client = createClient();
+    const client = createClient();
     const emails = TEST_EMAIL;
     const seatType = SeatTypes.MEMBER;
     const page = TEST_PAGE_NUMBER;

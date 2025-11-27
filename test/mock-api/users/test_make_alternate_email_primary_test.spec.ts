@@ -13,7 +13,7 @@ import {
 } from './common_test_constants';
 
 describe('Users - makeAlternateEmailPrimary endpoint tests', () => {
-    let client = createClient();
+    const client = createClient();
     const TEST_EMAIL = 'alternate.email@smartsheet.com';
     const TEST_CONFIRMED = true;
 

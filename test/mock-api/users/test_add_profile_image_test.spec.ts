@@ -20,7 +20,7 @@ import {
 } from './common_test_constants';
 
 describe('Users - addProfileImage endpoint tests', () => {
-    let client = createClient();
+    const client = createClient();
     const imageId = TEST_PROFILE_IMAGE_ID;
     const height = TEST_PROFILE_IMAGE_HEIGHT;
     const width = TEST_PROFILE_IMAGE_WIDTH;

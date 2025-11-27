@@ -25,7 +25,7 @@ import {
 import { SeatTypes, UserStatus } from '@smartsheet/users/types';
 
 describe('Users - addUser endpoint tests', () => {
-    let client = createClient();
+    const client = createClient();
     const newUserId = TEST_USER_ID;
     const email = TEST_EMAIL;
     const firstName = TEST_FIRST_NAME;
@@ -130,7 +130,7 @@ describe('Users - addUser endpoint tests', () => {
         expect(response.result.sheetCount).toBe(sheetCount);
         expect(response.result.status).toBe(status);
         
-        let body = JSON.parse(matchedRequest.body);
+        const body = JSON.parse(matchedRequest.body);
         expect(body.email).toBe(email);
         expect(body.firstName).toBe(firstName);
         expect(body.lastName).toBe(lastName);
@@ -175,7 +175,7 @@ describe('Users - addUser endpoint tests', () => {
         expect(response.result.sheetCount).toBe(undefined);
         expect(response.result.status).toBe(status);
         
-        let body = JSON.parse(matchedRequest.body);
+        const body = JSON.parse(matchedRequest.body);
         expect(body.email).toBe(email);
         expect(body.firstName).toBe(firstName);
         expect(body.lastName).toBe(lastName);

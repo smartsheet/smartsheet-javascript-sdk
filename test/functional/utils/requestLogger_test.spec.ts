@@ -33,7 +33,7 @@ describe('#RequestLogger', () => {
         });
     });
 
-    function createRequest(opts) {
+    function createRequest(opts?: any) {
         opts = opts ? opts : {};
         return {
             verb: opts.verb ? opts.verb : "GET",
@@ -46,7 +46,7 @@ describe('#RequestLogger', () => {
         };
     }
 
-    function createResponse(opts) {
+    function createResponse(opts?: any) {
         opts = opts ? opts : {};
         return {
             statusCode: opts.statusCode ? opts.statusCode : 200,

@@ -14,7 +14,7 @@ import {
 import { SeatTypes } from '@smartsheet/users/types';
 
 describe('Users - upgradeUser & downgradeUser endpoint tests', () => {
-    let client = createClient();
+    const client = createClient();
     const TEST_UPGRADE_SEAT_TYPE = SeatTypes.MEMBER;
     const TEST_DOWNGRADE_SEAT_TYPE = SeatTypes.VIEWER;
     const TEST_UPGRADE_BODY = { seatType: TEST_UPGRADE_SEAT_TYPE };
@@ -55,7 +55,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', () => {
         expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
         expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
         
-        let body = JSON.parse(matchedRequest.body);
+        const body = JSON.parse(matchedRequest.body);
         expect(body).toEqual(TEST_UPGRADE_BODY);
     });
 
@@ -149,7 +149,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', () => {
         expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
         expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
         
-        let body = JSON.parse(matchedRequest.body);
+        const body = JSON.parse(matchedRequest.body);
         expect(body).toEqual(TEST_DOWNGRADE_BODY);
     });
 

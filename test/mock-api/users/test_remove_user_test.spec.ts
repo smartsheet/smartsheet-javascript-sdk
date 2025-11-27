@@ -12,7 +12,7 @@ import {
 } from './common_test_constants';
 
 describe('Users - removeUser endpoint tests', () => {
-    let client = createClient();
+    const client = createClient();
     const transferToUserId = 9876543210987654;
     const transferSheets = true;
     const removeFromSharing = true;

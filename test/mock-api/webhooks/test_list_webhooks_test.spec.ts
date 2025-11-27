@@ -30,7 +30,7 @@ import {
 } from './common_test_constants';
 
 describe('Webhooks - listWebhooks endpoint tests', () => {
-    let client = createClient();
+    const client = createClient();
     const pageNumber = 1;
     const pageSize = 100;
     const totalPages = 1;

@@ -13,7 +13,7 @@ import {
 } from './common_test_constants';
 
 describe('Users - removeUserFromPlan endpoint tests', () => {
-    let client = createClient();
+    const client = createClient();
 
     it('removeUserFromPlan generated url is correct', async () => {
         const requestId = crypto.randomUUID();

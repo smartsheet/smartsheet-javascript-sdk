@@ -13,7 +13,7 @@ import {
 } from './common_test_constants';
 
 describe('Webhooks - deleteWebhook endpoint tests', () => {
-    let client = createClient();
+    const client = createClient();
 
     it('deleteWebhook generated url is correct', async () => {
         const requestId = crypto.randomUUID();
