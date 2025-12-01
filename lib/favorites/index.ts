@@ -7,12 +7,12 @@ import type {
   ListFavoritesResponse,
   AddFavoritesBody,
   AddFavoritesResponse,
+  AddFavoriteConvenienceOptions,
   RemoveFavoriteOptions,
   RemoveMultipleFavoritesOptions,
   RemoveFavoritesResponse,
 } from './types';
 import { FavoriteType } from './types';
-import { types } from '../utils/constants';
 
 export function create(options: CreateOptions): FavoritesApi {
   const requestor = options.requestor;
@@ -33,39 +33,41 @@ export function create(options: CreateOptions): FavoritesApi {
   ) => requestor.post({ ...optionsToSend, ...postOptions }, callback);
 
   const handleFavorites = (
-    postOptions: RequestOptions<undefined, AddFavoritesBody | AddFavoritesBody[]>,
+    postOptions: AddFavoriteConvenienceOptions,
     callback?: RequestCallback<AddFavoritesResponse>
   ) => {
     const body: AddFavoritesBody = {
-      type: (postOptions as any).type,
-      objectId: (postOptions as any).objectId,
+      type: postOptions.type,
+      objectId: postOptions.objectId,
     };
     const options = { ...postOptions, body };
     return addItemsToFavorites(options, callback);
   };
 
-  const buildFavoriteAddition = (type: string) => {
+  const buildFavoriteAddition = (type: FavoriteType) => {
     return (
-      postOptions: RequestOptions<undefined, AddFavoritesBody | AddFavoritesBody[]>,
+      postOptions: AddFavoriteConvenienceOptions,
       callback?: RequestCallback<AddFavoritesResponse>
     ) => {
-      const options = JSON.parse(JSON.stringify(postOptions)) as any;
-      options.type = type;
+      const options: AddFavoriteConvenienceOptions = {
+        ...JSON.parse(JSON.stringify(postOptions)),
+        type,
+      };
       return handleFavorites(options, callback);
     };
   };
 
-  const addSheetToFavorites = buildFavoriteAddition(types.sheet);
+  const addSheetToFavorites = buildFavoriteAddition(FavoriteType.SHEET);
 
-  const addFolderToFavorites = buildFavoriteAddition(types.folder);
+  const addFolderToFavorites = buildFavoriteAddition(FavoriteType.FOLDER);
 
-  const addReportToFavorites = buildFavoriteAddition(types.report);
+  const addReportToFavorites = buildFavoriteAddition(FavoriteType.REPORT);
 
-  const addTemplateToFavorites = buildFavoriteAddition(types.template);
+  const addTemplateToFavorites = buildFavoriteAddition(FavoriteType.TEMPLATE);
 
-  const addWorkspaceToFavorites = buildFavoriteAddition(types.workspace);
+  const addWorkspaceToFavorites = buildFavoriteAddition(FavoriteType.WORKSPACE);
 
-  const addSightToFavorites = buildFavoriteAddition(types.sight);
+  const addSightToFavorites = buildFavoriteAddition(FavoriteType.SIGHT);
 
   const addMultipleToFavorites = (
     postOptions: RequestOptions<undefined, AddFavoritesBody[]>,
@@ -90,7 +92,17 @@ export function create(options: CreateOptions): FavoritesApi {
     const urlOptions = {
       url: options.apiUrls.favorites + '/' + deleteOptions.favoriteType,
     };
-    return requestor.delete({ ...optionsToSend, ...urlOptions, ...deleteOptions }, callback);
+    
+    // Transform objectIds array to comma-separated string if needed
+    const processedOptions = { ...deleteOptions };
+    if (processedOptions.queryParameters?.objectIds && Array.isArray(processedOptions.queryParameters.objectIds)) {
+      processedOptions.queryParameters = {
+        ...processedOptions.queryParameters,
+        objectIds: processedOptions.queryParameters.objectIds.join(','),
+      };
+    }
+    
+    return requestor.delete({ ...optionsToSend, ...urlOptions, ...processedOptions }, callback);
   };
 
   const buildFavoriteRemoval = (type: FavoriteType) => {

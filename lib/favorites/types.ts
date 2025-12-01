@@ -54,7 +54,7 @@ export interface FavoritesApi {
 
   /**
    * Adds a sheet to the user's list of favorite items.
-   * @param options - {@link RequestOptions}\<undefined, {@link AddFavoritesBody} | {@link AddFavoritesBody}[]\> - Configuration options for the request
+   * @param options - {@link AddFavoriteConvenienceOptions} - Configuration options for the request
    * @param callback - {@link RequestCallback}\<{@link AddFavoritesResponse}\> - Optional callback function
    * @returns Promise\<{@link AddFavoritesResponse}\>
    *
@@ -62,67 +62,67 @@ export interface FavoritesApi {
    * It mirrors to the following Smartsheet REST API method: `POST /favorites`
    */
   addSheetToFavorites: (
-    options: RequestOptions<undefined, AddFavoritesBody>,
+    options: AddFavoriteConvenienceOptions,
     callback?: RequestCallback<AddFavoritesResponse>
   ) => Promise<AddFavoritesResponse>;
 
   /**
    * Adds a folder to the user's list of favorite items.
    *
-   * @param options - {@link AddFavoriteOptions} - Configuration options for the request
+   * @param options - {@link AddFavoriteConvenienceOptions} - Configuration options for the request
    * @param callback - {@link RequestCallback}\<{@link AddFavoritesResponse}\> - Optional callback function
    * @returns Promise\<{@link AddFavoritesResponse}\>
    */
   addFolderToFavorites: (
-    options: RequestOptions<undefined, AddFavoritesBody>,
+    options: AddFavoriteConvenienceOptions,
     callback?: RequestCallback<AddFavoritesResponse>
   ) => Promise<AddFavoritesResponse>;
 
   /**
    * Adds a report to the user's list of favorite items.
    *
-   * @param options - {@link AddFavoriteOptions} - Configuration options for the request
+   * @param options - {@link AddFavoriteConvenienceOptions} - Configuration options for the request
    * @param callback - {@link RequestCallback}\<{@link AddFavoritesResponse}\> - Optional callback function
    * @returns Promise\<{@link AddFavoritesResponse}\>
    */
   addReportToFavorites: (
-    options: RequestOptions<undefined, AddFavoritesBody>,
+    options: AddFavoriteConvenienceOptions,
     callback?: RequestCallback<AddFavoritesResponse>
   ) => Promise<AddFavoritesResponse>;
 
   /**
    * Adds a template to the user's list of favorite items.
    *
-   * @param options - {@link AddFavoriteOptions} - Configuration options for the request
+   * @param options - {@link AddFavoriteConvenienceOptions} - Configuration options for the request
    * @param callback - {@link RequestCallback}\<{@link AddFavoritesResponse}\> - Optional callback function
    * @returns Promise\<{@link AddFavoritesResponse}\>
    */
   addTemplateToFavorites: (
-    options: RequestOptions<undefined, AddFavoritesBody>,
+    options: AddFavoriteConvenienceOptions,
     callback?: RequestCallback<AddFavoritesResponse>
   ) => Promise<AddFavoritesResponse>;
 
   /**
    * Adds a workspace to the user's list of favorite items.
    *
-   * @param options - {@link AddFavoriteOptions} - Configuration options for the request
+   * @param options - {@link AddFavoriteConvenienceOptions} - Configuration options for the request
    * @param callback - {@link RequestCallback}\<{@link AddFavoritesResponse}\> - Optional callback function
    * @returns Promise\<{@link AddFavoritesResponse}\>
    */
   addWorkspaceToFavorites: (
-    options: RequestOptions<undefined, AddFavoritesBody>,
+    options: AddFavoriteConvenienceOptions,
     callback?: RequestCallback<AddFavoritesResponse>
   ) => Promise<AddFavoritesResponse>;
 
   /**
    * Adds a sight (dashboard) to the user's list of favorite items.
    *
-   * @param options - {@link AddFavoriteOptions} - Configuration options for the request
+   * @param options - {@link AddFavoriteConvenienceOptions} - Configuration options for the request
    * @param callback - {@link RequestCallback}\<{@link AddFavoritesResponse}\> - Optional callback function
    * @returns Promise\<{@link AddFavoritesResponse}\>
    */
   addSightToFavorites: (
-    options: RequestOptions<undefined, AddFavoritesBody>,
+    options: AddFavoriteConvenienceOptions,
     callback?: RequestCallback<AddFavoritesResponse>
   ) => Promise<AddFavoritesResponse>;
 
@@ -381,6 +381,22 @@ export interface AddFavoritesBody {
   type: FavoriteType;
 }
 
+/**
+ * Options for convenience functions like addSheetToFavorites, addFolderToFavorites, etc.
+ * Extends RequestOptions to include objectId as a top-level property.
+ */
+export interface AddFavoriteConvenienceOptions extends RequestOptions<undefined, AddFavoritesBody> {
+  /**
+   * The ID of the object to add to favorites
+   */
+  objectId: number;
+
+  /**
+   * The type of the favorite object (set internally by convenience functions)
+   */
+  type: FavoriteType;
+}
+
 export interface AddFavoritesResponse {
   /**
    * Status message
@@ -406,7 +422,7 @@ export interface RemoveMultipleFavoritesQueryParams {
   /**
    * A comma-separated list of Ids of the favorited item.
    */
-  objectIds?: string;
+  objectIds?: string | string[];
 }
 
 export interface RemoveMultipleFavoritesOptions extends RequestOptions<RemoveMultipleFavoritesQueryParams, undefined> {

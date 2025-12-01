@@ -23,7 +23,7 @@ describe('Favorites - removeFromFavorites convenience endpoint tests', () => {
             favoriteId: TEST_SHEET_ID,
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/favorites/remove-from-favorites/all-response-body-properties'
+                'x-test-name': '/favorites/delete-favorite/all-response-body-properties'
             }
         };
         await client.favorites.removeSheetFromFavorites(options);
@@ -38,7 +38,7 @@ describe('Favorites - removeFromFavorites convenience endpoint tests', () => {
             favoriteId: TEST_SHEET_ID,
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/favorites/remove-from-favorites/all-response-body-properties'
+                'x-test-name': '/favorites/delete-favorite/all-response-body-properties'
             }
         };
         const response = await client.favorites.removeSheetFromFavorites(options);
@@ -59,7 +59,7 @@ describe('Favorites - removeFromFavorites convenience endpoint tests', () => {
             favoriteId: TEST_FOLDER_ID,
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/favorites/remove-from-favorites/all-response-body-properties'
+                'x-test-name': '/favorites/delete-favorite/all-response-body-properties'
             }
         };
         await client.favorites.removeFolderFromFavorites(options);
@@ -74,7 +74,7 @@ describe('Favorites - removeFromFavorites convenience endpoint tests', () => {
             favoriteId: TEST_FOLDER_ID,
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/favorites/remove-from-favorites/all-response-body-properties'
+                'x-test-name': '/favorites/delete-favorite/all-response-body-properties'
             }
         };
         const response = await client.favorites.removeFolderFromFavorites(options);

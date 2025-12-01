@@ -25,13 +25,20 @@ describe('Favorites - removeMultipleFavorites convenience endpoint tests', () =>
             },
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/favorites/remove-multiple-favorites/all-response-body-properties'
+                'x-test-name': '/favorites/delete-multiple-favorites/all-response-body-properties'
             }
         };
         await client.favorites.removeSheetsFromFavorites(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
         expect(matchedRequest.url.includes(`/2.0/favorites/${TEST_FAVORITE_TYPE_SHEET}`)).toBeTruthy();
+        
+        // Verify query parameters
+        expect(matchedRequest.queryParams).toEqual({
+            objectIds: {
+                values: [`${TEST_SHEET_ID},${TEST_FOLDER_ID}`]
+            }
+        });
     });
 
     it('removeSheetsFromFavorites all response body properties', async () => {
@@ -42,16 +49,10 @@ describe('Favorites - removeMultipleFavorites convenience endpoint tests', () =>
             },
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/favorites/remove-multiple-favorites/all-response-body-properties'
+                'x-test-name': '/favorites/delete-multiple-favorites/all-response-body-properties'
             }
         };
         const response = await client.favorites.removeSheetsFromFavorites(options);
-        const matchedRequest = await findWireMockRequest(requestId);
-        
-        // Verify query parameters
-        const queryParams = matchedRequest.queryParams;
-        expect(queryParams.objectIds).toBeTruthy();
-        expect(queryParams.objectIds.values[0]).toBe(`${TEST_SHEET_ID},${TEST_FOLDER_ID}`);
         
         // Verify response
         expect(response).toBeTruthy();
@@ -67,13 +68,20 @@ describe('Favorites - removeMultipleFavorites convenience endpoint tests', () =>
             },
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/favorites/remove-multiple-favorites/all-response-body-properties'
+                'x-test-name': '/favorites/delete-multiple-favorites/all-response-body-properties'
             }
         };
         await client.favorites.removeFoldersFromFavorites(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
         expect(matchedRequest.url.includes(`/2.0/favorites/${TEST_FAVORITE_TYPE_FOLDER}`)).toBeTruthy();
+        
+        // Verify query parameters
+        expect(matchedRequest.queryParams).toEqual({
+            objectIds: {
+                values: [`${TEST_SHEET_ID},${TEST_FOLDER_ID}`]
+            }
+        });
     });
 
     it('removeFoldersFromFavorites all response body properties', async () => {
@@ -84,16 +92,10 @@ describe('Favorites - removeMultipleFavorites convenience endpoint tests', () =>
             },
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/favorites/remove-multiple-favorites/all-response-body-properties'
+                'x-test-name': '/favorites/delete-multiple-favorites/all-response-body-properties'
             }
         };
         const response = await client.favorites.removeFoldersFromFavorites(options);
-        const matchedRequest = await findWireMockRequest(requestId);
-        
-        // Verify query parameters
-        const queryParams = matchedRequest.queryParams;
-        expect(queryParams.objectIds).toBeTruthy();
-        expect(queryParams.objectIds.values[0]).toBe(`${TEST_SHEET_ID},${TEST_FOLDER_ID}`);
         
         // Verify response
         expect(response).toBeTruthy();

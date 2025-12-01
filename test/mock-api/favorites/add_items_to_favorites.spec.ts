@@ -25,7 +25,7 @@ describe('Favorites - addItemsToFavorites endpoint tests', () => {
             },
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/favorites/add-items-to-favorites/all-response-body-properties'
+                'x-test-name': '/favorites/add-favorites/all-response-body-properties'
             }
         };
         await client.favorites.addItemsToFavorites(options);
@@ -43,7 +43,7 @@ describe('Favorites - addItemsToFavorites endpoint tests', () => {
             },
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/favorites/add-items-to-favorites/all-response-body-properties'
+                'x-test-name': '/favorites/add-favorites/all-response-body-properties'
             }
         };
         const response = await client.favorites.addItemsToFavorites(options);
