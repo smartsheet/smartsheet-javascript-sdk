@@ -377,8 +377,8 @@ export interface ListFavoritesResponse {
 // ============================================================================
 
 export interface AddFavoritesBody {
-    objectId: number;
-    type: FavoriteType;
+  objectId: number;
+  type: FavoriteType;
 }
 
 export interface AddFavoritesResponse {
@@ -403,21 +403,21 @@ export interface AddFavoritesResponse {
 // ============================================================================
 
 export interface RemoveMultipleFavoritesQueryParams {
-   /**
+  /**
    * A comma-separated list of Ids of the favorited item.
    */
   objectIds?: string;
 }
 
 export interface RemoveMultipleFavoritesOptions extends RequestOptions<RemoveMultipleFavoritesQueryParams, undefined> {
-   /**
+  /**
    * The type of the favorite object
    */
   favoriteType?: FavoriteType;
 }
 
 export interface RemoveFavoriteOptions extends RequestOptions<undefined, undefined> {
-   /**
+  /**
    * The ID of the object to remove from favorites (for single removal)
    */
   favoriteId?: number;
