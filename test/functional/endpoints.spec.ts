@@ -1,0 +1,411 @@
+import { create as createRequestor } from '../../lib/utils/httpRequestor';
+import * as constants from '../../lib/utils/constants';
+import _ from 'underscore';
+import * as smartsheet from '@smartsheet';
+import { expect, jest, describe, beforeEach, afterEach, it } from '@jest/globals';
+
+describe('Method Unit Tests', () => {
+    const requestor = createRequestor({});
+    
+    const testGroups = [
+        {
+            name: 'contacts',
+            methods: [
+                { name: 'getContact', stub: 'get', options: {}, expectedRequest: {url: "contacts/" }},
+                { name: 'listContacts', stub: 'get', options: undefined, expectedRequest: {url: "contacts" }},
+            ]
+        },
+        {
+            name: 'events',
+            methods: [
+                { name: 'getEvents', stub: 'get', options: {}, expectedRequest: {url: "events" }}
+            ]
+        },
+        {
+            name: 'favorites',
+            methods: [
+                { name: 'listFavorites', stub: 'get', options: undefined, expectedRequest: {url: "favorites" }},
+                { name: 'addItemsToFavorites', stub: 'post', options: {}, expectedRequest: {url: "favorites" }},
+                { name: 'addSheetToFavorites', stub: 'post', options: { objectId: 123 }, expectedRequest: {url: "favorites", body: { objectId: 123, type: 'sheet' } }},
+                { name: 'addFolderToFavorites', stub: 'post', options: { objectId: 123 }, expectedRequest: {url: "favorites", body: { objectId: 123, type: 'folder' } }},
+                { name: 'addReportToFavorites', stub: 'post', options: { objectId: 123 }, expectedRequest: {url: "favorites", body: { objectId: 123, type: 'report' } }},
+                { name: 'addTemplateToFavorites', stub: 'post', options: { objectId: 123 }, expectedRequest: {url: "favorites", body: { objectId: 123, type: 'template' } }},
+                { name: 'addSightToFavorites', stub: 'post', options: { objectId: 123 }, expectedRequest: {url: "favorites", body: { objectId: 123, type: 'sight' } }},
+                { name: 'addWorkspaceToFavorites', stub: 'post', options: { objectId: 123 }, expectedRequest: {url: "favorites", body: { objectId: 123, type: 'workspace' } }},
+                { name: 'addMultipleToFavorites', stub: 'post', options: { body: [{objectId: 123, type: 'workspace'}] }, expectedRequest: {url: "favorites", body: [{ objectId: 123, type: 'workspace' }] }},
+                { name: 'removeSheetFromFavorites', stub: 'delete', options: { objectId: 123 }, expectedRequest: {url: "favorites/sheet/123" }},
+                { name: 'removeFolderFromFavorites', stub: 'delete', options: { objectId: 123 }, expectedRequest: {url: "favorites/folder/123" }},
+                { name: 'removeReportFromFavorites', stub: 'delete', options: { objectId: 123 }, expectedRequest: {url: "favorites/report/123" }},
+                { name: 'removeTemplateFromFavorites', stub: 'delete', options: { objectId: 123 }, expectedRequest: {url: "favorites/template/123" }},
+                { name: 'removeSightFromFavorites', stub: 'delete', options: { objectId: 123 }, expectedRequest: {url: "favorites/sight/123" }},
+                { name: 'removeWorkspaceFromFavorites', stub: 'delete', options: { objectId: 123 }, expectedRequest: {url: "favorites/workspace/123" }},
+                { name: 'removeSheetsFromFavorites', stub: 'delete', options: { queryParameters: {objectIds: [123, 234] }}, expectedRequest: {url: "favorites/sheet", queryParameters: {objectIds: '123,234'}}},
+                { name: 'removeFoldersFromFavorites', stub: 'delete', options: { queryParameters: {objectIds: [123, 234] }}, expectedRequest: {url: "favorites/folder", queryParameters: {objectIds: '123,234'} }},
+                { name: 'removeReportsFromFavorites', stub: 'delete', options: { queryParameters: {objectIds: [123, 234] }}, expectedRequest: {url: "favorites/report", queryParameters: {objectIds: '123,234'} }},
+                { name: 'removeTemplatesFromFavorites', stub: 'delete', options: { queryParameters: {objectIds: [123, 234] }}, expectedRequest: {url: "favorites/template", queryParameters: {objectIds: '123,234'} }},
+                { name: 'removeSightsFromFavorites', stub: 'delete', options: { queryParameters: {objectIds: [123, 234] }}, expectedRequest: {url: "favorites/sight", queryParameters: {objectIds: '123,234'} }},
+                { name: 'removeWorkspacesFromFavorites', stub: 'delete', options: { queryParameters: {objectIds: [123, 234] }}, expectedRequest: {url: "favorites/workspace", queryParameters: {objectIds: '123,234'} }},
+                { name: 'removeSheetsFromFavorites', stub: 'delete', options: { queryParameters: {objectIds: '123,234'} }, expectedRequest: {url: "favorites/sheet", queryParameters: {objectIds: '123,234'} }},
+                { name: 'removeFoldersFromFavorites', stub: 'delete', options: { queryParameters: {objectIds: '123,234'} }, expectedRequest: {url: "favorites/folder", queryParameters: {objectIds: '123,234'} }},
+                { name: 'removeReportsFromFavorites', stub: 'delete', options: { queryParameters: {objectIds: '123,234'} }, expectedRequest: {url: "favorites/report", queryParameters: {objectIds: '123,234'} }},
+                { name: 'removeTemplatesFromFavorites', stub: 'delete', options: { queryParameters: {objectIds: '123,234'} }, expectedRequest: {url: "favorites/template", queryParameters: {objectIds: '123,234'} }},
+                { name: 'removeSightsFromFavorites', stub: 'delete', options: { queryParameters: {objectIds: '123,234'} }, expectedRequest: {url: "favorites/sight", queryParameters: {objectIds: '123,234'} }},
+                { name: 'removeWorkspacesFromFavorites', stub: 'delete', options: { queryParameters: {objectIds: '123,234'} }, expectedRequest: {url: "favorites/workspace", queryParameters: {objectIds: '123,234'} }},
+            ]
+        },
+        {
+            name: 'folders',
+            methods: [
+                { name: 'getFolder', stub: 'get', options: {}, expectedRequest: {url: "folders" }},
+                { name: 'getFolderMetadata', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123/metadata" }},
+                { name: 'getFolderChildren', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123/children" }},
+                { name: 'listChildFolders', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123/folders" }},
+                { name: 'createChildFolder', stub: 'post', options: {folderId: 123}, expectedRequest: {url: "folders/123/folders" }},
+                { name: 'updateFolder', stub: 'put', options: {folderId: 123}, expectedRequest: {url: "folders/123" }},
+                { name: 'deleteFolder', stub: 'delete', options: {folderId: 123}, expectedRequest: {url: "folders/123" }},
+                { name: 'moveFolder', stub: 'post', options: {folderId: 123}, expectedRequest: {url: "folders/123/move" }},
+                { name: 'copyFolder', stub: 'post', options: {folderId: 123}, expectedRequest: {url: "folders/123/copy" }},
+            ]
+        },
+        {
+            name: 'groups',
+            methods: [
+                { name: 'getGroup', stub: 'get', options: {}, expectedRequest: {url: "groups" }},
+                { name: 'listGroups', stub: 'get', options: undefined, expectedRequest: {url: "groups" }},
+                { name: 'createGroup', stub: 'post', options: {}, expectedRequest: {url: "groups" }},
+                { name: 'addGroupMembers', stub: 'post', options: {groupId: 123}, expectedRequest: {url: "groups/123/members" }},
+                { name: 'updateGroup', stub: 'put', options: {groupId: 123}, expectedRequest: {url: "groups/123" }},
+                { name: 'deleteGroup', stub: 'delete', options: {groupId: 123}, expectedRequest: {url: "groups/123" }},
+                { name: 'removeGroupMember', stub: 'delete', options: {groupId: 123, userId: 234}, expectedRequest: {url: "groups/123/members/234" }},
+            ]
+        },
+        {
+            name: 'home',
+            methods: [
+                { name: 'listContents', stub: 'get', options: undefined, expectedRequest: {url: "home" }},
+                { name: 'listFolders', stub: 'get', options: undefined, expectedRequest: {url: "home/folders" }},
+                { name: 'createFolder', stub: 'post', options: {}, expectedRequest: {url: "home/folders" }},
+            ]
+        },
+        {
+            name: 'images',
+            methods: [
+                { name: 'listImageUrls', stub: 'post', options: {}, expectedRequest: {url: "imageurls" }},
+            ]
+        },
+        {
+            name: 'reports',
+            methods: [
+                { name: 'getReport', stub: 'get', options: {reportId: 123}, expectedRequest: {url: "reports/123" }},
+                { name: 'listReports', stub: 'get', options: undefined, expectedRequest: {url: "reports"}},
+                { name: 'sendReportViaEmail', stub: 'post', options: {reportId: 123}, expectedRequest: {url: "reports/123/emails" }},
+                { name: 'getReportAsExcel', stub: 'get', options: {reportId: 123}, expectedRequest: {url: "reports/123", accept: constants.acceptHeaders.vndMsExcel, encoding:null }},
+                { name: 'getReportAsCSV', stub: 'get', options: {reportId: 123}, expectedRequest: {url: "reports/123", accept: constants.acceptHeaders.textCsv }},
+                { name: 'getReportPublishStatus', stub: 'get', options: {reportId: 123}, expectedRequest: {url: "reports/123/publish" }},
+                { name: 'setReportPublishStatus', stub: 'put', options: {reportId: 123}, expectedRequest: {url: "reports/123/publish" }},
+            ]
+        },
+        {
+            name: 'request',
+            methods: [
+                { name: 'get', stub: 'get', options: {url: "something"}, expectedRequest: {url: "something"}},
+                { name: 'post', stub: 'post', options: {url: "something"}, expectedRequest: {url: "something"}},
+                { name: 'put', stub: 'put', options: {url: "something"}, expectedRequest: {url: "something"}},
+                { name: 'postFile', stub: 'postFile', options: {url: "something"}, expectedRequest: {url: "something"}},
+                { name: 'delete', stub: 'delete', options: {url: "something"}, expectedRequest: {url: "something"}},
+            ]
+        },
+        {
+            name: 'search',
+            methods: [
+                { name: 'searchAll', stub: 'get', options: {query: "query"}, expectedRequest: {url: "search", queryParameters: {query: "query"}}},
+                { name: 'searchAll', stub: 'get', options: {query: "query", queryParameters: {someParam: "something"}}, expectedRequest: {url: "search", queryParameters: {query: "query", someParam: "something"}}},
+                { name: 'searchAll', stub: 'get', options: {query: "query"}, expectedRequest: {url: "search", queryParameters: {query: "query"}}},
+                { name: 'searchSheet', stub: 'get', options: {query: "query", sheetId: 1}, expectedRequest: {url: "search/sheets/1", queryParameters: {query: "query"}}},
+            ]
+        },
+        {
+            name: 'server',
+            methods: [
+                { name: 'getInfo', stub: 'get', options: undefined, expectedRequest: {url: "serverinfo"}},
+            ]
+        },
+        {
+            name: 'sheets',
+            methods: [
+                { name: 'sendSheetViaEmail', stub: 'post', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/emails"}},
+                { name: 'getPublishStatus', stub: 'get', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/publish"}},
+                { name: 'setPublishStatus', stub: 'put', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/publish"}},
+                { name: 'updateSheet', stub: 'put', options: {sheetId: 123}, expectedRequest: {url: "sheets/123"}},
+                { name: 'deleteSheet', stub: 'delete', options: {sheetId: 123}, expectedRequest: {url: "sheets/123"}},
+                { name: 'moveSheet', stub: 'post', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/move"}},
+                { name: 'sortRowsInSheet', stub: 'post', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/sort"}},
+                // attachments
+                { name: 'listAttachments', stub: 'get', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/attachments"}},
+                { name: 'listAttachmentVersions', stub: 'get', options: {sheetId: 123, attachmentId: 234}, expectedRequest: {url: "sheets/123/attachments/234/versions"}},
+                { name: 'addUrlAttachment', stub: 'post', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/attachments"}},
+                { name: 'addAttachment', stub: 'post', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/attachments"}},
+                { name: 'addFileAttachment', stub: 'postFile', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/attachments"}},
+                { name: 'attachNewVersion', stub: 'postFile', options: {sheetId: 123, attachmentId: 234}, expectedRequest: {url: "sheets/123/attachments/234/versions"}},
+                { name: 'deleteAttachment', stub: 'delete', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/attachments"}},
+                { name: 'deleteAllAttachmentVersions', stub: 'delete', options: {sheetId: 123, attachmentId: 234}, expectedRequest: {url: "sheets/123/attachments/234/versions"}},
+                // automation rules
+                { name: 'deleteAutomationRule', stub: 'delete', options: {sheetId: 123, automationRuleId: 234}, expectedRequest: {url: "sheets/123/automationrules/234"}},
+                { name: 'getAutomationRule', stub: 'get', options: {sheetId: 123, automationRuleId: 234}, expectedRequest: {url: "sheets/123/automationrules/234"}},
+                { name: 'listAutomationRules', stub: 'get', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/automationrules"}},
+                { name: 'updateAutomationRule', stub: 'put', options: {sheetId: 123, automationRuleId: 234}, expectedRequest: {url: "sheets/123/automationrules/234"}},
+                // columns
+                { name: 'getColumns', stub: 'get', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/columns"}},
+                { name: 'getColumn', stub: 'get', options: {sheetId: 123, columnId: 234}, expectedRequest: {url: "sheets/123/columns/234"}},
+                { name: 'addColumn', stub: 'post', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/columns"}},
+                { name: 'updateColumn', stub: 'put', options: {sheetId: 123, columnId: 234}, expectedRequest: {url: "sheets/123/columns/234"}},
+                { name: 'deleteColumn', stub: 'delete', options: {sheetId: 123, columnId: 234}, expectedRequest: {url: "sheets/123/columns/234"}},
+                // comments
+                { name: 'getComment', stub: 'get', options: {sheetId: 123, commentId: 234}, expectedRequest: {url: "sheets/123/comments/234"}},
+                { name: 'deleteComment', stub: 'delete', options: {sheetId: 123, commentId: 234}, expectedRequest: {url: "sheets/123/comments/234"}},
+                { name: 'addCommentUrlAttachment', stub: 'post', options: {sheetId: 123, commentId: 234}, expectedRequest: {url: "sheets/123/comments/234/attachments"}},
+                { name: 'addCommentAttachment', stub: 'post', options: {sheetId: 123, commentId: 234}, expectedRequest: {url: "sheets/123/comments/234/attachments"}},
+                { name: 'addCommentFileAttachment', stub: 'postFile', options: {sheetId: 123, commentId: 234}, expectedRequest: {url: "sheets/123/comments/234/attachments"}},
+                { name: 'editComment', stub: 'put', options: {sheetId: 123, commentId: 234}, expectedRequest: {url: "sheets/123/comments/234"}},
+                // create
+                { name: 'createSheet', stub: 'post', options: {}, expectedRequest: {url: "sheets"}},
+                { name: 'createSheetFromExisting', stub: 'post', options: {}, expectedRequest: {url: "sheets"}},
+                { name: 'createSheetFromExisting', stub: 'post', options: {folderId: 123}, expectedRequest: {url: "folders/123/sheets"}},
+                { name: 'createSheetFromExisting', stub: 'post', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/sheets"}},
+                { name: 'createSheetInFolder', stub: 'post', options: {folderId: 123}, expectedRequest: {url: "folders/123/sheets"}},
+                { name: 'createSheetInWorkspace', stub: 'post', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/sheets"}},
+                { name: 'copySheet', stub: 'post', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/copy"}},
+                // Not yet released
+                // { name: 'importXlsxAndReplaceSheet', stub: 'postFile', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/import", contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", contentDisposition: 'attachment'}},
+                // { name: 'importCsvAndReplaceSheet', stub: 'postFile', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/import", contentType: "text/csv", contentDisposition: 'attachment'}},
+                { name: 'importXlsxSheet', stub: 'postFile', options: undefined, expectedRequest: {url: "sheets/import", contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", contentDisposition: 'attachment'}},
+                { name: 'importCsvSheet', stub: 'postFile', options: undefined, expectedRequest: {url: "sheets/import", contentType: "text/csv", contentDisposition: 'attachment'}},
+                { name: 'importXlsxSheetIntoFolder', stub: 'postFile', options: {folderId: 123}, expectedRequest: {url: "folders/123/sheets/import", contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", contentDisposition: 'attachment'}},
+                { name: 'importCsvSheetIntoFolder', stub: 'postFile', options: {folderId: 123}, expectedRequest: {url: "folders/123/sheets/import", contentType: "text/csv", contentDisposition: 'attachment'}},
+                { name: 'importXlsxSheetIntoWorkspace', stub: 'postFile', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/sheets/import", contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", contentDisposition: 'attachment'}},
+                { name: 'importCsvSheetIntoWorkspace', stub: 'postFile', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/sheets/import", contentType: "text/csv", contentDisposition: 'attachment'}},
+                // cross sheet references
+                { name: 'createCrossSheetReference', stub: 'post', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/crosssheetreferences"}},
+                { name: 'getCrossSheetReference', stub: 'get', options: {sheetId: 123, crossSheetReferenceId: 234}, expectedRequest: {url: "sheets/123/crosssheetreferences/234"}},
+                { name: 'listCrossSheetReferences', stub: 'get', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/crosssheetreferences"}},
+                // discussions
+                { name: 'getDiscussions', stub: 'get', options: {sheetId:123}, expectedRequest: {url: "sheets/123/discussions"}},
+                { name: 'getDiscussion', stub: 'get', options: {sheetId:123, discussionId: 234}, expectedRequest: {url: "sheets/123/discussions/234"}},
+                { name: 'listDiscussionAttachments', stub: 'get', options: {sheetId:123, discussionId: 234}, expectedRequest: {url: "sheets/123/discussions/234/attachments"}},
+                { name: 'createDiscussion', stub: 'post', options: {sheetId:123}, expectedRequest: {url: "sheets/123/discussions"}},
+                { name: 'addDiscussionComment', stub: 'post', options: {sheetId:123, discussionId: 234}, expectedRequest: {url: "sheets/123/discussions/234/comments"}},
+                { name: 'deleteDiscussion', stub: 'delete', options: {sheetId:123, discussionId: 234}, expectedRequest: {url: "sheets/123/discussions/234"}},
+                // get
+                { name: 'getSheet', stub: 'get', options: {}, expectedRequest: {url: "sheets"}},
+                { name: 'listSheets', stub: 'get', options: undefined, expectedRequest: {url: "sheets"}},
+                { name: 'getSheetAsCSV', stub: 'get', options: {}, expectedRequest: {url: "sheets", accept: constants.acceptHeaders.textCsv}},
+                { name: 'getSheetAsExcel', stub: 'get', options: {}, expectedRequest: {url: "sheets", accept: constants.acceptHeaders.vndMsExcel, encoding:null}},
+                { name: 'getSheetAsPDF', stub: 'get', options: {}, expectedRequest: {url: "sheets", accept: constants.acceptHeaders.applicationPdf, encoding:null}},
+                { name: 'getSheetVersion', stub: 'get', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/version"}},
+                { name: 'listOrganizationSheets', stub: 'get', options: undefined, expectedRequest: {url: "users/sheets"}},
+                // summaries
+                { name: 'getSummary', stub: 'get', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/summary"}},
+                { name: 'getSummaryFields', stub: 'get', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/summary/fields"}},
+                { name: 'addSummaryFields', stub: 'post', options: {sheetId: 123, body: {}}, expectedRequest: {url: "sheets/123/summary/fields"}},
+                { name: 'deleteSummaryFields', stub: 'delete', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/summary/fields"}},
+                { name: 'updateSummaryFields', stub: 'put', options: {sheetId: 123, body: {}}, expectedRequest: {url: "sheets/123/summary/fields"}},
+                { name: 'addSummaryFieldImage', stub: 'postFile', options: {sheetId: 123, fieldId: 234}, expectedRequest: {url: "sheets/123/summary/fields/234/images"}},
+                // rows
+                { name: 'getRow', stub: 'get', options: {sheetId: 123, rowId: 234}, expectedRequest: {url: "sheets/123/rows/234"}},
+                { name: 'getRowAttachments', stub: 'get', options: {sheetId: 123, rowId: 234}, expectedRequest: {url: "sheets/123/rows/234/attachments"}},
+                { name: 'getRowDiscussions', stub: 'get', options: {sheetId: 123, rowId: 234}, expectedRequest: {url: "sheets/123/rows/234/discussions"}},
+                { name: 'getCellHistory', stub: 'get', options: {sheetId: 123, rowId: 234, columnId: 345}, expectedRequest: {url: "sheets/123/rows/234/columns/345/history"}},
+                { name: 'copyRowToAnotherSheet', stub: 'post', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/rows/copy"}},
+                { name: 'moveRowToAnotherSheet', stub: 'post', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/rows/move"}},
+                { name: 'addRow', stub: 'post', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/rows"}},
+                { name: 'addRows', stub: 'post', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/rows"}},
+                { name: 'addRowUrlAttachment', stub: 'post', options: {sheetId: 123, rowId: 234}, expectedRequest: {url: "sheets/123/rows/234/attachments"}},
+                { name: 'addRowAttachment', stub: 'post', options: {sheetId: 123, rowId: 234}, expectedRequest: {url: "sheets/123/rows/234/attachments"}},
+                { name: 'addRowFileAttachment', stub: 'postFile', options: {sheetId: 123, rowId: 234}, expectedRequest: {url: "sheets/123/rows/234/attachments"}},
+                { name: 'createRowDiscussion', stub: 'post', options: {sheetId: 123, rowId: 234}, expectedRequest: {url: "sheets/123/rows/234/discussions"}},
+                { name: 'sendRows', stub: 'post', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/rows/emails"}},
+                { name: 'deleteRow', stub: 'delete', options: {sheetId: 123, rowId: 234}, expectedRequest: {url: "sheets/123/rows?ids=234"}},
+                { name: 'deleteRows', stub: 'delete', options: {sheetId: 123, queryParameters: {ids: [234, 456]}}, expectedRequest: {url: "sheets/123/rows", queryParameters: {ids: '234,456'}}},
+                { name: 'deleteRows', stub: 'delete', options: {sheetId: 123, queryParameters: {ids: '234,456'}}, expectedRequest: {url: "sheets/123/rows", queryParameters: {ids: '234,456'}}},
+                { name: 'updateRow', stub: 'put', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/rows"}},
+                { name: 'updateRow', stub: 'put', options: {sheetId: 123, rowId: 234}, expectedRequest: {url: "sheets/123/rows"}},
+                { name: 'addImageToCell', stub: 'postFile', options: {sheetId: 123, rowId: 234, columnId: 345}, expectedRequest: {url: "sheets/123/rows/234/columns/345/cellimages"}},
+                // update requests
+                { name: 'createUpdateRequest', stub: 'post', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/updaterequests"}},
+                { name: 'deleteUpdateRequest', stub: 'delete', options: {sheetId: 123, updateRequestId: 234}, expectedRequest: {url: "sheets/123/updaterequests/234"}},
+                { name: 'getUpdateRequest', stub: 'get', options: {sheetId: 123, updateRequestId: 234}, expectedRequest: {url: "sheets/123/updaterequests/234"}},
+                { name: 'getAllUpdateRequests', stub: 'get', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/updaterequests"}},
+                { name: 'changeUpdateRequest', stub: 'put', options: {sheetId: 123, updateRequestId: 234}, expectedRequest: {url: "sheets/123/updaterequests/234"}},
+                // sent update requests
+                { name: 'deleteSentUpdateRequest', stub: 'delete', options: {sheetId: 123, sentUpdateRequestId: 234}, expectedRequest: {url: "sheets/123/sentupdaterequests/234"}},
+                { name: 'getSentUpdateRequest', stub: 'get', options: {sheetId: 123, sentUpdateRequestId: 234}, expectedRequest: {url: "sheets/123/sentupdaterequests/234"}},
+                { name: 'getAllSentUpdateRequests', stub: 'get', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/sentupdaterequests"}},
+                // shares
+                { name: 'getShare', stub: 'get', options: {sheetId: 123, shareId: 234}, expectedRequest: {url: "sheets/123/shares/234"}},
+                { name: 'listShares', stub: 'get', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/shares"}},
+                { name: 'share', stub: 'post', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/shares"}},
+                { name: 'deleteShare', stub: 'delete', options: {sheetId: 123, shareId: 234}, expectedRequest: {url: "sheets/123/shares/234"}},
+                { name: 'updateShare', stub: 'put', options: {sheetId: 123, shareId: 234}, expectedRequest: {url: "sheets/123/shares/234"}},
+            ]
+        },
+        {
+            name: 'sights',
+            methods: [
+                { name: 'listSights', stub: 'get', options: undefined, expectedRequest: {url: "sights"}},
+                { name: 'getSight', stub: 'get', options: {sightId:123}, expectedRequest: {url: "sights/123"}},
+                { name: 'deleteSight', stub: 'delete', options: {sightId:123}, expectedRequest: {url: "sights/123"}},
+                { name: 'updateSight', stub: 'put', options: {sightId:123}, expectedRequest: {url: "sights/123"}},
+                { name: 'copySight', stub: 'post', options: {sightId:123}, expectedRequest: {url: "sights/123/copy"}},
+                { name: 'moveSight', stub: 'post', options: {sightId:123}, expectedRequest: {url: "sights/123/move"}},
+                { name: 'getSightPublishStatus', stub: 'get', options: {sightId:123}, expectedRequest: {url: "sights/123/publish"}},
+                { name: 'setSightPublishStatus', stub: 'put', options: {sightId:123}, expectedRequest: {url: "sights/123/publish"}},
+            ]
+        },
+        {
+            name: 'templates',
+            methods: [
+                { name: 'listUserCreatedTemplates', stub: 'get', options: undefined, expectedRequest: {url: "templates"}},
+                { name: 'listPublicTemplates', stub: 'get', options: undefined, expectedRequest: {url: "templates/public"}},
+            ]
+        },
+        {
+            name: 'tokens',
+            methods: [
+                { name: 'getAccessToken', stub: 'post', options: {}, expectedRequest: {url: "token", queryParameters: {'grant_type': 'authorization_code'}}, noAuth: true},
+                { name: 'refreshAccessToken', stub: 'post', options: {}, expectedRequest: {url: "token", queryParameters: {'grant_type': 'refresh_token'}}, noAuth: true},
+                { name: 'revokeAccessToken', stub: 'delete', options: {}, expectedRequest: {url: "token", accessToken: "token"}},
+            ]
+        },
+        {
+            name: 'users',
+            methods: [
+                { name: 'getUser', stub: 'get', options: {userId: 123}, expectedRequest: {url: "users/123"}},
+                { name: 'listAllUsers', stub: 'get', options: undefined, expectedRequest: {url: "users"}},
+                { name: 'getCurrentUser', stub: 'get', options: {}, expectedRequest: {url: "users/me"}},
+                { name: 'addUser', stub: 'post', options: {}, expectedRequest: {url: "users"}},
+                { name: 'addUserAndSendEmail', stub: 'post', options: {}, expectedRequest: {url: "users"}},
+                { name: 'updateUser', stub: 'put', options: {userId: 123}, expectedRequest: {url: "users/123"}},
+                { name: 'removeUser', stub: 'delete', options: {userId: 123}, expectedRequest: {url: "users/123"}},
+                { name: 'deactivateUser', stub: 'post', options: {userId: 123}, expectedRequest: {url: "users/123/deactivate"}},
+                { name: 'reactivateUser', stub: 'post', options: {userId: 123}, expectedRequest: {url: "users/123/reactivate"}},
+                { name: 'upgradeUser', stub: 'post', options: {userId: 123, planId: 456, body: {seatType: 'MEMBER'}}, expectedRequest: {url: "users/123/plans/456/upgrade", body: {seatType: 'MEMBER'}}},
+                { name: 'downgradeUser', stub: 'post', options: {userId: 123, planId: 456, body: {seatType: 'VIEWER'}}, expectedRequest: {url: "users/123/plans/456/downgrade", body: {seatType: 'VIEWER'}}},
+                { name: 'listUserPlans', stub: 'get', options: { userId: 123 }, expectedRequest: { url: "users/123/plans" }},
+                { name: 'removeUserFromPlan', stub: 'delete', options: { userId: 123, planId: 456 }, expectedRequest: { url: "users/123/plans/456" }},
+                // alternate emails
+                { name: 'addAlternateEmail', stub: 'post', options: {userId: 123}, expectedRequest: {url: "users/123/alternateemails"}},
+                { name: 'getAlternateEmail', stub: 'get', options: {userId: 123, alternateEmailId: 234}, expectedRequest: {url: "users/123/alternateemails/234"}},
+                { name: 'listAlternateEmails', stub: 'get', options: {userId: 123}, expectedRequest: {url: "users/123/alternateemails"}},
+                { name: 'makeAlternateEmailPrimary', stub: 'post', options: {userId: 123, alternateEmailId: 234}, expectedRequest: {url: "users/123/alternateemails/234/makeprimary"}},
+                { name: 'deleteAlternateEmail', stub: 'delete', options: {userId: 123, alternateEmailId: 234}, expectedRequest: {url: "users/123/alternateemails/234"}},
+                // profile image
+                { name: 'addProfileImage', stub: 'postFile', options: {userId: 123}, expectedRequest: {url: "users/123/profileimage"}},
+            ]
+        },
+        {
+            name: 'webhooks',
+            methods: [
+                { name: 'createWebhook', stub: 'post', options: {}, expectedRequest: {url: "webhooks" }},
+                { name: 'deleteWebhook', stub: 'delete', options: { webhookId: 123 }, expectedRequest: {url: "webhooks/123" }},
+                { name: 'updateWebhook', stub: 'put', options: { webhookId: 123 }, expectedRequest: {url: "webhooks/123" }},
+                { name: 'getWebhook', stub: 'get', options: { webhookId: 123 }, expectedRequest: {url: "webhooks/123" }},
+                { name: 'listWebhooks', stub: 'get', options: undefined, expectedRequest: {url: "webhooks" }},
+                { name: 'resetSharedSecret', stub: 'post', options: { webhookId: 123 }, expectedRequest: {url: "webhooks/123/resetsharedsecret" }},
+            ]
+        },
+        {
+            name: 'workspaces',
+            methods: [
+                { name: 'listWorkspaces', stub: 'get', options: undefined, expectedRequest: {url: "workspaces"}},
+                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {paginationType: 'token', lastKey: 'abc123'}}, expectedRequest: {url: "workspaces", queryParameters: {paginationType: 'token', lastKey: 'abc123'}}},
+                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {paginationType: 'token', maxItems: 500}}, expectedRequest: {url: "workspaces", queryParameters: {paginationType: 'token', maxItems: 500}}},
+                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {paginationType: 'token', lastKey: 'abc123', maxItems: 100}}, expectedRequest: {url: "workspaces", queryParameters: {paginationType: 'token', lastKey: 'abc123', maxItems: 100}}},
+                { name: 'getWorkspace', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123"}},
+                { name: 'getWorkspaceMetadata', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/metadata"}},
+                { name: 'getWorkspaceChildren', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/children"}},
+                { name: 'listWorkspaceFolders', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/folders"}},
+                { name: 'createWorkspace', stub: 'post', options: {}, expectedRequest: {url: "workspaces"}},
+                { name: 'createFolder', stub: 'post', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/folders"}},
+                { name: 'deleteWorkspace', stub: 'delete', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123"}},
+                { name: 'updateWorkspace', stub: 'put', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123"}},
+                { name: 'copyWorkspace', stub: 'post', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/copy"}},
+            ]
+        },
+    ];
+
+    _.each(testGroups, function (testGroup) {
+        describe('#' + testGroup.name, () => {
+            _.each(testGroup.methods, function (method) {
+                describe('#' + method.name, () => {
+                    let stub;
+                    let client;
+                    const originalOptions = (method.options === undefined) ? undefined : JSON.parse(JSON.stringify(method.options));
+
+                    beforeEach(() => {
+                        stub = jest.spyOn(requestor, method.stub).mockImplementation(() => {});
+                        client = smartsheet.createClient({accessToken: "token", requestor: requestor, userAgent: "user agent", baseUrl: "base url"});
+                    });
+
+                    afterEach(() => {
+                        stub.mockRestore();
+                    });
+
+                    it('method exists', () => {
+                        expect(client).toHaveProperty(testGroup.name);
+                        expect(client[testGroup.name]).toHaveProperty(method.name);
+                    });
+
+                    it('calls requestor once', () => {
+                        client[testGroup.name][method.name](method.options);
+                        expect(stub.mock.calls.length).toBe(1);
+                    });
+
+                    it('allows arbitrary options', () => {
+                        const optionsWithArbitraryOption = _.extend({somethingArbitrary: 123}, method.options);
+                        client[testGroup.name][method.name](optionsWithArbitraryOption);
+                        expect(stub.mock.calls[0][0]).toHaveProperty('somethingArbitrary', 123);
+                    });
+
+                    it('passes constructor args', () => {
+                        client[testGroup.name][method.name](method.options);
+                        expect(stub.mock.calls[0][0]).toHaveProperty('userAgent', "user agent");
+                        expect(stub.mock.calls[0][0]).toHaveProperty('baseUrl', "base url");
+                    });
+
+                    if (method.noAuth === true) {
+                        it('does not pass access token', () => {
+                            client[testGroup.name][method.name](method.options);
+                            expect(stub.mock.calls[0][0]).not.toHaveProperty('accessToken', "token");
+                        });
+                    }
+                    else {
+                        it('passes access token', () => {
+                            client[testGroup.name][method.name](method.options);
+                            expect(stub.mock.calls[0][0]).toHaveProperty('accessToken', "token");
+                        });
+                    }
+
+                    it('multiple requests are correct', () => {
+                        client[testGroup.name][method.name](method.options);
+                        client[testGroup.name][method.name](method.options);
+                        // Check that the request matches expected properties
+                        const actualRequest = stub.mock.calls[0][0];
+                        _.each(method.expectedRequest, (value, key) => {
+                            expect(actualRequest).toHaveProperty(key, value);
+                        });
+                    });
+
+                    it('does not mutate options', () => {
+                        if (originalOptions === undefined) {
+                            return;
+                        }
+
+                        const beforeOptions = JSON.stringify(originalOptions);
+                        client[testGroup.name][method.name](method.options);
+                        expect(beforeOptions).toBe(JSON.stringify(method.options));
+                    });
+                });
+            });
+        });
+    });
+});

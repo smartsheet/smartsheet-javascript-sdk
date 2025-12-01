@@ -1,4 +1,6 @@
-import type { BaseResponseStatus, RequestCallback, RequestOptions } from '../types';
+import type { BaseResponseStatus } from '../types/BaseResponseStatus';
+import type { RequestCallback } from '../types/RequestCallback';
+import type { RequestOptions } from '../types/RequestOptions';
 import type { APIAccessLevel } from '../types/ApiAccessLevel';
 
 export interface GetSightQueryParameters {
@@ -282,9 +284,9 @@ export interface SightsApi {
   updateSight: UpdateSight;
   copySight: CopySight;
   moveSight: MoveSight;
-  getSightPublshStatus: GetSightPublishStatus;
+  getSightPublishStatus: GetSightPublishStatus;
   setSightPublishStatus: SetSightPublishStatus;
-  // TODO -> the sharing method will be exposed as part of the sharing module work
+  // Deprecated sharing methods
   getShare: any;
   listShares: any;
   share: any;

@@ -1,12 +1,30 @@
-import type { CreateClient, CreateOptions } from './lib/types';
+import type { CreateClient } from './lib/types/CreateClient';
+import type { CreateOptions } from './lib/types/CreateOptions';
 import { apiUrls } from './lib/utils/apis';
-import { createContacts } from './lib/contacts';
-import { createEvents } from './lib/events';
-import { createSearch } from './lib/search';
-import { createSights } from './lib/sights';
+import { createContacts } from './lib/contacts/index';
+import { createEvents } from './lib/events/index';
+import { createSearch } from './lib/search/index';
+import { createSharing } from './lib/sharing/index';
+import { createSights } from './lib/sights/index';
+import { create as createHttpRequestor } from './lib/utils/httpRequestor';
+import * as constants from './lib/utils/constants';
+import { create as createFavorites } from './lib/favorites/index';
+import { create as createFolders } from './lib/folders/index';
+import { create as createGroups } from './lib/groups/index';
+import { create as createHome } from './lib/home/index';
+import { create as createImages } from './lib/images/index';
+import { create as createReports } from './lib/reports/index';
+import { create as createRequest } from './lib/request/index';
+import { create as createServer } from './lib/server/index';
+import { create as createSheets } from './lib/sheets/index';
+import { create as createTemplates } from './lib/templates/index';
+import { create as createTokens } from './lib/tokens/index';
+import { create as createUsers } from './lib/users/index';
+import { create as createWebhooks } from './lib/webhooks/index';
+import { create as createWorkspaces } from './lib/workspaces/index';
 
-const _ = require('underscore');
-const winston = require('winston');
+import _ from 'underscore';
+import * as winston from 'winston';
 
 // Possible TODO: Namespace parameters for different subcomponents
 // E.g. clientOptions.requestor.instance OR
@@ -23,7 +41,7 @@ function buildRequestor(clientOptions) {
 
   requestorConfig.logger = buildLogger(clientOptions);
 
-  return require('./lib/utils/httpRequestor.js').create(requestorConfig);
+  return createHttpRequestor(requestorConfig);
 }
 
 function buildLogger(clientOptions) {
@@ -51,7 +69,7 @@ function hasMultipleLogOptions(clientOptions) {
 }
 
 function buildLoggerFromLevel(logLevel) {
-  if (winston.levels[logLevel] == null) {
+  if (winston.level[logLevel] == null) {
     throw new Error(
       'Smartsheet client received configuration with invalid log level ' +
         `'${logLevel}'. Use one of the standard Winston log levels.`
@@ -91,12 +109,12 @@ export const createClient: CreateClient = function (clientOptions) {
   };
 
   return {
-    constants: require('./lib/utils/constants.js'),
+    constants: constants,
     contacts: createContacts(options),
     events: createEvents(options),
-    favorites: require('./lib/favorites/').create(options),
-    folders: require('./lib/folders/').create(options),
-    groups: require('./lib/groups/').create(options),
+    favorites: createFavorites(options),
+    folders: createFolders(options),
+    groups: createGroups(options),
     /**
      * @deprecated
      * The home module is deprecated. The endpoints powering this module
@@ -106,19 +124,20 @@ export const createClient: CreateClient = function (clientOptions) {
      * See this changelog entry for more information
      * https://developers.smartsheet.com/api/smartsheet/changelog#2025-03-25
      */
-    home: require('./lib/home/').create(options),
-    images: require('./lib/images/').create(options),
-    reports: require('./lib/reports/').create(options),
-    request: require('./lib/request/').create(options),
+    home: createHome(options),
+    images: createImages(options),
+    reports: createReports(options),
+    request: createRequest(options),
     search: createSearch(options),
-    server: require('./lib/server/').create(options),
-    sheets: require('./lib/sheets/').create(options),
+    server: createServer(options),
+    sharing: createSharing(options),
+    sheets: createSheets(options),
     sights: createSights(options),
-    templates: require('./lib/templates/').create(options),
-    tokens: require('./lib/tokens/').create(options),
-    users: require('./lib/users/').create(options),
-    webhooks: require('./lib/webhooks/').create(options),
-    workspaces: require('./lib/workspaces/').create(options),
+    templates: createTemplates(options),
+    tokens: createTokens(options),
+    users: createUsers(options),
+    webhooks: createWebhooks(options),
+    workspaces: createWorkspaces(options),
   };
 };
 
@@ -128,5 +147,8 @@ export const smartSheetURIs = {
   euBaseURI: 'https://api.smartsheet.eu/2.0/',
 };
 
-export { CreateClient, CreateClientOptions, SmartsheetClient } from './lib/types';
+export { CreateClient } from './lib/types/CreateClient';
+export { CreateClientOptions } from './lib/types/CreateClientOptions';
+export { SmartsheetClient } from './lib/types/SmartsheetClient';
 export * from './lib/events/types';
+export * from './lib/sharing/index';

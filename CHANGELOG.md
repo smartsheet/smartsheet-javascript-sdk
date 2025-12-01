@@ -5,6 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [x.x.x] - Unreleased
+### Added
+- WiremMock integration tests for contract testing for GET /2.0/users/{userId}/plans and GET /2.0/users endpoints
+- WireMock integration tests for contract testing for POST /2.0/users/{userId}/plans/{planId}/upgrade and POST /2.0/users/{userId}/plans/{planId}/downgrade
+- WireMock integration tests for contract testing for DELETE /2.0/users/{userId}/plans/{planId} endpoint
+- Remove trailing slashes from routes
+### Updated
+- listAllUsers url generation
+- Folder structure for the Users related WireMock tests
+- Update endpoint and sheet tests
+
+## [4.7.0] - 2025-06-30
+### Added
+- Support for new asset-based sharing endpoints in a new `sharing` module:
+  - `listAssetShares`: List all shares for a specified asset
+  - `getAssetShare`: Get a specific share for a specified asset
+  - `shareAsset`: Share an asset with specified users and/or groups
+  - `updateAssetShare`: Update a specific share for a specified asset
+  - `deleteAssetShare`: Delete a specific share for a specified asset
+- Added TypeScript interfaces and enums for the sharing API
+
+### Updated
+- Deprecated old sharing endpoints in the `share` module
+- Added backward compatibility wrappers in sheets, reports, workspaces, and sights modules
+- Added deprecation notices and migration examples in documentation
+- Fix typo in SightsApi (`getSightPublshStatus` to `getSightPublishStatus`)
+
+## 4.6.0 - 2025-09-25
+### Added
+  - Support for upgrade/downgrade endpoints
+  - Support for GET /users/{userId}/plans
+  - Support for DELETE /users/{userId}/plans/{planId}
+
 ## [4.5.0] - 2025-08-25
 ### Added
   - Token-based pagination support for `workspaces.listWorkspaces()` method with `paginationType`, `lastKey` and `maxItems` parameters.

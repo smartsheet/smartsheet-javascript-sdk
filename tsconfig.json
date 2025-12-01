@@ -3,11 +3,19 @@
     "outDir": "./dist",
     "allowJs": true,
     "checkJs": true,
-    "target": "ES6",
+    "target": "esnext",
     "declaration": true,
-    "moduleResolution": "node16",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "module": "Node16"
+    "module": "esnext",
+    "types": ["node", "jest"],
+    "esModuleInterop": true,
+    "rootDir": ".",
+    "paths": {
+      "@smartsheet": ["./index.ts"],
+      "@smartsheet/*": ["./lib/*"]
+    }
   },
-  "include": ["./lib/**/*", "./index.ts", "./package.json"]
+  "include": ["./lib/**/*", "./index.ts", "./package.json", "./test/**/*"],
+  "exclude": ["./dist/**/*", "./node_modules/**/*"]
 }

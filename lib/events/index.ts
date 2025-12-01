@@ -1,5 +1,7 @@
 import type { EventsApi, GetEventsOptions, GetEventsResponse } from './types';
-import type { ClientOptions, CreateOptions, RequestCallback, RequestOptions } from '../types';
+import type { RequestCallback } from '../types/RequestCallback';
+import type { RequestOptions } from '../types/RequestOptions';
+import type { ClientOptions, CreateOptions } from '../types/CreateOptions';
 
 type OptionsToSend = Partial<ClientOptions> & {
   url: string;

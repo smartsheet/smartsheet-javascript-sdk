@@ -1,4 +1,6 @@
-import type { CreateOptions, RequestCallback } from '../types';
+import type { RequestCallback } from '../types/RequestCallback';
+import type { CreateOptions } from '../types/CreateOptions';
+import { apiUrls } from '../utils/apis';
 import type { SearchAllOptions, SearchApi, SearchResponse, SearchSheetOptions } from './types';
 
 export const createSearch = (options: CreateOptions): SearchApi => {
@@ -29,9 +31,10 @@ export const createSearch = (options: CreateOptions): SearchApi => {
       ...getOptions,
       queryParameters: {
         query: getOptions.query,
-        sheetId: getOptions.sheetId,
       },
     };
+
+    options.url = apiUrls.search + '/sheets/' + getOptions.sheetId;
 
     return requestor.get(options, callback);
   };

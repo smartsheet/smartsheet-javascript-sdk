@@ -66,7 +66,7 @@ The SDK can be directed to point at a different base URL, which can be helpful f
 When creating the Smartsheet client, set the base URL by passing it into the constructor arguments:
 
 ```javascript
-var smartsheet = require('smartsheet').createClient({
+const smartsheet = require('smartsheet').createClient({
   baseUrl: smartsheet.smartSheetURIs.defaultBaseURI
 });
 ```
@@ -76,7 +76,7 @@ If you need to access Smartsheetgov you will need to specify the Smartsheetgov A
 
 Invoke the SmartsheetBuilder with the base URI pointing to Smartsheetgov:
 ```javascript
-var smartsheet = require('smartsheet').createClient({
+const smartsheet = require('smartsheet').createClient({
   baseUrl: smartsheet.smartSheetURIs.govBaseURI
 });
 ```
@@ -87,7 +87,7 @@ If you need to access Smartsheet.eu you will need to specify the Smartsheet.eu A
 
 Invoke the SmartsheetBuilder with the base URI pointing to Smartsheet.eu:
 ```javascript
-var smartsheet = require('smartsheet').createClient({
+const smartsheet = require('smartsheet').createClient({
   baseUrl: smartsheet.smartSheetURIs.euBaseURI
 });
 ```
@@ -104,6 +104,90 @@ The source code comes with several scripts for running tests:
 |`npm run coverage`|Runs functional tests and reports on code coverage|
 
 Note that a successful test run will currently output some unhandled rejection messages in the body of the logs. This is expected, and does not indicate test failure.
+
+Mock API tests:
+
+We use WireMock for API contract testing. This allows us to simulate Smartsheet API responses and run tests without relying on the live API.
+The [smartsheet-sdk-tests](https://github.com/smartsheet/smartsheet-sdk-tests) repo provides a standalone WireMock server with JSON mappings that simulate the Smartsheet API.
+Each mapping defines a request to match and a response to return.
+
+Common test cases use catch-all path patterns (e.g., /errors/500-response).
+
+We use two custom headers:
+
+- x-test-name: Used for exact mapping match, allowing different mock responses for the same HTTP method and endpoint.
+- x-request-id: A UUID generated for each request, used to verify request URLs and search for requests in WireMock admin history.
+
+To run the mock API tests:
+1. Clone the [smartsheet-sdk-tests](https://github.com/smartsheet/smartsheet-sdk-tests) repo and follow the instructions from the readme to start the mock server.
+2. `npm test mock-api`
+
+To add new mock API tests:
+
+1. Add a WireMock Mapping (JSON) in the [smartsheet-sdk-tests](https://github.com/smartsheet/smartsheet-sdk-tests):
+```json
+{
+    "request": {
+        "urlPathTemplate": "/2.0/users/{userId}/plans",
+        "method": "GET",
+        "headers": {
+            "Authorization": {
+                "matches": "Bearer .*"
+            },
+            "x-test-name": {
+                "equalTo": "/users/list-user-plans/all-response-body-properties"
+            },
+            "x-request-id": {
+                "matches" : ".*"
+            }
+        }
+    },
+    "response": {
+        "statusMessage": "OK",
+        "status": 200,
+        "jsonBody": {
+            "lastKey": "12345678901234569",
+            "data": [
+                {
+                    "planId": 1234567890123456,
+                    "seatType": "MEMBER",
+                    "seatTypeLastChangedAt": "2025-01-01T00:00:00.123456789Z",
+                    "provisionalExpirationDate": "2026-12-13T12:17:52.525696Z",
+                    "isInternal": false
+                }
+            ]
+        },
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    }
+}
+```
+2. Write a Test in the SDK:
+
+- Always use x-test-name to target specific mock responses.
+- Use x-request-id for traceability in WireMock admin.
+- Keep mappings in the smartsheet-sdk-tests repository organized and descriptive
+
+```javascript
+    it('listUserPlans all response body properties', async function () {
+        const requestId = crypto.randomUUID();
+        const options = {
+            userId: TEST_USER_ID,
+            queryParameters: {
+                lastKey: lastKey,
+                maxItems: maxItems
+            },
+            customProperties: {
+                'x-request-id': requestId,
+                'x-test-name': '/users/list-user-plans/all-response-body-properties'
+            }
+        };
+        const response = await client.users.listUserPlans(options);
+        
+        assert.ok(response);
+    });
+```
 
 ## Passthrough Option
 
@@ -128,7 +212,7 @@ The `...Options` parameter takes the normal set of parameters taken by other sim
 The following example shows how to POST data to `https://api.smartsheet.com/2.0/sheets` using the passthrough method:
 
 ```javascript
-var payload = {
+const payload = {
   name: 'my new sheet',
   columns: [
     {
@@ -144,7 +228,7 @@ var payload = {
   ]
 };
 
-var responsePromise = smartsheet.request.post({
+const responsePromise = smartsheet.request.post({
   url: 'sheets',
   body: payload
 });
@@ -164,8 +248,8 @@ Many events have additional information available as a part of the event. That i
 
 ```javascript
 // Initialize the client
-var client = require('smartsheet');
-var smartsheet = client.createClient({
+const client = require('smartsheet');
+const smartsheet = client.createClient({
   accessToken: 'JKlMNOpQ12RStUVwxYZAbcde3F5g6hijklM789',
   logLevel: 'info'
 });

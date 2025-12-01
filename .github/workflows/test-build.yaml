@@ -11,7 +11,7 @@ jobs:
       - name: Set up Node.js  
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
       - name: Install dependencies
         run:  npm install 
       - name: Run eslint
@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [20.x, 22.x, 24.x]
 
     steps:
       - uses: actions/checkout@v3
@@ -43,8 +43,7 @@ jobs:
           repository: 'smartsheet-sdk-tests'
       - name: Setup mock API
         run: |
-          smartsheet-sdk-tests/ci_scripts/install_wiremock.sh
-          smartsheet-sdk-tests/ci_scripts/start_wiremock.sh
+          docker compose -f smartsheet-sdk-tests/docker-compose.yml up -d --wait
       - name: Run coverage on Node ${{ matrix.node-version }}
         run: npm run coverage
       - name: Coveralls Parallel

@@ -2,16 +2,18 @@ import eslint from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 import prettierConfig from 'eslint-config-prettier';
+import tsdoc from 'eslint-plugin-tsdoc';
 
 export default tseslint.config(
   {
-    ignores: ['**/dist/**', '**/test/**', '**/smartsheet-sdk-tests/**'],
+    ignores: ['**/dist/**', '**/smartsheet-sdk-tests/**'],
   },
   {
     languageOptions: {
       globals: {
         ...globals.browser,
         ...globals.node,
+        ...globals.mocha,
       },
     },
   },
@@ -21,6 +23,9 @@ export default tseslint.config(
   {
     // Apply to both JS and TS files
     files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
+    plugins: {
+      tsdoc,
+    },
     rules: {
       '@typescript-eslint/no-require-imports': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
@@ -34,6 +39,7 @@ export default tseslint.config(
         },
       ],
       '@typescript-eslint/consistent-type-imports': 'error',
+      'tsdoc/syntax': 'warn',
     },
   },
   {
