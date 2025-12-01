@@ -45,10 +45,7 @@ export function create(options: CreateOptions): FavoritesApi {
   };
 
   const buildFavoriteAddition = (type: FavoriteType) => {
-    return (
-      postOptions: AddFavoriteConvenienceOptions,
-      callback?: RequestCallback<AddFavoritesResponse>
-    ) => {
+    return (postOptions: AddFavoriteConvenienceOptions, callback?: RequestCallback<AddFavoritesResponse>) => {
       const options: AddFavoriteConvenienceOptions = {
         ...JSON.parse(JSON.stringify(postOptions)),
         type,
@@ -92,7 +89,7 @@ export function create(options: CreateOptions): FavoritesApi {
     const urlOptions = {
       url: options.apiUrls.favorites + '/' + deleteOptions.favoriteType,
     };
-    
+
     // Transform objectIds array to comma-separated string if needed
     const processedOptions = { ...deleteOptions };
     if (processedOptions.queryParameters?.objectIds && Array.isArray(processedOptions.queryParameters.objectIds)) {
@@ -101,7 +98,7 @@ export function create(options: CreateOptions): FavoritesApi {
         objectIds: processedOptions.queryParameters.objectIds.join(','),
       };
     }
-    
+
     return requestor.delete({ ...optionsToSend, ...urlOptions, ...processedOptions }, callback);
   };
 
