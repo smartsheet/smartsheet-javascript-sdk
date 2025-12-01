@@ -1,4 +1,4 @@
-import type { FavoritesApi } from '@smartsheet/favorites/types';
+import type { FavoritesApi } from '../favorites/types';
 import type { ContactsApi } from '../contacts/types';
 import type { EventsApi } from '../events/types';
 import type { SearchApi } from '../search/types';

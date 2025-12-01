@@ -36,6 +36,7 @@ describe('Favorites - removeMultipleFavorites convenience endpoint tests', () =>
         // Verify query parameters
         expect(matchedRequest.queryParams).toEqual({
             objectIds: {
+                key: 'objectIds',
                 values: [`${TEST_SHEET_ID},${TEST_FOLDER_ID}`]
             }
         });
@@ -79,6 +80,7 @@ describe('Favorites - removeMultipleFavorites convenience endpoint tests', () =>
         // Verify query parameters
         expect(matchedRequest.queryParams).toEqual({
             objectIds: {
+                key: 'objectIds',
                 values: [`${TEST_SHEET_ID},${TEST_FOLDER_ID}`]
             }
         });

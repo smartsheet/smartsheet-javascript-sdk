@@ -394,7 +394,7 @@ export interface AddFavoriteConvenienceOptions extends RequestOptions<undefined,
   /**
    * The type of the favorite object (set internally by convenience functions)
    */
-  type: FavoriteType;
+  type?: FavoriteType;
 }
 
 export interface AddFavoritesResponse {
