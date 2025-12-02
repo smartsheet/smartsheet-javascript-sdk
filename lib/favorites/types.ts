@@ -422,7 +422,7 @@ export interface RemoveMultipleFavoritesQueryParams {
   /**
    * A comma-separated list of Ids of the favorited item.
    */
-  objectIds?: string | string[];
+  objectIds?: string | string[] | number | number[];
 }
 
 export interface RemoveMultipleFavoritesOptions extends RequestOptions<RemoveMultipleFavoritesQueryParams, undefined> {

@@ -60,7 +60,7 @@ describe('Favorites - removeMultipleFavorites endpoint tests', () => {
         expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
     });
 
-    it('removeSheetsFromFavorites with array objectIds', async () => {
+    it('removeSheetsFromFavorites with string array objectIds', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             queryParameters: {
@@ -74,11 +74,67 @@ describe('Favorites - removeMultipleFavorites endpoint tests', () => {
         const response = await client.favorites.removeSheetsFromFavorites(options);
         const matchedRequest = await findWireMockRequest(requestId);
         
-        // Verify query parameters were transformed to string
+        // Verify query parameters were transformed to comma-separated string
         expect(matchedRequest.queryParams).toEqual({
             objectIds: {
                 key: 'objectIds',
                 values: [`${TEST_SHEET_ID},${TEST_FOLDER_ID}`]
+            }
+        });
+        
+        // Verify response
+        expect(response).toBeTruthy();
+        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
+        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
+    });
+
+    it('removeSheetsFromFavorites with number array objectIds', async () => {
+        const requestId = crypto.randomUUID();
+        const options = {
+            queryParameters: {
+                objectIds: [TEST_SHEET_ID, TEST_FOLDER_ID]
+            },
+            customProperties: {
+                'x-request-id': requestId,
+                'x-test-name': '/favorites/delete-multiple-favorites/all-response-body-properties'
+            }
+        };
+        const response = await client.favorites.removeSheetsFromFavorites(options);
+        const matchedRequest = await findWireMockRequest(requestId);
+        
+        // Verify query parameters were transformed to comma-separated string
+        expect(matchedRequest.queryParams).toEqual({
+            objectIds: {
+                key: 'objectIds',
+                values: [`${TEST_SHEET_ID},${TEST_FOLDER_ID}`]
+            }
+        });
+        
+        // Verify response
+        expect(response).toBeTruthy();
+        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
+        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
+    });
+
+    it('removeSheetsFromFavorites with single number objectIds', async () => {
+        const requestId = crypto.randomUUID();
+        const options = {
+            queryParameters: {
+                objectIds: TEST_SHEET_ID
+            },
+            customProperties: {
+                'x-request-id': requestId,
+                'x-test-name': '/favorites/delete-multiple-favorites/all-response-body-properties'
+            }
+        };
+        const response = await client.favorites.removeSheetsFromFavorites(options);
+        const matchedRequest = await findWireMockRequest(requestId);
+        
+        // Verify query parameters
+        expect(matchedRequest.queryParams).toEqual({
+            objectIds: {
+                key: 'objectIds',
+                values: [`${TEST_SHEET_ID}`]
             }
         });
         

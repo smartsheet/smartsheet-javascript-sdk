@@ -30,6 +30,11 @@ describe('Favorites - listFavorites endpoint tests', () => {
         const matchedRequest = await findWireMockRequest(requestId);
 
         expect(matchedRequest.url.includes('/2.0/favorites')).toBeTruthy();
+        
+        // Verify query parameters
+        const queryParams = matchedRequest.queryParams;
+        expect(queryParams.includeAll).toBeTruthy();
+        expect(queryParams.includeAll.values[0]).toBe('true');
     });
 
     it('listFavorites all response body properties', async () => {
@@ -44,12 +49,6 @@ describe('Favorites - listFavorites endpoint tests', () => {
             }
         };
         const response = await client.favorites.listFavorites(options);
-        const matchedRequest = await findWireMockRequest(requestId);
-        
-        // Verify query parameters
-        const queryParams = matchedRequest.queryParams;
-        expect(queryParams.includeAll).toBeTruthy();
-        expect(queryParams.includeAll.values[0]).toBe('true');
         
         // Verify response structure
         expect(response).toBeTruthy();
