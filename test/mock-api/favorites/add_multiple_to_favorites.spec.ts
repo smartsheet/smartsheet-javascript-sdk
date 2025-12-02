@@ -65,12 +65,16 @@ describe('Favorites - addItemsToFavorites endpoint tests', () => {
         
         // Verify request body
         const requestBody = JSON.parse(matchedRequest.body);
-        expect(Array.isArray(requestBody)).toBeTruthy();
-        expect(requestBody.length).toBe(2);
-        expect(requestBody[0].type).toBe(TEST_FAVORITE_TYPE_SHEET);
-        expect(requestBody[0].objectId).toBe(TEST_SHEET_ID);
-        expect(requestBody[1].type).toBe(TEST_FAVORITE_TYPE_FOLDER);
-        expect(requestBody[1].objectId).toBe(TEST_FOLDER_ID);
+        expect(requestBody).toEqual([
+            {
+                type: TEST_FAVORITE_TYPE_SHEET,
+                objectId: TEST_SHEET_ID
+            },
+            {
+                type: TEST_FAVORITE_TYPE_FOLDER,
+                objectId: TEST_FOLDER_ID
+            }
+        ]);
         
         // Verify response
         expect(response).toBeTruthy();

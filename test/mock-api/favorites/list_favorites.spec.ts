@@ -19,7 +19,9 @@ describe('Favorites - listFavorites endpoint tests', () => {
         const requestId = crypto.randomUUID();
         const options = {
             queryParameters: {
-                includeAll: true
+                includeAll: false,
+                page: 1,
+                pageSize: 50
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -32,9 +34,20 @@ describe('Favorites - listFavorites endpoint tests', () => {
         expect(matchedRequest.url.includes('/2.0/favorites')).toBeTruthy();
         
         // Verify query parameters
-        const queryParams = matchedRequest.queryParams;
-        expect(queryParams.includeAll).toBeTruthy();
-        expect(queryParams.includeAll.values[0]).toBe('true');
+        expect(matchedRequest.queryParams).toEqual({
+            includeAll: {
+                key: 'includeAll',
+                values: ['false']
+            },
+            page: {
+                key: 'page',
+                values: ['1']
+            },
+            pageSize: {
+                key: 'pageSize',
+                values: ['50']
+            }
+        });
     });
 
     it('listFavorites all response body properties', async () => {
@@ -67,34 +80,6 @@ describe('Favorites - listFavorites endpoint tests', () => {
         // Verify second favorite (folder)
         expect(response.data[1].type).toBe(TEST_FAVORITE_TYPE_FOLDER);
         expect(response.data[1].objectId).toBe(TEST_FOLDER_ID);
-    });
-
-    it('listFavorites with pagination parameters', async () => {
-        const requestId = crypto.randomUUID();
-        const options = {
-            queryParameters: {
-                page: 1,
-                pageSize: 50
-            },
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/favorites/list-favorites/all-response-body-properties'
-            }
-        };
-        const response = await client.favorites.listFavorites(options);
-        const matchedRequest = await findWireMockRequest(requestId);
-        
-        // Verify query parameters
-        const queryParams = matchedRequest.queryParams;
-        expect(queryParams.page).toBeTruthy();
-        expect(queryParams.page.values[0]).toBe('1');
-        expect(queryParams.pageSize).toBeTruthy();
-        expect(queryParams.pageSize.values[0]).toBe('50');
-        
-        // Verify response
-        expect(response).toBeTruthy();
-        expect(response.data).toBeTruthy();
-        expect(Array.isArray(response.data)).toBe(true);
     });
 
     it('listFavorites error 500 response', async () => {
