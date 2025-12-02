@@ -210,8 +210,8 @@ export interface FoldersApi {
    */
   copyFolder: (
     options: CopyFolderOptions,
-    callback?: RequestCallback<ContainerDestination>
-  ) => Promise<ContainerDestination>;
+    callback?: RequestCallback<CopyFolderResponse>
+  ) => Promise<CopyFolderResponse>;
 
   /**
    * Moves a folder.
@@ -237,7 +237,7 @@ export interface FoldersApi {
    * });
    * ```
    */
-  moveFolder: (options: MoveFolderOptions, callback?: RequestCallback<MoveFolderBody>) => Promise<MoveFolderBody>;
+  moveFolder: (options: MoveFolderOptions, callback?: RequestCallback<MoveFolderResponse>) => Promise<MoveFolderResponse>;
 }
 
 // ============================================================================
@@ -812,6 +812,13 @@ export interface CopyFolderOptions extends RequestOptions<CopyFolderQueryParamet
   folderId: number;
 }
 
+export interface CopyFolderResponse extends BaseResponseStatus {
+  /**
+   * The copied folder object.
+   */
+  result: Folder;
+}
+
 // ============================================================================
 // Move Folder
 // ============================================================================
@@ -833,4 +840,11 @@ export interface MoveFolderOptions extends RequestOptions<undefined, MoveFolderB
    * Folder Id to move.
    */
   folderId: number;
+}
+
+export interface MoveFolderResponse extends BaseResponseStatus {
+  /**
+   * The moved folder object.
+   */
+  result: Folder;
 }

@@ -18,8 +18,8 @@ import type {
   DeleteFolderOptions,
   CopyFolderOptions,
   MoveFolderOptions,
-  MoveFolderBody,
-  ContainerDestination,
+  MoveFolderResponse,
+  CopyFolderResponse,
 } from './types';
 
 export function create(options: CreateOptions): FoldersApi {
@@ -78,16 +78,16 @@ export function create(options: CreateOptions): FoldersApi {
 
   const copyFolder = (
     postOptions: CopyFolderOptions,
-    callback?: RequestCallback<ContainerDestination>
-  ): Promise<ContainerDestination> => {
+    callback?: RequestCallback<CopyFolderResponse>
+  ): Promise<CopyFolderResponse> => {
     const urlOptions = { url: options.apiUrls.folders + '/' + postOptions.folderId + '/copy' };
     return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
   };
 
   const moveFolder = (
     postOptions: MoveFolderOptions,
-    callback?: RequestCallback<MoveFolderBody>
-  ): Promise<MoveFolderBody> => {
+    callback?: RequestCallback<MoveFolderResponse>
+  ): Promise<MoveFolderResponse> => {
     const urlOptions = { url: options.apiUrls.folders + '/' + postOptions.folderId + '/move' };
     return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
   };

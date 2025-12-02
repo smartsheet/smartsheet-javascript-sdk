@@ -7,7 +7,11 @@ import {
     ERROR_500_STATUS_CODE,
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
-    ERROR_400_MESSAGE
+    ERROR_400_MESSAGE,
+    TEST_SUCCESS_RESULT_CODE,
+    TEST_SUCCESS_MESSAGE,
+    TEST_FOLDER_NAME,
+    TEST_FOLDER_PERMALINK
 } from './common_test_constants';
 import { DestinationType } from '@smartsheet/folders/types';
 
@@ -58,8 +62,11 @@ describe('Folders - moveFolder endpoint tests', () => {
         
         // Verify response
         expect(response).toBeTruthy();
-        expect(response.destinationId).toBe(TEST_DESTINATION_FOLDER_ID);
-        expect(response.destinationType).toBe(DestinationType.FOLDER);
+        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
+        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
+        expect(response.result.id).toBe(TEST_FOLDER_ID);
+        expect(response.result.name).toBe(TEST_FOLDER_NAME);
+        expect(response.result.permalink).toBe(TEST_FOLDER_PERMALINK);
     });
 
     it('moveFolder error 500 response', async () => {

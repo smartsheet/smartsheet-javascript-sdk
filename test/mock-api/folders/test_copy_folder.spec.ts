@@ -8,7 +8,12 @@ import {
     ERROR_500_STATUS_CODE,
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
-    ERROR_400_MESSAGE
+    ERROR_400_MESSAGE,
+    TEST_NEW_FOLDER_PERMALINK,
+    TEST_NEW_FOLDER_ID,
+    TEST_NEW_FOLDER_NAME,
+    TEST_SUCCESS_MESSAGE,
+    TEST_SUCCESS_RESULT_CODE
 } from './common_test_constants';
 import { DestinationType } from '@smartsheet/folders/types';
 
@@ -83,41 +88,11 @@ describe('Folders - copyFolder endpoint tests', () => {
         
         // Verify response
         expect(response).toBeTruthy();
-        expect(response.destinationType).toBe(DestinationType.FOLDER);
-        expect(response.destinationId).toBe(TEST_DESTINATION_FOLDER_ID);
-        expect(response.newName).toBe(TEST_COPIED_FOLDER_NAME);
-    });
-
-    it('copyFolder required response body properties', async () => {
-        const requestId = crypto.randomUUID();
-        const options = {
-            folderId: TEST_FOLDER_ID,
-            body: {
-                destinationType: DestinationType.FOLDER,
-                destinationId: TEST_DESTINATION_FOLDER_ID
-            },
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/folders/copy-folder/required-response-body-properties'
-            }
-        };
-        const response = await client.folders.copyFolder(options);
-        const matchedRequest = await findWireMockRequest(requestId);
-        
-        // Verify request body
-        const requestBody = JSON.parse(matchedRequest.body);
-        expect(requestBody).toEqual({
-            destinationType: DestinationType.FOLDER,
-            destinationId: TEST_DESTINATION_FOLDER_ID
-        });
-        
-        // Verify response
-        expect(response).toBeTruthy();
-        expect(response.destinationType).toBe(DestinationType.FOLDER);
-        expect(response.destinationId).toBe(TEST_DESTINATION_FOLDER_ID);
-        
-        // Optional property should be undefined
-        expect(response.newName).toBeUndefined();
+        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
+        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
+        expect(response.result.id).toBe(TEST_NEW_FOLDER_ID);
+        expect(response.result.name).toBe(TEST_NEW_FOLDER_NAME);
+        expect(response.result.permalink).toBe(TEST_NEW_FOLDER_PERMALINK);
     });
 
     it('copyFolder error 500 response', async () => {
