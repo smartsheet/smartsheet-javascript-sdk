@@ -56,7 +56,7 @@ describe('Method Unit Tests', () => {
         {
             name: 'folders',
             methods: [
-                { name: 'getFolder', stub: 'get', options: {}, expectedRequest: {url: "folders" }},
+                { name: 'getFolder', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123" }},
                 { name: 'getFolderMetadata', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123/metadata" }},
                 { name: 'getFolderChildren', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123/children" }},
                 { name: 'listChildFolders', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123/folders" }},

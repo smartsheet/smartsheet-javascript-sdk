@@ -1,3 +1,4 @@
+import type { FoldersApi } from '../folders/types';
 import type { ContactsApi } from '../contacts/types';
 import type { EventsApi } from '../events/types';
 import type { SearchApi } from '../search/types';
@@ -12,7 +13,7 @@ export interface SmartsheetClient {
   contacts: ContactsApi;
   events: EventsApi;
   favorites: any;
-  folders: any;
+  folders: FoldersApi;
   groups: any;
   home: any;
   images: any;
