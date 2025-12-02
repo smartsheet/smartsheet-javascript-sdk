@@ -237,7 +237,10 @@ export interface FoldersApi {
    * });
    * ```
    */
-  moveFolder: (options: MoveFolderOptions, callback?: RequestCallback<MoveFolderResponse>) => Promise<MoveFolderResponse>;
+  moveFolder: (
+    options: MoveFolderOptions,
+    callback?: RequestCallback<MoveFolderResponse>
+  ) => Promise<MoveFolderResponse>;
 }
 
 // ============================================================================
