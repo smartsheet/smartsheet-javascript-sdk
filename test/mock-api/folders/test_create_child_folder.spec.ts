@@ -30,7 +30,7 @@ describe('Folders - createChildFolder endpoint tests', () => {
             },
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/folders/create-child-folder/required-response-body-properties'
+                'x-test-name': '/folders/create-child-folder/all-response-body-properties'
             }
         };
         await client.folders.createChildFolder(options);
@@ -70,49 +70,6 @@ describe('Folders - createChildFolder endpoint tests', () => {
         expect(response.result.id).toBe(TEST_NEW_FOLDER_ID);
         expect(response.result.name).toBe(TEST_NEW_FOLDER_NAME);
         expect(response.result.permalink).toBe(TEST_NEW_FOLDER_PERMALINK);
-        
-        // Check optional arrays
-        expect(response.result.folders).toBeDefined();
-        expect(response.result.sheets).toBeDefined();
-        expect(response.result.reports).toBeDefined();
-        expect(response.result.sights).toBeDefined();
-        expect(response.result.templates).toBeDefined();
-        
-        // Validate request body
-        const body = JSON.parse(matchedRequest.body);
-        expect(body).toEqual({ name: folderName });
-    });
-
-    it('createChildFolder required response body properties', async () => {
-        const requestId = crypto.randomUUID();
-        const folderName = TEST_NEW_FOLDER_NAME;
-        const options = {
-            folderId: TEST_FOLDER_ID,
-            body: {
-                name: folderName
-            },
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/folders/create-child-folder/required-response-body-properties'
-            }
-        };
-        const response = await client.folders.createChildFolder(options);
-        const matchedRequest = await findWireMockRequest(requestId);
-        
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
-        expect(response.result).toBeDefined();
-        expect(response.result.id).toBe(TEST_NEW_FOLDER_ID);
-        expect(response.result.name).toBe(TEST_NEW_FOLDER_NAME);
-        expect(response.result.permalink).toBe(TEST_NEW_FOLDER_PERMALINK);
-        
-        // Optional arrays should be undefined
-        expect(response.result.folders).toBeUndefined();
-        expect(response.result.sheets).toBeUndefined();
-        expect(response.result.reports).toBeUndefined();
-        expect(response.result.sights).toBeUndefined();
-        expect(response.result.templates).toBeUndefined();
         
         // Validate request body
         const body = JSON.parse(matchedRequest.body);

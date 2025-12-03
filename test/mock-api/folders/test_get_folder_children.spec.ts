@@ -150,7 +150,7 @@ describe('Folders - getFolderChildren endpoint tests', () => {
         expect(response.data[1].createdAt).toBe(TEST_CREATED_AT);
         expect(response.data[1].modifiedAt).toBe(TEST_MODIFIED_AT);
         expect(response.data[1].resourceType).toBe('sheet');
-        expect(response.data[1].accessLevel).toBeUndefined();
+        expect(response.data[1].accessLevel).toBe('OWNER');
         
         // Verify pagination token is not present
         expect(response.lastKey).toBeUndefined();

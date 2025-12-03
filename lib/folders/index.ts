@@ -92,14 +92,6 @@ export function create(options: CreateOptions): FoldersApi {
     return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
   };
 
-  /**
-   * Get metadata of a folder
-   * @param {Object} getOptions - Options including folderId and optional query parameters
-   * @param {number} getOptions.folderId - The folder ID
-   * @param {Object} [getOptions.queryParameters] - Optional query parameters
-   * @param {string} [getOptions.queryParameters.include] - Comma-separated list of fields to include (source)
-   * @param {Function} callback - Callback function
-   */
   const getFolderMetadata = (
     getOptions: GetFolderMetadataOptions,
     callback?: RequestCallback<GetFolderMetadataResponse>
@@ -108,17 +100,6 @@ export function create(options: CreateOptions): FoldersApi {
     return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
 
-  /**
-   * Get children of a folder with token-based pagination
-   * @param {Object} getOptions - Options including folderId and optional query parameters
-   * @param {number} getOptions.folderId - The folder ID
-   * @param {Object} [getOptions.queryParameters] - Optional query parameters
-   * @param {string} [getOptions.queryParameters.childrenResourceTypes] - Filter by resource type(s) (sheets, reports, sights, folders). Comma-separated string of types.
-   * @param {string} [getOptions.queryParameters.include] - Comma-separated list of fields to include (source, ownerInfo)
-   * @param {number} [getOptions.queryParameters.maxItems] - Maximum items per page
-   * @param {string} [getOptions.queryParameters.lastKey] - Token for pagination
-   * @param {Function} callback - Callback function
-   */
   const getFolderChildren = (
     getOptions: GetFolderChildrenOptions,
     callback?: RequestCallback<GetFolderChildrenResponse>
