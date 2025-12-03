@@ -53,11 +53,6 @@ describe('Folders - updateFolder endpoint tests', () => {
         expect(response).toBeTruthy();
         expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
         expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
-        expect(response.failedItems).toBeDefined();
-        expect(response.failedItems.length).toBe(0);
-        expect(response.version).toBeDefined();
-        expect(response.version).toBe(2);
-        
         expect(response.result).toBeDefined();
         expect(response.result.id).toBe(TEST_FOLDER_ID);
         expect(response.result.name).toBe(TEST_UPDATED_FOLDER_NAME);

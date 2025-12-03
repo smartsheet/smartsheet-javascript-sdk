@@ -37,7 +37,7 @@ describe('Folders - getFolderChildren endpoint tests', () => {
             },
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/folders/get-folder-children/all-response-body-properties'
+                'x-test-name': '/folders/list-folder-children/all-response-body-properties'
             }
         };
         await client.folders.getFolderChildren(options);
@@ -68,7 +68,7 @@ describe('Folders - getFolderChildren endpoint tests', () => {
             folderId: TEST_FOLDER_ID,
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/folders/get-folder-children/all-response-body-properties'
+                'x-test-name': '/folders/list-folder-children/all-response-body-properties'
             }
         };
         const response = await client.folders.getFolderChildren(options);
@@ -124,7 +124,7 @@ describe('Folders - getFolderChildren endpoint tests', () => {
             folderId: TEST_FOLDER_ID,
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/folders/get-folder-children/required-response-body-properties'
+                'x-test-name': '/folders/list-folder-children/required-response-body-properties'
             }
         };
         const response = await client.folders.getFolderChildren(options);
