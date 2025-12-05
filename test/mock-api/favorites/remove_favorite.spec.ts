@@ -42,9 +42,10 @@ describe('Favorites - removeFavorite endpoint tests', () => {
         const response = await client.favorites.removeSheetFromFavorites(options);
         
         // Verify response
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE
+        });
     });
 
     it('removeSheetFromFavorites error 500 response', async () => {

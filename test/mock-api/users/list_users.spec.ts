@@ -62,20 +62,33 @@ describe('Users - listAllUsers endpoint tests', () => {
         };
         await client.users.listAllUsers(options);
         const matchedRequest = await findWireMockRequest(requestId);
-        const queryParams = matchedRequest.queryParams;
-        const emailsActual = queryParams.emails.values[0];
-        const planIdActual = parseInt(queryParams.planId.values[0]);
-        const seatTypeActual = queryParams.seatType.values[0];
-        const includeAllActual = queryParams.includeAll.values[0];
-        const pageActual = queryParams.page.values[0];
-        const pageSizeActual = queryParams.pageSize.values[0];
         expect(matchedRequest.url.includes(`/2.0/users`)).toBeTruthy();
-        expect(emailsActual).toBe(emails);
-        expect(planIdActual).toBe(TEST_PLAN_ID);
-        expect(seatTypeActual).toBe(seatType);
-        expect(includeAllActual).toBe(includeAll.toString());
-        expect(parseInt(pageActual)).toBe(page);
-        expect(parseInt(pageSizeActual)).toBe(pageSize);
+        expect(matchedRequest.queryParams).toEqual({
+            emails: {
+                key: 'emails',
+                values: [emails]
+            },
+            planId: {
+                key: 'planId',
+                values: [TEST_PLAN_ID.toString()]
+            },
+            seatType: {
+                key: 'seatType',
+                values: [seatType]
+            },
+            includeAll: {
+                key: 'includeAll',
+                values: [includeAll.toString()]
+            },
+            page: {
+                key: 'page',
+                values: [page.toString()]
+            },
+            pageSize: {
+                key: 'pageSize',
+                values: [pageSize.toString()]
+            }
+        });
     });
 
     it('listUsers all response body properties', async () => {
@@ -90,24 +103,38 @@ describe('Users - listAllUsers endpoint tests', () => {
             }
         };
         const response = await client.users.listAllUsers(options);
-    expect(response).toBeTruthy();
-    expect(response.data[0].seatType).toBe(seatType);
-    expect(response.data[0].seatTypeLastChangedAt).toBe(seatTypeLastChangedAt);
-    expect(response.data[0].provisionalExpirationDate).toBe(provisionalExpirationDate);
-    expect(response.data[0].isInternal).toBe(isInternal);
-    expect(response.data[0].firstName).toBe(firstName);
-    expect(response.data[0].lastName).toBe(lastName);
-    expect(response.data[0].name).toBe(name);
-    expect(response.data[0].email).toBe(email);
-    expect(response.data[0].admin).toBe(admin);
-    expect(response.data[0].licensedSheetCreator).toBe(licensedSheetCreator);
-    expect(response.data[0].resourceViewer).toBe(resourceViewer);
-    expect(response.data[0].groupAdmin).toBe(groupAdmin);
-    expect(response.data[0].status).toBe(status);
-    expect(response.data[0].sheetCount).toBe(sheetCount);
-    expect(response.data[0].lastLogin).toBe(lastLogin);
-    expect(response.data[0].customWelcomeScreenViewed).toBe(customWelcomeScreenViewed);
-    expect(response.data[0].id).toBe(TEST_PLAN_ID);
+        expect(response).toEqual({
+            data: [
+                {
+                    seatType: seatType,
+                    seatTypeLastChangedAt: seatTypeLastChangedAt,
+                    provisionalExpirationDate: provisionalExpirationDate,
+                    isInternal: isInternal,
+                    firstName: firstName,
+                    lastName: lastName,
+                    name: name,
+                    email: email,
+                    admin: admin,
+                    licensedSheetCreator: licensedSheetCreator,
+                    resourceViewer: resourceViewer,
+                    groupAdmin: groupAdmin,
+                    status: status,
+                    sheetCount: sheetCount,
+                    lastLogin: lastLogin,
+                    customWelcomeScreenViewed: customWelcomeScreenViewed,
+                    id: TEST_PLAN_ID,
+                    profileImage: {
+                        height: 1050,
+                        imageId: 'u!1!nAtdn5RJB_o!k6_e_3h2R3w!wmYXPek-yVD',
+                        width: 1050
+                    }
+                }
+            ],
+            pageNumber: 1,
+            pageSize: 100,
+            totalCount: 1,
+            totalPages: 1
+        });
     });
 
     it('listUsers required response body properties', async () => {
@@ -122,24 +149,29 @@ describe('Users - listAllUsers endpoint tests', () => {
             }
         };
         const response = await client.users.listAllUsers(options);
-    expect(response).toBeTruthy();
-    expect(response.data[0].seatType).toBe(seatType);
-    expect(response.data[0].seatTypeLastChangedAt).toBe(undefined);
-    expect(response.data[0].provisionalExpirationDate).toBe(undefined);
-    expect(response.data[0].isInternal).toBe(isInternal);
-    expect(response.data[0].firstName).toBe(firstName);
-    expect(response.data[0].lastName).toBe(lastName);
-    expect(response.data[0].name).toBe(name);
-    expect(response.data[0].email).toBe(email);
-    expect(response.data[0].admin).toBe(admin);
-    expect(response.data[0].licensedSheetCreator).toBe(licensedSheetCreator);
-    expect(response.data[0].resourceViewer).toBe(resourceViewer);
-    expect(response.data[0].groupAdmin).toBe(groupAdmin);
-    expect(response.data[0].status).toBe(status);
-    expect(response.data[0].sheetCount).toBe(sheetCount);
-    expect(response.data[0].lastLogin).toBe(undefined);
-    expect(response.data[0].customWelcomeScreenViewed).toBe(undefined);
-    expect(response.data[0].id).toBe(TEST_PLAN_ID);
+        expect(response).toEqual({
+            data: [
+                {
+                    seatType: seatType,
+                    isInternal: isInternal,
+                    firstName: firstName,
+                    lastName: lastName,
+                    name: name,
+                    email: email,
+                    admin: admin,
+                    licensedSheetCreator: licensedSheetCreator,
+                    resourceViewer: resourceViewer,
+                    groupAdmin: groupAdmin,
+                    status: status,
+                    sheetCount: sheetCount,
+                    id: TEST_PLAN_ID
+                }
+            ],
+            pageNumber: 1,
+            pageSize: 100,
+            totalCount: 1,
+            totalPages: 1
+        });
     });
 
     it('listUserPlans error 500 response', async () => {

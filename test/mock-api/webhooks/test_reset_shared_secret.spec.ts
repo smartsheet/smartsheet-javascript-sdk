@@ -42,13 +42,15 @@ describe('Webhooks - resetSharedSecret endpoint tests', () => {
         };
         const response = await client.webhooks.resetSharedSecret(options);
 
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
-        expect(response.version).toBe(TEST_VERSION);
-        expect(response.failedItems).toBeTruthy();
-        expect(response.result).toBeTruthy();
-        expect(response.result.sharedSecret).toBe(newSharedSecret);
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE,
+            version: TEST_VERSION,
+            failedItems: [],
+            result: {
+                sharedSecret: newSharedSecret
+            }
+        });
     });
 
     it('resetSharedSecret error 500 response', async () => {

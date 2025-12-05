@@ -73,49 +73,47 @@ describe('Folders - getFolderChildren endpoint tests', () => {
         };
         const response = await client.folders.getFolderChildren(options);
         
-        expect(response).toBeTruthy();
-        expect(response.data).toBeTruthy();
-        expect(Array.isArray(response.data)).toBe(true);
-        expect(response.data.length).toBe(4);
-        
-        // Verify first child (folder)
-        expect(response.data[0].id).toBe(TEST_CHILD_FOLDER_ID_1);
-        expect(response.data[0].name).toBe(TEST_CHILD_FOLDER_NAME_1);
-        expect(response.data[0].permalink).toBe(TEST_CHILD_FOLDER_PERMALINK_1);
-        expect(response.data[0].createdAt).toBe(TEST_CREATED_AT);
-        expect(response.data[0].modifiedAt).toBe(TEST_MODIFIED_AT);
-        expect(response.data[0].accessLevel).toBe('OWNER');
-        expect(response.data[0].resourceType).toBe('folder');
-        
-        // Verify second child (sheet)
-        expect(response.data[1].id).toBe(TEST_SHEET_ID);
-        expect(response.data[1].name).toBe(TEST_SHEET_NAME);
-        expect(response.data[1].permalink).toBe(TEST_SHEET_PERMALINK);
-        expect(response.data[1].createdAt).toBe(TEST_CREATED_AT);
-        expect(response.data[1].modifiedAt).toBe(TEST_MODIFIED_AT);
-        expect(response.data[1].accessLevel).toBe('OWNER');
-        expect(response.data[1].resourceType).toBe('sheet');
-        
-        // Verify third child (report)
-        expect(response.data[2].id).toBe(TEST_REPORT_ID);
-        expect(response.data[2].name).toBe(TEST_REPORT_NAME);
-        expect(response.data[2].permalink).toBe(TEST_REPORT_PERMALINK);
-        expect(response.data[2].createdAt).toBe(TEST_CREATED_AT);
-        expect(response.data[2].modifiedAt).toBe(TEST_MODIFIED_AT);
-        expect(response.data[2].accessLevel).toBe('EDITOR');
-        expect(response.data[2].resourceType).toBe('report');
-        
-        // Verify fourth child (sight/dashboard)
-        expect(response.data[3].id).toBe(TEST_SIGHT_ID);
-        expect(response.data[3].name).toBe(TEST_SIGHT_NAME);
-        expect(response.data[3].permalink).toBe(TEST_SIGHT_PERMALINK);
-        expect(response.data[3].createdAt).toBe(TEST_CREATED_AT);
-        expect(response.data[3].modifiedAt).toBe(TEST_MODIFIED_AT);
-        expect(response.data[3].accessLevel).toBe('VIEWER');
-        expect(response.data[3].resourceType).toBe('sight');
-        
-        // Verify pagination token
-        expect(response.lastKey).toBe('next-page-token-12345');
+        expect(response).toEqual({
+            data: [
+                {
+                    id: TEST_CHILD_FOLDER_ID_1,
+                    name: TEST_CHILD_FOLDER_NAME_1,
+                    permalink: TEST_CHILD_FOLDER_PERMALINK_1,
+                    createdAt: TEST_CREATED_AT,
+                    modifiedAt: TEST_MODIFIED_AT,
+                    accessLevel: 'OWNER',
+                    resourceType: 'folder'
+                },
+                {
+                    id: TEST_SHEET_ID,
+                    name: TEST_SHEET_NAME,
+                    permalink: TEST_SHEET_PERMALINK,
+                    createdAt: TEST_CREATED_AT,
+                    modifiedAt: TEST_MODIFIED_AT,
+                    accessLevel: 'OWNER',
+                    resourceType: 'sheet'
+                },
+                {
+                    id: TEST_REPORT_ID,
+                    name: TEST_REPORT_NAME,
+                    permalink: TEST_REPORT_PERMALINK,
+                    createdAt: TEST_CREATED_AT,
+                    modifiedAt: TEST_MODIFIED_AT,
+                    accessLevel: 'EDITOR',
+                    resourceType: 'report'
+                },
+                {
+                    id: TEST_SIGHT_ID,
+                    name: TEST_SIGHT_NAME,
+                    permalink: TEST_SIGHT_PERMALINK,
+                    createdAt: TEST_CREATED_AT,
+                    modifiedAt: TEST_MODIFIED_AT,
+                    accessLevel: 'VIEWER',
+                    resourceType: 'sight'
+                }
+            ],
+            lastKey: 'next-page-token-12345'
+        });
     });
 
     it('getFolderChildren required response body properties', async () => {
@@ -129,31 +127,27 @@ describe('Folders - getFolderChildren endpoint tests', () => {
         };
         const response = await client.folders.getFolderChildren(options);
         
-        expect(response).toBeTruthy();
-        expect(response.data).toBeTruthy();
-        expect(Array.isArray(response.data)).toBe(true);
-        expect(response.data.length).toBe(2);
-        
-        // Verify first child (folder) - required properties only
-        expect(response.data[0].id).toBe(TEST_CHILD_FOLDER_ID_1);
-        expect(response.data[0].name).toBe(TEST_CHILD_FOLDER_NAME_1);
-        expect(response.data[0].permalink).toBe(TEST_CHILD_FOLDER_PERMALINK_1);
-        expect(response.data[0].createdAt).toBe(TEST_CREATED_AT);
-        expect(response.data[0].modifiedAt).toBe(TEST_MODIFIED_AT);
-        expect(response.data[0].resourceType).toBe('folder');
-        expect(response.data[0].accessLevel).toBeUndefined();
-        
-        // Verify second child (sheet) - required properties only
-        expect(response.data[1].id).toBe(TEST_SHEET_ID);
-        expect(response.data[1].name).toBe(TEST_SHEET_NAME);
-        expect(response.data[1].permalink).toBe(TEST_SHEET_PERMALINK);
-        expect(response.data[1].createdAt).toBe(TEST_CREATED_AT);
-        expect(response.data[1].modifiedAt).toBe(TEST_MODIFIED_AT);
-        expect(response.data[1].resourceType).toBe('sheet');
-        expect(response.data[1].accessLevel).toBe('OWNER');
-        
-        // Verify pagination token is not present
-        expect(response.lastKey).toBeUndefined();
+        expect(response).toEqual({
+            data: [
+                {
+                    id: TEST_CHILD_FOLDER_ID_1,
+                    name: TEST_CHILD_FOLDER_NAME_1,
+                    permalink: TEST_CHILD_FOLDER_PERMALINK_1,
+                    createdAt: TEST_CREATED_AT,
+                    modifiedAt: TEST_MODIFIED_AT,
+                    resourceType: 'folder'
+                },
+                {
+                    id: TEST_SHEET_ID,
+                    name: TEST_SHEET_NAME,
+                    permalink: TEST_SHEET_PERMALINK,
+                    createdAt: TEST_CREATED_AT,
+                    modifiedAt: TEST_MODIFIED_AT,
+                    resourceType: 'sheet',
+                    accessLevel: 'OWNER'
+                }
+            ]
+        });
     });
 
     it('getFolderChildren error 500 response', async () => {

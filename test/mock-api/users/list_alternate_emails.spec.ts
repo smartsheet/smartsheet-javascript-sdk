@@ -45,15 +45,19 @@ describe('Users - listAlternateEmails endpoint tests', () => {
             }
         };
         const response = await client.users.listAlternateEmails(options);
-        expect(response).toBeTruthy();
-        expect(response.pageNumber).toBe(TEST_PAGE_NUMBER);
-        expect(response.pageSize).toBe(TEST_PAGE_SIZE);
-        expect(response.totalPages).toBe(TEST_TOTAL_PAGES);
-        expect(response.totalCount).toBe(TEST_TOTAL_COUNT);
-        expect(response.data.length).toBe(1);
-        expect(response.data[0].id).toBe(TEST_ALTERNATE_EMAIL_ID_1);
-        expect(response.data[0].confirmed).toBe(TEST_CONFIRMED_1);
-        expect(response.data[0].email).toBe(TEST_EMAIL_1);
+        expect(response).toEqual({
+            pageNumber: TEST_PAGE_NUMBER,
+            pageSize: TEST_PAGE_SIZE,
+            totalPages: TEST_TOTAL_PAGES,
+            totalCount: TEST_TOTAL_COUNT,
+            data: [
+                {
+                    id: TEST_ALTERNATE_EMAIL_ID_1,
+                    confirmed: TEST_CONFIRMED_1,
+                    email: TEST_EMAIL_1
+                }
+            ]
+        });
     });
 
     it('listAlternateEmails error 500 response', async () => {

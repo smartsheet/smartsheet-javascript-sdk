@@ -85,46 +85,57 @@ describe('Users - getCurrentUser endpoint tests', () => {
             }
         };
         const response = await client.users.getCurrentUser(options);
-        expect(response).toBeTruthy();
-        expect(response.id).toBe(userId);
-        expect(response.account.id).toBe(accountId);
-        expect(response.account.name).toBe(accountName);
-        expect(response.admin).toBe(admin);
-        expect(response.alternateEmails.length).toBe(1);
-        expect(response.alternateEmails[0].id).toBe(alternateEmailId);
-        expect(response.alternateEmails[0].confirmed).toBe(alternateEmailConfirmed);
-        expect(response.alternateEmails[0].email).toBe(alternateEmail);
-        expect(response.company).toBe(company);
-        expect(response.customWelcomeScreenViewed).toBe(customWelcomeScreenViewed);
-        expect(response.department).toBe(department);
-        expect(response.email).toBe(email);
-        expect(response.firstName).toBe(firstName);
-        expect(response.groupAdmin).toBe(groupAdmin);
-        expect(response.jiraAdmin).toBe(jiraAdmin);
-        expect(response.lastLogin).toBe(lastLogin);
-        expect(response.lastName).toBe(lastName);
-        expect(response.licensedSheetCreator).toBe(licensedSheetCreator);
-        expect(response.locale).toBe(locale);
-        expect(response.mobilePhone).toBe(mobilePhone);
-        expect(response.profileImage.imageId).toBe(profileImageId);
-        expect(response.profileImage.height).toBe(profileImageHeight);
-        expect(response.profileImage.width).toBe(profileImageWidth);
-        expect(response.resourceViewer).toBe(resourceViewer);
-        expect(response.role).toBe(role);
-        expect(response.salesforceAdmin).toBe(salesforceAdmin);
-        expect(response.salesforceUser).toBe(salesforceUser);
-        expect(response.sheetCount).toBe(sheetCount);
-        expect(response.timeZone).toBe(timeZone);
-        expect(response.title).toBe(title);
-        expect(response.workPhone).toBe(workPhone);
-        expect(response.data.length).toBe(1);
-        expect(response.data[0].id).toBe(groupId);
-        expect(response.data[0].name).toBe(groupName);
-        expect(response.data[0].description).toBe(groupDescription);
-        expect(response.data[0].owner).toBe(groupOwner);
-        expect(response.data[0].ownerId).toBe(groupOwnerId);
-        expect(response.data[0].createdAt).toBe(groupCreatedAt);
-        expect(response.data[0].modifiedAt).toBe(groupModifiedAt);
+        expect(response).toEqual({
+            id: userId,
+            account: {
+                id: accountId,
+                name: accountName
+            },
+            admin: admin,
+            alternateEmails: [
+                {
+                    id: alternateEmailId,
+                    confirmed: alternateEmailConfirmed,
+                    email: alternateEmail
+                }
+            ],
+            company: company,
+            customWelcomeScreenViewed: customWelcomeScreenViewed,
+            department: department,
+            email: email,
+            firstName: firstName,
+            groupAdmin: groupAdmin,
+            jiraAdmin: jiraAdmin,
+            lastLogin: lastLogin,
+            lastName: lastName,
+            licensedSheetCreator: licensedSheetCreator,
+            locale: locale,
+            mobilePhone: mobilePhone,
+            profileImage: {
+                imageId: profileImageId,
+                height: profileImageHeight,
+                width: profileImageWidth
+            },
+            resourceViewer: resourceViewer,
+            role: role,
+            salesforceAdmin: salesforceAdmin,
+            salesforceUser: salesforceUser,
+            sheetCount: sheetCount,
+            timeZone: timeZone,
+            title: title,
+            workPhone: workPhone,
+            data: [
+                {
+                    id: groupId,
+                    name: groupName,
+                    description: groupDescription,
+                    owner: groupOwner,
+                    ownerId: groupOwnerId,
+                    createdAt: groupCreatedAt,
+                    modifiedAt: groupModifiedAt
+                }
+            ]
+        });
     });
 
     it('getCurrentUser required response body properties', async () => {
@@ -136,34 +147,33 @@ describe('Users - getCurrentUser endpoint tests', () => {
             }
         };
         const response = await client.users.getCurrentUser(options);
-        expect(response).toBeTruthy();
-        expect(response.id).toBe(userId);
-        expect(response.account.id).toBe(accountId);
-        expect(response.account.name).toBe(accountName);
-        expect(response.admin).toBe(admin);
-        expect(response.alternateEmails).toBe(undefined);
-        expect(response.company).toBe(company);
-        expect(response.customWelcomeScreenViewed).toBe(undefined);
-        expect(response.department).toBe(department);
-        expect(response.email).toBe(email);
-        expect(response.firstName).toBe(firstName);
-        expect(response.groupAdmin).toBe(groupAdmin);
-        expect(response.jiraAdmin).toBe(jiraAdmin);
-        expect(response.lastLogin).toBe(undefined);
-        expect(response.lastName).toBe(lastName);
-        expect(response.licensedSheetCreator).toBe(licensedSheetCreator);
-        expect(response.locale).toBe(locale);
-        expect(response.mobilePhone).toBe(mobilePhone);
-        expect(response.profileImage).toBe(undefined);
-        expect(response.resourceViewer).toBe(resourceViewer);
-        expect(response.role).toBe(role);
-        expect(response.salesforceAdmin).toBe(salesforceAdmin);
-        expect(response.salesforceUser).toBe(salesforceUser);
-        expect(response.sheetCount).toBe(sheetCount);
-        expect(response.timeZone).toBe(timeZone);
-        expect(response.title).toBe(title);
-        expect(response.workPhone).toBe(workPhone);
-        expect(response.data.length).toBe(0);
+        expect(response).toEqual({
+            id: userId,
+            account: {
+                id: accountId,
+                name: accountName
+            },
+            admin: admin,
+            company: company,
+            department: department,
+            email: email,
+            firstName: firstName,
+            groupAdmin: groupAdmin,
+            jiraAdmin: jiraAdmin,
+            lastName: lastName,
+            licensedSheetCreator: licensedSheetCreator,
+            locale: locale,
+            mobilePhone: mobilePhone,
+            resourceViewer: resourceViewer,
+            role: role,
+            salesforceAdmin: salesforceAdmin,
+            salesforceUser: salesforceUser,
+            sheetCount: sheetCount,
+            timeZone: timeZone,
+            title: title,
+            workPhone: workPhone,
+            data: []
+        });
     });
 
     it('getCurrentUser error 500 response', async () => {

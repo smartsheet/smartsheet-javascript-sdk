@@ -46,14 +46,17 @@ describe('Users - makeAlternateEmailPrimary endpoint tests', () => {
                 }
             };
             const response = await client.users.makeAlternateEmailPrimary(options);
-            expect(response).toBeTruthy();
-            expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-            expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
-            expect(Array.isArray(response.data)).toBeTruthy();
-            expect(response.data.length).toBe(1);
-            expect(response.data[0].id).toBe(TEST_ALTERNATE_EMAIL_ID);
-            expect(response.data[0].confirmed).toBe(TEST_CONFIRMED);
-            expect(response.data[0].email).toBe(TEST_EMAIL);
+            expect(response).toEqual({
+                message: TEST_SUCCESS_MESSAGE,
+                resultCode: TEST_SUCCESS_RESULT_CODE,
+                data: [
+                    {
+                        id: TEST_ALTERNATE_EMAIL_ID,
+                        confirmed: TEST_CONFIRMED,
+                        email: TEST_EMAIL
+                    }
+                ]
+            });
         }
     );
 

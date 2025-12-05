@@ -77,17 +77,20 @@ describe('Favorites - addItemsToFavorites endpoint tests', () => {
         ]);
         
         // Verify response
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
-        expect(Array.isArray(response.result)).toBeTruthy();
-        if (Array.isArray(response.result)) {
-            expect(response.result.length).toBe(2);
-            expect(response.result[0].type).toBe(TEST_FAVORITE_TYPE_SHEET);
-            expect(response.result[0].objectId).toBe(TEST_SHEET_ID);
-            expect(response.result[1].type).toBe(TEST_FAVORITE_TYPE_FOLDER);
-            expect(response.result[1].objectId).toBe(TEST_FOLDER_ID);
-        }
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE,
+            result: [
+                {
+                    type: TEST_FAVORITE_TYPE_SHEET,
+                    objectId: TEST_SHEET_ID
+                },
+                {
+                    type: TEST_FAVORITE_TYPE_FOLDER,
+                    objectId: TEST_FOLDER_ID
+                }
+            ]
+        });
     });
 
     it('addMultipleToFavorites error 500 response', async () => {

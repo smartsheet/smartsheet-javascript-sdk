@@ -58,20 +58,24 @@ describe('Users - addProfileImage endpoint tests', () => {
         const response = await client.users.addProfileImage(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
-        expect(response.data).toBeTruthy();
-        expect(response.data.length).toBe(1);
-        expect(response.data[0].id).toBe(TEST_USER_ID);
-        expect(response.data[0].email).toBe(email);
-        expect(response.data[0].name).toBe(name);
-        expect(response.data[0].firstName).toBe(firstName);
-        expect(response.data[0].lastName).toBe(lastName);
-        expect(response.data[0].profileImage).toBeTruthy();
-        expect(response.data[0].profileImage.imageId).toBe(imageId);
-        expect(response.data[0].profileImage.height).toBe(height);
-        expect(response.data[0].profileImage.width).toBe(width);
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE,
+            data: [
+                {
+                    id: TEST_USER_ID,
+                    email: email,
+                    name: name,
+                    firstName: firstName,
+                    lastName: lastName,
+                    profileImage: {
+                        imageId: imageId,
+                        height: height,
+                        width: width
+                    }
+                }
+            ]
+        });
         
         const expectedBody = ADD_PROFILE_IMAGE_REQUEST_BODY.toString();
         expect(matchedRequest.body).toEqual(expectedBody);
