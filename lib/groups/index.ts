@@ -8,8 +8,8 @@ import type {
   ListGroupsQueryParameters,
   ListGroupsResponse,
   GetGroupOptions,
-  CreateGroupBody,
-  CreateGroupResponse,
+  AddGroupBody,
+  AddGroupResponse,
   UpdateGroupOptions,
   UpdateGroupResponse,
   DeleteGroupOptions,
@@ -39,9 +39,9 @@ export function create(options: CreateOptions): GroupsApi {
   };
 
   const createGroup = (
-    postOptions: RequestOptions<undefined, CreateGroupBody>,
-    callback?: RequestCallback<CreateGroupResponse>
-  ): Promise<CreateGroupResponse> => {
+    postOptions: RequestOptions<undefined, AddGroupBody>,
+    callback?: RequestCallback<AddGroupResponse>
+  ): Promise<AddGroupResponse> => {
     return requestor.post({ ...optionsToSend, ...postOptions }, callback);
   };
 

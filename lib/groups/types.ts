@@ -53,9 +53,9 @@ export interface GroupsApi {
   /**
    * Creates a new group.
    *
-   * @param options - {@link RequestOptions}\<undefined, {@link CreateGroupBody}\> - Configuration options for the request
-   * @param callback - {@link RequestCallback}\<{@link CreateGroupResponse}\> - Optional callback function
-   * @returns Promise\<{@link CreateGroupResponse}\>
+   * @param options - {@link RequestOptions}\<undefined, {@link AddGroupBody}\> - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link AddGroupResponse}\> - Optional callback function
+   * @returns Promise\<{@link AddGroupResponse}\>
    *
    * @remarks
    * **Who can use this operation:**
@@ -74,9 +74,9 @@ export interface GroupsApi {
    * ```
    */
   createGroup: (
-    options: RequestOptions<undefined, CreateGroupBody>,
-    callback?: RequestCallback<CreateGroupResponse>
-  ) => Promise<CreateGroupResponse>;
+    options: RequestOptions<undefined, AddGroupBody>,
+    callback?: RequestCallback<AddGroupResponse>
+  ) => Promise<AddGroupResponse>;
 
   /**
    * Updates a group.
@@ -332,17 +332,17 @@ export interface GetGroupOptions extends RequestOptions<undefined, undefined> {
 }
 
 // ============================================================================
-// Create Group
+// Add Group
 // ============================================================================
 
-export interface CreateGroupMember {
+export interface AddGroupMember {
   /**
    * Member's email address (required).
    */
   email: string;
 }
 
-export interface CreateGroupBody {
+export interface AddGroupBody {
   /**
    * Group name (required).
    */
@@ -354,12 +354,12 @@ export interface CreateGroupBody {
   description?: string;
 
   /**
-   * Array of CreateGroupMember objects.
+   * Array of AddGroupMember objects.
    */
-  members?: CreateGroupMember[];
+  members?: AddGroupMember[];
 }
 
-export interface CreateGroupResponse extends BaseResponseStatus {
+export interface AddGroupResponse extends BaseResponseStatus {
   /**
    * The created group object.
    */
