@@ -22,7 +22,7 @@ describe('Groups - removeGroupMember endpoint tests', () => {
             userId: TEST_MEMBER_ID,
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/groups/remove-group-member/all-response-body-properties'
+                'x-test-name': '/groups/delete-group-member/all-response-body-properties'
             }
         };
         await client.groups.removeGroupMember(options);
@@ -38,7 +38,7 @@ describe('Groups - removeGroupMember endpoint tests', () => {
             userId: TEST_MEMBER_ID,
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/groups/remove-group-member/all-response-body-properties'
+                'x-test-name': '/groups/delete-group-member/all-response-body-properties'
             }
         };
         const response = await client.groups.removeGroupMember(options);

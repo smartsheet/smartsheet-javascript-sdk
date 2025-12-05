@@ -29,7 +29,7 @@ describe('Groups - createGroup endpoint tests', () => {
             },
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/groups/create-group/all-response-body-properties'
+                'x-test-name': '/groups/add-group/all-response-body-properties'
             }
         };
         await client.groups.createGroup(options);
@@ -47,7 +47,7 @@ describe('Groups - createGroup endpoint tests', () => {
             },
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/groups/create-group/all-response-body-properties'
+                'x-test-name': '/groups/add-group/all-response-body-properties'
             }
         };
         const response = await client.groups.createGroup(options);
