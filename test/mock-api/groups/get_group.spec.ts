@@ -53,25 +53,31 @@ describe('Groups - getGroup endpoint tests', () => {
             }
         };
         const response = await client.groups.getGroup(options);
-        expect(response).toBeTruthy();
-        expect(response.id).toBe(TEST_GROUP_ID);
-        expect(response.name).toBe(TEST_GROUP_NAME);
-        expect(response.description).toBe(TEST_GROUP_DESCRIPTION);
-        expect(response.owner).toBe(TEST_GROUP_OWNER);
-        expect(response.ownerId).toBe(TEST_GROUP_OWNER_ID);
-        expect(response.createdAt).toBe(TEST_GROUP_CREATED_AT);
-        expect(response.modifiedAt).toBe(TEST_GROUP_MODIFIED_AT);
-        expect(response.members).toHaveLength(2);
-        expect(response.members[0].id).toBe(TEST_MEMBER_ID);
-        expect(response.members[0].email).toBe(TEST_MEMBER_EMAIL);
-        expect(response.members[0].firstName).toBe(TEST_MEMBER_FIRST_NAME);
-        expect(response.members[0].lastName).toBe(TEST_MEMBER_LAST_NAME);
-        expect(response.members[0].name).toBe(TEST_MEMBER_NAME);
-        expect(response.members[1].id).toBe(TEST_MEMBER_ID_2);
-        expect(response.members[1].email).toBe(TEST_MEMBER_EMAIL_2);
-        expect(response.members[1].firstName).toBe(TEST_MEMBER_FIRST_NAME_2);
-        expect(response.members[1].lastName).toBe(TEST_MEMBER_LAST_NAME_2);
-        expect(response.members[1].name).toBe(TEST_MEMBER_NAME_2);
+        expect(response).toEqual({
+            id: TEST_GROUP_ID,
+            name: TEST_GROUP_NAME,
+            description: TEST_GROUP_DESCRIPTION,
+            owner: TEST_GROUP_OWNER,
+            ownerId: TEST_GROUP_OWNER_ID,
+            createdAt: TEST_GROUP_CREATED_AT,
+            modifiedAt: TEST_GROUP_MODIFIED_AT,
+            members: [
+                {
+                    id: TEST_MEMBER_ID,
+                    email: TEST_MEMBER_EMAIL,
+                    firstName: TEST_MEMBER_FIRST_NAME,
+                    lastName: TEST_MEMBER_LAST_NAME,
+                    name: TEST_MEMBER_NAME
+                },
+                {
+                    id: TEST_MEMBER_ID_2,
+                    email: TEST_MEMBER_EMAIL_2,
+                    firstName: TEST_MEMBER_FIRST_NAME_2,
+                    lastName: TEST_MEMBER_LAST_NAME_2,
+                    name: TEST_MEMBER_NAME_2
+                }
+            ]
+        });
     });
 
     it('getGroup error 500 response', async () => {

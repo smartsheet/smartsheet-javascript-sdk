@@ -48,19 +48,22 @@ describe('Groups - addGroupMembers endpoint tests', () => {
         const response = await client.groups.addGroupMembers(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
-        expect(Array.isArray(response.result)).toBe(true);
-        expect(response.result[0].id).toBe(TEST_MEMBER_ID);
-        expect(response.result[0].email).toBe(TEST_MEMBER_EMAIL);
-        expect(response.result[0].firstName).toBe(TEST_MEMBER_FIRST_NAME);
-        expect(response.result[0].lastName).toBe(TEST_MEMBER_LAST_NAME);
-        expect(response.result[0].name).toBe(TEST_MEMBER_NAME);
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE,
+            result: [
+                {
+                    id: TEST_MEMBER_ID,
+                    email: TEST_MEMBER_EMAIL,
+                    firstName: TEST_MEMBER_FIRST_NAME,
+                    lastName: TEST_MEMBER_LAST_NAME,
+                    name: TEST_MEMBER_NAME
+                }
+            ]
+        });
 
         const body = JSON.parse(matchedRequest.body);
-        expect(Array.isArray(body)).toBe(true);
-        expect(body[0].email).toBe(TEST_MEMBER_EMAIL);
+        expect(body).toEqual([{ email: TEST_MEMBER_EMAIL }]);
     });
 
     it('addGroupMembers single member all response body properties', async () => {
@@ -76,18 +79,20 @@ describe('Groups - addGroupMembers endpoint tests', () => {
         const response = await client.groups.addGroupMembers(options);
         const matchedRequest = await findWireMockRequest(requestId);
 
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
-        expect(Array.isArray(response.result)).toBe(false);
-        expect(response.result.id).toBe(TEST_MEMBER_ID);
-        expect(response.result.email).toBe(TEST_MEMBER_EMAIL);
-        expect(response.result.firstName).toBe(TEST_MEMBER_FIRST_NAME);
-        expect(response.result.lastName).toBe(TEST_MEMBER_LAST_NAME);
-        expect(response.result.name).toBe(TEST_MEMBER_NAME);
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE,
+            result: {
+                id: TEST_MEMBER_ID,
+                email: TEST_MEMBER_EMAIL,
+                firstName: TEST_MEMBER_FIRST_NAME,
+                lastName: TEST_MEMBER_LAST_NAME,
+                name: TEST_MEMBER_NAME
+            }
+        });
 
         const body = JSON.parse(matchedRequest.body);
-        expect(body.email).toBe(TEST_MEMBER_EMAIL);
+        expect(body).toEqual({ email: TEST_MEMBER_EMAIL });
     });
 
     it('addGroupMembers error 500 response', async () => {

@@ -42,10 +42,14 @@ describe('Groups - listGroups endpoint tests', () => {
         };
         await client.groups.listGroups(options);
         const matchedRequest = await findWireMockRequest(requestId);
-        const queryParams = matchedRequest.queryParams;
-        const includeAllActual = queryParams.includeAll.values[0];
+        
         expect(matchedRequest.url.includes(`/2.0/groups`)).toBeTruthy();
-        expect(includeAllActual).toBe('true');
+        expect(matchedRequest.queryParams).toEqual({
+            includeAll: {
+                key: 'includeAll',
+                values: ['true']
+            }
+        });
     });
 
     it('listGroups all response body properties', async () => {
@@ -57,30 +61,32 @@ describe('Groups - listGroups endpoint tests', () => {
             }
         };
         const response = await client.groups.listGroups(options);
-        expect(response).toBeTruthy();
-        expect(response.pageNumber).toBe(TEST_PAGE_NUMBER);
-        expect(response.pageSize).toBe(TEST_PAGE_SIZE);
-        expect(response.totalPages).toBe(TEST_TOTAL_PAGES);
-        expect(response.totalCount).toBe(TEST_TOTAL_COUNT);
-        expect(response.data).toHaveLength(2);
-        
-        // First group
-        expect(response.data[0].id).toBe(TEST_GROUP_ID);
-        expect(response.data[0].name).toBe(TEST_GROUP_NAME);
-        expect(response.data[0].description).toBe(TEST_GROUP_DESCRIPTION);
-        expect(response.data[0].owner).toBe(TEST_GROUP_OWNER);
-        expect(response.data[0].ownerId).toBe(TEST_GROUP_OWNER_ID);
-        expect(response.data[0].createdAt).toBe(TEST_GROUP_CREATED_AT);
-        expect(response.data[0].modifiedAt).toBe(TEST_GROUP_MODIFIED_AT);
-        
-        // Second group
-        expect(response.data[1].id).toBe(TEST_GROUP_ID_2);
-        expect(response.data[1].name).toBe(TEST_GROUP_NAME_2);
-        expect(response.data[1].description).toBe(TEST_GROUP_DESCRIPTION_2);
-        expect(response.data[1].owner).toBe(TEST_GROUP_OWNER_2);
-        expect(response.data[1].ownerId).toBe(TEST_GROUP_OWNER_ID_2);
-        expect(response.data[1].createdAt).toBe(TEST_GROUP_CREATED_AT_2);
-        expect(response.data[1].modifiedAt).toBe(TEST_GROUP_MODIFIED_AT_2);
+        expect(response).toEqual({
+            pageNumber: TEST_PAGE_NUMBER,
+            pageSize: TEST_PAGE_SIZE,
+            totalPages: TEST_TOTAL_PAGES,
+            totalCount: TEST_TOTAL_COUNT,
+            data: [
+                {
+                    id: TEST_GROUP_ID,
+                    name: TEST_GROUP_NAME,
+                    description: TEST_GROUP_DESCRIPTION,
+                    owner: TEST_GROUP_OWNER,
+                    ownerId: TEST_GROUP_OWNER_ID,
+                    createdAt: TEST_GROUP_CREATED_AT,
+                    modifiedAt: TEST_GROUP_MODIFIED_AT
+                },
+                {
+                    id: TEST_GROUP_ID_2,
+                    name: TEST_GROUP_NAME_2,
+                    description: TEST_GROUP_DESCRIPTION_2,
+                    owner: TEST_GROUP_OWNER_2,
+                    ownerId: TEST_GROUP_OWNER_ID_2,
+                    createdAt: TEST_GROUP_CREATED_AT_2,
+                    modifiedAt: TEST_GROUP_MODIFIED_AT_2
+                }
+            ]
+        });
     });
 
     it('listGroups error 500 response', async () => {
