@@ -8,6 +8,7 @@ import type { SightsApi } from '../sights/types';
 import type { AlternateEmailsApi } from '../users/alternateemails_types';
 import type { UsersApi } from '../users/types';
 import type { WebhooksApi } from '../webhooks/types';
+import type { ImagesApi } from '@smartsheet/images/types';
 
 export interface SmartsheetClient {
   constants: any;
@@ -17,7 +18,7 @@ export interface SmartsheetClient {
   favorites: FavoritesApi;
   groups: any;
   home: any;
-  images: any;
+  images: ImagesApi;
   reports: any;
   request: any;
   search: SearchApi;
