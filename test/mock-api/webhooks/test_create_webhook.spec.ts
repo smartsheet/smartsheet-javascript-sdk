@@ -65,31 +65,36 @@ describe('Webhooks - createWebhook endpoint tests', () => {
             const response = await client.webhooks.createWebhook(options);
             const matchedRequest = await findWireMockRequest(requestId);
 
-            expect(response).toBeTruthy();
-            expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-            expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
-            expect(response.version).toBe(TEST_VERSION);
-            expect(response.result.id).toBe(TEST_WEBHOOK_ID);
-            expect(response.result.name).toBe(TEST_WEBHOOK_NAME);
-            expect(response.result.callbackUrl).toBe(TEST_CALLBACK_URL);
-            expect(response.result.scope).toBe(TEST_SCOPE_SHEET);
-            expect(response.result.scopeObjectId).toBe(TEST_SCOPE_OBJECT_ID);
-            expect(response.result.events).toEqual(TEST_EVENTS);
-            expect(response.result.version).toBe(TEST_VERSION);
-            expect(response.result.subscope).toBeTruthy();
-            expect(response.result.subscope.columnIds).toEqual(TEST_COLUMN_IDS);
-            expect(response.result.enabled).toBe(TEST_ENABLED);
-            expect(response.result.status).toBe(TEST_STATUS);
-            expect(response.result.sharedSecret).toBe(TEST_SHARED_SECRET);
-            expect(response.result.createdAt).toBe(TEST_CREATED_AT);
-            expect(response.result.modifiedAt).toBe(TEST_MODIFIED_AT);
-            expect(response.result.disabledDetails).toBe(TEST_DISABLED_DETAILS);
-            expect(response.result.apiClientId).toBe(TEST_API_CLIENT_ID);
-            expect(response.result.apiClientName).toBe(TEST_API_CLIENT_NAME);
-            expect(response.result.stats).toBeTruthy();
-            expect(response.result.stats.lastCallbackAttempt).toBe(TEST_LAST_CALLBACK_ATTEMPT);
-            expect(response.result.stats.lastCallbackAttemptRetryCount).toBe(TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT);
-            expect(response.result.stats.lastSuccessfulCallback).toBe(TEST_LAST_SUCCESSFUL_CALLBACK);
+            expect(response).toEqual({
+                message: TEST_SUCCESS_MESSAGE,
+                resultCode: TEST_SUCCESS_RESULT_CODE,
+                version: TEST_VERSION,
+                result: {
+                    id: TEST_WEBHOOK_ID,
+                    name: TEST_WEBHOOK_NAME,
+                    callbackUrl: TEST_CALLBACK_URL,
+                    scope: TEST_SCOPE_SHEET,
+                    scopeObjectId: TEST_SCOPE_OBJECT_ID,
+                    events: TEST_EVENTS,
+                    version: TEST_VERSION,
+                    subscope: {
+                        columnIds: TEST_COLUMN_IDS
+                    },
+                    enabled: TEST_ENABLED,
+                    status: TEST_STATUS,
+                    sharedSecret: TEST_SHARED_SECRET,
+                    createdAt: TEST_CREATED_AT,
+                    modifiedAt: TEST_MODIFIED_AT,
+                    disabledDetails: TEST_DISABLED_DETAILS,
+                    apiClientId: TEST_API_CLIENT_ID,
+                    apiClientName: TEST_API_CLIENT_NAME,
+                    stats: {
+                        lastCallbackAttempt: TEST_LAST_CALLBACK_ATTEMPT,
+                        lastCallbackAttemptRetryCount: TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT,
+                        lastSuccessfulCallback: TEST_LAST_SUCCESSFUL_CALLBACK
+                    }
+                }
+            });
 
             const body = JSON.parse(matchedRequest.body);
             expect(body).toEqual(TEST_SHEET_WEBHOOK_REQUEST_BODY);
@@ -110,31 +115,34 @@ describe('Webhooks - createWebhook endpoint tests', () => {
             const response = await client.webhooks.createWebhook(options);
             const matchedRequest = await findWireMockRequest(requestId);
 
-            expect(response).toBeTruthy();
-            expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-            expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
-            expect(response.version).toBe(TEST_VERSION);
-            expect(response.result.id).toBe(TEST_WEBHOOK_ID);
-            expect(response.result.name).toBe(TEST_WEBHOOK_NAME);
-            expect(response.result.callbackUrl).toBe(TEST_CALLBACK_URL);
-            expect(response.result.scope).toBe(TEST_SCOPE_PLAN);
-            expect(response.result.scopeObjectId).toBe(TEST_SCOPE_OBJECT_ID);
-            expect(response.result.events).toEqual(TEST_EVENTS);
-            expect(response.result.version).toBe(TEST_VERSION);
-            expect(response.result.customHeaders).toBeTruthy();
-            expect(response.result.customHeaders).toEqual(TEST_CUSTOM_HEADERS);
-            expect(response.result.enabled).toBe(TEST_ENABLED);
-            expect(response.result.status).toBe(TEST_STATUS);
-            expect(response.result.sharedSecret).toBe(TEST_SHARED_SECRET);
-            expect(response.result.createdAt).toBe(TEST_CREATED_AT);
-            expect(response.result.modifiedAt).toBe(TEST_MODIFIED_AT);
-            expect(response.result.disabledDetails).toBe(TEST_DISABLED_DETAILS);
-            expect(response.result.apiClientId).toBe(TEST_API_CLIENT_ID);
-            expect(response.result.apiClientName).toBe(TEST_API_CLIENT_NAME);
-            expect(response.result.stats).toBeTruthy();
-            expect(response.result.stats.lastCallbackAttempt).toBe(TEST_LAST_CALLBACK_ATTEMPT);
-            expect(response.result.stats.lastCallbackAttemptRetryCount).toBe(TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT);
-            expect(response.result.stats.lastSuccessfulCallback).toBe(TEST_LAST_SUCCESSFUL_CALLBACK);
+            expect(response).toEqual({
+                message: TEST_SUCCESS_MESSAGE,
+                resultCode: TEST_SUCCESS_RESULT_CODE,
+                version: TEST_VERSION,
+                result: {
+                    id: TEST_WEBHOOK_ID,
+                    name: TEST_WEBHOOK_NAME,
+                    callbackUrl: TEST_CALLBACK_URL,
+                    scope: TEST_SCOPE_PLAN,
+                    scopeObjectId: TEST_SCOPE_OBJECT_ID,
+                    events: TEST_EVENTS,
+                    version: TEST_VERSION,
+                    customHeaders: TEST_CUSTOM_HEADERS,
+                    enabled: TEST_ENABLED,
+                    status: TEST_STATUS,
+                    sharedSecret: TEST_SHARED_SECRET,
+                    createdAt: TEST_CREATED_AT,
+                    modifiedAt: TEST_MODIFIED_AT,
+                    disabledDetails: TEST_DISABLED_DETAILS,
+                    apiClientId: TEST_API_CLIENT_ID,
+                    apiClientName: TEST_API_CLIENT_NAME,
+                    stats: {
+                        lastCallbackAttempt: TEST_LAST_CALLBACK_ATTEMPT,
+                        lastCallbackAttemptRetryCount: TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT,
+                        lastSuccessfulCallback: TEST_LAST_SUCCESSFUL_CALLBACK
+                    }
+                }
+            });
 
             const body = JSON.parse(matchedRequest.body);
             expect(body).toEqual(TEST_PLAN_WEBHOOK_REQUEST_BODY);

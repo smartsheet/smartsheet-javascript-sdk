@@ -55,9 +55,10 @@ describe('Favorites - removeMultipleFavorites endpoint tests', () => {
         const response = await client.favorites.removeSheetsFromFavorites(options);
         
         // Verify response
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE
+        });
     });
 
     it('removeSheetsFromFavorites with string array objectIds', async () => {
@@ -83,9 +84,10 @@ describe('Favorites - removeMultipleFavorites endpoint tests', () => {
         });
         
         // Verify response
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE
+        });
     });
 
     it('removeSheetsFromFavorites with number array objectIds', async () => {
@@ -111,9 +113,10 @@ describe('Favorites - removeMultipleFavorites endpoint tests', () => {
         });
         
         // Verify response
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE
+        });
     });
 
     it('removeSheetsFromFavorites with single number objectIds', async () => {
@@ -139,9 +142,10 @@ describe('Favorites - removeMultipleFavorites endpoint tests', () => {
         });
         
         // Verify response
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE
+        });
     });
 
     it('removeSheetsFromFavorites error 500 response', async () => {

@@ -40,9 +40,10 @@ describe('Folders - deleteFolder endpoint tests', () => {
         };
         const response = await client.folders.deleteFolder(options);
         
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE
+        });
     });
 
     it('deleteFolder error 500 response', async () => {

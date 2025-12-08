@@ -61,12 +61,15 @@ describe('Folders - moveFolder endpoint tests', () => {
         });
         
         // Verify response
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
-        expect(response.result.id).toBe(TEST_FOLDER_ID);
-        expect(response.result.name).toBe(TEST_FOLDER_NAME);
-        expect(response.result.permalink).toBe(TEST_FOLDER_PERMALINK);
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE,
+            result: {
+                id: TEST_FOLDER_ID,
+                name: TEST_FOLDER_NAME,
+                permalink: TEST_FOLDER_PERMALINK
+            }
+        });
     });
 
     it('moveFolder error 500 response', async () => {

@@ -63,23 +63,23 @@ describe('Favorites - listFavorites endpoint tests', () => {
         };
         const response = await client.favorites.listFavorites(options);
         
-        // Verify response structure
-        expect(response).toBeTruthy();
-        expect(response.pageNumber).toBe(1);
-        expect(response.pageSize).toBe(100);
-        expect(response.totalPages).toBe(1);
-        expect(response.totalCount).toBe(2);
-        expect(response.data).toBeTruthy();
-        expect(Array.isArray(response.data)).toBe(true);
-        expect(response.data.length).toBe(2);
-        
-        // Verify first favorite (sheet)
-        expect(response.data[0].type).toBe(TEST_FAVORITE_TYPE_SHEET);
-        expect(response.data[0].objectId).toBe(TEST_SHEET_ID);
-        
-        // Verify second favorite (folder)
-        expect(response.data[1].type).toBe(TEST_FAVORITE_TYPE_FOLDER);
-        expect(response.data[1].objectId).toBe(TEST_FOLDER_ID);
+        // Verify response
+        expect(response).toEqual({
+            pageNumber: 1,
+            pageSize: 100,
+            totalPages: 1,
+            totalCount: 2,
+            data: [
+                {
+                    type: TEST_FAVORITE_TYPE_SHEET,
+                    objectId: TEST_SHEET_ID
+                },
+                {
+                    type: TEST_FAVORITE_TYPE_FOLDER,
+                    objectId: TEST_FOLDER_ID
+                }
+            ]
+        });
     });
 
     it('listFavorites error 500 response', async () => {

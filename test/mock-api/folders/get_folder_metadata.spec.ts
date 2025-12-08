@@ -53,12 +53,13 @@ describe('Folders - getFolderMetadata endpoint tests', () => {
         };
         const response = await client.folders.getFolderMetadata(options);
         
-        expect(response).toBeTruthy();
-        expect(response.id).toBe(TEST_FOLDER_ID);
-        expect(response.name).toBe(TEST_FOLDER_NAME);
-        expect(response.permalink).toBe(TEST_FOLDER_PERMALINK);
-        expect(response.createdAt).toBe(TEST_CREATED_AT);
-        expect(response.modifiedAt).toBe(TEST_MODIFIED_AT);
+        expect(response).toEqual({
+            id: TEST_FOLDER_ID,
+            name: TEST_FOLDER_NAME,
+            permalink: TEST_FOLDER_PERMALINK,
+            createdAt: TEST_CREATED_AT,
+            modifiedAt: TEST_MODIFIED_AT
+        });
     });
 
     it('getFolderMetadata error 500 response', async () => {

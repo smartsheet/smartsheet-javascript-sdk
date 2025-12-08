@@ -36,13 +36,17 @@ describe('Users - listUserPlans endpoint tests', () => {
         };
         await client.users.listUserPlans(options);
         const matchedRequest = await findWireMockRequest(requestId);
-        const queryParams = matchedRequest.queryParams;
-        const lastKeyActual = queryParams.lastKey.values[0];
-        const maxItemsActual = parseInt(queryParams.maxItems.values[0]);
-        
         expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans`)).toBeTruthy();
-        expect(lastKeyActual).toBe(lastKey);
-        expect(maxItemsActual).toBe(maxItems);
+        expect(matchedRequest.queryParams).toEqual({
+            lastKey: {
+                key: 'lastKey',
+                values: [lastKey]
+            },
+            maxItems: {
+                key: 'maxItems',
+                values: [maxItems.toString()]
+            }
+        });
     });
 
     it('listUserPlans all response body properties', async () => {
@@ -60,13 +64,18 @@ describe('Users - listUserPlans endpoint tests', () => {
         };
         const response = await client.users.listUserPlans(options);
         
-        expect(response).toBeTruthy();
-        expect(response.lastKey).toBe(lastKey);
-        expect(response.data[0].planId).toBe(TEST_PLAN_ID);
-        expect(response.data[0].seatType).toBe(seatType);
-        expect(response.data[0].seatTypeLastChangedAt).toBe(seatTypeLastChangedAt);
-        expect(response.data[0].provisionalExpirationDate).toBe(provisionalExpirationDate);
-        expect(response.data[0].isInternal).toBe(isInternalTrue);
+        expect(response).toEqual({
+            lastKey: lastKey,
+            data: [
+                {
+                    planId: TEST_PLAN_ID,
+                    seatType: seatType,
+                    seatTypeLastChangedAt: seatTypeLastChangedAt,
+                    provisionalExpirationDate: provisionalExpirationDate,
+                    isInternal: isInternalTrue
+                }
+            ]
+        });
     });
 
     it('listUserPlans required response body properties', async () => {
@@ -80,12 +89,15 @@ describe('Users - listUserPlans endpoint tests', () => {
         };
         const response = await client.users.listUserPlans(options);
         
-        expect(response).toBeTruthy();
-        expect(response.data[0].planId).toBe(TEST_PLAN_ID);
-        expect(response.data[0].seatType).toBe(seatType);
-        expect(response.data[0].seatTypeLastChangedAt).toBe(undefined);
-        expect(response.data[0].provisionalExpirationDate).toBe(undefined);
-        expect(response.data[0].isInternal).toBe(isInternalTrue);
+        expect(response).toEqual({
+            data: [
+                {
+                    planId: TEST_PLAN_ID,
+                    seatType: seatType,
+                    isInternal: isInternalTrue
+                }
+            ]
+        });
     });
 
     it('listUserPlans error 500 response', async () => {
