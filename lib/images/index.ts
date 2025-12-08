@@ -12,8 +12,7 @@ export function create(options: CreateOptions): ImagesApi {
   const listImageUrls = (
     postOptions: RequestOptions<undefined, ImageUrl[]>,
     callback?: RequestCallback<ListImageUrlsResponse>
-  ): Promise<ListImageUrlsResponse> =>
-    options.requestor.post({ ...optionsToSend, ...postOptions }, callback);
+  ): Promise<ListImageUrlsResponse> => options.requestor.post({ ...optionsToSend, ...postOptions }, callback);
 
   return {
     listImageUrls,
