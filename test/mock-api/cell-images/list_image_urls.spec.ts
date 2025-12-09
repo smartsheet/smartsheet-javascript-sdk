@@ -24,12 +24,12 @@ describe('Images - listImageUrls endpoint tests', () => {
         const requestId = crypto.randomUUID();
         const options = {
             body: [
-                { imageId: TEST_IMAGE_ID_1 },
-                { imageId: TEST_IMAGE_ID_2 }
+                { imageId: TEST_IMAGE_ID_1, height: TEST_IMAGE_HEIGHT_1, width: TEST_IMAGE_WIDTH_1 },
+                { imageId: TEST_IMAGE_ID_2, height: TEST_IMAGE_HEIGHT_2, width: TEST_IMAGE_WIDTH_2 }
             ],
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/images/list-image-urls/all-response-body-properties'
+                'x-test-name': '/cell-images/list-image-urls/all-response-body-properties'
             }
         };
         await client.images.listImageUrls(options);
@@ -41,12 +41,12 @@ describe('Images - listImageUrls endpoint tests', () => {
         const requestId = crypto.randomUUID();
         const options = {
             body: [
-                { imageId: TEST_IMAGE_ID_1 },
-                { imageId: TEST_IMAGE_ID_2 }
+                { imageId: TEST_IMAGE_ID_1, height: TEST_IMAGE_HEIGHT_1, width: TEST_IMAGE_WIDTH_1 },
+                { imageId: TEST_IMAGE_ID_2, height: TEST_IMAGE_HEIGHT_2, width: TEST_IMAGE_WIDTH_2 }
             ],
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/images/list-image-urls/all-response-body-properties'
+                'x-test-name': '/cell-images/list-image-urls/all-response-body-properties'
             }
         };
         const response = await client.images.listImageUrls(options);
@@ -56,6 +56,11 @@ describe('Images - listImageUrls endpoint tests', () => {
             imageUrls: [
                 {
                     imageId: TEST_IMAGE_ID_1,
+                    error: {
+                        refId: '123',
+                        errorCode: 0,
+                        message: 'Image not found'
+                    },
                     height: TEST_IMAGE_HEIGHT_1,
                     width: TEST_IMAGE_WIDTH_1,
                     url: TEST_IMAGE_URL_1
@@ -72,8 +77,8 @@ describe('Images - listImageUrls endpoint tests', () => {
 
         const body = JSON.parse(matchedRequest.body);
         expect(body).toEqual([
-            { imageId: TEST_IMAGE_ID_1 },
-            { imageId: TEST_IMAGE_ID_2 }
+            { imageId: TEST_IMAGE_ID_1, height: TEST_IMAGE_HEIGHT_1, width: TEST_IMAGE_WIDTH_1 },
+            { imageId: TEST_IMAGE_ID_2, height: TEST_IMAGE_HEIGHT_2, width: TEST_IMAGE_WIDTH_2 }
         ]);
     });
 
@@ -81,7 +86,7 @@ describe('Images - listImageUrls endpoint tests', () => {
         const requestId = crypto.randomUUID();
         const options = {
             body: [
-                { imageId: TEST_IMAGE_ID_1 }
+                { imageId: TEST_IMAGE_ID_1, height: TEST_IMAGE_HEIGHT_1, width: TEST_IMAGE_WIDTH_1 }
             ],
             customProperties: {
                 'x-request-id': requestId,
@@ -101,7 +106,7 @@ describe('Images - listImageUrls endpoint tests', () => {
         const requestId = crypto.randomUUID();
         const options = {
             body: [
-                { imageId: TEST_IMAGE_ID_1 }
+                { imageId: TEST_IMAGE_ID_1, height: TEST_IMAGE_HEIGHT_1, width: TEST_IMAGE_WIDTH_1 }
             ],
             customProperties: {
                 'x-request-id': requestId,
