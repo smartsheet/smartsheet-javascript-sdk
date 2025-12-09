@@ -27,8 +27,8 @@ describe('Users - removeUserFromPlan endpoint tests', () => {
         };
         await client.users.removeUserFromPlan(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}`);
     });
 
     it('removeUserFromPlan all response body properties', async () => {

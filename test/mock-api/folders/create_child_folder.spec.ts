@@ -11,7 +11,8 @@ import {
     ERROR_500_STATUS_CODE,
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
-    ERROR_400_MESSAGE
+    ERROR_400_MESSAGE,
+    TEST_INCLUDE_PARAM
 } from './common_test_constants';
 
 describe('Folders - createChildFolder endpoint tests', () => {
@@ -19,14 +20,13 @@ describe('Folders - createChildFolder endpoint tests', () => {
 
     it('createChildFolder generated url is correct', async () => {
         const requestId = crypto.randomUUID();
-        const includeParam = 'data';
         const options = {
             folderId: TEST_FOLDER_ID,
             body: {
                 name: TEST_NEW_FOLDER_NAME
             },
             queryParameters: {
-                include: includeParam
+                include: TEST_INCLUDE_PARAM
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -35,15 +35,12 @@ describe('Folders - createChildFolder endpoint tests', () => {
         };
         await client.folders.createChildFolder(options);
         const matchedRequest = await findWireMockRequest(requestId);
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/folders/${TEST_FOLDER_ID}/folders`);
 
-        expect(matchedRequest.url.includes(`/folders/${TEST_FOLDER_ID}/folders`)).toBeTruthy();
-        
-        // Check query parameters
-        expect(matchedRequest.queryParams).toEqual({
-            include: {
-                key: 'include',
-                values: [includeParam]
-            }
+        const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+        expect(queryParamsObject).toEqual({
+            include: TEST_INCLUDE_PARAM
         });
     });
 

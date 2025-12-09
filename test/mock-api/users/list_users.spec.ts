@@ -17,43 +17,24 @@ import {
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE,
-    TEST_PROVISIONAL_EXPIRATION_DATE
+    TEST_PROVISIONAL_EXPIRATION_DATE,
+    TEST_INCLUDE_ALL
 } from './common_test_constants';
 import { SeatTypes, UserStatus } from '@smartsheet/users/types';
 
 describe('Users - listAllUsers endpoint tests', () => {
     const client = createClient();
-    const emails = TEST_EMAIL;
-    const seatType = SeatTypes.MEMBER;
-    const page = TEST_PAGE_NUMBER;
-    const pageSize = TEST_PAGE_SIZE;
-    const includeAll = false;
-    const seatTypeLastChangedAt = TEST_SEAT_TYPE_LAST_CHANGED_AT;
-    const provisionalExpirationDate = TEST_PROVISIONAL_EXPIRATION_DATE;
-    const isInternal = true;
-    const firstName = TEST_FIRST_NAME;
-    const lastName = TEST_LAST_NAME;
-    const name = TEST_NAME;
-    const email = TEST_EMAIL;
-    const admin = true;
-    const licensedSheetCreator = true;
-    const resourceViewer = true;
-    const groupAdmin = true;
-    const status = UserStatus.ACTIVE;
-    const sheetCount = TEST_SHEET_COUNT;
-    const lastLogin = TEST_LAST_LOGIN;
-    const customWelcomeScreenViewed = TEST_CUSTOM_WELCOME_SCREEN_VIEWED;
 
     it('listUsers generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             queryParameters: {
-                emails: emails,
+                emails: TEST_EMAIL,
                 planId: TEST_PLAN_ID,
-                seatType: seatType,
-                includeAll: includeAll,
-                page: page,
-                pageSize: pageSize
+                seatType: SeatTypes.MEMBER,
+                includeAll: TEST_INCLUDE_ALL,
+                page: TEST_PAGE_NUMBER,
+                pageSize: TEST_PAGE_SIZE
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -62,32 +43,17 @@ describe('Users - listAllUsers endpoint tests', () => {
         };
         await client.users.listAllUsers(options);
         const matchedRequest = await findWireMockRequest(requestId);
-        expect(matchedRequest.url.includes(`/2.0/users`)).toBeTruthy();
-        expect(matchedRequest.queryParams).toEqual({
-            emails: {
-                key: 'emails',
-                values: [emails]
-            },
-            planId: {
-                key: 'planId',
-                values: [TEST_PLAN_ID.toString()]
-            },
-            seatType: {
-                key: 'seatType',
-                values: [seatType]
-            },
-            includeAll: {
-                key: 'includeAll',
-                values: [includeAll.toString()]
-            },
-            page: {
-                key: 'page',
-                values: [page.toString()]
-            },
-            pageSize: {
-                key: 'pageSize',
-                values: [pageSize.toString()]
-            }
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual('/2.0/users');
+
+        const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+        expect(queryParamsObject).toEqual({
+            emails: TEST_EMAIL,
+            planId: TEST_PLAN_ID.toString(),
+            seatType: SeatTypes.MEMBER,
+            includeAll: TEST_INCLUDE_ALL.toString(),
+            page: TEST_PAGE_NUMBER.toString(),
+            pageSize: TEST_PAGE_SIZE.toString()
         });
     });
 
@@ -106,22 +72,22 @@ describe('Users - listAllUsers endpoint tests', () => {
         expect(response).toEqual({
             data: [
                 {
-                    seatType: seatType,
-                    seatTypeLastChangedAt: seatTypeLastChangedAt,
-                    provisionalExpirationDate: provisionalExpirationDate,
-                    isInternal: isInternal,
-                    firstName: firstName,
-                    lastName: lastName,
-                    name: name,
-                    email: email,
-                    admin: admin,
-                    licensedSheetCreator: licensedSheetCreator,
-                    resourceViewer: resourceViewer,
-                    groupAdmin: groupAdmin,
-                    status: status,
-                    sheetCount: sheetCount,
-                    lastLogin: lastLogin,
-                    customWelcomeScreenViewed: customWelcomeScreenViewed,
+                    seatType: SeatTypes.MEMBER,
+                    seatTypeLastChangedAt: TEST_SEAT_TYPE_LAST_CHANGED_AT,
+                    provisionalExpirationDate: TEST_PROVISIONAL_EXPIRATION_DATE,
+                    isInternal: true,
+                    firstName: TEST_FIRST_NAME,
+                    lastName: TEST_LAST_NAME,
+                    name: TEST_NAME,
+                    email: TEST_EMAIL,
+                    admin: true,
+                    licensedSheetCreator: true,
+                    resourceViewer: true,
+                    groupAdmin: true,
+                    status: UserStatus.ACTIVE,
+                    sheetCount: TEST_SHEET_COUNT,
+                    lastLogin: TEST_LAST_LOGIN,
+                    customWelcomeScreenViewed: TEST_CUSTOM_WELCOME_SCREEN_VIEWED,
                     id: TEST_PLAN_ID,
                     profileImage: {
                         height: 1050,
@@ -152,18 +118,18 @@ describe('Users - listAllUsers endpoint tests', () => {
         expect(response).toEqual({
             data: [
                 {
-                    seatType: seatType,
-                    isInternal: isInternal,
-                    firstName: firstName,
-                    lastName: lastName,
-                    name: name,
-                    email: email,
-                    admin: admin,
-                    licensedSheetCreator: licensedSheetCreator,
-                    resourceViewer: resourceViewer,
-                    groupAdmin: groupAdmin,
-                    status: status,
-                    sheetCount: sheetCount,
+                    seatType: SeatTypes.MEMBER,
+                    isInternal: true,
+                    firstName: TEST_FIRST_NAME,
+                    lastName: TEST_LAST_NAME,
+                    name: TEST_NAME,
+                    email: TEST_EMAIL,
+                    admin: true,
+                    licensedSheetCreator: true,
+                    resourceViewer: true,
+                    groupAdmin: true,
+                    status: UserStatus.ACTIVE,
+                    sheetCount: TEST_SHEET_COUNT,
                     id: TEST_PLAN_ID
                 }
             ],

@@ -13,7 +13,10 @@ import {
     TEST_NEW_FOLDER_ID,
     TEST_NEW_FOLDER_NAME,
     TEST_SUCCESS_MESSAGE,
-    TEST_SUCCESS_RESULT_CODE
+    TEST_SUCCESS_RESULT_CODE,
+    TEST_COPY_INCLUDE,
+    TEST_COPY_EXCLUDE,
+    TEST_COPY_SKIP_REMAP
 } from './common_test_constants';
 import { DestinationType } from '@smartsheet/folders/types';
 
@@ -25,9 +28,9 @@ describe('Folders - copyFolder endpoint tests', () => {
         const options = {
             folderId: TEST_FOLDER_ID,
             queryParameters: {
-                include: 'data,attachments',
-                exclude: 'sheetHyperlinks',
-                skipRemap: 'cellLinks'
+                include: TEST_COPY_INCLUDE,
+                exclude: TEST_COPY_EXCLUDE,
+                skipRemap: TEST_COPY_SKIP_REMAP
             },
             body: {
                 destinationType: DestinationType.FOLDER,
@@ -41,23 +44,14 @@ describe('Folders - copyFolder endpoint tests', () => {
         };
         await client.folders.copyFolder(options);
         const matchedRequest = await findWireMockRequest(requestId);
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/folders/${TEST_FOLDER_ID}/copy`);
 
-        expect(matchedRequest.url.includes(`/folders/${TEST_FOLDER_ID}/copy`)).toBeTruthy();
-        
-        // Verify query parameters
-        expect(matchedRequest.queryParams).toEqual({
-            include: {
-                key: 'include',
-                values: ['data,attachments']
-            },
-            exclude: {
-                key: 'exclude',
-                values: ['sheetHyperlinks']
-            },
-            skipRemap: {
-                key: 'skipRemap',
-                values: ['cellLinks']
-            }
+        const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+        expect(queryParamsObject).toEqual({
+            include: TEST_COPY_INCLUDE,
+            exclude: TEST_COPY_EXCLUDE,
+            skipRemap: TEST_COPY_SKIP_REMAP
         });
     });
 

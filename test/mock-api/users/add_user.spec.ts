@@ -20,42 +20,23 @@ import {
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE,
-    TEST_USER_ID
+    TEST_USER_ID,
+    TEST_SEND_EMAIL
 } from './common_test_constants';
 import { SeatTypes, UserStatus } from '@smartsheet/users/types';
 
 describe('Users - addUser endpoint tests', () => {
     const client = createClient();
-    const newUserId = TEST_USER_ID;
-    const email = TEST_EMAIL;
-    const firstName = TEST_FIRST_NAME;
-    const lastName = TEST_LAST_NAME;
-    const name = TEST_NAME;
-    const admin = false;
-    const licensedSheetCreator = true;
-    const groupAdmin = false;
-    const resourceViewer = false;
-    const status = UserStatus.ACTIVE;
-    const customWelcomeScreenViewed = TEST_CUSTOM_WELCOME_SCREEN_VIEWED;
-    const lastLogin = TEST_LAST_LOGIN;
-    const isInternal = true;
-    const profileImageId = TEST_PROFILE_IMAGE_ID;
-    const profileImageHeight = TEST_PROFILE_IMAGE_HEIGHT;
-    const profileImageWidth = TEST_PROFILE_IMAGE_WIDTH;
-    const provisionalExpirationDate = TEST_PROVISIONAL_EXPIRATION_DATE;
-    const seatType = SeatTypes.MEMBER;
-    const seatTypeLastChangedAt = TEST_SEAT_TYPE_LAST_CHANGED_AT;
-    const sheetCount = TEST_SHEET_COUNT;
 
     const testUserBody = {
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        admin: admin,
-        licensedSheetCreator: licensedSheetCreator,
-        groupAdmin: groupAdmin,
-        resourceViewer: resourceViewer,
-        status: status
+        email: TEST_EMAIL,
+        firstName: TEST_FIRST_NAME,
+        lastName: TEST_LAST_NAME,
+        admin: false,
+        licensedSheetCreator: true,
+        groupAdmin: false,
+        resourceViewer: false,
+        status: UserStatus.ACTIVE
     };
 
     it('addUser generated url is correct', async () => {
@@ -63,7 +44,7 @@ describe('Users - addUser endpoint tests', () => {
         const options = {
             body: testUserBody,
             queryParameters: {
-                sendEmail: true
+                sendEmail: TEST_SEND_EMAIL
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -72,8 +53,8 @@ describe('Users - addUser endpoint tests', () => {
         };
         await client.users.addUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes('/2.0/users')).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual('/2.0/users');
     });
     
     it('addUserAndSendEmail generated url is correct', async () => {
@@ -87,13 +68,12 @@ describe('Users - addUser endpoint tests', () => {
         };
         await client.users.addUserAndSendEmail(options);
         const matchedRequest = await findWireMockRequest(requestId);
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual('/2.0/users');
 
-        expect(matchedRequest.url.includes('/2.0/users')).toBeTruthy();
-        expect(matchedRequest.queryParams).toEqual({
-            sendEmail: {
-                key: 'sendEmail',
-                values: ['true']
-            }
+        const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+        expect(queryParamsObject).toEqual({
+            sendEmail: TEST_SEND_EMAIL.toString()
         });
     });
 
@@ -114,42 +94,33 @@ describe('Users - addUser endpoint tests', () => {
             message: TEST_SUCCESS_MESSAGE,
             resultCode: TEST_SUCCESS_RESULT_CODE,
             result: {
-                id: newUserId,
-                admin: admin,
-                customWelcomeScreenViewed: customWelcomeScreenViewed,
-                email: email,
-                firstName: firstName,
-                groupAdmin: groupAdmin,
-                isInternal: isInternal,
-                lastLogin: lastLogin,
-                lastName: lastName,
-                licensedSheetCreator: licensedSheetCreator,
-                name: name,
+                id: TEST_USER_ID,
+                admin: false,
+                customWelcomeScreenViewed: TEST_CUSTOM_WELCOME_SCREEN_VIEWED,
+                email: TEST_EMAIL,
+                firstName: TEST_FIRST_NAME,
+                groupAdmin: false,
+                isInternal: true,
+                lastLogin: TEST_LAST_LOGIN,
+                lastName: TEST_LAST_NAME,
+                licensedSheetCreator: true,
+                name: TEST_NAME,
                 profileImage: {
-                    imageId: profileImageId,
-                    height: profileImageHeight,
-                    width: profileImageWidth
+                    imageId: TEST_PROFILE_IMAGE_ID,
+                    height: TEST_PROFILE_IMAGE_HEIGHT,
+                    width: TEST_PROFILE_IMAGE_WIDTH
                 },
-                provisionalExpirationDate: provisionalExpirationDate,
-                resourceViewer: resourceViewer,
-                seatType: seatType,
-                seatTypeLastChangedAt: seatTypeLastChangedAt,
-                sheetCount: sheetCount,
-                status: status
+                provisionalExpirationDate: TEST_PROVISIONAL_EXPIRATION_DATE,
+                resourceViewer: false,
+                seatType: SeatTypes.MEMBER,
+                seatTypeLastChangedAt: TEST_SEAT_TYPE_LAST_CHANGED_AT,
+                sheetCount: TEST_SHEET_COUNT,
+                status: UserStatus.ACTIVE
             }
         });
         
         const body = JSON.parse(matchedRequest.body);
-        expect(body).toEqual({
-            email: email,
-            firstName: firstName,
-            lastName: lastName,
-            admin: admin,
-            licensedSheetCreator: licensedSheetCreator,
-            groupAdmin: groupAdmin,
-            resourceViewer: resourceViewer,
-            status: status
-        });
+        expect(body).toEqual(testUserBody);
     });
 
     it('addUser required response body properties', async () => {
@@ -168,26 +139,17 @@ describe('Users - addUser endpoint tests', () => {
             message: TEST_SUCCESS_MESSAGE,
             resultCode: TEST_SUCCESS_RESULT_CODE,
             result: {
-                id: newUserId,
-                email: email,
-                firstName: firstName,
-                lastName: lastName,
-                name: name,
-                status: status
+                id: TEST_USER_ID,
+                email: TEST_EMAIL,
+                firstName: TEST_FIRST_NAME,
+                lastName: TEST_LAST_NAME,
+                name: TEST_NAME,
+                status: UserStatus.ACTIVE
             }
         });
         
         const body = JSON.parse(matchedRequest.body);
-        expect(body).toEqual({
-            email: email,
-            firstName: firstName,
-            lastName: lastName,
-            admin: admin,
-            licensedSheetCreator: licensedSheetCreator,
-            groupAdmin: groupAdmin,
-            resourceViewer: resourceViewer,
-            status: status
-        });
+        expect(body).toEqual(testUserBody);
     });
 
     it('addUser error 500 response', async () => {
