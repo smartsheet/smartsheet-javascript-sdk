@@ -31,9 +31,14 @@ describe('Groups - listGroups endpoint tests', () => {
 
     it('listGroups generated url is correct', async () => {
         const requestId = crypto.randomUUID();
+        const modifiedSince = '2024-01-01T00:00:00Z';
         const options = {
             queryParameters: {
-                includeAll: true
+                includeAll: true,
+                modifiedSince: modifiedSince,
+                numericDates: true,
+                page: 2,
+                pageSize: 50
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -48,6 +53,22 @@ describe('Groups - listGroups endpoint tests', () => {
             includeAll: {
                 key: 'includeAll',
                 values: ['true']
+            },
+            modifiedSince: {
+                key: 'modifiedSince',
+                values: [modifiedSince]
+            },
+            numericDates: {
+                key: 'numericDates',
+                values: ['true']
+            },
+            page: {
+                key: 'page',
+                values: ['2']
+            },
+            pageSize: {
+                key: 'pageSize',
+                values: ['50']
             }
         });
     });
