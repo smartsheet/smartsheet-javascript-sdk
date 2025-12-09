@@ -56,3 +56,10 @@ export const ERROR_500_STATUS_CODE = 500;
 export const ERROR_500_MESSAGE = 'Internal Server Error';
 export const ERROR_400_STATUS_CODE = 400;
 export const ERROR_400_MESSAGE = 'Malformed Request';
+
+// Common Query Parameters for listGroups
+export const TEST_INCLUDE_ALL = true;
+export const TEST_MODIFIED_SINCE = '2024-01-01T00:00:00Z';
+export const TEST_NUMERIC_DATES = true;
+export const TEST_LIST_GROUPS_PAGE = 2;
+export const TEST_LIST_GROUPS_PAGE_SIZE = 50;

@@ -39,8 +39,8 @@ describe('Groups - getGroup endpoint tests', () => {
         };
         await client.groups.getGroup(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/groups/${TEST_GROUP_ID}`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/groups/${TEST_GROUP_ID}`);
     });
 
     it('getGroup all response body properties', async () => {

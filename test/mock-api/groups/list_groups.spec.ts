@@ -20,6 +20,11 @@ import {
     TEST_PAGE_SIZE,
     TEST_TOTAL_PAGES,
     TEST_TOTAL_COUNT,
+    TEST_INCLUDE_ALL,
+    TEST_MODIFIED_SINCE,
+    TEST_NUMERIC_DATES,
+    TEST_LIST_GROUPS_PAGE,
+    TEST_LIST_GROUPS_PAGE_SIZE,
     ERROR_500_STATUS_CODE,
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
@@ -31,14 +36,13 @@ describe('Groups - listGroups endpoint tests', () => {
 
     it('listGroups generated url is correct', async () => {
         const requestId = crypto.randomUUID();
-        const modifiedSince = '2024-01-01T00:00:00Z';
         const options = {
             queryParameters: {
-                includeAll: true,
-                modifiedSince: modifiedSince,
-                numericDates: true,
-                page: 2,
-                pageSize: 50
+                includeAll: TEST_INCLUDE_ALL,
+                modifiedSince: TEST_MODIFIED_SINCE,
+                numericDates: TEST_NUMERIC_DATES,
+                page: TEST_LIST_GROUPS_PAGE,
+                pageSize: TEST_LIST_GROUPS_PAGE_SIZE
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -47,29 +51,16 @@ describe('Groups - listGroups endpoint tests', () => {
         };
         await client.groups.listGroups(options);
         const matchedRequest = await findWireMockRequest(requestId);
-        
-        expect(matchedRequest.url.includes(`/2.0/groups`)).toBeTruthy();
-        expect(matchedRequest.queryParams).toEqual({
-            includeAll: {
-                key: 'includeAll',
-                values: ['true']
-            },
-            modifiedSince: {
-                key: 'modifiedSince',
-                values: [modifiedSince]
-            },
-            numericDates: {
-                key: 'numericDates',
-                values: ['true']
-            },
-            page: {
-                key: 'page',
-                values: ['2']
-            },
-            pageSize: {
-                key: 'pageSize',
-                values: ['50']
-            }
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual('/2.0/groups');
+
+        const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+        expect(queryParamsObject).toEqual({
+            includeAll: TEST_INCLUDE_ALL.toString(),
+            modifiedSince: TEST_MODIFIED_SINCE,
+            numericDates: TEST_NUMERIC_DATES.toString(),
+            page: TEST_LIST_GROUPS_PAGE.toString(),
+            pageSize: TEST_LIST_GROUPS_PAGE_SIZE.toString()
         });
     });
 

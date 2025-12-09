@@ -27,8 +27,8 @@ describe('Groups - removeGroupMember endpoint tests', () => {
         };
         await client.groups.removeGroupMember(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/groups/${TEST_GROUP_ID}/members/${TEST_MEMBER_ID}`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/groups/${TEST_GROUP_ID}/members/${TEST_MEMBER_ID}`);
     });
 
     it('removeGroupMember all response body properties', async () => {

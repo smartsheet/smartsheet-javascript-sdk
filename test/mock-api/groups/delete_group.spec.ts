@@ -25,8 +25,8 @@ describe('Groups - deleteGroup endpoint tests', () => {
         };
         await client.groups.deleteGroup(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/groups/${TEST_GROUP_ID}`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/groups/${TEST_GROUP_ID}`);
     });
 
     it('deleteGroup all response body properties', async () => {

@@ -34,8 +34,8 @@ describe('Groups - createGroup endpoint tests', () => {
         };
         await client.groups.createGroup(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes('/2.0/groups')).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual('/2.0/groups');
     });
 
     it('createGroup all response body properties', async () => {
