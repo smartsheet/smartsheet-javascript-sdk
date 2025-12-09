@@ -30,6 +30,7 @@ import {
     TEST_FAILED_ERROR_CODE,
     TEST_FAILED_ERROR_MESSAGE,
     TEST_FAILED_INDEX,
+    TEST_OVERRIDE_VALIDATION,
     ERROR_500_STATUS_CODE,
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
@@ -49,7 +50,7 @@ describe('Images - addImageToCell endpoint tests', () => {
             body: testImageBuffer,
             queryParameters: {
                 altText: TEST_CELL_IMAGE_ALT_TEXT,
-                overrideValidation: true
+                overrideValidation: TEST_OVERRIDE_VALIDATION
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -58,19 +59,13 @@ describe('Images - addImageToCell endpoint tests', () => {
         };
         await client.images.addImageToCell(options);
         const matchedRequest = await findWireMockRequest(requestId);
-        
-        expect(matchedRequest.url.includes(`/2.0/sheets/${TEST_SHEET_ID}/rows/${TEST_ROW_ID}/columns/${TEST_COLUMN_ID}/cellimages`)).toBeTruthy();
-        
-        // Verify query parameters
-        expect(matchedRequest.queryParams).toEqual({
-            altText: {
-                key: 'altText',
-                values: [TEST_CELL_IMAGE_ALT_TEXT]
-            },
-            overrideValidation: {
-                key: 'overrideValidation',
-                values: ['true']
-            }
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/sheets/${TEST_SHEET_ID}/rows/${TEST_ROW_ID}/columns/${TEST_COLUMN_ID}/cellimages`);
+
+        const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+        expect(queryParamsObject).toEqual({
+            altText: TEST_CELL_IMAGE_ALT_TEXT,
+            overrideValidation: TEST_OVERRIDE_VALIDATION.toString()
         });
     });
 
@@ -83,7 +78,7 @@ describe('Images - addImageToCell endpoint tests', () => {
             body: testImageBuffer,
             queryParameters: {
                 altText: TEST_CELL_IMAGE_ALT_TEXT,
-                overrideValidation: true
+                overrideValidation: TEST_OVERRIDE_VALIDATION
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -392,7 +387,7 @@ describe('Images - addImageToCell endpoint tests', () => {
             body: testImageBuffer,
             queryParameters: {
                 altText: TEST_CELL_IMAGE_ALT_TEXT,
-                overrideValidation: true
+                overrideValidation: TEST_OVERRIDE_VALIDATION
             },
             customProperties: {
                 'x-request-id': requestId,

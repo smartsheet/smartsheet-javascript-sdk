@@ -61,3 +61,6 @@ export const TEST_FAILED_ERROR_REF_ID = 'abc123';
 export const TEST_FAILED_ERROR_CODE = 1001;
 export const TEST_FAILED_ERROR_MESSAGE = 'Failed to add image';
 export const TEST_FAILED_INDEX = 0;
+
+// Common Query Parameters
+export const TEST_OVERRIDE_VALIDATION = true;

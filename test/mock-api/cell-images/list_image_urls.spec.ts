@@ -34,7 +34,8 @@ describe('Images - listImageUrls endpoint tests', () => {
         };
         await client.images.listImageUrls(options);
         const matchedRequest = await findWireMockRequest(requestId);
-        expect(matchedRequest.url.includes(`/2.0/imageurls`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual('/2.0/imageurls');
     });
 
     it('listImageUrls all response body properties', async () => {
