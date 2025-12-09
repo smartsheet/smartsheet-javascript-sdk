@@ -35,9 +35,8 @@ describe('Reports - sendReportViaEmail endpoint tests', () => {
         };
         await client.reports.sendReportViaEmail(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/reports/${TEST_REPORT_ID}/emails`)).toBeTruthy();
-        expect(matchedRequest.method).toBe('POST');
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/reports/${TEST_REPORT_ID}/emails`);
     });
 
     it('sendReportViaEmail success response', async () => {

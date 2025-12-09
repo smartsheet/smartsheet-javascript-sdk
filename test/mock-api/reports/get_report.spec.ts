@@ -35,8 +35,8 @@ describe('Reports - getReport endpoint tests', () => {
         };
         await client.reports.getReport(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/reports/${TEST_REPORT_ID}`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/reports/${TEST_REPORT_ID}`);
     });
 
     it('getReport all response body properties', async () => {

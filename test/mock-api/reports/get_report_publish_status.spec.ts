@@ -23,8 +23,8 @@ describe('Reports - getReportPublishStatus endpoint tests', () => {
         };
         await client.reports.getReportPublishStatus(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/reports/${TEST_REPORT_ID}/publish`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/reports/${TEST_REPORT_ID}/publish`);
     });
 
     it('getReportPublishStatus all response body properties', async () => {

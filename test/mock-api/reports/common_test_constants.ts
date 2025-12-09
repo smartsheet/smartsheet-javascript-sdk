@@ -20,6 +20,7 @@ export const TEST_REPORT_PERMALINK_ALL_PROPS = 'https://app.smartsheet.com/repor
 export const TEST_CREATED_AT = '2019-08-24T14:15:22Z';
 export const TEST_MODIFIED_AT = '2019-08-24T14:15:22Z';
 export const TEST_MODIFIED_AT_ALL_PROPS = '2019-08-25T10:30:45Z';
+export const TEST_MODIFIED_SINCE = '2023-01-01T00:00:00Z';
 
 // Common Success Response Values
 export const TEST_SUCCESS_MESSAGE = 'SUCCESS';

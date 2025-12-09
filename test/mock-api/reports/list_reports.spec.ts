@@ -6,6 +6,7 @@ import {
     TEST_REPORT_NAME,
     TEST_REPORT_PERMALINK,
     TEST_REPORT_ACCESS_LEVEL,
+    TEST_MODIFIED_SINCE,
     ERROR_500_STATUS_CODE,
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
@@ -19,7 +20,7 @@ describe('Reports - listReports endpoint tests', () => {
         const requestId = crypto.randomUUID();
         const options = {
             queryParameters: {
-                modifiedSince: '2023-01-01T00:00:00Z'
+                modifiedSince: TEST_MODIFIED_SINCE
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -28,14 +29,12 @@ describe('Reports - listReports endpoint tests', () => {
         };
         await client.reports.listReports(options);
         const matchedRequest = await findWireMockRequest(requestId);
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual('/2.0/reports');
 
-        expect(matchedRequest.url.includes(`/2.0/reports`)).toBeTruthy();
-
-        expect(matchedRequest.queryParams).toEqual({
-            modifiedSince: {
-                key: 'modifiedSince',
-                values: ['2023-01-01T00:00:00Z']
-            }
+        const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+        expect(queryParamsObject).toEqual({
+            modifiedSince: TEST_MODIFIED_SINCE
         });
     });
 
