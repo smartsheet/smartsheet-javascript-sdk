@@ -89,12 +89,12 @@ export interface ImageUrl {
   /**
    * Image height (in pixels).
    */
-  height: number;
+  height?: number;
 
   /**
    * Image width (in pixels).
    */
-  width: number;
+  width?: number;
 
   /**
    * Temporary URL that can be used to retrieve the image.

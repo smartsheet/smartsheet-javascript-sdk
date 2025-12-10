@@ -57,19 +57,10 @@ describe('Images - listImageUrls endpoint tests', () => {
             imageUrls: [
                 {
                     imageId: TEST_IMAGE_ID_1,
-                    error: {
-                        refId: '123',
-                        errorCode: 0,
-                        message: 'Image not found'
-                    },
-                    height: TEST_IMAGE_HEIGHT_1,
-                    width: TEST_IMAGE_WIDTH_1,
                     url: TEST_IMAGE_URL_1
                 },
                 {
                     imageId: TEST_IMAGE_ID_2,
-                    height: TEST_IMAGE_HEIGHT_2,
-                    width: TEST_IMAGE_WIDTH_2,
                     url: TEST_IMAGE_URL_2
                 }
             ],
