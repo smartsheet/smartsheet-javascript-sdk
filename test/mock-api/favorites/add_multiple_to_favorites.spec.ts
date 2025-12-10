@@ -38,8 +38,8 @@ describe('Favorites - addItemsToFavorites endpoint tests', () => {
         };
         await client.favorites.addMultipleToFavorites(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes('/2.0/favorites')).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual('/2.0/favorites');
     });
 
     it('addMultipleToFavorites all response body properties', async () => {

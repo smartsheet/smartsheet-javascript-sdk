@@ -15,10 +15,8 @@ import { SeatTypes } from '@smartsheet/users/types';
 
 describe('Users - upgradeUser & downgradeUser endpoint tests', () => {
     const client = createClient();
-    const TEST_UPGRADE_SEAT_TYPE = SeatTypes.MEMBER;
-    const TEST_DOWNGRADE_SEAT_TYPE = SeatTypes.VIEWER;
-    const TEST_UPGRADE_BODY = { seatType: TEST_UPGRADE_SEAT_TYPE };
-    const TEST_DOWNGRADE_BODY = { seatType: TEST_DOWNGRADE_SEAT_TYPE };
+    const TEST_UPGRADE_BODY = { seatType: SeatTypes.MEMBER };
+    const TEST_DOWNGRADE_BODY = { seatType: SeatTypes.VIEWER };
 
     it('upgradeUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
@@ -33,8 +31,8 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', () => {
         };
         await client.users.upgradeUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}/upgrade`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}/upgrade`);
     });
 
     it('upgradeUser all response body properties', async () => {
@@ -130,7 +128,8 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', () => {
         };
         await client.users.downgradeUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
-        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}/downgrade`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/users/${TEST_USER_ID}/plans/${TEST_PLAN_ID}/downgrade`);
     });
 
     it('downgradeUser all response body properties', async () => {

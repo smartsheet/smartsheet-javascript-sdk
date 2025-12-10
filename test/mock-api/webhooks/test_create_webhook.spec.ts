@@ -47,8 +47,8 @@ describe('Webhooks - createWebhook endpoint tests', () => {
         };
         await client.webhooks.createWebhook(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes('/2.0/webhooks')).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual('/2.0/webhooks');
     });
 
     it(

@@ -20,7 +20,10 @@ import {
     ERROR_500_STATUS_CODE,
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
-    ERROR_400_MESSAGE
+    ERROR_400_MESSAGE,
+    TEST_CHILDREN_RESOURCE_TYPES,
+    TEST_CHILDREN_INCLUDE,
+    TEST_MAX_ITEMS
 } from './common_test_constants';
 
 describe('Folders - getFolderChildren endpoint tests', () => {
@@ -31,9 +34,9 @@ describe('Folders - getFolderChildren endpoint tests', () => {
         const options = {
             folderId: TEST_FOLDER_ID,
             queryParameters: {
-                childrenResourceTypes: 'sheets,folders',
-                include: 'source,ownerInfo',
-                maxItems: 100
+                childrenResourceTypes: TEST_CHILDREN_RESOURCE_TYPES,
+                include: TEST_CHILDREN_INCLUDE,
+                maxItems: TEST_MAX_ITEMS
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -42,23 +45,14 @@ describe('Folders - getFolderChildren endpoint tests', () => {
         };
         await client.folders.getFolderChildren(options);
         const matchedRequest = await findWireMockRequest(requestId);
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/folders/${TEST_FOLDER_ID}/children`);
 
-        expect(matchedRequest.url.includes(`/folders/${TEST_FOLDER_ID}/children`)).toBeTruthy();
-        
-        // Verify query parameters
-        expect(matchedRequest.queryParams).toEqual({
-            childrenResourceTypes: {
-                key: 'childrenResourceTypes',
-                values: ['sheets,folders']
-            },
-            include: {
-                key: 'include',
-                values: ['source,ownerInfo']
-            },
-            maxItems: {
-                key: 'maxItems',
-                values: ['100']
-            }
+        const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+        expect(queryParamsObject).toEqual({
+            childrenResourceTypes: TEST_CHILDREN_RESOURCE_TYPES,
+            include: TEST_CHILDREN_INCLUDE,
+            maxItems: TEST_MAX_ITEMS.toString()
         });
     });
 

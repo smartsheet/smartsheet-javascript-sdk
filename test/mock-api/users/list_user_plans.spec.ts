@@ -9,25 +9,22 @@ import {
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE,
-    TEST_PROVISIONAL_EXPIRATION_DATE
+    TEST_PROVISIONAL_EXPIRATION_DATE,
+    TEST_LAST_KEY,
+    TEST_MAX_ITEMS
 } from './common_test_constants';
+import { SeatTypes } from '@smartsheet/users/types';
 
 describe('Users - listUserPlans endpoint tests', () => {
     const client = createClient();
-    const lastKey = '12345678901234569';
-    const maxItems = 100;
-    const seatType = 'MEMBER';
-    const seatTypeLastChangedAt = TEST_SEAT_TYPE_LAST_CHANGED_AT;
-    const provisionalExpirationDate = TEST_PROVISIONAL_EXPIRATION_DATE;
-    const isInternalTrue = false;
 
     it('listUserPlans generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
             queryParameters: {
-                lastKey: lastKey,
-                maxItems: maxItems
+                lastKey: TEST_LAST_KEY,
+                maxItems: TEST_MAX_ITEMS
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -36,16 +33,13 @@ describe('Users - listUserPlans endpoint tests', () => {
         };
         await client.users.listUserPlans(options);
         const matchedRequest = await findWireMockRequest(requestId);
-        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/plans`)).toBeTruthy();
-        expect(matchedRequest.queryParams).toEqual({
-            lastKey: {
-                key: 'lastKey',
-                values: [lastKey]
-            },
-            maxItems: {
-                key: 'maxItems',
-                values: [maxItems.toString()]
-            }
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/users/${TEST_USER_ID}/plans`);
+
+        const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+        expect(queryParamsObject).toEqual({
+            lastKey: TEST_LAST_KEY,
+            maxItems: TEST_MAX_ITEMS.toString()
         });
     });
 
@@ -54,8 +48,8 @@ describe('Users - listUserPlans endpoint tests', () => {
         const options = {
             userId: TEST_USER_ID,
             queryParameters: {
-                lastKey: lastKey,
-                maxItems: maxItems
+                lastKey: TEST_LAST_KEY,
+                maxItems: TEST_MAX_ITEMS
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -65,14 +59,14 @@ describe('Users - listUserPlans endpoint tests', () => {
         const response = await client.users.listUserPlans(options);
         
         expect(response).toEqual({
-            lastKey: lastKey,
+            lastKey: TEST_LAST_KEY,
             data: [
                 {
                     planId: TEST_PLAN_ID,
-                    seatType: seatType,
-                    seatTypeLastChangedAt: seatTypeLastChangedAt,
-                    provisionalExpirationDate: provisionalExpirationDate,
-                    isInternal: isInternalTrue
+                    seatType: SeatTypes.MEMBER,
+                    seatTypeLastChangedAt: TEST_SEAT_TYPE_LAST_CHANGED_AT,
+                    provisionalExpirationDate: TEST_PROVISIONAL_EXPIRATION_DATE,
+                    isInternal: false
                 }
             ]
         });
@@ -93,8 +87,8 @@ describe('Users - listUserPlans endpoint tests', () => {
             data: [
                 {
                     planId: TEST_PLAN_ID,
-                    seatType: seatType,
-                    isInternal: isInternalTrue
+                    seatType: SeatTypes.MEMBER,
+                    isInternal: false
                 }
             ]
         });

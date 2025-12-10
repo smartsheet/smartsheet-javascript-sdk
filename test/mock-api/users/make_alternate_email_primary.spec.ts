@@ -9,13 +9,13 @@ import {
     ERROR_500_STATUS_CODE,
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
-    ERROR_400_MESSAGE
+    ERROR_400_MESSAGE,
+    TEST_ALTERNATE_EMAIL,
+    TEST_ALTERNATE_EMAIL_CONFIRMED
 } from './common_test_constants';
 
 describe('Users - makeAlternateEmailPrimary endpoint tests', () => {
     const client = createClient();
-    const TEST_EMAIL = 'alternate.email@smartsheet.com';
-    const TEST_CONFIRMED = true;
 
     it('makeAlternateEmailPrimary generated url is correct', async () => {
         const requestId = crypto.randomUUID();
@@ -29,8 +29,8 @@ describe('Users - makeAlternateEmailPrimary endpoint tests', () => {
         };
         await client.users.makeAlternateEmailPrimary(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/alternateemails/${TEST_ALTERNATE_EMAIL_ID}/makeprimary`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/users/${TEST_USER_ID}/alternateemails/${TEST_ALTERNATE_EMAIL_ID}/makeprimary`);
     });
 
     it(
@@ -52,8 +52,8 @@ describe('Users - makeAlternateEmailPrimary endpoint tests', () => {
                 data: [
                     {
                         id: TEST_ALTERNATE_EMAIL_ID,
-                        confirmed: TEST_CONFIRMED,
-                        email: TEST_EMAIL
+                        confirmed: TEST_ALTERNATE_EMAIL_CONFIRMED,
+                        email: TEST_ALTERNATE_EMAIL
                     }
                 ]
             });

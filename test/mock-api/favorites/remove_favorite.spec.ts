@@ -26,8 +26,8 @@ describe('Favorites - removeFavorite endpoint tests', () => {
         };
         await client.favorites.removeSheetFromFavorites(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/2.0/favorites/${TEST_FAVORITE_TYPE_SHEET}/${TEST_SHEET_ID}`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/favorites/${TEST_FAVORITE_TYPE_SHEET}/${TEST_SHEET_ID}`);
     });
 
     it('removeSheetFromFavorites all response body properties', async () => {

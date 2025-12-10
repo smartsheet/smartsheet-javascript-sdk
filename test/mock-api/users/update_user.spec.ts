@@ -20,26 +20,15 @@ import {
 
 describe('Users - updateUser endpoint tests', () => {
     const client = createClient();
-    const email = TEST_EMAIL;
-    const firstName = TEST_FIRST_NAME;
-    const lastName = TEST_LAST_NAME;
-    const name = TEST_NAME;
-    const admin = true;
-    const licensedSheetCreator = true;
-    const groupAdmin = false;
-    const resourceViewer = true;
-    const profileImageId = TEST_PROFILE_IMAGE_ID;
-    const profileImageHeight = TEST_PROFILE_IMAGE_HEIGHT;
-    const profileImageWidth = TEST_PROFILE_IMAGE_WIDTH;
 
     const testUpdateBody = {
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        admin: admin,
-        licensedSheetCreator: licensedSheetCreator,
-        groupAdmin: groupAdmin,
-        resourceViewer: resourceViewer
+        email: TEST_EMAIL,
+        firstName: TEST_FIRST_NAME,
+        lastName: TEST_LAST_NAME,
+        admin: true,
+        licensedSheetCreator: true,
+        groupAdmin: false,
+        resourceViewer: true
     };
 
     it('updateUser generated url is correct', async () => {
@@ -54,8 +43,8 @@ describe('Users - updateUser endpoint tests', () => {
         };
         await client.users.updateUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/2.0/users/${TEST_USER_ID}`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/users/${TEST_USER_ID}`);
     });
 
     it('updateUser all response body properties', async () => {
@@ -77,29 +66,21 @@ describe('Users - updateUser endpoint tests', () => {
             data: [
                 {
                     id: TEST_USER_ID,
-                    email: email,
-                    firstName: firstName,
-                    lastName: lastName,
-                    name: name,
+                    email: TEST_EMAIL,
+                    firstName: TEST_FIRST_NAME,
+                    lastName: TEST_LAST_NAME,
+                    name: TEST_NAME,
                     profileImage: {
-                        imageId: profileImageId,
-                        height: profileImageHeight,
-                        width: profileImageWidth
+                        imageId: TEST_PROFILE_IMAGE_ID,
+                        height: TEST_PROFILE_IMAGE_HEIGHT,
+                        width: TEST_PROFILE_IMAGE_WIDTH
                     }
                 }
             ]
         });
         
         const body = JSON.parse(matchedRequest.body);
-        expect(body).toEqual({
-            email: email,
-            firstName: firstName,
-            lastName: lastName,
-            admin: admin,
-            licensedSheetCreator: licensedSheetCreator,
-            groupAdmin: groupAdmin,
-            resourceViewer: resourceViewer
-        });
+        expect(body).toEqual(testUpdateBody);
     });
 
     it('updateUser required response body properties', async () => {
@@ -121,24 +102,16 @@ describe('Users - updateUser endpoint tests', () => {
             data: [
                 {
                     id: TEST_USER_ID,
-                    email: email,
-                    firstName: firstName,
-                    lastName: lastName,
-                    name: name
+                    email: TEST_EMAIL,
+                    firstName: TEST_FIRST_NAME,
+                    lastName: TEST_LAST_NAME,
+                    name: TEST_NAME
                 }
             ]
         });
         
         const body = JSON.parse(matchedRequest.body);
-        expect(body).toEqual({
-            email: email,
-            firstName: firstName,
-            lastName: lastName,
-            admin: admin,
-            licensedSheetCreator: licensedSheetCreator,
-            groupAdmin: groupAdmin,
-            resourceViewer: resourceViewer
-        });
+        expect(body).toEqual(testUpdateBody);
     });
 
     it('updateUser error 500 response', async () => {
