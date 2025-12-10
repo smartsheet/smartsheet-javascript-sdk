@@ -70,7 +70,7 @@ describe('Method Unit Tests', () => {
         {
             name: 'groups',
             methods: [
-                { name: 'getGroup', stub: 'get', options: {}, expectedRequest: {url: "groups" }},
+                { name: 'getGroup', stub: 'get', options: { groupId: 123 }, expectedRequest: {url: "groups/123" }},
                 { name: 'listGroups', stub: 'get', options: undefined, expectedRequest: {url: "groups" }},
                 { name: 'createGroup', stub: 'post', options: {}, expectedRequest: {url: "groups" }},
                 { name: 'addGroupMembers', stub: 'post', options: {groupId: 123}, expectedRequest: {url: "groups/123/members" }},
