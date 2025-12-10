@@ -33,8 +33,8 @@ describe('Folders - moveFolder endpoint tests', () => {
         };
         await client.folders.moveFolder(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/folders/${TEST_FOLDER_ID}/move`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/folders/${TEST_FOLDER_ID}/move`);
     });
 
     it('moveFolder all response body properties', async () => {

@@ -21,13 +21,6 @@ import {
 
 describe('Users - addProfileImage endpoint tests', () => {
     const client = createClient();
-    const imageId = TEST_PROFILE_IMAGE_ID;
-    const height = TEST_PROFILE_IMAGE_HEIGHT;
-    const width = TEST_PROFILE_IMAGE_WIDTH;
-    const email = TEST_EMAIL;
-    const name = TEST_NAME;
-    const firstName = TEST_FIRST_NAME;
-    const lastName = TEST_LAST_NAME;
 
     it('addProfileImage generated url is correct', async () => {
         const requestId = crypto.randomUUID();
@@ -41,8 +34,8 @@ describe('Users - addProfileImage endpoint tests', () => {
         };
         await client.users.addProfileImage(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/profileimage`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/users/${TEST_USER_ID}/profileimage`);
     });
 
     it('addProfileImage all response body properties', async () => {
@@ -64,14 +57,14 @@ describe('Users - addProfileImage endpoint tests', () => {
             data: [
                 {
                     id: TEST_USER_ID,
-                    email: email,
-                    name: name,
-                    firstName: firstName,
-                    lastName: lastName,
+                    email: TEST_EMAIL,
+                    name: TEST_NAME,
+                    firstName: TEST_FIRST_NAME,
+                    lastName: TEST_LAST_NAME,
                     profileImage: {
-                        imageId: imageId,
-                        height: height,
-                        width: width
+                        imageId: TEST_PROFILE_IMAGE_ID,
+                        height: TEST_PROFILE_IMAGE_HEIGHT,
+                        width: TEST_PROFILE_IMAGE_WIDTH
                     }
                 }
             ]

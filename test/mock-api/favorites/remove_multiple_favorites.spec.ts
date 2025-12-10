@@ -29,15 +29,12 @@ describe('Favorites - removeMultipleFavorites endpoint tests', () => {
         };
         await client.favorites.removeSheetsFromFavorites(options);
         const matchedRequest = await findWireMockRequest(requestId);
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/favorites/${TEST_FAVORITE_TYPE_SHEET}`);
 
-        expect(matchedRequest.url.includes(`/2.0/favorites/${TEST_FAVORITE_TYPE_SHEET}`)).toBeTruthy();
-        
-        // Verify query parameters
-        expect(matchedRequest.queryParams).toEqual({
-            objectIds: {
-                key: 'objectIds',
-                values: [`${TEST_SHEET_ID},${TEST_FOLDER_ID}`]
-            }
+        const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+        expect(queryParamsObject).toEqual({
+            objectIds: `${TEST_SHEET_ID},${TEST_FOLDER_ID}`
         });
     });
 

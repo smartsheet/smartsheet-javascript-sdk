@@ -19,40 +19,21 @@ import {
     ERROR_500_STATUS_CODE,
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
-    ERROR_400_MESSAGE
+    ERROR_400_MESSAGE,
+    TEST_DEPARTMENT,
+    TEST_LOCALE,
+    TEST_TIME_ZONE,
+    TEST_JIRA_ADMIN,
+    TEST_SALESFORCE_ADMIN,
+    TEST_SALESFORCE_USER,
+    TEST_ADMIN,
+    TEST_GROUP_ADMIN,
+    TEST_LICENSED_SHEET_CREATOR,
+    TEST_ALTERNATE_EMAIL_CONFIRMED
 } from './common_test_constants';
 
 describe('Users - getUser endpoint tests', () => {
     const client = createClient();
-    const accountId = TEST_ACCOUNT_ID;
-    const accountName = 'Acme Corporation';
-    const company = 'Acme Corporation';
-    const department = 'Engineering';
-    const email = TEST_EMAIL;
-    const firstName = TEST_FIRST_NAME;
-    const jiraAdmin = false;
-    const lastName = TEST_LAST_NAME;
-    const locale = 'en_US';
-    const mobilePhone = TEST_MOBILE_PHONE;
-    const role = 'Senior Developer';
-    const salesforceAdmin = false;
-    const salesforceUser = false;
-    const timeZone = 'US/Pacific';
-    const title = 'Senior Software Engineer';
-    const workPhone = TEST_MOBILE_PHONE;
-    const admin = true;
-    const alternateEmailId = TEST_ALTERNATE_EMAIL_ID;
-    const alternateEmailConfirmed = true;
-    const alternateEmailAddress = TEST_ALTERNATE_EMAIL;
-    const customWelcomeScreenViewed = TEST_CUSTOM_WELCOME_SCREEN_VIEWED;
-    const groupAdmin = true;
-    const lastLogin = TEST_LAST_LOGIN;
-    const licensedSheetCreator = true;
-    const profileImageId = TEST_PROFILE_IMAGE_ID;
-    const profileImageHeight = TEST_PROFILE_IMAGE_HEIGHT;
-    const profileImageWidth = TEST_PROFILE_IMAGE_WIDTH;
-    const resourceViewer = false;
-    const sheetCount = TEST_SHEET_COUNT;
 
     it('getUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
@@ -65,7 +46,8 @@ describe('Users - getUser endpoint tests', () => {
         };
         await client.users.getUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
-        expect(matchedRequest.url.includes(`/2.0/users/${TEST_USER_ID}`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/users/${TEST_USER_ID}`);
     });
 
     it('getUser all response body properties', async () => {
@@ -82,42 +64,42 @@ describe('Users - getUser endpoint tests', () => {
         expect(response).toEqual({
             id: TEST_USER_ID,
             account: {
-                id: accountId,
-                name: accountName
+                id: TEST_ACCOUNT_ID,
+                name: 'Acme Corporation'
             },
-            company: company,
-            department: department,
-            email: email,
-            firstName: firstName,
-            jiraAdmin: jiraAdmin,
-            lastName: lastName,
-            locale: locale,
-            mobilePhone: mobilePhone,
-            role: role,
-            salesforceAdmin: salesforceAdmin,
-            salesforceUser: salesforceUser,
-            timeZone: timeZone,
-            title: title,
-            workPhone: workPhone,
-            admin: admin,
+            company: 'Acme Corporation',
+            department: TEST_DEPARTMENT,
+            email: TEST_EMAIL,
+            firstName: TEST_FIRST_NAME,
+            jiraAdmin: TEST_JIRA_ADMIN,
+            lastName: TEST_LAST_NAME,
+            locale: TEST_LOCALE,
+            mobilePhone: TEST_MOBILE_PHONE,
+            role: 'Senior Developer',
+            salesforceAdmin: TEST_SALESFORCE_ADMIN,
+            salesforceUser: TEST_SALESFORCE_USER,
+            timeZone: TEST_TIME_ZONE,
+            title: 'Senior Software Engineer',
+            workPhone: TEST_MOBILE_PHONE,
+            admin: TEST_ADMIN,
             alternateEmails: [
                 {
-                    id: alternateEmailId,
-                    confirmed: alternateEmailConfirmed,
-                    email: alternateEmailAddress
+                    id: TEST_ALTERNATE_EMAIL_ID,
+                    confirmed: TEST_ALTERNATE_EMAIL_CONFIRMED,
+                    email: TEST_ALTERNATE_EMAIL
                 }
             ],
-            customWelcomeScreenViewed: customWelcomeScreenViewed,
-            groupAdmin: groupAdmin,
-            lastLogin: lastLogin,
-            licensedSheetCreator: licensedSheetCreator,
+            customWelcomeScreenViewed: TEST_CUSTOM_WELCOME_SCREEN_VIEWED,
+            groupAdmin: TEST_GROUP_ADMIN,
+            lastLogin: TEST_LAST_LOGIN,
+            licensedSheetCreator: TEST_LICENSED_SHEET_CREATOR,
             profileImage: {
-                imageId: profileImageId,
-                height: profileImageHeight,
-                width: profileImageWidth
+                imageId: TEST_PROFILE_IMAGE_ID,
+                height: TEST_PROFILE_IMAGE_HEIGHT,
+                width: TEST_PROFILE_IMAGE_WIDTH
             },
-            resourceViewer: resourceViewer,
-            sheetCount: sheetCount
+            resourceViewer: false,
+            sheetCount: TEST_SHEET_COUNT
         });
     });
 
@@ -135,23 +117,23 @@ describe('Users - getUser endpoint tests', () => {
         expect(response).toEqual({
             id: TEST_USER_ID,
             account: {
-                id: accountId,
-                name: accountName
+                id: TEST_ACCOUNT_ID,
+                name: 'Acme Corporation',
             },
-            company: company,
-            department: department,
-            email: email,
-            firstName: firstName,
-            jiraAdmin: jiraAdmin,
-            lastName: lastName,
-            locale: locale,
-            mobilePhone: mobilePhone,
-            role: role,
-            salesforceAdmin: salesforceAdmin,
-            salesforceUser: salesforceUser,
-            timeZone: timeZone,
-            title: title,
-            workPhone: workPhone
+            company: 'Acme Corporation',
+            department: TEST_DEPARTMENT,
+            email: TEST_EMAIL,
+            firstName: TEST_FIRST_NAME,
+            jiraAdmin: TEST_JIRA_ADMIN,
+            lastName: TEST_LAST_NAME,
+            locale: TEST_LOCALE,
+            mobilePhone: TEST_MOBILE_PHONE,
+            role: 'Senior Developer',
+            salesforceAdmin: TEST_SALESFORCE_ADMIN,
+            salesforceUser: TEST_SALESFORCE_USER,
+            timeZone: TEST_TIME_ZONE,
+            title: 'Senior Software Engineer',
+            workPhone: TEST_MOBILE_PHONE
         });
     });
 

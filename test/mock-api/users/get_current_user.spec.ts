@@ -19,48 +19,34 @@ import {
     ERROR_500_STATUS_CODE,
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
-    ERROR_400_MESSAGE
+    ERROR_400_MESSAGE,
+    TEST_ACCOUNT_NAME,
+    TEST_COMPANY,
+    TEST_DEPARTMENT,
+    TEST_LOCALE,
+    TEST_ROLE,
+    TEST_TIME_ZONE,
+    TEST_TITLE,
+    TEST_WORK_PHONE,
+    TEST_JIRA_ADMIN,
+    TEST_SALESFORCE_ADMIN,
+    TEST_SALESFORCE_USER,
+    TEST_ADMIN,
+    TEST_GROUP_ADMIN,
+    TEST_LICENSED_SHEET_CREATOR,
+    TEST_RESOURCE_VIEWER,
+    TEST_ALTERNATE_EMAIL_CONFIRMED,
+    TEST_GROUP_ID,
+    TEST_GROUP_NAME,
+    TEST_GROUP_DESCRIPTION,
+    TEST_GROUP_OWNER,
+    TEST_GROUP_OWNER_ID,
+    TEST_GROUP_CREATED_AT,
+    TEST_GROUP_MODIFIED_AT
 } from './common_test_constants';
 
 describe('Users - getCurrentUser endpoint tests', () => {
     const client = createClient();
-    const userId = TEST_USER_ID;
-    const accountId = TEST_ACCOUNT_ID;
-    const accountName = 'Test Account';
-    const admin = true;
-    const alternateEmailId = TEST_ALTERNATE_EMAIL_ID;
-    const alternateEmailConfirmed = true;
-    const alternateEmail = TEST_ALTERNATE_EMAIL;
-    const company = 'Test Company';
-    const customWelcomeScreenViewed = TEST_CUSTOM_WELCOME_SCREEN_VIEWED;
-    const department = 'Engineering';
-    const email = TEST_EMAIL;
-    const firstName = TEST_FIRST_NAME;
-    const groupAdmin = true;
-    const jiraAdmin = false;
-    const lastLogin = TEST_LAST_LOGIN;
-    const lastName = TEST_LAST_NAME;
-    const licensedSheetCreator = true;
-    const locale = 'en_US';
-    const mobilePhone = TEST_MOBILE_PHONE;
-    const profileImageId = TEST_PROFILE_IMAGE_ID;
-    const profileImageHeight = TEST_PROFILE_IMAGE_HEIGHT;
-    const profileImageWidth = TEST_PROFILE_IMAGE_WIDTH;
-    const resourceViewer = true;
-    const role = 'System Admin';
-    const salesforceAdmin = false;
-    const salesforceUser = false;
-    const sheetCount = TEST_SHEET_COUNT;
-    const timeZone = 'US/Pacific';
-    const title = 'Senior Engineer';
-    const workPhone = TEST_MOBILE_PHONE;
-    const groupId = 2222222222222222;
-    const groupName = 'Engineering Team';
-    const groupDescription = 'Engineering department group';
-    const groupOwner = 'owner@smartsheet.com';
-    const groupOwnerId = 3333333333333333;
-    const groupCreatedAt = '2020-01-15T10:30:00Z';
-    const groupModifiedAt = '2020-06-20T14:45:00Z';
 
     it('getCurrentUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
@@ -72,8 +58,8 @@ describe('Users - getCurrentUser endpoint tests', () => {
         };
         await client.users.getCurrentUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes('/2.0/users/me')).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual('/2.0/users/me');
     });
 
     it('getCurrentUser all response body properties', async () => {
@@ -86,53 +72,53 @@ describe('Users - getCurrentUser endpoint tests', () => {
         };
         const response = await client.users.getCurrentUser(options);
         expect(response).toEqual({
-            id: userId,
+            id: TEST_USER_ID,
             account: {
-                id: accountId,
-                name: accountName
+                id: TEST_ACCOUNT_ID,
+                name: TEST_ACCOUNT_NAME
             },
-            admin: admin,
+            admin: TEST_ADMIN,
             alternateEmails: [
                 {
-                    id: alternateEmailId,
-                    confirmed: alternateEmailConfirmed,
-                    email: alternateEmail
+                    id: TEST_ALTERNATE_EMAIL_ID,
+                    confirmed: TEST_ALTERNATE_EMAIL_CONFIRMED,
+                    email: TEST_ALTERNATE_EMAIL
                 }
             ],
-            company: company,
-            customWelcomeScreenViewed: customWelcomeScreenViewed,
-            department: department,
-            email: email,
-            firstName: firstName,
-            groupAdmin: groupAdmin,
-            jiraAdmin: jiraAdmin,
-            lastLogin: lastLogin,
-            lastName: lastName,
-            licensedSheetCreator: licensedSheetCreator,
-            locale: locale,
-            mobilePhone: mobilePhone,
+            company: TEST_COMPANY,
+            customWelcomeScreenViewed: TEST_CUSTOM_WELCOME_SCREEN_VIEWED,
+            department: TEST_DEPARTMENT,
+            email: TEST_EMAIL,
+            firstName: TEST_FIRST_NAME,
+            groupAdmin: TEST_GROUP_ADMIN,
+            jiraAdmin: TEST_JIRA_ADMIN,
+            lastLogin: TEST_LAST_LOGIN,
+            lastName: TEST_LAST_NAME,
+            licensedSheetCreator: TEST_LICENSED_SHEET_CREATOR,
+            locale: TEST_LOCALE,
+            mobilePhone: TEST_MOBILE_PHONE,
             profileImage: {
-                imageId: profileImageId,
-                height: profileImageHeight,
-                width: profileImageWidth
+                imageId: TEST_PROFILE_IMAGE_ID,
+                height: TEST_PROFILE_IMAGE_HEIGHT,
+                width: TEST_PROFILE_IMAGE_WIDTH
             },
-            resourceViewer: resourceViewer,
-            role: role,
-            salesforceAdmin: salesforceAdmin,
-            salesforceUser: salesforceUser,
-            sheetCount: sheetCount,
-            timeZone: timeZone,
-            title: title,
-            workPhone: workPhone,
+            resourceViewer: TEST_RESOURCE_VIEWER,
+            role: TEST_ROLE,
+            salesforceAdmin: TEST_SALESFORCE_ADMIN,
+            salesforceUser: TEST_SALESFORCE_USER,
+            sheetCount: TEST_SHEET_COUNT,
+            timeZone: TEST_TIME_ZONE,
+            title: TEST_TITLE,
+            workPhone: TEST_WORK_PHONE,
             data: [
                 {
-                    id: groupId,
-                    name: groupName,
-                    description: groupDescription,
-                    owner: groupOwner,
-                    ownerId: groupOwnerId,
-                    createdAt: groupCreatedAt,
-                    modifiedAt: groupModifiedAt
+                    id: TEST_GROUP_ID,
+                    name: TEST_GROUP_NAME,
+                    description: TEST_GROUP_DESCRIPTION,
+                    owner: TEST_GROUP_OWNER,
+                    ownerId: TEST_GROUP_OWNER_ID,
+                    createdAt: TEST_GROUP_CREATED_AT,
+                    modifiedAt: TEST_GROUP_MODIFIED_AT
                 }
             ]
         });
@@ -148,30 +134,30 @@ describe('Users - getCurrentUser endpoint tests', () => {
         };
         const response = await client.users.getCurrentUser(options);
         expect(response).toEqual({
-            id: userId,
+            id: TEST_USER_ID,
             account: {
-                id: accountId,
-                name: accountName
+                id: TEST_ACCOUNT_ID,
+                name: TEST_ACCOUNT_NAME
             },
-            admin: admin,
-            company: company,
-            department: department,
-            email: email,
-            firstName: firstName,
-            groupAdmin: groupAdmin,
-            jiraAdmin: jiraAdmin,
-            lastName: lastName,
-            licensedSheetCreator: licensedSheetCreator,
-            locale: locale,
-            mobilePhone: mobilePhone,
-            resourceViewer: resourceViewer,
-            role: role,
-            salesforceAdmin: salesforceAdmin,
-            salesforceUser: salesforceUser,
-            sheetCount: sheetCount,
-            timeZone: timeZone,
-            title: title,
-            workPhone: workPhone,
+            admin: TEST_ADMIN,
+            company: TEST_COMPANY,
+            department: TEST_DEPARTMENT,
+            email: TEST_EMAIL,
+            firstName: TEST_FIRST_NAME,
+            groupAdmin: TEST_GROUP_ADMIN,
+            jiraAdmin: TEST_JIRA_ADMIN,
+            lastName: TEST_LAST_NAME,
+            licensedSheetCreator: TEST_LICENSED_SHEET_CREATOR,
+            locale: TEST_LOCALE,
+            mobilePhone: TEST_MOBILE_PHONE,
+            resourceViewer: TEST_RESOURCE_VIEWER,
+            role: TEST_ROLE,
+            salesforceAdmin: TEST_SALESFORCE_ADMIN,
+            salesforceUser: TEST_SALESFORCE_USER,
+            sheetCount: TEST_SHEET_COUNT,
+            timeZone: TEST_TIME_ZONE,
+            title: TEST_TITLE,
+            workPhone: TEST_WORK_PHONE,
             data: []
         });
     });

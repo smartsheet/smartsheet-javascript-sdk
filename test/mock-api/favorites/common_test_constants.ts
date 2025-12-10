@@ -25,3 +25,8 @@ export const ERROR_500_STATUS_CODE = 500;
 export const ERROR_500_MESSAGE = 'Internal Server Error';
 export const ERROR_400_STATUS_CODE = 400;
 export const ERROR_400_MESSAGE = 'Malformed Request';
+
+// Common Query Parameters
+export const TEST_INCLUDE_ALL = false;
+export const TEST_PAGE = 1;
+export const TEST_PAGE_SIZE = 50;
