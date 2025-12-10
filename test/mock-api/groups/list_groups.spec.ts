@@ -101,6 +101,42 @@ describe('Groups - listGroups endpoint tests', () => {
         });
     });
 
+    it('listGroups required response body properties', async () => {
+        const requestId = crypto.randomUUID();
+        const options = {
+            customProperties: {
+                'x-request-id': requestId,
+                'x-test-name': '/groups/list-groups/required-response-body-properties'
+            }
+        };
+        const response = await client.groups.listGroups(options);
+        expect(response).toEqual({
+            pageNumber: TEST_PAGE_NUMBER,
+            totalPages: TEST_TOTAL_PAGES,
+            totalCount: TEST_TOTAL_COUNT,
+            data: [
+                {
+                    id: TEST_GROUP_ID,
+                    name: TEST_GROUP_NAME,
+                    description: TEST_GROUP_DESCRIPTION,
+                    owner: TEST_GROUP_OWNER,
+                    ownerId: TEST_GROUP_OWNER_ID,
+                    createdAt: TEST_GROUP_CREATED_AT,
+                    modifiedAt: TEST_GROUP_MODIFIED_AT
+                },
+                {
+                    id: TEST_GROUP_ID_2,
+                    name: TEST_GROUP_NAME_2,
+                    description: TEST_GROUP_DESCRIPTION_2,
+                    owner: TEST_GROUP_OWNER_2,
+                    ownerId: TEST_GROUP_OWNER_ID_2,
+                    createdAt: TEST_GROUP_CREATED_AT_2,
+                    modifiedAt: TEST_GROUP_MODIFIED_AT_2
+                }
+            ]
+        });
+    });
+
     it('listGroups error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {

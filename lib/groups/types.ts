@@ -194,64 +194,64 @@ export interface GroupMember {
   /**
    * Member's user Id.
    */
-  id?: number;
+  id: number;
 
   /**
    * Member's email address.
    */
-  email?: string;
+  email: string;
 
   /**
    * Member's first name.
    */
-  firstName?: string;
+  firstName: string;
 
   /**
    * Member's last name.
    */
-  lastName?: string;
+  lastName: string;
 
   /**
    * Member's full name
    */
-  name?: string;
+  name: string;
 }
 
 export interface Group {
   /**
    * Group Id.
    */
-  id?: number;
+  id: number;
 
   /**
    * Group name.
    */
-  name?: string;
+  name: string;
 
   /**
    * Group description.
    */
-  description?: string;
+  description: string;
 
   /**
    * Group owner's email address.
    */
-  owner?: string;
+  owner: string;
 
   /**
    * Group owner's user Id.
    */
-  ownerId?: number;
+  ownerId: number;
 
   /**
    * Time of creation.
    */
-  createdAt?: string | number;
+  createdAt: string | number;
 
   /**
    * Time of last modification.
    */
-  modifiedAt?: string | number;
+  modifiedAt: string | number;
 
   /**
    * List of group members.
@@ -302,7 +302,7 @@ export interface ListGroupsResponse {
   /**
    * Current page number.
    */
-  pageNumber?: number;
+  pageNumber: number;
 
   /**
    * Number of items per page.
@@ -312,12 +312,12 @@ export interface ListGroupsResponse {
   /**
    * Total number of pages.
    */
-  totalPages?: number;
+  totalPages: number;
 
   /**
    * Total count of items.
    */
-  totalCount?: number;
+  totalCount: number;
 }
 
 // ============================================================================
