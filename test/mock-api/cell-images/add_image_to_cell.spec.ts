@@ -407,7 +407,11 @@ describe('Images - addImageToCell endpoint tests', () => {
                 expanded: true,
                 createdAt: TEST_CREATED_AT,
                 modifiedAt: TEST_MODIFIED_AT,
-                cells: []
+                cells: [
+                    {
+                        columnId: TEST_COLUMN_ID
+                    }
+                ]
             }
         });
     });

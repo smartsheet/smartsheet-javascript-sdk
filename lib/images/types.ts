@@ -184,7 +184,6 @@ export interface Row {
 
 export interface Cell {
   columnId: number;
-  rowId: number;
   columnType?: string;
   conditionalFormat?: string;
   displayValue: string;
