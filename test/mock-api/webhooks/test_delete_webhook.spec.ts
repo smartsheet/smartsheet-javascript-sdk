@@ -41,11 +41,22 @@ describe('Webhooks - deleteWebhook endpoint tests', () => {
         };
         const response = await client.webhooks.deleteWebhook(options);
 
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
-        expect(response.version).toBe(TEST_VERSION);
-        expect(response.failedItems).toBeTruthy();
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE,
+            version: TEST_VERSION,
+            failedItems: [
+                {
+                    error: {
+                        errorCode: 1234,
+                        message: 'Sample error message',
+                        refId: 'abc123'
+                    },
+                    index: 0,
+                    rowId: 0
+                }
+            ]
+        });
     });
 
     it('deleteWebhook error 500 response', async () => {

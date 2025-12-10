@@ -75,6 +75,7 @@ describe('Users - addUser endpoint tests', () => {
 
         expect(matchedRequest.url.includes('/2.0/users')).toBeTruthy();
     });
+    
     it('addUserAndSendEmail generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
@@ -88,9 +89,12 @@ describe('Users - addUser endpoint tests', () => {
         const matchedRequest = await findWireMockRequest(requestId);
 
         expect(matchedRequest.url.includes('/2.0/users')).toBeTruthy();
-        const queryParams = matchedRequest.queryParams;
-        const sendEmailActual = queryParams.sendEmail.values[0];
-        expect(sendEmailActual).toBe('true');
+        expect(matchedRequest.queryParams).toEqual({
+            sendEmail: {
+                key: 'sendEmail',
+                values: ['true']
+            }
+        });
     });
 
 
@@ -106,39 +110,46 @@ describe('Users - addUser endpoint tests', () => {
         const response = await client.users.addUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
         
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
-        expect(response.result.id).toBe(newUserId);
-        expect(response.result.admin).toBe(admin);
-        expect(response.result.customWelcomeScreenViewed).toBe(customWelcomeScreenViewed);
-        expect(response.result.email).toBe(email);
-        expect(response.result.firstName).toBe(firstName);
-        expect(response.result.groupAdmin).toBe(groupAdmin);
-        expect(response.result.isInternal).toBe(isInternal);
-        expect(response.result.lastLogin).toBe(lastLogin);
-        expect(response.result.lastName).toBe(lastName);
-        expect(response.result.licensedSheetCreator).toBe(licensedSheetCreator);
-        expect(response.result.name).toBe(name);
-        expect(response.result.profileImage.imageId).toBe(profileImageId);
-        expect(response.result.profileImage.height).toBe(profileImageHeight);
-        expect(response.result.profileImage.width).toBe(profileImageWidth);
-        expect(response.result.provisionalExpirationDate).toBe(provisionalExpirationDate);
-        expect(response.result.resourceViewer).toBe(resourceViewer);
-        expect(response.result.seatType).toBe(seatType);
-        expect(response.result.seatTypeLastChangedAt).toBe(seatTypeLastChangedAt);
-        expect(response.result.sheetCount).toBe(sheetCount);
-        expect(response.result.status).toBe(status);
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE,
+            result: {
+                id: newUserId,
+                admin: admin,
+                customWelcomeScreenViewed: customWelcomeScreenViewed,
+                email: email,
+                firstName: firstName,
+                groupAdmin: groupAdmin,
+                isInternal: isInternal,
+                lastLogin: lastLogin,
+                lastName: lastName,
+                licensedSheetCreator: licensedSheetCreator,
+                name: name,
+                profileImage: {
+                    imageId: profileImageId,
+                    height: profileImageHeight,
+                    width: profileImageWidth
+                },
+                provisionalExpirationDate: provisionalExpirationDate,
+                resourceViewer: resourceViewer,
+                seatType: seatType,
+                seatTypeLastChangedAt: seatTypeLastChangedAt,
+                sheetCount: sheetCount,
+                status: status
+            }
+        });
         
         const body = JSON.parse(matchedRequest.body);
-        expect(body.email).toBe(email);
-        expect(body.firstName).toBe(firstName);
-        expect(body.lastName).toBe(lastName);
-        expect(body.admin).toBe(admin);
-        expect(body.licensedSheetCreator).toBe(licensedSheetCreator);
-        expect(body.groupAdmin).toBe(groupAdmin);
-        expect(body.resourceViewer).toBe(resourceViewer);
-        expect(body.status).toBe(status);
+        expect(body).toEqual({
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            admin: admin,
+            licensedSheetCreator: licensedSheetCreator,
+            groupAdmin: groupAdmin,
+            resourceViewer: resourceViewer,
+            status: status
+        });
     });
 
     it('addUser required response body properties', async () => {
@@ -153,37 +164,30 @@ describe('Users - addUser endpoint tests', () => {
         const response = await client.users.addUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
         
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
-        expect(response.result.id).toBe(newUserId);
-        expect(response.result.admin).toBe(undefined);
-        expect(response.result.customWelcomeScreenViewed).toBe(undefined);
-        expect(response.result.email).toBe(email);
-        expect(response.result.firstName).toBe(firstName);
-        expect(response.result.groupAdmin).toBe(undefined);
-        expect(response.result.isInternal).toBe(undefined);
-        expect(response.result.lastLogin).toBe(undefined);
-        expect(response.result.lastName).toBe(lastName);
-        expect(response.result.licensedSheetCreator).toBe(undefined);
-        expect(response.result.name).toBe(name);
-        expect(response.result.profileImage).toBe(undefined);
-        expect(response.result.provisionalExpirationDate).toBe(undefined);
-        expect(response.result.resourceViewer).toBe(undefined);
-        expect(response.result.seatType).toBe(undefined);
-        expect(response.result.seatTypeLastChangedAt).toBe(undefined);
-        expect(response.result.sheetCount).toBe(undefined);
-        expect(response.result.status).toBe(status);
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE,
+            result: {
+                id: newUserId,
+                email: email,
+                firstName: firstName,
+                lastName: lastName,
+                name: name,
+                status: status
+            }
+        });
         
         const body = JSON.parse(matchedRequest.body);
-        expect(body.email).toBe(email);
-        expect(body.firstName).toBe(firstName);
-        expect(body.lastName).toBe(lastName);
-        expect(body.admin).toBe(admin);
-        expect(body.licensedSheetCreator).toBe(licensedSheetCreator);
-        expect(body.groupAdmin).toBe(groupAdmin);
-        expect(body.resourceViewer).toBe(resourceViewer);
-        expect(body.status).toBe(status);
+        expect(body).toEqual({
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            admin: admin,
+            licensedSheetCreator: licensedSheetCreator,
+            groupAdmin: groupAdmin,
+            resourceViewer: resourceViewer,
+            status: status
+        });
     });
 
     it('addUser error 500 response', async () => {

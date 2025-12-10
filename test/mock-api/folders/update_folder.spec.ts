@@ -50,13 +50,15 @@ describe('Folders - updateFolder endpoint tests', () => {
         const response = await client.folders.updateFolder(options);
         const matchedRequest = await findWireMockRequest(requestId);
         
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
-        expect(response.result).toBeDefined();
-        expect(response.result.id).toBe(TEST_FOLDER_ID);
-        expect(response.result.name).toBe(TEST_UPDATED_FOLDER_NAME);
-        expect(response.result.permalink).toBe(TEST_FOLDER_PERMALINK);
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE,
+            result: {
+                id: TEST_FOLDER_ID,
+                name: TEST_UPDATED_FOLDER_NAME,
+                permalink: TEST_FOLDER_PERMALINK
+            }
+        });
         
         // Validate request body
         const body = JSON.parse(matchedRequest.body);

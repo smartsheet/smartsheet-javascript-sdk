@@ -52,13 +52,20 @@ describe('Users - removeUser endpoint tests', () => {
             const matchedRequest = await findWireMockRequest(requestId);
 
             expect(matchedRequest.url.includes(`/2.0/users/${TEST_USER_ID}`)).toBeTruthy();
-            const queryParams = matchedRequest.queryParams;
-            const transferToActual = parseInt(queryParams.transferTo.values[0]);
-            const transferSheetsActual = queryParams.transferSheets.values[0];
-            const removeFromSharingActual = queryParams.removeFromSharing.values[0];
-            expect(transferToActual).toBe(transferToUserId);
-            expect(transferSheetsActual).toBe(transferSheets.toString());
-            expect(removeFromSharingActual).toBe(removeFromSharing.toString());
+            expect(matchedRequest.queryParams).toEqual({
+                transferTo: {
+                    key: 'transferTo',
+                    values: [transferToUserId.toString()]
+                },
+                transferSheets: {
+                    key: 'transferSheets',
+                    values: [transferSheets.toString()]
+                },
+                removeFromSharing: {
+                    key: 'removeFromSharing',
+                    values: [removeFromSharing.toString()]
+                }
+            });
         }
     );
 
@@ -72,9 +79,10 @@ describe('Users - removeUser endpoint tests', () => {
             }
         };
         const response = await client.users.removeUser(options);
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE
+        });
     });
 
     it(
@@ -93,9 +101,10 @@ describe('Users - removeUser endpoint tests', () => {
                 }
             };
             const response = await client.users.removeUser(options);
-            expect(response).toBeTruthy();
-            expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-            expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
+            expect(response).toEqual({
+                message: TEST_SUCCESS_MESSAGE,
+                resultCode: TEST_SUCCESS_RESULT_CODE
+            });
         }
     );
 

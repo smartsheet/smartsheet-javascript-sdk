@@ -71,26 +71,35 @@ describe('Users - updateUser endpoint tests', () => {
         const response = await client.users.updateUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
         
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
-        expect(response.data[0].id).toBe(TEST_USER_ID);
-        expect(response.data[0].email).toBe(email);
-        expect(response.data[0].firstName).toBe(firstName);
-        expect(response.data[0].lastName).toBe(lastName);
-        expect(response.data[0].name).toBe(name);
-        expect(response.data[0].profileImage.imageId).toBe(profileImageId);
-        expect(response.data[0].profileImage.height).toBe(profileImageHeight);
-        expect(response.data[0].profileImage.width).toBe(profileImageWidth);
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE,
+            data: [
+                {
+                    id: TEST_USER_ID,
+                    email: email,
+                    firstName: firstName,
+                    lastName: lastName,
+                    name: name,
+                    profileImage: {
+                        imageId: profileImageId,
+                        height: profileImageHeight,
+                        width: profileImageWidth
+                    }
+                }
+            ]
+        });
         
         const body = JSON.parse(matchedRequest.body);
-        expect(body.email).toBe(email);
-        expect(body.firstName).toBe(firstName);
-        expect(body.lastName).toBe(lastName);
-        expect(body.admin).toBe(admin);
-        expect(body.licensedSheetCreator).toBe(licensedSheetCreator);
-        expect(body.groupAdmin).toBe(groupAdmin);
-        expect(body.resourceViewer).toBe(resourceViewer);
+        expect(body).toEqual({
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            admin: admin,
+            licensedSheetCreator: licensedSheetCreator,
+            groupAdmin: groupAdmin,
+            resourceViewer: resourceViewer
+        });
     });
 
     it('updateUser required response body properties', async () => {
@@ -106,24 +115,30 @@ describe('Users - updateUser endpoint tests', () => {
         const response = await client.users.updateUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
         
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
-        expect(response.data[0].id).toBe(TEST_USER_ID);
-        expect(response.data[0].email).toBe(email);
-        expect(response.data[0].firstName).toBe(firstName);
-        expect(response.data[0].lastName).toBe(lastName);
-        expect(response.data[0].name).toBe(name);
-        expect(response.data[0].profileImage).toBe(undefined);
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE,
+            data: [
+                {
+                    id: TEST_USER_ID,
+                    email: email,
+                    firstName: firstName,
+                    lastName: lastName,
+                    name: name
+                }
+            ]
+        });
         
         const body = JSON.parse(matchedRequest.body);
-        expect(body.email).toBe(email);
-        expect(body.firstName).toBe(firstName);
-        expect(body.lastName).toBe(lastName);
-        expect(body.admin).toBe(admin);
-        expect(body.licensedSheetCreator).toBe(licensedSheetCreator);
-        expect(body.groupAdmin).toBe(groupAdmin);
-        expect(body.resourceViewer).toBe(resourceViewer);
+        expect(body).toEqual({
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            admin: admin,
+            licensedSheetCreator: licensedSheetCreator,
+            groupAdmin: groupAdmin,
+            resourceViewer: resourceViewer
+        });
     });
 
     it('updateUser error 500 response', async () => {

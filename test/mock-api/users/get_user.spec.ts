@@ -79,44 +79,46 @@ describe('Users - getUser endpoint tests', () => {
         };
         const response = await client.users.getUser(options);
         
-        // Verify required properties
-        expect(response).toBeTruthy();
-        expect(response.id).toBe(TEST_USER_ID);
-        expect(response.account).toBeTruthy();
-        expect(response.account.id).toBe(accountId);
-        expect(response.account.name).toBe(accountName);
-        expect(response.company).toBe(company);
-        expect(response.department).toBe(department);
-        expect(response.email).toBe(email);
-        expect(response.firstName).toBe(firstName);
-        expect(response.jiraAdmin).toBe(jiraAdmin);
-        expect(response.lastName).toBe(lastName);
-        expect(response.locale).toBe(locale);
-        expect(response.mobilePhone).toBe(mobilePhone);
-        expect(response.role).toBe(role);
-        expect(response.salesforceAdmin).toBe(salesforceAdmin);
-        expect(response.salesforceUser).toBe(salesforceUser);
-        expect(response.timeZone).toBe(timeZone);
-        expect(response.title).toBe(title);
-        expect(response.workPhone).toBe(workPhone);
-
-        // Verify optional properties
-        expect(response.admin).toBe(admin);
-        expect(response.alternateEmails).toBeTruthy();
-        expect(response.alternateEmails.length).toBe(1);
-        expect(response.alternateEmails[0].id).toBe(alternateEmailId);
-        expect(response.alternateEmails[0].confirmed).toBe(alternateEmailConfirmed);
-        expect(response.alternateEmails[0].email).toBe(alternateEmailAddress);
-        expect(response.customWelcomeScreenViewed).toBe(customWelcomeScreenViewed);
-        expect(response.groupAdmin).toBe(groupAdmin);
-        expect(response.lastLogin).toBe(lastLogin);
-        expect(response.licensedSheetCreator).toBe(licensedSheetCreator);
-        expect(response.profileImage).toBeTruthy();
-        expect(response.profileImage.imageId).toBe(profileImageId);
-        expect(response.profileImage.height).toBe(profileImageHeight);
-        expect(response.profileImage.width).toBe(profileImageWidth);
-        expect(response.resourceViewer).toBe(resourceViewer);
-        expect(response.sheetCount).toBe(sheetCount);
+        expect(response).toEqual({
+            id: TEST_USER_ID,
+            account: {
+                id: accountId,
+                name: accountName
+            },
+            company: company,
+            department: department,
+            email: email,
+            firstName: firstName,
+            jiraAdmin: jiraAdmin,
+            lastName: lastName,
+            locale: locale,
+            mobilePhone: mobilePhone,
+            role: role,
+            salesforceAdmin: salesforceAdmin,
+            salesforceUser: salesforceUser,
+            timeZone: timeZone,
+            title: title,
+            workPhone: workPhone,
+            admin: admin,
+            alternateEmails: [
+                {
+                    id: alternateEmailId,
+                    confirmed: alternateEmailConfirmed,
+                    email: alternateEmailAddress
+                }
+            ],
+            customWelcomeScreenViewed: customWelcomeScreenViewed,
+            groupAdmin: groupAdmin,
+            lastLogin: lastLogin,
+            licensedSheetCreator: licensedSheetCreator,
+            profileImage: {
+                imageId: profileImageId,
+                height: profileImageHeight,
+                width: profileImageWidth
+            },
+            resourceViewer: resourceViewer,
+            sheetCount: sheetCount
+        });
     });
 
     it('getUser required response body properties', async () => {
@@ -130,37 +132,27 @@ describe('Users - getUser endpoint tests', () => {
         };
         const response = await client.users.getUser(options);
         
-        // Verify required properties
-        expect(response).toBeTruthy();
-        expect(response.id).toBe(TEST_USER_ID);
-        expect(response.account).toBeTruthy();
-        expect(response.account.id).toBe(accountId);
-        expect(response.account.name).toBe(accountName);
-        expect(response.company).toBe(company);
-        expect(response.department).toBe(department);
-        expect(response.email).toBe(email);
-        expect(response.firstName).toBe(firstName);
-        expect(response.jiraAdmin).toBe(jiraAdmin);
-        expect(response.lastName).toBe(lastName);
-        expect(response.locale).toBe(locale);
-        expect(response.mobilePhone).toBe(mobilePhone);
-        expect(response.role).toBe(role);
-        expect(response.salesforceAdmin).toBe(salesforceAdmin);
-        expect(response.salesforceUser).toBe(salesforceUser);
-        expect(response.timeZone).toBe(timeZone);
-        expect(response.title).toBe(title);
-        expect(response.workPhone).toBe(workPhone);
-
-        // Verify optional properties are undefined
-        expect(response.admin).toBe(undefined);
-        expect(response.alternateEmails).toBe(undefined);
-        expect(response.customWelcomeScreenViewed).toBe(undefined);
-        expect(response.groupAdmin).toBe(undefined);
-        expect(response.lastLogin).toBe(undefined);
-        expect(response.licensedSheetCreator).toBe(undefined);
-        expect(response.profileImage).toBe(undefined);
-        expect(response.resourceViewer).toBe(undefined);
-        expect(response.sheetCount).toBe(undefined);
+        expect(response).toEqual({
+            id: TEST_USER_ID,
+            account: {
+                id: accountId,
+                name: accountName
+            },
+            company: company,
+            department: department,
+            email: email,
+            firstName: firstName,
+            jiraAdmin: jiraAdmin,
+            lastName: lastName,
+            locale: locale,
+            mobilePhone: mobilePhone,
+            role: role,
+            salesforceAdmin: salesforceAdmin,
+            salesforceUser: salesforceUser,
+            timeZone: timeZone,
+            title: title,
+            workPhone: workPhone
+        });
     });
 
     it('getUser error 500 response', async () => {

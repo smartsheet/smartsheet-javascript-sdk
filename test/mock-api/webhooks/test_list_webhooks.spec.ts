@@ -52,15 +52,22 @@ describe('Webhooks - listWebhooks endpoint tests', () => {
         };
         await client.webhooks.listWebhooks(options);
         const matchedRequest = await findWireMockRequest(requestId);
-        const queryParams = matchedRequest.queryParams;
-        const includeAllActual = queryParams.includeAll.values[0];
-        const pageActual = queryParams.page.values[0];
-        const pageSizeActual = queryParams.pageSize.values[0];
         
         expect(matchedRequest.url.includes('/2.0/webhooks')).toBeTruthy();
-        expect(includeAllActual).toBe(includeAll.toString());
-        expect(parseInt(pageActual)).toBe(pageNumber);
-        expect(parseInt(pageSizeActual)).toBe(pageSize);
+        expect(matchedRequest.queryParams).toEqual({
+            includeAll: {
+                key: 'includeAll',
+                values: [includeAll.toString()]
+            },
+            page: {
+                key: 'page',
+                values: [pageNumber.toString()]
+            },
+            pageSize: {
+                key: 'pageSize',
+                values: [pageSize.toString()]
+            }
+        });
     });
 
     it('listWebhooks all response body properties', async () => {
@@ -73,45 +80,62 @@ describe('Webhooks - listWebhooks endpoint tests', () => {
         };
         const response = await client.webhooks.listWebhooks(options);
         
-        expect(response).toBeTruthy();
-        expect(response.pageNumber).toBe(pageNumber);
-        expect(response.pageSize).toBe(pageSize);
-        expect(response.totalPages).toBe(totalPages);
-        expect(response.totalCount).toBe(totalCount);
-        expect(Array.isArray(response.data)).toBeTruthy();
-        expect(response.data.length).toBe(2);
-        
-        // Verify first webhook (sheet webhook with all properties)
-        const sheetWebhook = response.data[0];
-        expect(sheetWebhook.id).toBe(TEST_WEBHOOK_ID);
-        expect(sheetWebhook.name).toBe(TEST_WEBHOOK_NAME);
-        expect(sheetWebhook.callbackUrl).toBe(TEST_CALLBACK_URL);
-        expect(sheetWebhook.scope).toBe(TEST_SCOPE_SHEET);
-        expect(sheetWebhook.scopeObjectId).toBe(TEST_SCOPE_OBJECT_ID);
-        expect(sheetWebhook.events).toEqual(TEST_EVENTS);
-        expect(sheetWebhook.version).toBe(TEST_VERSION);
-        expect(sheetWebhook.subscope).toBeTruthy();
-        expect(sheetWebhook.subscope.columnIds).toEqual(TEST_COLUMN_IDS);
-        expect(sheetWebhook.enabled).toBe(TEST_ENABLED);
-        expect(sheetWebhook.status).toBe(TEST_STATUS);
-        expect(sheetWebhook.sharedSecret).toBe(TEST_SHARED_SECRET);
-        expect(sheetWebhook.createdAt).toBe(TEST_CREATED_AT);
-        expect(sheetWebhook.modifiedAt).toBe(TEST_MODIFIED_AT);
-        expect(sheetWebhook.disabledDetails).toBe(TEST_DISABLED_DETAILS);
-        expect(sheetWebhook.apiClientId).toBe(TEST_API_CLIENT_ID);
-        expect(sheetWebhook.apiClientName).toBe(TEST_API_CLIENT_NAME);
-        expect(sheetWebhook.stats).toBeTruthy();
-        expect(sheetWebhook.stats.lastCallbackAttempt).toBe(TEST_LAST_CALLBACK_ATTEMPT);
-        expect(sheetWebhook.stats.lastCallbackAttemptRetryCount).toBe(TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT);
-        expect(sheetWebhook.stats.lastSuccessfulCallback).toBe(TEST_LAST_SUCCESSFUL_CALLBACK);
-        
-        // Verify second webhook (plan webhook with custom headers)
-        const planWebhook = response.data[1];
-        expect(planWebhook.id).toBe(TEST_WEBHOOK_ID + 1);
-        expect(planWebhook.name).toBe('Test Plan Webhook');
-        expect(planWebhook.scope).toBe(TEST_SCOPE_PLAN);
-        expect(planWebhook.customHeaders).toBeTruthy();
-        expect(planWebhook.customHeaders).toEqual(TEST_CUSTOM_HEADERS);
+        expect(response).toEqual({
+            pageNumber: pageNumber,
+            pageSize: pageSize,
+            totalPages: totalPages,
+            totalCount: totalCount,
+            data: [
+                {
+                    id: TEST_WEBHOOK_ID,
+                    name: TEST_WEBHOOK_NAME,
+                    callbackUrl: TEST_CALLBACK_URL,
+                    scope: TEST_SCOPE_SHEET,
+                    scopeObjectId: TEST_SCOPE_OBJECT_ID,
+                    events: TEST_EVENTS,
+                    version: TEST_VERSION,
+                    subscope: {
+                        columnIds: TEST_COLUMN_IDS
+                    },
+                    enabled: TEST_ENABLED,
+                    status: TEST_STATUS,
+                    sharedSecret: TEST_SHARED_SECRET,
+                    createdAt: TEST_CREATED_AT,
+                    modifiedAt: TEST_MODIFIED_AT,
+                    disabledDetails: TEST_DISABLED_DETAILS,
+                    apiClientId: TEST_API_CLIENT_ID,
+                    apiClientName: TEST_API_CLIENT_NAME,
+                    stats: {
+                        lastCallbackAttempt: TEST_LAST_CALLBACK_ATTEMPT,
+                        lastCallbackAttemptRetryCount: TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT,
+                        lastSuccessfulCallback: TEST_LAST_SUCCESSFUL_CALLBACK
+                    }
+                },
+                {
+                    id: TEST_WEBHOOK_ID + 1,
+                    name: 'Test Plan Webhook',
+                    callbackUrl: TEST_CALLBACK_URL,
+                    scope: TEST_SCOPE_PLAN,
+                    scopeObjectId: TEST_SCOPE_OBJECT_ID,
+                    events: TEST_EVENTS,
+                    version: TEST_VERSION,
+                    customHeaders: TEST_CUSTOM_HEADERS,
+                    enabled: TEST_ENABLED,
+                    status: TEST_STATUS,
+                    sharedSecret: TEST_SHARED_SECRET,
+                    createdAt: TEST_CREATED_AT,
+                    modifiedAt: TEST_MODIFIED_AT,
+                    disabledDetails: TEST_DISABLED_DETAILS,
+                    apiClientId: TEST_API_CLIENT_ID,
+                    apiClientName: TEST_API_CLIENT_NAME,
+                    stats: {
+                        lastCallbackAttempt: TEST_LAST_CALLBACK_ATTEMPT,
+                        lastCallbackAttemptRetryCount: TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT,
+                        lastSuccessfulCallback: TEST_LAST_SUCCESSFUL_CALLBACK
+                    }
+                }
+            ]
+        });
     });
 
     it('listWebhooks required response body properties', async () => {
@@ -124,36 +148,23 @@ describe('Webhooks - listWebhooks endpoint tests', () => {
         };
         const response = await client.webhooks.listWebhooks(options);
         
-        expect(response).toBeTruthy();
-        expect(response.pageNumber).toBe(pageNumber);
-        expect(response.pageSize).toBe(pageSize);
-        expect(response.totalPages).toBe(totalPages);
-        expect(response.totalCount).toBe(1);
-        expect(Array.isArray(response.data)).toBeTruthy();
-        expect(response.data.length).toBe(1);
-        
-        // Verify webhook has only required properties
-        const webhook = response.data[0];
-        expect(webhook.id).toBe(TEST_WEBHOOK_ID);
-        expect(webhook.name).toBe(TEST_WEBHOOK_NAME);
-        expect(webhook.callbackUrl).toBe(TEST_CALLBACK_URL);
-        expect(webhook.scope).toBe(TEST_SCOPE_SHEET);
-        expect(webhook.scopeObjectId).toBe(TEST_SCOPE_OBJECT_ID);
-        expect(webhook.events).toEqual(TEST_EVENTS);
-        expect(webhook.version).toBe(TEST_VERSION);
-        
-        // Verify optional properties are not present
-        expect(webhook.subscope).toBe(undefined);
-        expect(webhook.enabled).toBe(undefined);
-        expect(webhook.status).toBe(undefined);
-        expect(webhook.sharedSecret).toBe(undefined);
-        expect(webhook.createdAt).toBe(undefined);
-        expect(webhook.modifiedAt).toBe(undefined);
-        expect(webhook.disabledDetails).toBe(undefined);
-        expect(webhook.apiClientId).toBe(undefined);
-        expect(webhook.apiClientName).toBe(undefined);
-        expect(webhook.stats).toBe(undefined);
-        expect(webhook.customHeaders).toBe(undefined);
+        expect(response).toEqual({
+            pageNumber: pageNumber,
+            pageSize: pageSize,
+            totalPages: totalPages,
+            totalCount: 1,
+            data: [
+                {
+                    id: TEST_WEBHOOK_ID,
+                    name: TEST_WEBHOOK_NAME,
+                    callbackUrl: TEST_CALLBACK_URL,
+                    scope: TEST_SCOPE_SHEET,
+                    scopeObjectId: TEST_SCOPE_OBJECT_ID,
+                    events: TEST_EVENTS,
+                    version: TEST_VERSION
+                }
+            ]
+        });
     });
 
     it('listWebhooks error 500 response', async () => {

@@ -11,7 +11,7 @@ import {
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE
 } from './common_test_constants';
-import type { Favorite, FavoriteType } from '@smartsheet/favorites/types';
+import type { FavoriteType } from '@smartsheet/favorites/types';
 
 describe('Favorites - addItemsToFavorites endpoint tests', () => {
     const client = createClient();
@@ -57,13 +57,14 @@ describe('Favorites - addItemsToFavorites endpoint tests', () => {
         });
         
         // Verify response
-        expect(response).toBeTruthy();
-        expect(response.message).toBe(TEST_SUCCESS_MESSAGE);
-        expect(response.resultCode).toBe(TEST_SUCCESS_RESULT_CODE);
-        expect(response.result).toBeTruthy();
-        const result = response.result as Favorite;
-        expect(result.type).toBe(TEST_FAVORITE_TYPE_SHEET);
-        expect(result.objectId).toBe(TEST_SHEET_ID);
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE,
+            result: {
+                type: TEST_FAVORITE_TYPE_SHEET,
+                objectId: TEST_SHEET_ID
+            }
+        });
     });
 
     it('addItemsToFavorites error 500 response', async () => {

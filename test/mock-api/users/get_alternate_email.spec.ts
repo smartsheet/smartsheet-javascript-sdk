@@ -42,10 +42,11 @@ describe('Users - getAlternateEmail endpoint tests', () => {
             }
         };
         const response = await client.users.getAlternateEmail(options);
-        expect(response).toBeTruthy();
-        expect(response.id).toBe(TEST_ALTERNATE_EMAIL_ID);
-        expect(response.confirmed).toBe(TEST_CONFIRMED);
-        expect(response.email).toBe(TEST_EMAIL);
+        expect(response).toEqual({
+            id: TEST_ALTERNATE_EMAIL_ID,
+            confirmed: TEST_CONFIRMED,
+            email: TEST_EMAIL
+        });
     });
 
     it('getAlternateEmail error 500 response', async () => {
