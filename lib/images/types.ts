@@ -32,7 +32,7 @@ export interface ImagesApi {
     callback?: RequestCallback<ListImageUrlsResponse>
   ) => Promise<ListImageUrlsResponse>;
 
-   /**
+  /**
    * Uploads an image to the specified cell within a sheet.
    *
    * @param options - {@link AddImageToCellOptions} - Configuration options for the request
@@ -45,7 +45,7 @@ export interface ImagesApi {
    * @example
    * ```typescript
    * const fs = require('fs');
-   * 
+   *
    * const options = {
    *   sheetId: 1696831624483716,
    *   rowId: 1049441315358596,
@@ -58,7 +58,7 @@ export interface ImagesApi {
    *     overrideValidation: true
    *   }
    * };
-   * 
+   *
    * const result = await client.images.addImageToCell(options);
    * ```
    */
@@ -84,7 +84,7 @@ export interface ImageUrl {
   /**
    * The error caused by the failed item.
    */
-  error?: ApiError; 
+  error?: ApiError;
 
   /**
    * Image height (in pixels).
@@ -126,7 +126,7 @@ export interface AddImageToCellQueryParams {
    * Url-encoded alternate text for the image
    */
   altText?: string;
-  
+
   /**
    * You may use the query string parameter overrideValidation with a value of true to allow a cell value outside of the validation limits. You must specify strict with a value of false to bypass value type checking.
    */
@@ -138,12 +138,12 @@ export interface AddImageToCellOptions extends RequestOptions<AddImageToCellQuer
    * Sheet Id of the sheet being accessed.
    */
   sheetId: number;
-  
+
   /**
    * Row Id in the sheet being accessed.
    */
   rowId: number;
-  
+
   /**
    * Column Id in the sheet being accessed.
    */

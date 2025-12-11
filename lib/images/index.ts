@@ -1,6 +1,12 @@
 import type { CreateOptions } from '../types/CreateOptions';
 import type { RequestCallback } from '../types/RequestCallback';
-import type { AddImageToCellOptions, ImagesApi, ImageUrl, ListImageUrlsResponse, AddImageToCellResponse } from './types';
+import type {
+  AddImageToCellOptions,
+  ImagesApi,
+  ImageUrl,
+  ListImageUrlsResponse,
+  AddImageToCellResponse,
+} from './types';
 import type { RequestOptions } from '../types/RequestOptions';
 
 export function create(options: CreateOptions): ImagesApi {
@@ -20,7 +26,7 @@ export function create(options: CreateOptions): ImagesApi {
   ): Promise<AddImageToCellResponse> => {
     const { sheetId, rowId, columnId, ...restOptions } = postOptions;
     const cellImageUrl = `${options.apiUrls.sheets}/${sheetId}/rows/${rowId}/columns/${columnId}/cellimages`;
-    
+
     return options.requestor.post(
       {
         url: cellImageUrl,
