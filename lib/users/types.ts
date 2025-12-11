@@ -1,6 +1,8 @@
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
+import type { PaginationWithModifiedSinceQueryParameters } from '../types/PaginationQueryParameters';
+import type { PaginationResponse } from '../types/PaginationResponse';
 
 // ============================================================================
 // Users API Interface
@@ -693,7 +695,7 @@ export interface GetUserOptions extends RequestOptions<undefined, undefined> {
 // List Users
 // ============================================================================
 
-export interface ListUsersQueryParameters {
+export interface ListUsersQueryParameters extends PaginationWithModifiedSinceQueryParameters {
   /**
    * A comma-separated list of emails.
    */
@@ -705,18 +707,6 @@ export interface ListUsersQueryParameters {
   include?: string;
 
   /**
-   * @defaultValue false
-   * If true, include all results (do not paginate).
-   */
-  includeAll?: boolean;
-
-  /**
-   * @defaultValue false
-   * If true, dates/times are sent and received as milliseconds since the UNIX epoch (midnight on January 1, 1970 in UTC time).
-   */
-  numericDates?: boolean;
-
-  /**
    * Plan Id for which seat types are returned. Available only to system administrators.
    */
   planId?: number;
@@ -726,18 +716,6 @@ export interface ListUsersQueryParameters {
    * @see SeatTypes
    */
   seatType?: SeatTypes;
-
-  /**
-   * @defaultValue 1
-   * Which page to return.
-   */
-  page?: number;
-
-  /**
-   * @defaultValue 100
-   * The maximum number of items to return per page.
-   */
-  pageSize?: number;
 }
 
 export interface ListUsersData {
@@ -835,34 +813,7 @@ export interface ListUsersData {
   status: UserStatus | string;
 }
 
-export interface ListUsersResponse {
-  /**
-   * @defaultValue 1
-   * The current page number.
-   */
-  pageNumber: number;
-
-  /**
-   * @defaultValue 100
-   * The number of items per page.
-   */
-  pageSize: number;
-
-  /**
-   * The total number of pages.
-   */
-  totalPages: number;
-
-  /**
-   * The total number of users.
-   */
-  totalCount: number;
-
-  /**
-   * Array of User objects.
-   */
-  data: ListUsersData[];
-}
+export type ListUsersResponse = PaginationResponse<ListUsersData>;
 
 // ============================================================================
 // Get Current User
