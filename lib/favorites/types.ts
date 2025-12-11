@@ -1,3 +1,4 @@
+import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 
@@ -142,145 +143,145 @@ export interface FavoritesApi {
    * Removes a sheet from the user's list of favorite items.
    *
    * @param options - {@link RemoveFavoriteOptions} - Configuration options for the request
-   * @param callback - {@link RequestCallback}\<{@link RemoveFavoritesResponse}\> - Optional callback function
-   * @returns Promise\<{@link RemoveFavoritesResponse}\>
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    */
   removeSheetFromFavorites: (
     options: RemoveFavoriteOptions,
-    callback?: RequestCallback<RemoveFavoritesResponse>
-  ) => Promise<RemoveFavoritesResponse>;
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
 
   /**
    * Removes a folder from the user's list of favorite items.
    *
    * @param options - {@link RemoveFavoriteOptions} - Configuration options for the request
-   * @param callback - {@link RequestCallback}\<{@link RemoveFavoritesResponse}\> - Optional callback function
-   * @returns Promise\<{@link RemoveFavoritesResponse}\>
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    */
   removeFolderFromFavorites: (
     options: RemoveFavoriteOptions,
-    callback?: RequestCallback<RemoveFavoritesResponse>
-  ) => Promise<RemoveFavoritesResponse>;
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
 
   /**
    * Removes a report from the user's list of favorite items.
    *
    * @param options - {@link RemoveFavoriteOptions} - Configuration options for the request
-   * @param callback - {@link RequestCallback}\<{@link RemoveFavoritesResponse}\> - Optional callback function
-   * @returns Promise\<{@link RemoveFavoritesResponse}\>
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    */
   removeReportFromFavorites: (
     options: RemoveFavoriteOptions,
-    callback?: RequestCallback<RemoveFavoritesResponse>
-  ) => Promise<RemoveFavoritesResponse>;
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
 
   /**
    * Removes a template from the user's list of favorite items.
    *
    * @param options - {@link RemoveFavoriteOptions} - Configuration options for the request
-   * @param callback - {@link RequestCallback}\<{@link RemoveFavoritesResponse}\> - Optional callback function
-   * @returns Promise\<{@link RemoveFavoritesResponse}\>
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    */
   removeTemplateFromFavorites: (
     options: RemoveFavoriteOptions,
-    callback?: RequestCallback<RemoveFavoritesResponse>
-  ) => Promise<RemoveFavoritesResponse>;
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
 
   /**
    * Removes a sight (dashboard) from the user's list of favorite items.
    *
    * @param options - {@link RemoveFavoriteOptions} - Configuration options for the request
-   * @param callback - {@link RequestCallback}\<{@link RemoveFavoritesResponse}\> - Optional callback function
-   * @returns Promise\<{@link RemoveFavoritesResponse}\>
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    */
   removeSightFromFavorites: (
     options: RemoveFavoriteOptions,
-    callback?: RequestCallback<RemoveFavoritesResponse>
-  ) => Promise<RemoveFavoritesResponse>;
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
 
   /**
    * Removes a workspace from the user's list of favorite items.
    *
    * @param options - {@link RemoveFavoriteOptions} - Configuration options for the request
-   * @param callback - {@link RequestCallback}\<{@link RemoveFavoritesResponse}\> - Optional callback function
-   * @returns Promise\<{@link RemoveFavoritesResponse}\>
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    */
   removeWorkspaceFromFavorites: (
     options: RemoveFavoriteOptions,
-    callback?: RequestCallback<RemoveFavoritesResponse>
-  ) => Promise<RemoveFavoritesResponse>;
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
 
   /**
    * Removes multiple sheets from the user's list of favorite items.
    *
    * @param options - {@link RemoveMultipleFavoritesOptions} - Configuration options for the request
-   * @param callback - {@link RequestCallback}\<{@link RemoveFavoritesResponse}\> - Optional callback function
-   * @returns Promise\<{@link RemoveFavoritesResponse}\>
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    */
   removeSheetsFromFavorites: (
     options: RemoveMultipleFavoritesOptions,
-    callback?: RequestCallback<RemoveFavoritesResponse>
-  ) => Promise<RemoveFavoritesResponse>;
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
 
   /**
    * Removes multiple folders from the user's list of favorite items.
    *
    * @param options - {@link RemoveMultipleFavoritesOptions} - Configuration options for the request
-   * @param callback - {@link RequestCallback}\<{@link RemoveFavoritesResponse}\> - Optional callback function
-   * @returns Promise\<{@link RemoveFavoritesResponse}\>
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    */
   removeFoldersFromFavorites: (
     options: RemoveMultipleFavoritesOptions,
-    callback?: RequestCallback<RemoveFavoritesResponse>
-  ) => Promise<RemoveFavoritesResponse>;
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
 
   /**
    * Removes multiple reports from the user's list of favorite items.
    *
    * @param options - {@link RemoveMultipleFavoritesOptions} - Configuration options for the request
-   * @param callback - {@link RequestCallback}\<{@link RemoveFavoritesResponse}\> - Optional callback function
-   * @returns Promise\<{@link RemoveFavoritesResponse}\>
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    */
   removeReportsFromFavorites: (
     options: RemoveMultipleFavoritesOptions,
-    callback?: RequestCallback<RemoveFavoritesResponse>
-  ) => Promise<RemoveFavoritesResponse>;
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
 
   /**
    * Removes multiple templates from the user's list of favorite items.
    *
    * @param options - {@link RemoveMultipleFavoritesOptions} - Configuration options for the request
-   * @param callback - {@link RequestCallback}\<{@link RemoveFavoritesResponse}\> - Optional callback function
-   * @returns Promise\<{@link RemoveFavoritesResponse}\>
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    */
   removeTemplatesFromFavorites: (
     options: RemoveMultipleFavoritesOptions,
-    callback?: RequestCallback<RemoveFavoritesResponse>
-  ) => Promise<RemoveFavoritesResponse>;
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
 
   /**
    * Removes multiple sights (dashboards) from the user's list of favorite items.
    *
    * @param options - {@link RemoveMultipleFavoritesOptions} - Configuration options for the request
-   * @param callback - {@link RequestCallback}\<{@link RemoveFavoritesResponse}\> - Optional callback function
-   * @returns Promise\<{@link RemoveFavoritesResponse}\>
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    */
   removeSightsFromFavorites: (
     options: RemoveMultipleFavoritesOptions,
-    callback?: RequestCallback<RemoveFavoritesResponse>
-  ) => Promise<RemoveFavoritesResponse>;
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
 
   /**
    * Removes multiple workspaces from the user's list of favorite items.
    *
    * @param options - {@link RemoveMultipleFavoritesOptions} - Configuration options for the request
-   * @param callback - {@link RequestCallback}\<{@link RemoveFavoritesResponse}\> - Optional callback function
-   * @returns Promise\<{@link RemoveFavoritesResponse}\>
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    */
   removeWorkspacesFromFavorites: (
     options: RemoveMultipleFavoritesOptions,
-    callback?: RequestCallback<RemoveFavoritesResponse>
-  ) => Promise<RemoveFavoritesResponse>;
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
 }
 
 // ============================================================================
