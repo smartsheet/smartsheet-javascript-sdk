@@ -25,8 +25,8 @@ describe('Users - deactivateUser & reactivateUser endpoint tests', () => {
         };
         await client.users.deactivateUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/deactivate`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/users/${TEST_USER_ID}/deactivate`);
     });
 
     it('deactivateUser all response body properties', async () => {
@@ -92,8 +92,8 @@ describe('Users - deactivateUser & reactivateUser endpoint tests', () => {
         };
         await client.users.reactivateUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/reactivate`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/users/${TEST_USER_ID}/reactivate`);
     });
 
     it('reactivateUser all response body properties', async () => {

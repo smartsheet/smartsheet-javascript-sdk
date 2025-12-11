@@ -9,7 +9,10 @@ import {
     ERROR_500_STATUS_CODE,
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
-    ERROR_400_MESSAGE
+    ERROR_400_MESSAGE,
+    TEST_INCLUDE_ALL,
+    TEST_PAGE,
+    TEST_PAGE_SIZE
 } from './common_test_constants';
 
 describe('Favorites - listFavorites endpoint tests', () => {
@@ -19,9 +22,9 @@ describe('Favorites - listFavorites endpoint tests', () => {
         const requestId = crypto.randomUUID();
         const options = {
             queryParameters: {
-                includeAll: false,
-                page: 1,
-                pageSize: 50
+                includeAll: TEST_INCLUDE_ALL,
+                page: TEST_PAGE,
+                pageSize: TEST_PAGE_SIZE
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -30,23 +33,14 @@ describe('Favorites - listFavorites endpoint tests', () => {
         };
         await client.favorites.listFavorites(options);
         const matchedRequest = await findWireMockRequest(requestId);
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual('/2.0/favorites');
 
-        expect(matchedRequest.url.includes('/2.0/favorites')).toBeTruthy();
-        
-        // Verify query parameters
-        expect(matchedRequest.queryParams).toEqual({
-            includeAll: {
-                key: 'includeAll',
-                values: ['false']
-            },
-            page: {
-                key: 'page',
-                values: ['1']
-            },
-            pageSize: {
-                key: 'pageSize',
-                values: ['50']
-            }
+        const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+        expect(queryParamsObject).toEqual({
+            includeAll: TEST_INCLUDE_ALL.toString(),
+            page: TEST_PAGE.toString(),
+            pageSize: TEST_PAGE_SIZE.toString()
         });
     });
 

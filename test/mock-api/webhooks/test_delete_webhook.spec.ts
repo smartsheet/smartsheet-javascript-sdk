@@ -26,8 +26,8 @@ describe('Webhooks - deleteWebhook endpoint tests', () => {
         };
         await client.webhooks.deleteWebhook(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/webhooks/${TEST_WEBHOOK_ID}`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/webhooks/${TEST_WEBHOOK_ID}`);
     });
 
     it('deleteWebhook all response body properties', async () => {

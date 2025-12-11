@@ -23,6 +23,11 @@ import {
     TEST_LAST_CALLBACK_ATTEMPT_RETRY_COUNT,
     TEST_COLUMN_IDS,
     TEST_CUSTOM_HEADERS,
+    TEST_PAGE_NUMBER,
+    TEST_PAGE_SIZE,
+    TEST_INCLUDE_ALL,
+    TEST_TOTAL_PAGES,
+    TEST_TOTAL_COUNT,
     ERROR_500_STATUS_CODE,
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
@@ -31,19 +36,14 @@ import {
 
 describe('Webhooks - listWebhooks endpoint tests', () => {
     const client = createClient();
-    const pageNumber = 1;
-    const pageSize = 100;
-    const totalPages = 1;
-    const totalCount = 2;
-    const includeAll = false;
 
     it('listWebhooks generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             queryParameters: {
-                includeAll: includeAll,
-                page: pageNumber,
-                pageSize: pageSize
+                includeAll: TEST_INCLUDE_ALL,
+                page: TEST_PAGE_NUMBER,
+                pageSize: TEST_PAGE_SIZE
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -52,21 +52,14 @@ describe('Webhooks - listWebhooks endpoint tests', () => {
         };
         await client.webhooks.listWebhooks(options);
         const matchedRequest = await findWireMockRequest(requestId);
-        
-        expect(matchedRequest.url.includes('/2.0/webhooks')).toBeTruthy();
-        expect(matchedRequest.queryParams).toEqual({
-            includeAll: {
-                key: 'includeAll',
-                values: [includeAll.toString()]
-            },
-            page: {
-                key: 'page',
-                values: [pageNumber.toString()]
-            },
-            pageSize: {
-                key: 'pageSize',
-                values: [pageSize.toString()]
-            }
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual('/2.0/webhooks');
+
+        const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+        expect(queryParamsObject).toEqual({
+            includeAll: TEST_INCLUDE_ALL.toString(),
+            page: TEST_PAGE_NUMBER.toString(),
+            pageSize: TEST_PAGE_SIZE.toString()
         });
     });
 
@@ -81,10 +74,10 @@ describe('Webhooks - listWebhooks endpoint tests', () => {
         const response = await client.webhooks.listWebhooks(options);
         
         expect(response).toEqual({
-            pageNumber: pageNumber,
-            pageSize: pageSize,
-            totalPages: totalPages,
-            totalCount: totalCount,
+            pageNumber: TEST_PAGE_NUMBER,
+            pageSize: TEST_PAGE_SIZE,
+            totalPages: TEST_TOTAL_PAGES,
+            totalCount: TEST_TOTAL_COUNT,
             data: [
                 {
                     id: TEST_WEBHOOK_ID,
@@ -149,9 +142,9 @@ describe('Webhooks - listWebhooks endpoint tests', () => {
         const response = await client.webhooks.listWebhooks(options);
         
         expect(response).toEqual({
-            pageNumber: pageNumber,
-            pageSize: pageSize,
-            totalPages: totalPages,
+            pageNumber: TEST_PAGE_NUMBER,
+            pageSize: TEST_PAGE_SIZE,
+            totalPages: TEST_TOTAL_PAGES,
             totalCount: 1,
             data: [
                 {

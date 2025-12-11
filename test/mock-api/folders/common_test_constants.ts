@@ -60,3 +60,13 @@ export const ERROR_500_STATUS_CODE = 500;
 export const ERROR_500_MESSAGE = 'Internal Server Error';
 export const ERROR_400_STATUS_CODE = 400;
 export const ERROR_400_MESSAGE = 'Malformed Request';
+
+// Common Query Parameters
+export const TEST_INCLUDE_PARAM = 'data';
+export const TEST_COPY_INCLUDE = 'data,attachments';
+export const TEST_COPY_EXCLUDE = 'sheetHyperlinks';
+export const TEST_COPY_SKIP_REMAP = 'cellLinks';
+export const TEST_GET_METADATA_INCLUDE = 'source';
+export const TEST_CHILDREN_RESOURCE_TYPES = 'sheets,folders';
+export const TEST_CHILDREN_INCLUDE = 'source,ownerInfo';
+export const TEST_MAX_ITEMS = 100;

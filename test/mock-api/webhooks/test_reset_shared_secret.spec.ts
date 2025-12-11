@@ -27,8 +27,8 @@ describe('Webhooks - resetSharedSecret endpoint tests', () => {
         };
         await client.webhooks.resetSharedSecret(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/webhooks/${TEST_WEBHOOK_ID}/resetsharedsecret`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/webhooks/${TEST_WEBHOOK_ID}/resetsharedsecret`);
     });
 
     it('resetSharedSecret all response body properties', async () => {

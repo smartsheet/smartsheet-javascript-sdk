@@ -17,9 +17,6 @@ import {
 
 describe('Users - listAlternateEmails endpoint tests', () => {
     const client = createClient();
-    const TEST_ALTERNATE_EMAIL_ID_1 = TEST_ALTERNATE_EMAIL_ID;
-    const TEST_EMAIL_1 = TEST_ALTERNATE_EMAIL;
-    const TEST_CONFIRMED_1 = true;
     it('listAlternateEmails generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
@@ -31,8 +28,8 @@ describe('Users - listAlternateEmails endpoint tests', () => {
         };
         await client.users.listAlternateEmails(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/alternateemails`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/users/${TEST_USER_ID}/alternateemails`);
     });
 
     it('listAlternateEmails all response body properties', async () => {
@@ -52,9 +49,9 @@ describe('Users - listAlternateEmails endpoint tests', () => {
             totalCount: TEST_TOTAL_COUNT,
             data: [
                 {
-                    id: TEST_ALTERNATE_EMAIL_ID_1,
-                    confirmed: TEST_CONFIRMED_1,
-                    email: TEST_EMAIL_1
+                    id: TEST_ALTERNATE_EMAIL_ID,
+                    confirmed: true,
+                    email: TEST_ALTERNATE_EMAIL
                 }
             ]
         });
