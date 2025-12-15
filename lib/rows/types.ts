@@ -1,4 +1,4 @@
-import type { MiniUser } from '../types/MiniUser';
+import type { MiniUser } from "../users/types";
 import type { Attachment } from '../attachments/types';
 import type { Cell } from '../cells/types';
 import type { Column } from '../columns/types';

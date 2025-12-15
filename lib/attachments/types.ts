@@ -1,4 +1,4 @@
-import type { MiniUser } from '../types/MiniUser';
+import type { MiniUser } from "../users/types";
 
 /**
  * Represents an attachment.
