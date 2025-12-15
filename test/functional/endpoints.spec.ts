@@ -6,7 +6,7 @@ import { expect, jest, describe, beforeEach, afterEach, it } from '@jest/globals
 
 describe('Method Unit Tests', () => {
     const requestor = createRequestor({});
-    
+
     const testGroups = [
         {
             name: 'contacts',
@@ -118,10 +118,10 @@ describe('Method Unit Tests', () => {
         {
             name: 'search',
             methods: [
-                { name: 'searchAll', stub: 'get', options: {query: "query"}, expectedRequest: {url: "search", queryParameters: {query: "query"}}},
-                { name: 'searchAll', stub: 'get', options: {query: "query", queryParameters: {someParam: "something"}}, expectedRequest: {url: "search", queryParameters: {query: "query", someParam: "something"}}},
-                { name: 'searchAll', stub: 'get', options: {query: "query"}, expectedRequest: {url: "search", queryParameters: {query: "query"}}},
-                { name: 'searchSheet', stub: 'get', options: {query: "query", sheetId: 1}, expectedRequest: {url: "search/sheets/1", queryParameters: {query: "query"}}},
+                { name: 'searchAll', stub: 'get', options: {queryParameters: {query: "query"}}, expectedRequest: {url: "search", queryParameters: {query: "query"}}},
+                { name: 'searchAll', stub: 'get', options: {queryParameters: {query: "query", someParam: "something"}}, expectedRequest: {url: "search", queryParameters: {query: "query", someParam: "something"}}},
+                { name: 'searchAll', stub: 'get', options: {queryParameters: {query: "query"}}, expectedRequest: {url: "search", queryParameters: {query: "query"}}},
+                { name: 'searchSheet', stub: 'get', options: {queryParameters: {query: "query"}, sheetId: 1}, expectedRequest: {url: "search/sheets/1", queryParameters: {query: "query"}}},
             ]
         },
         {
