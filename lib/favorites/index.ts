@@ -1,3 +1,4 @@
+import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { CreateOptions } from '../types/CreateOptions';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
@@ -10,7 +11,6 @@ import type {
   AddFavoriteConvenienceOptions,
   RemoveFavoriteOptions,
   RemoveMultipleFavoritesOptions,
-  RemoveFavoritesResponse,
 } from './types';
 import { FavoriteType } from './types';
 
@@ -73,10 +73,7 @@ export function create(options: CreateOptions): FavoritesApi {
     return requestor.post({ ...optionsToSend, ...postOptions }, callback);
   };
 
-  const removeFavorite = (
-    deleteOptions: RemoveFavoriteOptions,
-    callback?: RequestCallback<RemoveFavoritesResponse>
-  ) => {
+  const removeFavorite = (deleteOptions: RemoveFavoriteOptions, callback?: RequestCallback<BaseResponseStatus>) => {
     const favoriteId = deleteOptions.favoriteId;
     const urlOptions = { url: options.apiUrls.favorites + '/' + deleteOptions.favoriteType + '/' + favoriteId };
     return requestor.delete({ ...optionsToSend, ...urlOptions, ...deleteOptions }, callback);
@@ -84,7 +81,7 @@ export function create(options: CreateOptions): FavoritesApi {
 
   const removeMultipleFavorites = (
     deleteOptions: RemoveMultipleFavoritesOptions,
-    callback?: RequestCallback<RemoveFavoritesResponse>
+    callback?: RequestCallback<BaseResponseStatus>
   ) => {
     const urlOptions = {
       url: options.apiUrls.favorites + '/' + deleteOptions.favoriteType,
@@ -103,7 +100,7 @@ export function create(options: CreateOptions): FavoritesApi {
   };
 
   const buildFavoriteRemoval = (type: FavoriteType) => {
-    return (deleteOptions: RemoveFavoriteOptions, callback?: RequestCallback<RemoveFavoritesResponse>) => {
+    return (deleteOptions: RemoveFavoriteOptions, callback?: RequestCallback<BaseResponseStatus>) => {
       const options = JSON.parse(JSON.stringify(deleteOptions)) as RemoveFavoriteOptions;
       options.favoriteType = type as FavoriteType;
       return removeFavorite(options, callback);
@@ -111,7 +108,7 @@ export function create(options: CreateOptions): FavoritesApi {
   };
 
   const buildMultipleFavoriteRemoval = (type: FavoriteType) => {
-    return (deleteOptions: RemoveMultipleFavoritesOptions, callback?: RequestCallback<RemoveFavoritesResponse>) => {
+    return (deleteOptions: RemoveMultipleFavoritesOptions, callback?: RequestCallback<BaseResponseStatus>) => {
       const options = JSON.parse(JSON.stringify(deleteOptions)) as RemoveMultipleFavoritesOptions;
       options.favoriteType = type as FavoriteType;
       return removeMultipleFavorites(options, callback);
