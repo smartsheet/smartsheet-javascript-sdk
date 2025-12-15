@@ -157,7 +157,7 @@ describe('Client Unit Tests', () => {
   describe('#images', () => {
     it('should have image object', () => {
       expect(smartsheet).toHaveProperty('images');
-      expect(Object.keys(smartsheet.images)).toHaveLength(1);
+      expect(Object.keys(smartsheet.images)).toHaveLength(2);
     });
 
     it('should have get methods', () => {
