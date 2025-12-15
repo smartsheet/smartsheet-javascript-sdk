@@ -1,107 +1,105 @@
 import type { CreateOptions } from '../types/CreateOptions';
+import type { RequestCallback } from '../types/RequestCallback';
+import type { RequestOptions } from '../types/RequestOptions';
 import shareModule from '../share/share';
 import type {
-  CopySight,
-  DeleteSight,
-  GetSight,
-  GetSightPublishStatus,
-  ListSights,
-  MoveSight,
-  SetSightPublishStatus,
   SightsApi,
-  UpdateSight,
+  GetSightOptions,
+  Sight,
+  ListSightQueryParameters,
+  ListSightsResponse,
+  DeleteSightOptions,
+  DeleteSightResponse,
+  UpdateSightOptions,
+  UpdateSightResponse,
+  CopySightOptions,
+  CopySightResponse,
+  MoveSightOptions,
+  MoveSightResponse,
+  GetSightPublishStatusOptions,
+  SightPublishStatus,
+  SetSightPublishStatusOptions,
+  SetSightPublishStatusResponse,
 } from './types';
 
-export const createSights = (options: CreateOptions): SightsApi => {
+export function create(options: CreateOptions): SightsApi {
   const requestor = options.requestor;
-  // Legacy shares module (deprecated)
-  const shares = shareModule(options.apiUrls.sights);
 
   const optionsToSend = {
     ...options.clientOptions,
   };
 
-  const getSight: GetSight = (getOptions, callback) => {
-    const requestOptions = {
-      ...optionsToSend,
-      url: `${options.apiUrls.sights}/${getOptions.sightId}`,
-      ...getOptions,
-    };
-    return requestor.get(requestOptions, callback);
+  // Legacy shares module (deprecated)
+  const shares = shareModule(options.apiUrls.sights);
+
+  const getSight = (getOptions: GetSightOptions, callback?: RequestCallback<Sight>) => {
+    const urlOptions = { url: buildUrl(getOptions.sightId) };
+    return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
 
-  const listSights: ListSights = (getOptions, callback) => {
-    const requestOptions = {
-      ...optionsToSend,
-      url: options.apiUrls.sights,
-      ...getOptions,
-    };
-    return requestor.get(requestOptions, callback);
+  const listSights = (
+    getOptions: RequestOptions<ListSightQueryParameters, undefined>,
+    callback?: RequestCallback<ListSightsResponse>
+  ) => {
+    const urlOptions = { url: buildUrl() };
+    return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
 
-  const deleteSight: DeleteSight = (deleteOptions, callback) => {
-    const requestOptions = {
-      ...optionsToSend,
-      url: `${options.apiUrls.sights}/${deleteOptions.sightId}`,
-      ...deleteOptions,
-    };
-    return requestor.delete(requestOptions, callback);
+  const deleteSight = (deleteOptions: DeleteSightOptions, callback?: RequestCallback<DeleteSightResponse>) => {
+    const urlOptions = { url: buildUrl(deleteOptions.sightId) };
+    return requestor.delete({ ...optionsToSend, ...urlOptions, ...deleteOptions }, callback);
   };
 
-  const updateSight: UpdateSight = (putOptions, callback) => {
-    const requestOptions = {
-      ...optionsToSend,
-      url: `${options.apiUrls.sights}/${putOptions.sightId}`,
-      ...putOptions,
-    };
-    return requestor.put(requestOptions, callback);
+  const updateSight = (putOptions: UpdateSightOptions, callback?: RequestCallback<UpdateSightResponse>) => {
+    const urlOptions = { url: buildUrl(putOptions.sightId) };
+    return requestor.put({ ...optionsToSend, ...urlOptions, ...putOptions }, callback);
   };
 
-  const copySight: CopySight = (postOptions, callback) => {
-    const requestOptions = {
-      ...optionsToSend,
-      url: `${options.apiUrls.sights}/${postOptions.sightId}/copy`,
-      ...postOptions,
-    };
-    return requestor.post(requestOptions, callback);
+  const copySight = (postOptions: CopySightOptions, callback?: RequestCallback<CopySightResponse>) => {
+    const urlOptions = { url: buildUrl(postOptions.sightId) + '/copy' };
+    return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
   };
 
-  const moveSight: MoveSight = (postOptions, callback) => {
-    const requestOptions = {
-      ...optionsToSend,
-      url: `${options.apiUrls.sights}/${postOptions.sightId}/move`,
-      ...postOptions,
-    };
-    return requestor.post(requestOptions, callback);
+  const moveSight = (postOptions: MoveSightOptions, callback?: RequestCallback<MoveSightResponse>) => {
+    const urlOptions = { url: buildUrl(postOptions.sightId) + '/move' };
+    return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
   };
 
-  const getSightPublishStatus: GetSightPublishStatus = (getOptions, callback) => {
-    const requestOptions = {
-      ...optionsToSend,
-      url: `${options.apiUrls.sights}/${getOptions.sightId}/publish`,
-      ...getOptions,
-    };
-    return requestor.get(requestOptions, callback);
+  const getSightPublishStatus = (
+    getOptions: GetSightPublishStatusOptions,
+    callback?: RequestCallback<SightPublishStatus>
+  ) => {
+    const urlOptions = { url: buildUrl(getOptions.sightId) + '/publish' };
+    return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
 
-  const setSightPublishStatus: SetSightPublishStatus = (putOptions, callback) => {
-    const requestOptions = {
-      ...optionsToSend,
-      url: `${options.apiUrls.sights}/${putOptions.sightId}/publish`,
-      ...putOptions,
-    };
-    return requestor.put(requestOptions, callback);
+  const setSightPublishStatus = (
+    putOptions: SetSightPublishStatusOptions,
+    callback?: RequestCallback<SetSightPublishStatusResponse>
+  ) => {
+    const urlOptions = { url: buildUrl(putOptions.sightId) + '/publish' };
+    return requestor.put({ ...optionsToSend, ...urlOptions, ...putOptions }, callback);
+  };
+
+  const buildUrl = (sightId?: number | string) => {
+    if (sightId !== undefined) {
+      return options.apiUrls.sights + '/' + sightId;
+    }
+    return options.apiUrls.sights;
   };
 
   return {
-    listSights,
-    getSight,
-    deleteSight,
-    updateSight,
-    copySight,
-    moveSight,
-    getSightPublishStatus,
-    setSightPublishStatus,
+    getSight: getSight,
+    listSights: listSights,
+    deleteSight: deleteSight,
+    updateSight: updateSight,
+    copySight: copySight,
+    moveSight: moveSight,
+    getSightPublishStatus: getSightPublishStatus,
+    setSightPublishStatus: setSightPublishStatus,
     ...shares.create(options),
   };
-};
+}
+
+// Export with legacy name for backward compatibility
+export const createSights = create;
