@@ -1,7 +1,7 @@
-import type { RequestCallback } from '../types/RequestCallback';
+import type { RequestCallback, RequestOptions } from '../types';
 import type { CreateOptions } from '../types/CreateOptions';
 import { apiUrls } from '../utils/apis';
-import type { SearchAllOptions, SearchApi, SearchResponse, SearchSheetOptions } from './types';
+import type { SearchQueryParameters, SearchApi, SearchResponse, SearchSheetOptions } from './types';
 
 export const createSearch = (options: CreateOptions): SearchApi => {
   const requestor = options.requestor;
@@ -12,30 +12,17 @@ export const createSearch = (options: CreateOptions): SearchApi => {
     ...options.clientOptions,
   };
 
-  const searchAll = (getOptions: SearchAllOptions, callback?: RequestCallback<SearchResponse>) => {
-    const options = {
-      ...optionsToSend,
-      ...getOptions,
-      queryParameters: {
-        ...getOptions.queryParameters,
-        query: getOptions.query,
-      },
-    };
-
+  const searchAll = (
+    getOptions: RequestOptions<SearchQueryParameters, undefined>,
+    callback?: RequestCallback<SearchResponse>
+  ) => {
+    const options = { ...optionsToSend, ...getOptions };
     return requestor.get(options, callback);
   };
 
   const searchSheet = (getOptions: SearchSheetOptions, callback?: RequestCallback<SearchResponse>) => {
-    const options = {
-      ...optionsToSend,
-      ...getOptions,
-      queryParameters: {
-        query: getOptions.query,
-      },
-    };
-
+    const options = { ...optionsToSend, ...getOptions };
     options.url = apiUrls.search + '/sheets/' + getOptions.sheetId;
-
     return requestor.get(options, callback);
   };
 
