@@ -382,9 +382,6 @@ export interface GetWebhookOptions extends RequestOptions<undefined, undefined> 
 // List Webhooks
 // ============================================================================
 
-/**
- * @deprecated As early as the sunset date specified in the Changelog, pagination parameters will be discontinued
- */
 export interface ListWebhooksQueryParameters {
   /**
    * @defaultValue false
@@ -394,13 +391,11 @@ export interface ListWebhooksQueryParameters {
   includeAll?: boolean;
   /**
    * @defaultValue 1
-   * @deprecated As early as the sunset date specified in the Changelog
    * Which page to return
    */
   page?: number;
   /**
    * @defaultValue 100
-   * @deprecated As early as the sunset date specified in the Changelog, the unlimited value range will be discontinued
    * The maximum number of items to return per page
    */
   pageSize?: number;

@@ -1,4 +1,4 @@
-import type { User } from '../types/User';
+import type { MiniUser } from '../types/MiniUser';
 
 /**
  * Represents an attachment.
@@ -40,9 +40,9 @@ export interface Attachment {
   createdAt: string | number;
 
   /**
-   * User object representing the creator.
+   * MiniUser object representing the creator.
    */
-  createdBy: User;
+  createdBy: MiniUser;
 
   /**
    * Attachment name.

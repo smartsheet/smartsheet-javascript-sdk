@@ -1,6 +1,6 @@
 import type { Attachment } from '../attachments/types';
 import type { Discussion } from '../discussions/types';
-import type { User } from '../types/User';
+import type { MiniUser } from '../types/MiniUser';
 
 /**
  * Represents a proof.
@@ -47,9 +47,9 @@ export interface Proof {
   lastUpdatedAt: string | number;
 
   /**
-   * User object representing the last updater.
+   * MiniUser object representing the last updater.
    */
-  lastUpdatedBy: User;
+  lastUpdatedBy: MiniUser;
 
   /**
    * Indicates whether the proof is completed.

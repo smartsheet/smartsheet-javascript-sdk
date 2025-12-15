@@ -1,5 +1,5 @@
 import type { Attachment } from '../attachments/types';
-import type { User } from '../types/User';
+import type { MiniUser } from '../types/MiniUser';
 
 /**
  * Represents a comment in a discussion.
@@ -16,9 +16,9 @@ export interface Comment {
   createdAt: string | number;
 
   /**
-   * User object representing the creator.
+   * MiniUser object representing the creator.
    */
-  createdBy: User;
+  createdBy: MiniUser;
 
   /**
    * Discussion Id.

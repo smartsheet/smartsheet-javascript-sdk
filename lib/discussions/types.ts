@@ -1,5 +1,5 @@
 import type { Attachment } from '../attachments/types';
-import type { User } from '../types/User';
+import type { MiniUser } from '../types/MiniUser';
 
 /**
  * Represents a discussion.
@@ -31,9 +31,9 @@ export interface Discussion {
   commentCount: number;
 
   /**
-   * User object representing the creator.
+   * MiniUser object representing the creator.
    */
-  createdBy: User;
+  createdBy: MiniUser;
 
   /**
    * Time of last comment.
@@ -41,9 +41,9 @@ export interface Discussion {
   lastCommentedAt: string | number;
 
   /**
-   * User object representing the last commenter.
+   * MiniUser object representing the last commenter.
    */
-  lastCommentedUser: User;
+  lastCommentedUser: MiniUser;
 
   /**
    * Parent Id (row, sheet, etc.).

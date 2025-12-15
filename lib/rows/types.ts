@@ -1,4 +1,4 @@
-import type { User } from '../types/User';
+import type { MiniUser } from '../types/MiniUser';
 import type { Attachment } from '../attachments/types';
 import type { Cell } from '../cells/types';
 import type { Column } from '../columns/types';
@@ -55,9 +55,9 @@ export interface Row {
   createdAt: string | number;
 
   /**
-   * User object representing the creator.
+   * MiniUser object representing the creator.
    */
-  createdBy: User;
+  createdBy: MiniUser;
 
   /**
    * Array of Discussion objects.
@@ -105,9 +105,9 @@ export interface Row {
   modifiedAt: string | number;
 
   /**
-   * User object representing the last modifier.
+   * MiniUser object representing the last modifier.
    */
-  modifiedBy: User;
+  modifiedBy: MiniUser;
 
   /**
    * Permalink to the row.

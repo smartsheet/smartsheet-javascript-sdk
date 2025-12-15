@@ -444,15 +444,3 @@ export interface RemoveFavoriteOptions extends RequestOptions<undefined, undefin
    */
   favoriteType?: FavoriteType;
 }
-
-export interface RemoveFavoritesResponse {
-  /**
-   * Status message
-   */
-  message: string;
-
-  /**
-   * Result code
-   */
-  resultCode: number;
-}
