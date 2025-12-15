@@ -1,7 +1,7 @@
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
-import type { ApiError } from '../types/ApiError';
+import type { FailedItem } from '../types/FailedItem';
 
 // ============================================================================
 // Webhooks API Interface
@@ -391,13 +391,11 @@ export interface ListWebhooksQueryParameters {
   includeAll?: boolean;
   /**
    * @defaultValue 1
-   * @deprecated As early as the sunset date specified in the Changelog
    * Which page to return
    */
   page?: number;
   /**
    * @defaultValue 100
-   * @deprecated As early as the sunset date specified in the Changelog, the unlimited value range will be discontinued
    * The maximum number of items to return per page
    */
   pageSize?: number;
@@ -495,22 +493,6 @@ export interface DeleteWebhookOptions extends RequestOptions<undefined, undefine
    * Webhook Id
    */
   webhookId: number;
-}
-
-export interface FailedItem {
-  /**
-   * Row Id of the failed item
-   */
-  rowId?: number;
-  /**
-   * Error details
-   * @see ApiError
-   */
-  error: ApiError;
-  /**
-   * Index of the failed item
-   */
-  index?: number;
 }
 
 export interface DeleteWebhookResponse extends BaseResponseStatus {
