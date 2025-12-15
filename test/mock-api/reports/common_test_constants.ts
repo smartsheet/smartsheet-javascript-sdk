@@ -66,7 +66,7 @@ export const TEST_COLUMN_2_WIDTH = 100;
 export const TEST_EFFECTIVE_ATTACHMENT_OPTIONS = ['BOX', 'DROPBOX', 'GOOGLE_DRIVE', 'ONEDRIVE'];
 
 // Report Project Settings - Non Working Days
-export const TEST_NON_WORKING_DAYS = ['SATURDAY', 'SUNDAY'];
+export const TEST_NON_WORKING_DAYS = ["2019-12-25"];
 export const TEST_WORKING_DAYS = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'];
 
 // Report Rows (Row type requires all these properties)
