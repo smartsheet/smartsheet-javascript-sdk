@@ -1,7 +1,14 @@
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
-import type { FailedItem } from '../webhooks/types';
+import type { FailedItem } from '../types/FailedItem';
+import type { ObjectValue } from '../types/ObjectValue';
+import type { Attachment } from '../attachments/types';
+import type { Column, ContactOption } from '../columns/types';
+import type { Row } from '../rows/types';
+import type { Hyperlink, CellImage } from '../cells/types';
+import type { Discussion } from '../discussions/types';
+import type { MiniUser } from '../users/types';
 
 // ============================================================================
 // Reports API Interface
@@ -336,172 +343,6 @@ export interface SourceSheet {
   workspace: WorkspaceListing;
 }
 
-export interface Column {
-  autoNumberFormat: AutoNumberFormat;
-  contactOptions: ContactOption[];
-  description: string;
-  format?: string;
-  formula: string;
-  hidden: boolean;
-  id: number;
-  index: number;
-  locked: boolean;
-  lockedForUser: boolean;
-  options: string[];
-  primary?: boolean;
-  symbol?: string;
-  systemColumnType: string;
-  tags: string[];
-  title: string;
-  type: string;
-  validation: boolean;
-  version: number;
-  width: number;
-}
-
-export interface AutoNumberFormat {
-  fill: string;
-  prefix: string;
-  startingNumber: number;
-  suffix: string;
-}
-
-export interface ContactOption {
-  email: string;
-  name: string;
-}
-
-export interface Row {
-  id: number;
-  sheetId: number;
-  siblingId: number;
-  accessLevel: string;
-  attachments?: Attachment[];
-  cells: Cell[];
-  columns: Column[];
-  conditionalFormat?: string;
-  createdAt: string | number;
-  createdBy: User;
-  discussions?: Discussion[];
-  proof: Proof;
-  expanded: boolean;
-  filteredOut?: boolean;
-  format?: string;
-  inCriticalPath?: boolean;
-  locked: boolean;
-  lockedForUser: boolean;
-  modifiedAt: string | number;
-  modifiedBy: User;
-  permaLink?: string;
-  rowNumber: number;
-  version: number;
-}
-
-export interface Cell {
-  columnId: number;
-  rowId: number;
-  columnType?: string;
-  conditionalFormat?: string;
-  displayValue: string;
-  format?: string;
-  formula: string;
-  hyperlink: Hyperlink;
-  image?: CellImage;
-  linkInFromCell?: CellLink;
-  linksOutToCells?: CellLink[];
-  objectValue: ObjectValue;
-  overrideValidation?: boolean;
-  strict: boolean;
-  value?: string | number | boolean | null;
-}
-
-export interface Hyperlink {
-  reportId?: number;
-  sheetId?: number;
-  sightId?: number;
-  url?: string;
-}
-
-export interface CellImage {
-  altText: string;
-  height: number;
-  id: string;
-  width: number;
-}
-
-export interface CellLink {
-  columnId: number;
-  rowId: number;
-  sheetId: number;
-  sheetName: string;
-  status: string;
-}
-
-export interface ObjectValue {
-  objectType: string;
-  value: string;
-}
-
-export interface Proof {
-  id: number;
-  originalId: number;
-  name?: string;
-  type: string;
-  documentType: string;
-  proofRequestUrl: string;
-  version: number;
-  lastUpdatedAt: string | number;
-  lastUpdatedBy: User;
-  isCompleted: boolean;
-  attachments?: Attachment[];
-  discussions?: Discussion[];
-}
-
-export interface Attachment {
-  id: number;
-  parentId: number;
-  attachmentType: string;
-  attachmentSubType: string;
-  mimeType: string;
-  parentType: string;
-  createdAt: string | number;
-  createdBy: User;
-  name: string;
-  sizeInKb: number;
-  url: string;
-  urlExpiresInMillis: number;
-}
-
-export interface Discussion {
-  accessLevel: string;
-  id: number;
-  comments?: Comment[];
-  commentAttachments?: Attachment[];
-  commentCount: number;
-  createdBy: User;
-  lastCommentedAt: string | number;
-  lastCommentedUser: User;
-  parentId: number;
-  parentType: string;
-  readOnly: boolean;
-  title: string;
-}
-
-export interface Comment {
-  attachments: Attachment[];
-  createdAt: string | number;
-  createdBy: User;
-  discussionId: number;
-  id: number;
-  modifiedAt: string | number;
-  text: string;
-}
-
-export interface User {
-  email: string;
-  name: string;
-}
-
 export interface CrossSheetReference {
   endColumnId?: number;
   endRowId?: number;
@@ -532,7 +373,7 @@ export interface SummaryField {
   id: number;
   contactOptions: ContactOption[];
   createdAt: string | number;
-  createdBy: User;
+  createdBy: MiniUser;
   displayValue: string;
   format?: string;
   formula?: string;
@@ -542,7 +383,7 @@ export interface SummaryField {
   locked: boolean;
   lockedForUser: boolean;
   modifiedAt: string | number;
-  modifiedBy: User;
+  modifiedBy: MiniUser;
   objectValue: ObjectValue;
   options?: string[];
   symbol?: string;
