@@ -427,7 +427,6 @@ export interface MiniUser {
   name: string;
 }
 
-
 export enum SeatTypes {
   MEMBER = 'MEMBER',
   PROVISIONAL_MEMBER = 'PROVISIONAL_MEMBER',

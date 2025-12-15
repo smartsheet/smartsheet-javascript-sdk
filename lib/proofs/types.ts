@@ -1,6 +1,6 @@
 import type { Attachment } from '../attachments/types';
 import type { Discussion } from '../discussions/types';
-import type { MiniUser } from "../users/types";
+import type { MiniUser } from '../users/types';
 
 /**
  * Represents a proof.

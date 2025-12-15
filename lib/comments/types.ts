@@ -1,5 +1,5 @@
 import type { Attachment } from '../attachments/types';
-import type { MiniUser } from "../users/types";
+import type { MiniUser } from '../users/types';
 
 /**
  * Represents a comment in a discussion.
