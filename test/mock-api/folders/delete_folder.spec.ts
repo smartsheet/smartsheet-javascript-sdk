@@ -25,8 +25,8 @@ describe('Folders - deleteFolder endpoint tests', () => {
         };
         await client.folders.deleteFolder(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/folders/${TEST_FOLDER_ID}`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/folders/${TEST_FOLDER_ID}`);
     });
 
     it('deleteFolder all response body properties', async () => {

@@ -9,20 +9,19 @@ import {
     ERROR_500_STATUS_CODE,
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
-    ERROR_400_MESSAGE
+    ERROR_400_MESSAGE,
+    TEST_ALTERNATE_EMAIL,
+    TEST_ALTERNATE_EMAIL_BODY
 } from './common_test_constants';
 
 describe('Users - addAlternateEmail endpoint tests', () => {
     const client = createClient();
-    const TEST_EMAIL = 'alternate.email@smartsheet.com';
-    const TEST_CONFIRMED = false;
-    const TEST_BODY = [{ email: TEST_EMAIL }];
 
     it('addAlternateEmail generated url is correct', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
-            body: TEST_BODY,
+            body: TEST_ALTERNATE_EMAIL_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/users/alternate-emails/add-alternate-email/all-response-body-properties'
@@ -30,15 +29,15 @@ describe('Users - addAlternateEmail endpoint tests', () => {
         };
         await client.users.addAlternateEmail(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/alternateemails`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/users/${TEST_USER_ID}/alternateemails`);
     });
 
     it('addAlternateEmail all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
-            body: TEST_BODY,
+            body: TEST_ALTERNATE_EMAIL_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/users/alternate-emails/add-alternate-email/all-response-body-properties'
@@ -53,21 +52,21 @@ describe('Users - addAlternateEmail endpoint tests', () => {
             data: [
                 {
                     id: TEST_ALTERNATE_EMAIL_ID,
-                    confirmed: TEST_CONFIRMED,
-                    email: TEST_EMAIL
+                    confirmed: false,
+                    email: TEST_ALTERNATE_EMAIL
                 }
             ]
         });
         
         const body = JSON.parse(matchedRequest.body);
-        expect(body).toEqual(TEST_BODY);
+        expect(body).toEqual(TEST_ALTERNATE_EMAIL_BODY);
     });
 
     it('addAlternateEmail error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
-            body: TEST_BODY,
+            body: TEST_ALTERNATE_EMAIL_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/errors/500-response'
@@ -86,7 +85,7 @@ describe('Users - addAlternateEmail endpoint tests', () => {
         const requestId = crypto.randomUUID();
         const options = {
             userId: TEST_USER_ID,
-            body: TEST_BODY,
+            body: TEST_ALTERNATE_EMAIL_BODY,
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/errors/400-response'

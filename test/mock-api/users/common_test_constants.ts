@@ -47,3 +47,49 @@ export const ERROR_400_STATUS_CODE = 400;
 export const ERROR_400_MESSAGE = 'Malformed Request';
 
 export const ADD_PROFILE_IMAGE_REQUEST_BODY = Buffer.from('fake-image-data');
+
+// Common Query Parameters for list_user_plans
+export const TEST_LAST_KEY = '12345678901234569';
+export const TEST_MAX_ITEMS = 100;
+export const TEST_INCLUDE_ALL = false;
+
+// Common Query Parameters for remove_user
+export const TEST_TRANSFER_TO_USER_ID = 9876543210987654;
+export const TEST_TRANSFER_SHEETS = true;
+export const TEST_REMOVE_FROM_SHARING = true;
+
+// Common Query Parameters for add_user
+export const TEST_SEND_EMAIL = true;
+
+// Common Alternate Email Properties
+export const TEST_ALTERNATE_EMAIL_CONFIRMED = true;
+export const TEST_ALTERNATE_EMAIL_BODY = [{ email: 'alternate.email@smartsheet.com' }];
+
+// Common User Properties for getCurrentUser and getUser
+export const TEST_ACCOUNT_NAME = 'Test Account';
+export const TEST_COMPANY = 'Test Company';
+export const TEST_DEPARTMENT = 'Engineering';
+export const TEST_LOCALE = 'en_US';
+export const TEST_ROLE = 'System Admin';
+export const TEST_TIME_ZONE = 'US/Pacific';
+export const TEST_TITLE = 'Senior Engineer';
+export const TEST_WORK_PHONE = '+1234567890';
+export const TEST_JIRA_ADMIN = false;
+export const TEST_SALESFORCE_ADMIN = false;
+export const TEST_SALESFORCE_USER = false;
+
+// Common Group Properties
+export const TEST_GROUP_ID = 2222222222222222;
+export const TEST_GROUP_NAME = 'Engineering Team';
+export const TEST_GROUP_DESCRIPTION = 'Engineering department group';
+export const TEST_GROUP_OWNER = 'owner@smartsheet.com';
+export const TEST_GROUP_OWNER_ID = 3333333333333333;
+export const TEST_GROUP_CREATED_AT = '2020-01-15T10:30:00Z';
+export const TEST_GROUP_MODIFIED_AT = '2020-06-20T14:45:00Z';
+
+// Common Boolean Flags
+export const TEST_ADMIN = true;
+export const TEST_LICENSED_SHEET_CREATOR = true;
+export const TEST_GROUP_ADMIN = true;
+export const TEST_RESOURCE_VIEWER = true;
+export const TEST_IS_INTERNAL = true;

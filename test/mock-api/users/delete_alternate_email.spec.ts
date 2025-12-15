@@ -27,8 +27,8 @@ describe('Users - deleteAlternateEmail endpoint tests', () => {
         };
         await client.users.deleteAlternateEmail(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/users/${TEST_USER_ID}/alternateemails/${TEST_ALTERNATE_EMAIL_ID}`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/users/${TEST_USER_ID}/alternateemails/${TEST_ALTERNATE_EMAIL_ID}`);
     });
 
     it('deleteAlternateEmail all response body properties', async () => {

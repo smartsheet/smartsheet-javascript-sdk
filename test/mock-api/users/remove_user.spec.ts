@@ -8,14 +8,14 @@ import {
     ERROR_500_STATUS_CODE,
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
-    ERROR_400_MESSAGE
+    ERROR_400_MESSAGE,
+    TEST_TRANSFER_TO_USER_ID,
+    TEST_TRANSFER_SHEETS,
+    TEST_REMOVE_FROM_SHARING
 } from './common_test_constants';
 
 describe('Users - removeUser endpoint tests', () => {
     const client = createClient();
-    const transferToUserId = 9876543210987654;
-    const transferSheets = true;
-    const removeFromSharing = true;
 
     it('removeUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
@@ -28,8 +28,8 @@ describe('Users - removeUser endpoint tests', () => {
         };
         await client.users.removeUser(options);
         const matchedRequest = await findWireMockRequest(requestId);
-
-        expect(matchedRequest.url.includes(`/2.0/users/${TEST_USER_ID}`)).toBeTruthy();
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+        expect(parsedUrl.pathname).toEqual(`/2.0/users/${TEST_USER_ID}`);
     });
 
     it(
@@ -39,9 +39,9 @@ describe('Users - removeUser endpoint tests', () => {
             const options = {
                 userId: TEST_USER_ID,
                 queryParameters: {
-                    transferTo: transferToUserId,
-                    transferSheets: transferSheets,
-                    removeFromSharing: removeFromSharing
+                    transferTo: TEST_TRANSFER_TO_USER_ID,
+                    transferSheets: TEST_TRANSFER_SHEETS,
+                    removeFromSharing: TEST_REMOVE_FROM_SHARING
                 },
                 customProperties: {
                     'x-request-id': requestId,
@@ -50,21 +50,14 @@ describe('Users - removeUser endpoint tests', () => {
             };
             await client.users.removeUser(options);
             const matchedRequest = await findWireMockRequest(requestId);
+            const parsedUrl = new URL(matchedRequest.absoluteUrl);
+            expect(parsedUrl.pathname).toEqual(`/2.0/users/${TEST_USER_ID}`);
 
-            expect(matchedRequest.url.includes(`/2.0/users/${TEST_USER_ID}`)).toBeTruthy();
-            expect(matchedRequest.queryParams).toEqual({
-                transferTo: {
-                    key: 'transferTo',
-                    values: [transferToUserId.toString()]
-                },
-                transferSheets: {
-                    key: 'transferSheets',
-                    values: [transferSheets.toString()]
-                },
-                removeFromSharing: {
-                    key: 'removeFromSharing',
-                    values: [removeFromSharing.toString()]
-                }
+            const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+            expect(queryParamsObject).toEqual({
+                transferTo: TEST_TRANSFER_TO_USER_ID.toString(),
+                transferSheets: TEST_TRANSFER_SHEETS.toString(),
+                removeFromSharing: TEST_REMOVE_FROM_SHARING.toString()
             });
         }
     );
@@ -92,8 +85,8 @@ describe('Users - removeUser endpoint tests', () => {
             const options = {
                 userId: TEST_USER_ID,
                 queryParameters: {
-                    transferTo: transferToUserId,
-                    transferSheets: transferSheets
+                    transferTo: TEST_TRANSFER_TO_USER_ID,
+                    transferSheets: TEST_TRANSFER_SHEETS
                 },
                 customProperties: {
                     'x-request-id': requestId,
