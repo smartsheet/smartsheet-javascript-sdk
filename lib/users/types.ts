@@ -414,6 +414,21 @@ export interface UsersApi {
 // User Types
 // ============================================================================
 
+/**
+ * Basic user information used across multiple endpoints.
+ */
+export interface MiniUser {
+  /**
+   * User's email address.
+   */
+  email: string;
+
+  /**
+   * User's full name.
+   */
+  name: string;
+}
+
 export enum SeatTypes {
   MEMBER = 'MEMBER',
   PROVISIONAL_MEMBER = 'PROVISIONAL_MEMBER',
