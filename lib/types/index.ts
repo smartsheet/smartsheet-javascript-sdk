@@ -10,3 +10,4 @@ export * from './ObjectValue';
 export * from './RequestCallback';
 export * from './RequestOptions';
 export * from './SmartsheetClient';
+export * from './TokenPaginationQueryParameters';
