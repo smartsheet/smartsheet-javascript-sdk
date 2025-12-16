@@ -459,6 +459,11 @@ export interface GetSightOptions extends RequestOptions<GetSightQueryParameters,
 // ============================================================================
 
 export interface ListSightQueryParameters extends TokenPaginationQueryParameters {
+    /**
+   * Specifies the type of pagination to use. When set to 'token', enables token-based pagination.
+   */
+  paginationType?: string;
+
   /**
    * @deprecated
    * Include all results in the first page. page and page size
@@ -502,6 +507,10 @@ export interface ListSightQueryParameters extends TokenPaginationQueryParameters
 }
 
 export interface ListSightsResponse extends TokenPaginationQueryParameters {
+    /**
+   * Specifies the type of pagination to use. When set to 'token', enables token-based pagination.
+   */
+  paginationType?: string;
   /**
    * Current page number
    */

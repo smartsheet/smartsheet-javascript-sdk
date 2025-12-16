@@ -5,11 +5,6 @@ export interface TokenPaginationQueryParameters {
   lastKey?: string;
 
   /**
-   * Specifies the type of pagination to use. When set to 'token', enables token-based pagination.
-   */
-  paginationType?: string;
-
-  /**
    * The maximum number of items to return in the response. The actual number of items returned may be less than maxItems.
    */
   maxItems?: number;

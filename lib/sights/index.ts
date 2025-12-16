@@ -92,7 +92,7 @@ export function create(options: CreateOptions): SightsApi {
     listSights,
     getSight,
     deleteSight,
-    updateSight: updateSight,
+    updateSight,
     copySight,
     moveSight,
     getSightPublishStatus,
