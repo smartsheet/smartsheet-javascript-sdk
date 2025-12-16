@@ -1,7 +1,7 @@
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
-import type { PaginationWithModifiedSinceQueryParameters } from '../types/PaginationQueryParameters';
+import type { PaginationQueryParameters } from '../types/PaginationQueryParameters';
 import type { PaginationResponse } from '../types/PaginationResponse';
 
 // ============================================================================
@@ -265,7 +265,21 @@ export interface Group {
 // List Groups
 // ============================================================================
 
-export type ListGroupsQueryParameters = PaginationWithModifiedSinceQueryParameters;
+export interface ListGroupsQueryParameters extends PaginationQueryParameters {
+  /**
+   * When specified with a date and time value, response only includes
+   * the objects that are modified on or after the date and time specified.
+   * Can be a timestamp string (ISO-8601) or number (milliseconds since UNIX epoch).
+   */
+  modifiedSince?: string | number;
+
+  /**
+   * If true, dates/times are sent and received as milliseconds since
+   * the UNIX epoch (midnight on January 1, 1970 in UTC time).
+   * @defaultValue false
+   */
+  numericDates?: boolean;
+}
 
 export type ListGroupsResponse = PaginationResponse<Group>;
 

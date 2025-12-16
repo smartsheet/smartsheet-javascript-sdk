@@ -1,7 +1,7 @@
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
-import type { PaginationWithModifiedSinceQueryParameters } from '../types/PaginationQueryParameters';
+import type { PaginationQueryParameters } from '../types/PaginationQueryParameters';
 import type { PaginationResponse } from '../types/PaginationResponse';
 
 // ============================================================================
@@ -695,7 +695,7 @@ export interface GetUserOptions extends RequestOptions<undefined, undefined> {
 // List Users
 // ============================================================================
 
-export interface ListUsersQueryParameters extends PaginationWithModifiedSinceQueryParameters {
+export interface ListUsersQueryParameters extends PaginationQueryParameters {
   /**
    * A comma-separated list of emails.
    */
@@ -716,6 +716,13 @@ export interface ListUsersQueryParameters extends PaginationWithModifiedSinceQue
    * @see SeatTypes
    */
   seatType?: SeatTypes;
+
+  /**
+   * If true, dates/times are sent and received as milliseconds since
+   * the UNIX epoch (midnight on January 1, 1970 in UTC time).
+   * @defaultValue false
+   */
+  numericDates?: boolean;
 }
 
 export interface ListUsersData {

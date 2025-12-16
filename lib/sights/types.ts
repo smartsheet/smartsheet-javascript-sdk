@@ -2,7 +2,7 @@ import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { APIAccessLevel } from '../types/ApiAccessLevel';
-import type { PaginationWithModifiedSinceQueryParameters } from '../types/PaginationQueryParameters';
+import type { PaginationQueryParameters } from '../types/PaginationQueryParameters';
 import type { PaginationResponse } from '../types/PaginationResponse';
 
 export interface GetSightQueryParameters {
@@ -85,7 +85,7 @@ export interface Sight extends BaseSight {
   };
 }
 
-export interface ListSightQueryParameters extends PaginationWithModifiedSinceQueryParameters {
+export interface ListSightQueryParameters extends PaginationQueryParameters {
   /**
    * Determines which variant of accessLevel is returned for
    * "VIEWER" or "COMMENTER". When 1 is passed "COMMENTER" will
@@ -93,6 +93,20 @@ export interface ListSightQueryParameters extends PaginationWithModifiedSinceQue
    * 0 is the default.
    */
   accessApiLevel?: 1 | 0;
+
+  /**
+   * When specified with a date and time value, response only includes
+   * the objects that are modified on or after the date and time specified.
+   * Can be a timestamp string (ISO-8601) or number (milliseconds since UNIX epoch).
+   */
+  modifiedSince?: string | number;
+
+  /**
+   * If true, dates/times are sent and received as milliseconds since
+   * the UNIX epoch (midnight on January 1, 1970 in UTC time).
+   * @defaultValue false
+   */
+  numericDates?: boolean;
 }
 
 export type ListSightsOptions = RequestOptions<ListSightQueryParameters, undefined>;
