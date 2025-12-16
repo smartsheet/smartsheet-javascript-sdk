@@ -1,6 +1,8 @@
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
+import type { PaginationQueryParameters } from '../types/PaginationQueryParameters';
+import type { PaginationResponse } from '../types/PaginationResponse';
 
 // ============================================================================
 // Groups API Interface
@@ -263,62 +265,23 @@ export interface Group {
 // List Groups
 // ============================================================================
 
-export interface ListGroupsQueryParameters {
+export interface ListGroupsQueryParameters extends PaginationQueryParameters {
   /**
-   * If true, include all results (do not paginate).
-   */
-  includeAll?: boolean;
-
-  /**
-   * When specified with a date and time value, response only includes groups that were modified on or after the date and time specified.
+   * When specified with a date and time value, response only includes
+   * the objects that are modified on or after the date and time specified.
+   * Can be a timestamp string (ISO-8601) or number (milliseconds since UNIX epoch).
    */
   modifiedSince?: string | number;
 
   /**
-   * If true, dates are returned as numbers (Unix epoch time).
+   * If true, dates/times are sent and received as milliseconds since
+   * the UNIX epoch (midnight on January 1, 1970 in UTC time).
    * @defaultValue false
    */
   numericDates?: boolean;
-
-  /**
-   * Which page to return.
-   * @defaultValue 1
-   */
-  page?: number;
-
-  /**
-   * Maximum number of items per page.
-   * @defaultValue 100
-   */
-  pageSize?: number;
 }
 
-export interface ListGroupsResponse {
-  /**
-   * Array of Group objects.
-   */
-  data: Group[];
-
-  /**
-   * Current page number.
-   */
-  pageNumber: number;
-
-  /**
-   * Number of items per page.
-   */
-  pageSize?: number;
-
-  /**
-   * Total number of pages.
-   */
-  totalPages: number;
-
-  /**
-   * Total count of items.
-   */
-  totalCount: number;
-}
+export type ListGroupsResponse = PaginationResponse<Group>;
 
 // ============================================================================
 // Get Group

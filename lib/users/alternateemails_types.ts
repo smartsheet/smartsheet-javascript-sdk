@@ -2,6 +2,7 @@ import type { RequestOptions } from '../types/RequestOptions';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { AlternateEmail } from './types';
+import type { PaginationResponse } from '../types/PaginationResponse';
 
 // ============================================================================
 // Alternate Emails API Interface
@@ -194,29 +195,7 @@ export interface ListAlternateEmailsOptions extends RequestOptions<undefined, un
   userId: number;
 }
 
-export interface ListAlternateEmailsResponse {
-  /**
-   * Array of alternate email objects
-   * @see AlternateEmail
-   */
-  data: AlternateEmail[];
-  /**
-   * The current page in the full result set.
-   */
-  pageNumber: number;
-  /**
-   * Number of items in a page.
-   */
-  pageSize: number;
-  /**
-   * Total number of pages
-   */
-  totalPages: number;
-  /**
-   * Total count of alternate emails
-   */
-  totalCount: number;
-}
+export type ListAlternateEmailsResponse = PaginationResponse<AlternateEmail>;
 
 // ============================================================================
 // Make Alternate Email Primary
