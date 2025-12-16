@@ -2,6 +2,7 @@ import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { APIAccessLevel } from '../types/ApiAccessLevel';
+import type { TokenPaginationQueryParameters } from '../types';
 
 // ============================================================================
 // Sights API Interface
@@ -457,22 +458,7 @@ export interface GetSightOptions extends RequestOptions<GetSightQueryParameters,
 // List Sights
 // ============================================================================
 
-export interface ListSightQueryParameters {
-  /**
-   * The lastKey token returned from the previous page of results. If not specified, the first page of results is returned.
-   */
-  lastKey?: string;
-
-  /**
-   * Specifies the type of pagination to use. When set to 'token', enables token-based pagination.
-   */
-  paginationType?: string;
-
-  /**
-   * The maximum number of items to return in the response. The actual number of items returned may be less than maxItems.
-   */
-  maxItems?: number;
-
+export interface ListSightQueryParameters extends TokenPaginationQueryParameters {
   /**
    * @deprecated
    * Include all results in the first page. page and page size
@@ -516,11 +502,7 @@ export interface ListSightQueryParameters {
   pageSize?: number;
 }
 
-export interface ListSightsResponse {
-  /**
-   * A token that is used to retrieve the next page of results when passed as the lastKey query parameter. This value will be absent when there are no further pages.
-   */
-  lastKey?: string;
+export interface ListSightsResponse extends TokenPaginationQueryParameters {
   /**
    * Current page number
    */

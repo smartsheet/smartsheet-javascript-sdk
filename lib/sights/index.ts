@@ -89,14 +89,14 @@ export function create(options: CreateOptions): SightsApi {
   };
 
   return {
-    getSight: getSight,
-    listSights: listSights,
-    deleteSight: deleteSight,
+    listSights,
+    getSight,
+    deleteSight,
     updateSight: updateSight,
-    copySight: copySight,
-    moveSight: moveSight,
-    getSightPublishStatus: getSightPublishStatus,
-    setSightPublishStatus: setSightPublishStatus,
+    copySight,
+    moveSight,
+    getSightPublishStatus,
+    setSightPublishStatus,
     ...shares.create(options),
   };
 }
