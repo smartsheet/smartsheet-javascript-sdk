@@ -1,7 +1,7 @@
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
-import type { FailedItem } from '../webhooks/types';
+import type { FailedItem } from '../types/FailedItem';
 
 // ============================================================================
 // Folders API Interface
