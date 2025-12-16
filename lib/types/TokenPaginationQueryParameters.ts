@@ -1,5 +1,5 @@
 export interface TokenPaginationQueryParameters {
-    /**
+  /**
    * The lastKey token returned from the previous page of results. If not specified, the first page of results is returned.
    */
   lastKey?: string;
