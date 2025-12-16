@@ -477,10 +477,9 @@ export interface ListSightQueryParameters extends TokenPaginationQueryParameters
   modifiedSince?: string | number;
 
   /**
-   * You can optionally choose to receive and send dates/times in numeric format
-   * as milliseconds since the UNIX epoch (midnight on January 1, 1970 in UTC time).
-   *
-   * false is the default.
+   * If true, dates/times are sent and received as milliseconds since
+   * the UNIX epoch (midnight on January 1, 1970 in UTC time).
+   * @defaultValue false
    */
   numericDates?: boolean;
 
