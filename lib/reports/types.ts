@@ -666,7 +666,7 @@ export interface SendReportViaEmailResponse extends BaseResponseStatus {
    */
   version: number;
   /**
-   * Array of BulkItemFailure objects which represents the items that failed to be added or updated. See Bulk operations > Partial success for more information. Applicable only for bulk operations that support partial success.
+   * Array of BulkItemFailure objects which represents the items that failed to be added or updated. See Bulk operations \> Partial success for more information. Applicable only for bulk operations that support partial success.
    */
   failedItems?: FailedItem[];
 }
@@ -717,7 +717,7 @@ export interface SetReportPublishStatusOptions extends RequestOptions<undefined,
 
 export interface SetReportPublishStatusResponse extends BaseResponseStatus {
   /**
-   * Array of BulkItemFailure objects which represents the items that failed to be added or updated. See Bulk operations > Partial success for more information. Applicable only for bulk operations that support partial success.
+   * Array of BulkItemFailure objects which represents the items that failed to be added or updated. See Bulk operations \> Partial success for more information. Applicable only for bulk operations that support partial success.
    */
   failedItems?: FailedItem[];
   result: ReportPublish;
