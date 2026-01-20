@@ -3,10 +3,6 @@ import { createClient, findWireMockRequest } from '../utils/utils';
 import { expect } from '@jest/globals';
 import {
     TEST_REPORT_ID,
-    TEST_REPORT_NAME,
-    TEST_REPORT_PERMALINK,
-    TEST_REPORT_ACCESS_LEVEL,
-    TEST_MODIFIED_SINCE,
     TEST_SUCCESS_MESSAGE,
     TEST_SUCCESS_RESULT_CODE,
     ERROR_500_STATUS_CODE,
