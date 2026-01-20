@@ -722,3 +722,16 @@ export interface SetReportPublishStatusResponse extends BaseResponseStatus {
   failedItems?: FailedItem[];
   result: ReportPublish;
 }
+
+// ============================================================================
+// Delete Report
+// ============================================================================
+
+export interface DeleteReportOptions extends RequestOptions<undefined, undefined> {
+  /**
+   * Report Id
+   */
+  reportId: number;
+}
+
+export type DeleteReportResponse = BaseResponseStatus;

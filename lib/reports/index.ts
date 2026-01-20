@@ -16,6 +16,8 @@ import type {
   ReportPublish,
   SetReportPublishStatusOptions,
   SetReportPublishStatusResponse,
+  DeleteReportOptions,
+  DeleteReportResponse,
 } from './types';
 import * as constants from '../utils/constants';
 
@@ -85,6 +87,11 @@ export function create(options: CreateOptions): ReportsApi {
   ): Promise<SetReportPublishStatusResponse> => {
     const urlOptions = { url: options.apiUrls.reports + '/' + putOptions.reportId + '/publish' };
     return requestor.put({ ...optionsToSend, ...urlOptions, ...putOptions }, callback);
+  };
+
+  const deleteReport = (deleteOptions: DeleteReportOptions, callback?: RequestCallback<DeleteReportResponse>) => {
+    const urlOptions = { url: options.apiUrls.reports + '/delete/' + deleteOptions.reportId };
+    return requestor.delete({ ...optionsToSend, ...urlOptions, ...deleteOptions }, callback);
   };
 
   return {
