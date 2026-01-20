@@ -75,7 +75,7 @@ describe('Reports - deleteReport endpoint tests', () => {
         }
     });
 
-    it('listReports error 400 response', async () => {
+    it('deleteReport error 400 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             reportId: TEST_REPORT_ID,
