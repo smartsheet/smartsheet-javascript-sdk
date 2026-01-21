@@ -90,7 +90,7 @@ export function create(options: CreateOptions): ReportsApi {
   };
 
   const deleteReport = (deleteOptions: DeleteReportOptions, callback?: RequestCallback<DeleteReportResponse>) => {
-    const urlOptions = { url: options.apiUrls.reports + '/delete/' + deleteOptions.reportId };
+    const urlOptions = { url: options.apiUrls.reports + '/' + deleteOptions.reportId };
     return requestor.delete({ ...optionsToSend, ...urlOptions, ...deleteOptions }, callback);
   };
 

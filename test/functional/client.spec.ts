@@ -180,7 +180,7 @@ describe('Client Unit Tests', () => {
   describe('#reports', () => {
     it('should have reports object', () => {
       expect(smartsheet).toHaveProperty('reports');
-      expect(Object.keys(smartsheet.reports)).toHaveLength(12);
+      expect(Object.keys(smartsheet.reports)).toHaveLength(13);
     });
 
     it('should have get methods', () => {

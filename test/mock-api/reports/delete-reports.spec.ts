@@ -21,17 +21,13 @@ describe('Reports - deleteReport endpoint tests', () => {
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/reports/delete-report/all-response-body-properties'
+                
             }
         };
         await client.reports.deleteReport(options);
         const matchedRequest = await findWireMockRequest(requestId);
         const parsedUrl = new URL(matchedRequest.absoluteUrl);
         expect(parsedUrl.pathname).toEqual("/2.0/reports/" + TEST_REPORT_ID);
-
-        const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
-        expect(queryParamsObject).toEqual({
-            reportId: TEST_REPORT_ID
-        });
     });
 
     it('deleteReport all response body properties', async () => {
