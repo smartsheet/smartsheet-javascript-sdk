@@ -102,6 +102,7 @@ export function create(options: CreateOptions): ReportsApi {
     getReportAsCSV,
     getReportPublishStatus,
     setReportPublishStatus,
+    deleteReport,
     ...shares.create(options),
   };
 }

@@ -103,6 +103,7 @@ describe('Method Unit Tests', () => {
                 { name: 'getReportAsCSV', stub: 'get', options: {reportId: 123}, expectedRequest: {url: "reports/123", accept: constants.acceptHeaders.textCsv }},
                 { name: 'getReportPublishStatus', stub: 'get', options: {reportId: 123}, expectedRequest: {url: "reports/123/publish" }},
                 { name: 'setReportPublishStatus', stub: 'put', options: {reportId: 123}, expectedRequest: {url: "reports/123/publish" }},
+                { name: 'deleteReport', stub: 'delete', options: {reportId:123}, expectedRequest: {url: "reports/123"}},
             ]
         },
         {

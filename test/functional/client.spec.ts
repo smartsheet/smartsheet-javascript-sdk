@@ -195,6 +195,10 @@ describe('Client Unit Tests', () => {
       expect(smartsheet.reports).toHaveProperty('setReportPublishStatus');
       expect(smartsheet.reports).toHaveProperty('sendReportViaEmail');
     });
+
+    it('should have delete methods', () => {
+      expect(smartsheet.reports).toHaveProperty('deleteReport');
+    });
   });
 
   describe('#server', () => {
