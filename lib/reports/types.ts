@@ -178,14 +178,14 @@ export interface ReportsApi {
 
   /**
    * Deletes the specified Report.
-   * 
+   *
    * @param options - {@link DeleteReportOptions} - Configuration options for the request
    * @param callback - {@link RequestCallback}\<{@link DeleteReportResponse}\> - Optional callback function
    * @returns Promise\<{@link DeleteReportResponse}\>
-   * 
+   *
    * @remarks
    * It mirrors to the following Smartsheet REST API method: `DELETE /2.0/reports/{reportId}`
-   * 
+   *
    * @example
    * ```typescript
    * const result = await client.reports.deleteReport({
