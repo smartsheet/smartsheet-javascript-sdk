@@ -191,10 +191,16 @@ describe('Client Unit Tests', () => {
       expect(smartsheet.reports).toHaveProperty('getReportPublishStatus');
     });
 
+    it('should have create methods', () => {
+      expect(smartsheet.reports).toHaveProperty('addReportScope');
+    });
+
     it('should have update methods', () => {
       expect(smartsheet.reports).toHaveProperty('setReportPublishStatus');
       expect(smartsheet.reports).toHaveProperty('sendReportViaEmail');
-      expect(smartsheet.reports).toHaveProperty('addReportScope');
+    });
+
+    it('should have delete methods', () => {
       expect(smartsheet.reports).toHaveProperty('removeReportScope');
     });
   });
