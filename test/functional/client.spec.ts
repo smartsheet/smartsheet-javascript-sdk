@@ -180,7 +180,7 @@ describe('Client Unit Tests', () => {
   describe('#reports', () => {
     it('should have reports object', () => {
       expect(smartsheet).toHaveProperty('reports');
-      expect(Object.keys(smartsheet.reports)).toHaveLength(12);
+      expect(Object.keys(smartsheet.reports)).toHaveLength(14);
     });
 
     it('should have get methods', () => {
@@ -194,6 +194,8 @@ describe('Client Unit Tests', () => {
     it('should have update methods', () => {
       expect(smartsheet.reports).toHaveProperty('setReportPublishStatus');
       expect(smartsheet.reports).toHaveProperty('sendReportViaEmail');
+      expect(smartsheet.reports).toHaveProperty('addReportScope');
+      expect(smartsheet.reports).toHaveProperty('removeReportScope');
     });
   });
 

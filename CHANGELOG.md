@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - WireMock integration tests for contract testing for POST /2.0/users/{userId}/plans/{planId}/upgrade and POST /2.0/users/{userId}/plans/{planId}/downgrade
 - WireMock integration tests for contract testing for DELETE /2.0/users/{userId}/plans/{planId} endpoint
 - Remove trailing slashes from routes
+- Support for POST /reports/{reportId}/scope endpoint
+- Support for DELETE /reports/{reportId}/scope endpoint
 ### Updated
 - listAllUsers url generation
 - Folder structure for the Users related WireMock tests
