@@ -5,6 +5,8 @@ import {
     TEST_REPORT_ID,
     TEST_SHEET_ID,
     TEST_WORKSPACE_ID,
+    TEST_ASSET_TYPE_SHEET,
+    TEST_ASSET_TYPE_WORKSPACE,
     TEST_SUCCESS_MESSAGE,
     TEST_SUCCESS_RESULT_CODE,
     ERROR_500_STATUS_CODE,
@@ -50,11 +52,18 @@ describe('Reports - removeReportScope endpoint tests', () => {
             }
         };
         const response = await client.reports.removeReportScope(options);
+        const matchedRequest = await findWireMockRequest(requestId);
 
         expect(response).toEqual({
             message: TEST_SUCCESS_MESSAGE,
             resultCode: TEST_SUCCESS_RESULT_CODE
         });
+
+        const body = JSON.parse(matchedRequest.body);
+        expect(body).toEqual([
+            { assetType: TEST_ASSET_TYPE_SHEET, assetId: TEST_SHEET_ID },
+            { assetType: TEST_ASSET_TYPE_WORKSPACE, assetId: TEST_WORKSPACE_ID }
+        ]);
     });
 
     it('removeReportScope error 500 response', async () => {
