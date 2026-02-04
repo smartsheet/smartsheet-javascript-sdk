@@ -188,7 +188,7 @@ export interface ReportsApi {
    *
    * @remarks
    * **Who can use this operation:**
-   * - **Permissions:** EDITOR or ADMIN access to the report
+   * - **Permissions:** ADMIN or OWNER access to the report
    *
    * **Additional notes:**
    * - Maximum of 100 scope items can be added at once
@@ -225,7 +225,7 @@ export interface ReportsApi {
    *
    * @remarks
    * **Who can use this operation:**
-   * - **Permissions:** EDITOR or ADMIN access to the report
+   * - **Permissions:** ADMIN or OWNER access to the report
    *
    * **Additional notes:**
    * - Maximum of 100 scope items can be removed at once
