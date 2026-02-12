@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - listAllUsers url generation
 - Folder structure for the Users related WireMock tests
 - Update endpoint and sheet tests
+### Fixed
+- Update dependencies to mitigate vulnerabilities (especially CVE-2026-25639)
 
 ## [4.7.0] - 2025-06-30
 ### Added
