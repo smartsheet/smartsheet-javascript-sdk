@@ -175,6 +175,52 @@ export interface ReportsApi {
     options: SetReportPublishStatusOptions,
     callback?: RequestCallback<SetReportPublishStatusResponse>
   ) => Promise<SetReportPublishStatusResponse>;
+
+    /**
+   * Update a Report's definition based on the specified ID
+   * 
+   * **Note:** This endpoint supports partial updates **only on root level** properties of the report definition, 
+   * such as `filters`, `groupingCriteria` and `aggregationCriteria`. For example, you can update the report's filters 
+   * without affecting its grouping criteria. However, nested properties within these objects, 
+   * such as a specific filter or grouping criterion, cannot be updated individually and 
+   * require a full replacement of the respective section.
+   *
+   * @param options - {@link UpdateReportDefinitionOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `PATCH /reports/{reportId}/definition`
+   *
+   * @example
+   * ```typescript
+   * // Update report filters
+   * const result = await client.reports.updateReportDefinition({
+   *   reportId: 4583173393803140,
+   *   body: {
+   *     filters: {
+   *       operator: 'AND',
+   *       criteria: [
+   *         {
+   *           column: { title: 'Status', type: 'PICKLIST' },
+   *           operator: 'EQUAL',
+   *           values: ['Complete']
+   *         },
+   *         {
+   *           column: { title: 'Priority', type: 'TEXT_NUMBER' },
+   *           operator: 'IS_ONE_OF',
+   *           values: ['High', 'Critical']
+   *         }
+   *       ]
+   *     }
+   *   }
+   * });
+   * ```
+   */
+  updateReportDefinition: (
+    options: UpdateReportDefinitionOptions, 
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
 }
 
 // ============================================================================
@@ -721,4 +767,290 @@ export interface SetReportPublishStatusResponse extends BaseResponseStatus {
    */
   failedItems?: FailedItem[];
   result: ReportPublish;
+}
+
+// ============================================================================
+// Update Report Definition
+// ============================================================================
+
+export interface UpdateReportDefinitionOptions extends RequestOptions<undefined, ReportDefinition> {
+  /**
+   * reportID of the report being accessed.
+   */
+  reportId: number;
+}
+
+// ============================================================================
+// Report Definition Enums
+// ============================================================================
+
+/**
+ * Boolean operator for filter expressions.
+ */
+export enum ReportFilterOperator {
+  AND = 'AND',
+  OR = 'OR',
+}
+
+/**
+ * Filter condition operators.
+ */
+export enum ReportFilterConditionOperator {
+  EQUAL = 'EQUAL',
+  NOT_EQUAL = 'NOT_EQUAL',
+  GREATER_THAN = 'GREATER_THAN',
+  LESS_THAN = 'LESS_THAN',
+  CONTAINS = 'CONTAINS',
+  BETWEEN = 'BETWEEN',
+  TODAY = 'TODAY',
+  PAST = 'PAST',
+  FUTURE = 'FUTURE',
+  LAST_N_DAYS = 'LAST_N_DAYS',
+  NEXT_N_DAYS = 'NEXT_N_DAYS',
+  IS_BLANK = 'IS_BLANK',
+  IS_NOT_BLANK = 'IS_NOT_BLANK',
+  IS_NUMBER = 'IS_NUMBER',
+  IS_NOT_NUMBER = 'IS_NOT_NUMBER',
+  IS_DATE = 'IS_DATE',
+  IS_NOT_DATE = 'IS_NOT_DATE',
+  IS_CHECKED = 'IS_CHECKED',
+  IS_UNCHECKED = 'IS_UNCHECKED',
+  IS_ONE_OF = 'IS_ONE_OF',
+  IS_NOT_ONE_OF = 'IS_NOT_ONE_OF',
+  LESS_THAN_OR_EQUAL = 'LESS_THAN_OR_EQUAL',
+  GREATER_THAN_OR_EQUAL = 'GREATER_THAN_OR_EQUAL',
+  DOES_NOT_CONTAIN = 'DOES_NOT_CONTAIN',
+  NOT_BETWEEN = 'NOT_BETWEEN',
+  NOT_TODAY = 'NOT_TODAY',
+  NOT_PAST = 'NOT_PAST',
+  NOT_FUTURE = 'NOT_FUTURE',
+  NOT_LAST_N_DAYS = 'NOT_LAST_N_DAYS',
+  NOT_NEXT_N_DAYS = 'NOT_NEXT_N_DAYS',
+  HAS_ANY_OF = 'HAS_ANY_OF',
+  HAS_NONE_OF = 'HAS_NONE_OF',
+  HAS_ALL_OF = 'HAS_ALL_OF',
+  NOT_ALL_OF = 'NOT_ALL_OF',
+  MULTI_IS_EQUAL = 'MULTI_IS_EQUAL',
+  MULTI_IS_NOT_EQUAL = 'MULTI_IS_NOT_EQUAL',
+}
+
+/**
+ * Sorting direction for grouping and sorting criteria.
+ */
+export enum ReportSortingDirection {
+  ASCENDING = 'ASCENDING',
+  DESCENDING = 'DESCENDING',
+}
+
+/**
+ * Aggregation types for report aggregation criteria.
+ */
+export enum ReportAggregationType {
+  SUM = 'SUM',
+  AVG = 'AVG',
+  MIN = 'MIN',
+  MAX = 'MAX',
+  COUNT = 'COUNT',
+  FIRST = 'FIRST',
+  LAST = 'LAST',
+}
+
+/**
+ * Column types for report column identifiers.
+ */
+export enum ReportColumnType {
+  ABSTRACT_DATETIME = 'ABSTRACT_DATETIME',
+  CHECKBOX = 'CHECKBOX',
+  CONTACT_LIST = 'CONTACT_LIST',
+  DATE = 'DATE',
+  DATETIME = 'DATETIME',
+  DURATION = 'DURATION',
+  MULTI_CONTACT_LIST = 'MULTI_CONTACT_LIST',
+  MULTI_PICKLIST = 'MULTI_PICKLIST',
+  PICKLIST = 'PICKLIST',
+  PREDECESSOR = 'PREDECESSOR',
+  TEXT_NUMBER = 'TEXT_NUMBER',
+}
+
+/**
+ * System column types for report column identifiers.
+ */
+export enum ReportSystemColumnType {
+  AUTO_NUMBER = 'AUTO_NUMBER',
+  CREATED_BY = 'CREATED_BY',
+  CREATED_DATE = 'CREATED_DATE',
+  MODIFIED_BY = 'MODIFIED_BY',
+  MODIFIED_DATE = 'MODIFIED_DATE',
+  SHEET_NAME = 'SHEET_NAME',
+}
+
+// ============================================================================
+// Report Definition Types
+// ============================================================================
+
+/**
+ * The report definition contains filters, grouping and sorting properties of the report.
+ *
+ * Note: When groupingCriteria is defined the primary column of the report will move to the index 0 when it is first rendered by the app.
+ */
+export interface ReportDefinition {
+  /**
+   * Report filter expression.
+   */
+  filters?: ReportFilterExpression;
+  /**
+   * List of report grouping criteria.
+   */
+  groupingCriteria?: ReportGroupingCriterion[];
+  /**
+   * List of report aggregation criteria.
+   */
+  aggregationCriteria?: ReportAggregationCriterion[];
+  /**
+   * List of report sorting criteria.
+   */
+  sortingCriteria?: ReportSortingCriterion[];
+}
+
+/**
+ * Report filter expression. It is a recursive object that allows at most 3 levels.
+ *
+ * At least one of `criteria` or `nestedCriteria` has to be provided in addition to `operator`.
+ *
+ * Example:
+ * ```json
+ * {
+ *   "operator": "OR",
+ *   "nestedCriteria": [
+ *     {
+ *       "operator": "AND",
+ *       "nestedCriteria": [],
+ *       "criteria": [
+ *         {
+ *           "column": { "title": "Price", "type": "TEXT_NUMBER" },
+ *           "operator": "GREATER_THAN",
+ *           "values": ["11"]
+ *         }
+ *       ]
+ *     }
+ *   ],
+ *   "criteria": []
+ * }
+ * ```
+ */
+export interface ReportFilterExpression {
+  /**
+   * The boolean operator that will be applied to the list of `criteria` and `nestedCriteria`.
+   */
+  operator: ReportFilterOperator | string;
+  /**
+   * A recursive list of report filter expressions. Each item will be joined to the filter expression with the AND/OR operator defined on this level.
+   */
+  nestedCriteria?: ReportFilterExpression[];
+  /**
+   * Criteria objects specifying custom criteria against which to match cell values. Each item will be joined to the filter expression with the AND/OR operator defined on this level.
+   */
+  criteria?: ReportFilterCriterion[];
+}
+
+/**
+ * Represents a report filter criterion.
+ */
+export interface ReportFilterCriterion {
+  /**
+   * Object used to match a sheet column for a report.
+   */
+  column: ReportColumnIdentifier;
+  /**
+   * Condition operator.
+   */
+  operator: ReportFilterConditionOperator | string;
+  /**
+   * List of filter values.
+   */
+  values?: string[];
+}
+
+/**
+ * Report grouping criterion.
+ */
+export interface ReportGroupingCriterion {
+  /**
+   * Object used to match a sheet column for a report.
+   */
+  column: ReportColumnIdentifier;
+  /**
+   * Sorting direction within the group.
+   */
+  sortingDirection: ReportSortingDirection | string;
+  /**
+   * Indicates whether the group is expanded in the UI.
+   */
+  isExpanded?: boolean;
+}
+
+/**
+ * Report aggregation criterion.
+ */
+export interface ReportAggregationCriterion {
+  /**
+   * Object used to match a sheet column for a report.
+   */
+  column: ReportColumnIdentifier;
+  /**
+   * Type of aggregation.
+   */
+  aggregationType: ReportAggregationType | string;
+  /**
+   * Indicates whether the group is expanded in the UI.
+   */
+  isExpanded?: boolean;
+}
+
+/**
+ * Report sorting criterion.
+ */
+export interface ReportSortingCriterion {
+  /**
+   * Object used to match a sheet column for a report.
+   */
+  column: ReportColumnIdentifier;
+  /**
+   * Sorting direction.
+   */
+  sortingDirection: ReportSortingDirection | string;
+  /**
+   * Force null values to the bottom of the sorted list.
+   */
+  forceNullsToBottom?: boolean;
+}
+
+/**
+ * Object used to match a sheet column for a report. One of [`type`, `systemColumnType`] or [`primary=true`] is required.
+ *
+ * `systemColumnType` should be specified if you want to match a system column. Use `primary=true` to match primary columns. When matching primary columns `title` can be used to customize primary column name in the rendered report.
+ *
+ * **Note:** Columns in the report are matched by the combination of `title` and `type` (and `systemColumnType` if specified).
+ *
+ * **Note:** `symbol` is not used for matching and as a result `CHECKBOX` or `PICKLIST` columns with different symbols (from different sheets) can be combined into the same column in the report. You cannot combine `CHECKBOX` with `PICKLIST` into the same column in the report because they are different types.
+ */
+export interface ReportColumnIdentifier {
+  /**
+   * Column title to be matched from the source sheets.
+   *
+   * Note: If `primary` is **true** then this property can be used to customize the primary column title.
+   */
+  title?: string;
+  /**
+   * Column type to be matched from the source sheets. See Column Types.
+   */
+  type?: ReportColumnType | string;
+  /**
+   * Column type to be matched from the source sheets. See System Columns. Additionally `SHEET_NAME` is available as an extra option for reports.
+   */
+  systemColumnType?: ReportSystemColumnType | string;
+  /**
+   * Indicates if the matched column is primary.
+   */
+  primary?: boolean;
 }
