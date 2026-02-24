@@ -176,13 +176,13 @@ export interface ReportsApi {
     callback?: RequestCallback<SetReportPublishStatusResponse>
   ) => Promise<SetReportPublishStatusResponse>;
 
-    /**
+  /**
    * Update a Report's definition based on the specified ID
-   * 
-   * **Note:** This endpoint supports partial updates **only on root level** properties of the report definition, 
-   * such as `filters`, `groupingCriteria` and `aggregationCriteria`. For example, you can update the report's filters 
-   * without affecting its grouping criteria. However, nested properties within these objects, 
-   * such as a specific filter or grouping criterion, cannot be updated individually and 
+   *
+   * **Note:** This endpoint supports partial updates **only on root level** properties of the report definition,
+   * such as `filters`, `groupingCriteria` and `aggregationCriteria`. For example, you can update the report's filters
+   * without affecting its grouping criteria. However, nested properties within these objects,
+   * such as a specific filter or grouping criterion, cannot be updated individually and
    * require a full replacement of the respective section.
    *
    * @param options - {@link UpdateReportDefinitionOptions} - Configuration options for the request
@@ -218,7 +218,7 @@ export interface ReportsApi {
    * ```
    */
   updateReportDefinition: (
-    options: UpdateReportDefinitionOptions, 
+    options: UpdateReportDefinitionOptions,
     callback?: RequestCallback<BaseResponseStatus>
   ) => Promise<BaseResponseStatus>;
 }
