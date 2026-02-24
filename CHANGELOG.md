@@ -6,8 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
-- Added support for PATCH /2.0/reports{reportId}/definition endpoint
-- WireMock integration tests for contract testing for PATCH /2.0/reports{reportId}/definition endpoint
+- Added support for PATCH /2.0/reports/{reportId}/definition endpoint
+- WireMock integration tests for contract testing for PATCH /2.0/reports/{reportId}/definition endpoint
 
 ## [4.7.1] - 2026-02-12
 ### Added

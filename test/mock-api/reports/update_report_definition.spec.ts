@@ -63,7 +63,7 @@ describe('Reports - updateReportDefinition endpoint tests', () => {
         expect(matchedRequest.method).toEqual('PATCH');
     });
 
-    it('updateReportDefinition request body', async () => {
+    it('updateReportDefinition all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             reportId: TEST_REPORT_ID,
