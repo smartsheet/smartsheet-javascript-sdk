@@ -876,7 +876,6 @@ export enum ReportColumnType {
  * System column types for report column identifiers.
  */
 export enum ReportSystemColumnType {
-  AUTO_NUMBER = 'AUTO_NUMBER',
   CREATED_BY = 'CREATED_BY',
   CREATED_DATE = 'CREATED_DATE',
   MODIFIED_BY = 'MODIFIED_BY',
@@ -1019,10 +1018,6 @@ export interface ReportSortingCriterion {
    * Sorting direction.
    */
   sortingDirection: ReportSortingDirection | string;
-  /**
-   * Force null values to the bottom of the sorted list.
-   */
-  forceNullsToBottom?: boolean;
 }
 
 /**
