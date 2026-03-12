@@ -778,6 +778,10 @@ export interface UpdateReportDefinitionOptions extends RequestOptions<undefined,
    * reportID of the report being accessed.
    */
   reportId: number;
+  /**
+   * Whether the `filters` property should be updated.
+   */
+  updateFilters?: boolean;
 }
 
 // ============================================================================

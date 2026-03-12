@@ -63,6 +63,22 @@ describe('Reports - updateReportDefinition endpoint tests', () => {
         expect(matchedRequest.method).toEqual('PATCH');
     });
 
+    it('updateReportDefinition sets query parameters correctly', async () => {
+        const requestId = crypto.randomUUID();
+        const options = {
+            reportId: TEST_REPORT_ID,
+            body: testFilterOnlyBody,
+            updateFilters: true,
+            customProperties: {
+                'x-request-id': requestId,
+                'x-test-name': '/reports/update-report-definition/all-response-body-properties'
+            }
+        };
+        await client.reports.updateReportDefinition(options);
+        const matchedRequest = await findWireMockRequest(requestId);
+        expect(matchedRequest.queryParams.updateFilters.values).toContain('true');
+    });
+
     it('updateReportDefinition all response body properties', async () => {
         const requestId = crypto.randomUUID();
         const options = {
