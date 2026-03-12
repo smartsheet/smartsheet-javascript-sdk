@@ -93,11 +93,11 @@ export function create(options: CreateOptions): ReportsApi {
     patchOptions: UpdateReportDefinitionOptions,
     callback?: RequestCallback<BaseResponseStatus>
   ): Promise<BaseResponseStatus> => {
-    const urlOptions = { 
+    const urlOptions = {
       url: options.apiUrls.reports + '/' + patchOptions.reportId + '/definition',
       queryParameters: {
         updateFilters: patchOptions.updateFilters,
-      }
+      },
     };
     return requestor.patch({ ...optionsToSend, ...urlOptions, ...patchOptions }, callback);
   };
