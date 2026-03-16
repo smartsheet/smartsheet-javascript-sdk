@@ -784,6 +784,10 @@ export interface UpdateReportDefinitionOptions extends RequestOptions<undefined,
   updateFilters?: boolean;
 }
 
+export interface UpdateReportDefinitionResponse extends BaseResponseStatus {
+  result: ReportDefinition;
+}
+
 // ============================================================================
 // Report Definition Enums
 // ============================================================================
