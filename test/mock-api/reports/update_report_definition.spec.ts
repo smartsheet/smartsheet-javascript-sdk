@@ -94,7 +94,55 @@ describe('Reports - updateReportDefinition endpoint tests', () => {
 
         expect(response).toEqual({
             message: TEST_SUCCESS_MESSAGE,
-            resultCode: TEST_SUCCESS_RESULT_CODE
+            resultCode: TEST_SUCCESS_RESULT_CODE,
+            result: {
+                filters: {
+                operator: "AND",
+                criteria: [
+                    {
+                        column: {
+                            title: "Primary Column",
+                            type: "TEXT_NUMBER",
+                            primary: true
+                        },
+                        operator: "EQUAL",
+                        values: ["Test"]
+                    }
+                    ]
+                },
+                groupingCriteria: [
+                    {
+                        column: {
+                            title: "Primary Column",
+                            type: "TEXT_NUMBER",
+                            primary: true
+                        },
+                        sortingDirection: "ASCENDING",
+                        isExpanded: true
+                    }
+                ],
+                sortingCriteria: [
+                    {
+                        column: {
+                            title: "Primary Column",
+                            type: "TEXT_NUMBER",
+                            primary: true
+                        },
+                        sortingDirection: "ASCENDING"
+                    }
+                ],
+                summarizingCriteria: [
+                    {
+                        column: {
+                            title: "Primary Column",
+                            type: "TEXT_NUMBER",
+                            primary: true
+                        },
+                        aggregationType: "COUNT",
+                        isExpanded: true
+                    }
+                ]
+            }
         });
 
         const body = JSON.parse(matchedRequest.body);

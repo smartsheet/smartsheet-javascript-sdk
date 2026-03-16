@@ -180,7 +180,7 @@ export interface ReportsApi {
    * Update a Report's definition based on the specified ID
    *
    * **Note:** This endpoint supports partial updates **only on root level** properties of the report definition,
-   * such as `filters`, `groupingCriteria` and `aggregationCriteria`. For example, you can update the report's filters
+   * such as `filters`, `groupingCriteria` and `summarizingCriteria`. For example, you can update the report's filters
    * without affecting its grouping criteria. However, nested properties within these objects,
    * such as a specific filter or grouping criterion, cannot be updated individually and
    * require a full replacement of the respective section.
@@ -847,7 +847,7 @@ export enum ReportSortingDirection {
 }
 
 /**
- * Aggregation types for report aggregation criteria.
+ * Aggregation types for report summarizing criteria.
  */
 export enum ReportAggregationType {
   SUM = 'SUM',
@@ -906,9 +906,9 @@ export interface ReportDefinition {
    */
   groupingCriteria?: ReportGroupingCriterion[];
   /**
-   * List of report aggregation criteria.
+   * List of report summarizing criteria.
    */
-  aggregationCriteria?: ReportAggregationCriterion[];
+  summarizingCriteria?: ReportSummarizingCriterion[];
   /**
    * List of report sorting criteria.
    */
@@ -993,9 +993,9 @@ export interface ReportGroupingCriterion {
 }
 
 /**
- * Report aggregation criterion.
+ * Report summarizing criterion.
  */
-export interface ReportAggregationCriterion {
+export interface ReportSummarizingCriterion {
   /**
    * Object used to match a sheet column for a report.
    */
