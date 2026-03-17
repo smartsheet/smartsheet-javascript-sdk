@@ -457,5 +457,49 @@ describe('Client Unit Tests', () => {
     });
   });
 
+  describe('#createClient with logLevel', () => {
+    it('should not throw when logLevel is set to "info"', () => {
+      expect(() => {
+        smartsheetModule.createClient({ accessToken: '1234', logLevel: 'info' });
+      }).not.toThrow();
+    });
+
+    it('should not throw when logLevel is set to "warn"', () => {
+      expect(() => {
+        smartsheetModule.createClient({ accessToken: '1234', logLevel: 'warn' });
+      }).not.toThrow();
+    });
+
+    it('should not throw when logLevel is set to "error"', () => {
+      expect(() => {
+        smartsheetModule.createClient({ accessToken: '1234', logLevel: 'error' });
+      }).not.toThrow();
+    });
+
+    it('should not throw when logLevel is set to "verbose"', () => {
+      expect(() => {
+        smartsheetModule.createClient({ accessToken: '1234', logLevel: 'verbose' });
+      }).not.toThrow();
+    });
+
+    it('should not throw when logLevel is set to "debug"', () => {
+      expect(() => {
+        smartsheetModule.createClient({ accessToken: '1234', logLevel: 'debug' });
+      }).not.toThrow();
+    });
+
+    it('should not throw when logLevel is set to "silly"', () => {
+      expect(() => {
+        smartsheetModule.createClient({ accessToken: '1234', logLevel: 'silly' });
+      }).not.toThrow();
+    });
+
+    it('should throw when logLevel is set to an invalid value', () => {
+      expect(() => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        smartsheetModule.createClient({ accessToken: '1234', logLevel: 'invalidLevel' as any });
+      }).toThrow();
+    });
+  });
 
 });
