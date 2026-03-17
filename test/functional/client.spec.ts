@@ -488,6 +488,12 @@ describe('Client Unit Tests', () => {
       }).not.toThrow();
     });
 
+    it('should not throw when logLevel is set to "silly"', () => {
+      expect(() => {
+        smartsheetModule.createClient({ accessToken: '1234', logLevel: 'silly' });
+      }).not.toThrow();
+    });
+
     it('should throw when logLevel is set to an invalid value', () => {
       expect(() => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
