@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [x.x.x] - Unreleased
+### Fixed
+- getSheet API returns 404 Not Found for existing sheet [#161](https://github.com/smartsheet/smartsheet-javascript-sdk/issues/161)
+
 ## [4.7.1] - 2026-02-12
 ### Added
 - WiremMock integration tests for contract testing for GET /2.0/users/{userId}/plans and GET /2.0/users endpoints
