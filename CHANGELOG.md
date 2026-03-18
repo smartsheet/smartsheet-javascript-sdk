@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [4.7.2] - 2026-03-17
 ### Fixed
 - App crashing after updating to v4.7.1 with logLevel set to 'info' [#158](https://github.com/smartsheet/smartsheet-javascript-sdk/issues/158)
+- getSheet API returns 404 Not Found for existing sheet [#161](https://github.com/smartsheet/smartsheet-javascript-sdk/issues/161)
 
 ## [4.7.1] - 2026-02-12
 ### Added
