@@ -50,7 +50,7 @@ smartsheet.sheets.listSheets(options)
     const sheetId = result.data[0].id;  // Choose the first sheet
 
     // Load one sheet
-    smartsheet.sheets.getSheet({id: sheetId})
+    smartsheet.sheets.getSheet({sheetId: sheetId})
       .then(function(sheetInfo) {
         console.log(sheetInfo);
       })
