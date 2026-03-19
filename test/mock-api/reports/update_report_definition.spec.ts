@@ -60,7 +60,7 @@ describe('Reports - updateReportDefinition endpoint tests', () => {
         };
         await client.reports.updateReportDefinition(options);
         const matchedRequest = await findWireMockRequest(requestId);
-        expect(matchedRequest.method).toEqual('PATCH');
+        expect(matchedRequest.method).toEqual('PUT');
     });
 
     it('updateReportDefinition sets query parameters correctly', async () => {
@@ -95,54 +95,6 @@ describe('Reports - updateReportDefinition endpoint tests', () => {
         expect(response).toEqual({
             message: TEST_SUCCESS_MESSAGE,
             resultCode: TEST_SUCCESS_RESULT_CODE,
-            result: {
-                filters: {
-                operator: "AND",
-                criteria: [
-                    {
-                        column: {
-                            title: "Primary Column",
-                            type: "TEXT_NUMBER",
-                            primary: true
-                        },
-                        operator: "EQUAL",
-                        values: ["Test"]
-                    }
-                    ]
-                },
-                groupingCriteria: [
-                    {
-                        column: {
-                            title: "Primary Column",
-                            type: "TEXT_NUMBER",
-                            primary: true
-                        },
-                        sortingDirection: "ASCENDING",
-                        isExpanded: true
-                    }
-                ],
-                sortingCriteria: [
-                    {
-                        column: {
-                            title: "Primary Column",
-                            type: "TEXT_NUMBER",
-                            primary: true
-                        },
-                        sortingDirection: "ASCENDING"
-                    }
-                ],
-                summarizingCriteria: [
-                    {
-                        column: {
-                            title: "Primary Column",
-                            type: "TEXT_NUMBER",
-                            primary: true
-                        },
-                        aggregationType: "COUNT",
-                        isExpanded: true
-                    }
-                ]
-            }
         });
 
         const body = JSON.parse(matchedRequest.body);

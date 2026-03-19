@@ -17,7 +17,6 @@ import type {
   SetReportPublishStatusOptions,
   SetReportPublishStatusResponse,
   UpdateReportDefinitionOptions,
-  UpdateReportDefinitionResponse,
 } from './types';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import * as constants from '../utils/constants';
@@ -92,15 +91,15 @@ export function create(options: CreateOptions): ReportsApi {
 
   const updateReportDefinition = (
     patchOptions: UpdateReportDefinitionOptions,
-    callback?: RequestCallback<UpdateReportDefinitionResponse>
-  ): Promise<UpdateReportDefinitionResponse> => {
+    callback?: RequestCallback<BaseResponseStatus>
+  ): Promise<BaseResponseStatus> => {
     const urlOptions = {
       url: options.apiUrls.reports + '/' + patchOptions.reportId + '/definition',
       queryParameters: {
         updateFilters: patchOptions.updateFilters,
       },
     };
-    return requestor.patch({ ...optionsToSend, ...urlOptions, ...patchOptions }, callback);
+    return requestor.put({ ...optionsToSend, ...urlOptions, ...patchOptions }, callback);
   };
 
   return {
