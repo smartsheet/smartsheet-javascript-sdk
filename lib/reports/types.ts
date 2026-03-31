@@ -863,15 +863,14 @@ export enum ReportAggregationType {
  * Column types for report column identifiers.
  */
 export enum ReportColumnType {
-  ABSTRACT_DATETIME = 'ABSTRACT_DATETIME',
   CHECKBOX = 'CHECKBOX',
-  CONTACT_LIST = 'CONTACT_LIST',
   DATE = 'DATE',
   DATETIME = 'DATETIME',
   DURATION = 'DURATION',
+  CONTACT_LIST = 'CONTACT_LIST',
   MULTI_CONTACT_LIST = 'MULTI_CONTACT_LIST',
-  MULTI_PICKLIST = 'MULTI_PICKLIST',
   PICKLIST = 'PICKLIST',
+  MULTI_PICKLIST = 'MULTI_PICKLIST',
   PREDECESSOR = 'PREDECESSOR',
   TEXT_NUMBER = 'TEXT_NUMBER',
 }
@@ -884,7 +883,7 @@ export enum ReportSystemColumnType {
   CREATED_DATE = 'CREATED_DATE',
   MODIFIED_BY = 'MODIFIED_BY',
   MODIFIED_DATE = 'MODIFIED_DATE',
-  SHEET_NAME = 'SHEET_NAME',
+  AUTO_NUMBER = 'AUTO_NUMBER',
 }
 
 // ============================================================================
@@ -916,42 +915,68 @@ export interface ReportDefinition {
 }
 
 /**
- * Report filter expression. It is a recursive object that allows at most 3 levels.
+ * An expression to filter on report columns. It is a recursive object that allows at most three levels.
  *
- * At least one of `criteria` or `nestedCriteria` has to be provided in addition to `operator`.
+ * It must include `operator` and at least one of the following: `criteria` or `nestedCriteria`
  *
- * Example:
+ * Here is a two-level example:
+ *
  * ```json
  * {
  *   "operator": "OR",
  *   "nestedCriteria": [
  *     {
  *       "operator": "AND",
- *       "nestedCriteria": [],
  *       "criteria": [
  *         {
  *           "column": { "title": "Price", "type": "TEXT_NUMBER" },
  *           "operator": "GREATER_THAN",
  *           "values": ["11"]
+ *         },
+ *         {
+ *           "column": { "primary": true },
+ *           "operator": "CONTAINS",
+ *           "values": ["PROJ-1"]
+ *         }
+ *       ]
+ *     },
+ *     {
+ *       "operator": "AND",
+ *       "criteria": [
+ *         {
+ *           "column": { "title": "Quantity", "type": "TEXT_NUMBER" },
+ *           "operator": "LESS_THAN",
+ *           "values": ["12"]
+ *         },
+ *         {
+ *           "column": { "title": "Sold Out", "type": "CHECKBOX" },
+ *           "operator": "IS_CHECKED"
  *         }
  *       ]
  *     }
- *   ],
- *   "criteria": []
+ *   ]
  * }
+ * ```
+ *
+ * It's equivalent to the following pseudo logic:
+ *
+ * ```
+ * ("Price" > 11 AND "Primary" CONTAINS "PROJ-1")
+ * OR
+ * ("Quantity" < 12 AND "Sold Out" IS_CHECKED)
  * ```
  */
 export interface ReportFilterExpression {
   /**
-   * The boolean operator that will be applied to the list of `criteria` and `nestedCriteria`.
+   * The boolean operator to apply to the list of `criteria` and `nestedCriteria`.
    */
   operator: ReportFilterOperator | string;
   /**
-   * A recursive list of report filter expressions. Each item will be joined to the filter expression with the AND/OR operator defined on this level.
+   * A recursive list of report filter expressions. Each item is joined to the filter expression with the AND/OR operator defined on this level.
    */
   nestedCriteria?: ReportFilterExpression[];
   /**
-   * Criteria objects specifying custom criteria against which to match cell values. Each item will be joined to the filter expression with the AND/OR operator defined on this level.
+   * Criteria objects specifying custom criteria against which to match cell values. Each item is joined to the filter expression with the AND/OR operator defined on this level.
    */
   criteria?: ReportFilterCriterion[];
 }
@@ -1004,10 +1029,6 @@ export interface ReportSummarizingCriterion {
    * Type of aggregation.
    */
   aggregationType: ReportAggregationType | string;
-  /**
-   * Indicates whether the group is expanded in the UI.
-   */
-  isExpanded?: boolean;
 }
 
 /**
@@ -1025,31 +1046,38 @@ export interface ReportSortingCriterion {
 }
 
 /**
- * Object used to match a sheet column for a report. One of [`type`, `systemColumnType`] or [`primary=true`] is required.
+ * An object for matching a source sheet column for a report. It requires one of:
  *
- * `systemColumnType` should be specified if you want to match a system column. Use `primary=true` to match primary columns. When matching primary columns `title` can be used to customize primary column name in the rendered report.
+ * - [`type`, `title`] for **regular columns**
+ * - [`type`, `systemColumnType`] for **system columns**
+ * - [`type=TEXT_NUMBER`, `primary=true`] for the **primary column**
+ * - [`type=TEXT_NUMBER`, `sheetNameColumn=true`] for the special **sheet name report column**
  *
- * **Note:** Columns in the report are matched by the combination of `title` and `type` (and `systemColumnType` if specified).
+ * **Note:** You can combine multiple `CHECKBOX` columns or multiple `PICKLIST` columns from different sheets into a single report column, even if their underlying symbols differ. However, you can't combine a `CHECKBOX` column with a `PICKLIST` column, because they're different types.
  *
- * **Note:** `symbol` is not used for matching and as a result `CHECKBOX` or `PICKLIST` columns with different symbols (from different sheets) can be combined into the same column in the report. You cannot combine `CHECKBOX` with `PICKLIST` into the same column in the report because they are different types.
+ * **Note:** The system column type `AUTO_NUMBER` is matched together with columns having the same `title` and `type=TEXT_NUMBER`. Therefore, `title` is a required property in this case.
  */
 export interface ReportColumnIdentifier {
   /**
-   * Column title to be matched from the source sheets.
+   * Title of a column to match.
    *
-   * Note: If `primary` is **true** then this property can be used to customize the primary column title.
+   * **Note:** If you specified `primary=true` to match primary columns, you can set the resulting report column title to this value.
    */
   title?: string;
   /**
-   * Column type to be matched from the source sheets. See Column Types.
+   * Type of column to match. See [Column Types](/api/smartsheet/openapi/columns).
    */
   type?: ReportColumnType | string;
   /**
-   * Column type to be matched from the source sheets. See System Columns. Additionally `SHEET_NAME` is available as an extra option for reports.
+   * System column type to match. See [System Columns](/api/smartsheet/openapi/columns).
    */
   systemColumnType?: ReportSystemColumnType | string;
   /**
-   * Indicates if the matched column is primary.
+   * Set this to `true` to match the primary column.
    */
   primary?: boolean;
+  /**
+   * Set this to `true` to match the special "Sheet Name" report column.
+   */
+  sheetNameColumn?: boolean;
 }
