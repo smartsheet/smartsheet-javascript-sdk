@@ -5,16 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [x.x.x] - Unreleased
+## [4.7.2] - 2026-03-17
+### Fixed
+- App crashing after updating to v4.7.1 with logLevel set to 'info' [#158](https://github.com/smartsheet/smartsheet-javascript-sdk/issues/158)
+- getSheet API returns 404 Not Found for existing sheet [#161](https://github.com/smartsheet/smartsheet-javascript-sdk/issues/161)
+
+## [4.7.1] - 2026-02-12
 ### Added
 - WiremMock integration tests for contract testing for GET /2.0/users/{userId}/plans and GET /2.0/users endpoints
 - WireMock integration tests for contract testing for POST /2.0/users/{userId}/plans/{planId}/upgrade and POST /2.0/users/{userId}/plans/{planId}/downgrade
 - WireMock integration tests for contract testing for DELETE /2.0/users/{userId}/plans/{planId} endpoint
 - Remove trailing slashes from routes
+- Support for POST /reports/{reportId}/scope endpoint
+- Support for DELETE /reports/{reportId}/scope endpoint
 ### Updated
 - listAllUsers url generation
 - Folder structure for the Users related WireMock tests
 - Update endpoint and sheet tests
+### Fixed
+- Update dependencies to mitigate vulnerabilities (especially CVE-2026-25639)
 
 ## [4.7.0] - 2025-06-30
 ### Added

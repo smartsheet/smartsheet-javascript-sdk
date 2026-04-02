@@ -69,7 +69,7 @@ function hasMultipleLogOptions(clientOptions) {
 }
 
 function buildLoggerFromLevel(logLevel) {
-  if (winston.level[logLevel] == null) {
+  if (winston.config.npm.levels[logLevel] == null) {
     throw new Error(
       'Smartsheet client received configuration with invalid log level ' +
         `'${logLevel}'. Use one of the standard Winston log levels.`
