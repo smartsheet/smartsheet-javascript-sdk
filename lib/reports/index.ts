@@ -17,6 +17,8 @@ import type {
   ReportPublish,
   SetReportPublishStatusOptions,
   SetReportPublishStatusResponse,
+  DeleteReportOptions,
+  DeleteReportResponse,
   AddReportScopeOptions,
   RemoveReportScopeOptions,
 } from './types';
@@ -90,6 +92,11 @@ export function create(options: CreateOptions): ReportsApi {
     return requestor.put({ ...optionsToSend, ...urlOptions, ...putOptions }, callback);
   };
 
+  const deleteReport = (deleteOptions: DeleteReportOptions, callback?: RequestCallback<DeleteReportResponse>) => {
+    const urlOptions = { url: options.apiUrls.reports + '/' + deleteOptions.reportId };
+    return requestor.delete({ ...optionsToSend, ...urlOptions, ...deleteOptions }, callback);
+  };
+
   const addReportScope = (
     postOptions: AddReportScopeOptions,
     callback?: RequestCallback<BaseResponseStatus>
@@ -114,6 +121,7 @@ export function create(options: CreateOptions): ReportsApi {
     getReportAsCSV,
     getReportPublishStatus,
     setReportPublishStatus,
+    deleteReport,
     addReportScope,
     removeReportScope,
     ...shares.create(options),
