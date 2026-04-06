@@ -61,5 +61,19 @@ describe('Client Unit Tests', () => {
         expect(spyGet.mock.calls[2][0]).toHaveProperty('url', 'sheets/100');
       }
     );
+
+    it(
+      'should handle legacy id option with correct URL formatting',
+      async () => {
+        // Test that the legacy { id: ... } syntax still works with proper slash separator
+        // This is a regression test for issue #163
+        await requestor.get({ url: 'sheets', id: 12345 });
+        
+        // Verify the URL was constructed correctly with slash separator
+        const callArgs = spyGet.mock.calls[0][0];
+        expect(callArgs.url).toBe('sheets');
+        expect(callArgs.id).toBe(12345);
+      }
+    );
   });
 });
