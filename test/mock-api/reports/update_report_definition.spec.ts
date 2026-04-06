@@ -48,7 +48,7 @@ describe('Reports - updateReportDefinition endpoint tests', () => {
         expect(parsedUrl.pathname).toEqual(`/2.0/reports/${TEST_REPORT_ID}/definition`);
     });
 
-    it('updateReportDefinition uses PATCH method', async () => {
+    it('updateReportDefinition uses PUT method', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             reportId: TEST_REPORT_ID,
