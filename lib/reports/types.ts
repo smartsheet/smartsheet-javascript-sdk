@@ -197,7 +197,7 @@ export interface ReportsApi {
     options: DeleteReportOptions,
     callback?: RequestCallback<DeleteReportResponse>
   ) => Promise<DeleteReportResponse>;
-  
+
   /**
    * Add sheets and/or workspaces to a report's scope.
    *
