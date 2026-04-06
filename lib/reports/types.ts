@@ -221,6 +221,101 @@ export interface ReportsApi {
     options: UpdateReportDefinitionOptions,
     callback?: RequestCallback<BaseResponseStatus>
   ) => Promise<BaseResponseStatus>;
+
+  /**
+   * Deletes the specified Report.
+   *
+   * @param options - {@link DeleteReportOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link DeleteReportResponse}\> - Optional callback function
+   * @returns Promise\<{@link DeleteReportResponse}\>
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `DELETE /2.0/reports/{reportId}`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.reports.deleteReport({
+   *   reportId: 11235813
+   * });
+   * ```
+   */
+  deleteReport: (
+    options: DeleteReportOptions,
+    callback?: RequestCallback<DeleteReportResponse>
+  ) => Promise<DeleteReportResponse>;
+
+  /**
+   * Add sheets and/or workspaces to a report's scope.
+   *
+   * This operation allows you to expand the data sources included in a report by adding
+   * sheets or workspaces. The report will then include data from these newly added sources.
+   *
+   * @param options - {@link AddReportScopeOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** ADMIN or OWNER access to the report
+   *
+   * **Additional notes:**
+   * - Maximum of 100 scope items can be added at once
+   * - Requires READ_SHEETS OAuth2 scope or API Token authentication
+   *
+   * It mirrors to the following Smartsheet REST API method: `POST /reports/{reportId}/scope`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.reports.addReportScope({
+   *   reportId: 1234567890,
+   *   body: [
+   *     { assetType: 'SHEET', assetId: 9876543210 },
+   *     { assetType: 'WORKSPACE', assetId: 1122334455 }
+   *   ]
+   * });
+   * console.log(result.message); // 'SUCCESS'
+   * ```
+   */
+  addReportScope: (
+    options: AddReportScopeOptions,
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
+
+  /**
+   * Remove sheets and/or workspaces from a report's scope.
+   *
+   * This operation allows you to remove data sources from a report. The report will
+   * no longer include data from these removed sources.
+   *
+   * @param options - {@link RemoveReportScopeOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** ADMIN or OWNER access to the report
+   *
+   * **Additional notes:**
+   * - Maximum of 100 scope items can be removed at once
+   * - Requires READ_SHEETS OAuth2 scope or API Token authentication
+   *
+   * It mirrors to the following Smartsheet REST API method: `DELETE /reports/{reportId}/scope`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.reports.removeReportScope({
+   *   reportId: 1234567890,
+   *   body: [
+   *     { assetType: 'SHEET', assetId: 9876543210 }
+   *   ]
+   * });
+   * console.log(result.message); // 'SUCCESS'
+   * ```
+   */
+  removeReportScope: (
+    options: RemoveReportScopeOptions,
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
 }
 
 // ============================================================================
@@ -563,6 +658,30 @@ Only returned in a response if readOnlyFullEnabled = true.
    * Deprecated Indicates whether the left nav toolbar is displayed. The default, or true, is to display the toolbar. If false, hides the toolbar.
    */
   readOnlyFullShowToolbar?: boolean;
+}
+
+/**
+ * Asset types that can be included in a report's scope.
+ */
+export enum ReportAssetType {
+  SHEET = 'SHEET',
+  WORKSPACE = 'WORKSPACE',
+}
+
+/**
+ * Represents an asset (sheet or workspace) in a report's scope.
+ */
+export interface ReportScopeAsset {
+  /**
+   * The asset type to be included in the scope of the report.
+   * @see ReportAssetType
+   */
+  assetType: ReportAssetType;
+
+  /**
+   * The ID of the asset according to its assetType.
+   */
+  assetId: number;
 }
 
 // ============================================================================
@@ -1080,4 +1199,45 @@ export interface ReportColumnIdentifier {
    * Set this to `true` to match the special "Sheet Name" report column.
    */
   sheetNameColumn?: boolean;
+}
+
+// ============================================================================
+// Delete Report
+// ============================================================================
+
+export interface DeleteReportOptions extends RequestOptions<undefined, undefined> {
+  /**
+   * Report Id
+   */
+  reportId: number;
+}
+
+export type DeleteReportResponse = BaseResponseStatus;
+
+// ============================================================================
+// Add Report Scope
+// ============================================================================
+
+/**
+ * Options for adding report scope.
+ */
+export interface AddReportScopeOptions extends RequestOptions<never, ReportScopeAsset[]> {
+  /**
+   * Report ID.
+   */
+  reportId: number;
+}
+
+// ============================================================================
+// Remove Report Scope
+// ============================================================================
+
+/**
+ * Options for removing report scope.
+ */
+export interface RemoveReportScopeOptions extends RequestOptions<never, ReportScopeAsset[]> {
+  /**
+   * Report ID.
+   */
+  reportId: number;
 }

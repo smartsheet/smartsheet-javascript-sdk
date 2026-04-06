@@ -7,7 +7,8 @@ const wiremockUrl = 'http://127.0.0.1:8082';
 export function createClient() {
     return smartsheet.createClient({
         accessToken: 'test_token',
-        baseUrl: baseUrl
+        baseUrl: baseUrl,
+        logLevel: 'info',
     });
 }
 

@@ -1,4 +1,5 @@
 import shareModule from '../share/share';
+import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { CreateOptions } from '../types/CreateOptions';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
@@ -17,8 +18,11 @@ import type {
   SetReportPublishStatusOptions,
   SetReportPublishStatusResponse,
   UpdateReportDefinitionOptions,
+  DeleteReportOptions,
+  DeleteReportResponse,
+  AddReportScopeOptions,
+  RemoveReportScopeOptions,
 } from './types';
-import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import * as constants from '../utils/constants';
 
 export function create(options: CreateOptions): ReportsApi {
@@ -102,6 +106,27 @@ export function create(options: CreateOptions): ReportsApi {
     return requestor.put({ ...optionsToSend, ...urlOptions, ...patchOptions }, callback);
   };
 
+  const deleteReport = (deleteOptions: DeleteReportOptions, callback?: RequestCallback<DeleteReportResponse>) => {
+    const urlOptions = { url: options.apiUrls.reports + '/' + deleteOptions.reportId };
+    return requestor.delete({ ...optionsToSend, ...urlOptions, ...deleteOptions }, callback);
+  };
+
+  const addReportScope = (
+    postOptions: AddReportScopeOptions,
+    callback?: RequestCallback<BaseResponseStatus>
+  ): Promise<BaseResponseStatus> => {
+    const urlOptions = { url: options.apiUrls.reports + '/' + postOptions.reportId + '/scope' };
+    return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
+  };
+
+  const removeReportScope = (
+    deleteOptions: RemoveReportScopeOptions,
+    callback?: RequestCallback<BaseResponseStatus>
+  ): Promise<BaseResponseStatus> => {
+    const urlOptions = { url: options.apiUrls.reports + '/' + deleteOptions.reportId + '/scope' };
+    return requestor.delete({ ...optionsToSend, ...urlOptions, ...deleteOptions }, callback);
+  };
+
   return {
     listReports,
     getReport,
@@ -111,6 +136,9 @@ export function create(options: CreateOptions): ReportsApi {
     getReportPublishStatus,
     setReportPublishStatus,
     updateReportDefinition,
+    deleteReport,
+    addReportScope,
+    removeReportScope,
     ...shares.create(options),
   };
 }
