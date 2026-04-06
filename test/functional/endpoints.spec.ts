@@ -10,7 +10,7 @@ describe('Method Unit Tests', () => {
     const testGroups = [
         {
             name: 'contacts',
-        methods: [
+            methods: [
                 { name: 'getContact', stub: 'get', options: {id: 1234}, expectedRequest: {url: "contacts/1234" }},
                 { name: 'listContacts', stub: 'get', options: undefined, expectedRequest: {url: "contacts" }},
             ]
@@ -33,7 +33,6 @@ describe('Method Unit Tests', () => {
                 { name: 'addSightToFavorites', stub: 'post', options: { objectId: 123 }, expectedRequest: {url: "favorites", body: { objectId: 123, type: 'sight' } }},
                 { name: 'addWorkspaceToFavorites', stub: 'post', options: { objectId: 123 }, expectedRequest: {url: "favorites", body: { objectId: 123, type: 'workspace' } }},
                 { name: 'addMultipleToFavorites', stub: 'post', options: { body: [{objectId: 123, type: 'workspace'}] }, expectedRequest: {url: "favorites", body: [{ objectId: 123, type: 'workspace' }] }},
-                { name: 'removeSheetFromFavorites', stub: 'delete', options: { favoriteId: 123 }, expectedRequest: {url: "favorites/sheet/123" }},
                 { name: 'removeSheetFromFavorites', stub: 'delete', options: { favoriteId: 123 }, expectedRequest: {url: "favorites/sheet/123" }},
                 { name: 'removeFolderFromFavorites', stub: 'delete', options: { favoriteId: 123 }, expectedRequest: {url: "favorites/folder/123" }},
                 { name: 'removeReportFromFavorites', stub: 'delete', options: { favoriteId: 123 }, expectedRequest: {url: "favorites/report/123" }},
