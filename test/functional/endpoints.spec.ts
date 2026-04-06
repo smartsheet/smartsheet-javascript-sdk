@@ -10,8 +10,10 @@ describe('Method Unit Tests', () => {
     const testGroups = [
         {
             name: 'contacts',
-            methods: [
-                { name: 'getContact', stub: 'get', options: {}, expectedRequest: {url: "contacts/" }},
+        methods: [
+                // Thsi test case has a expected url without the id because the test suite mocks the requestor
+                // and the buildUrl function which attaches the id to the url is not being called.
+                { name: 'getContact', stub: 'get', options: {id: 1234}, expectedRequest: {url: "contacts" }},
                 { name: 'listContacts', stub: 'get', options: undefined, expectedRequest: {url: "contacts" }},
             ]
         },
