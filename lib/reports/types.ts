@@ -853,6 +853,8 @@ export interface DeleteReportOptions extends RequestOptions<undefined, undefined
   reportId: number;
 }
 
+export type DeleteReportResponse = BaseResponseStatus;
+
 // ============================================================================
 // Add Report Scope
 // ============================================================================
@@ -866,8 +868,6 @@ export interface AddReportScopeOptions extends RequestOptions<never, ReportScope
    */
   reportId: number;
 }
-
-export type DeleteReportResponse = BaseResponseStatus;
 // ============================================================================
 // Remove Report Scope
 // ============================================================================
