@@ -194,7 +194,7 @@ export interface ReportsApi {
    *
    * @example
    * ```typescript
-   * // Update report filters
+   * // Update report filters with different value types
    * const result = await client.reports.updateReportDefinition({
    *   reportId: 4583173393803140,
    *   body: {
@@ -204,12 +204,22 @@ export interface ReportsApi {
    *         {
    *           column: { title: 'Status', type: 'PICKLIST' },
    *           operator: 'EQUAL',
-   *           values: ['Complete']
+   *           values: ['Complete']  // String values
    *         },
    *         {
    *           column: { title: 'Priority', type: 'TEXT_NUMBER' },
-   *           operator: 'IS_ONE_OF',
-   *           values: ['High', 'Critical']
+   *           operator: 'GREATER_THAN',
+   *           values: [5]  // Numeric values
+   *         },
+   *         {
+   *           column: { title: 'Due Date', type: 'DATE' },
+   *           operator: 'GREATER_THAN',
+   *           values: [{ objectType: 'DATE', value: '2024-01-01' }]  // Date object
+   *         },
+   *         {
+   *           column: { title: 'Assigned To', type: 'CONTACT_LIST' },
+   *           operator: 'EQUAL',
+   *           values: [{ objectType: 'CURRENT_USER', value: '' }]  // Current user filter
    *         }
    *       ]
    *     }
@@ -1038,7 +1048,7 @@ export interface ReportDefinition {
  *
  * It must include `operator` and at least one of the following: `criteria` or `nestedCriteria`
  *
- * Here is a two-level example:
+ * Here is a two-level example with different value types:
  *
  * ```json
  * {
@@ -1050,7 +1060,7 @@ export interface ReportDefinition {
  *         {
  *           "column": { "title": "Price", "type": "TEXT_NUMBER" },
  *           "operator": "GREATER_THAN",
- *           "values": ["11"]
+ *           "values": [100]
  *         },
  *         {
  *           "column": { "primary": true },
@@ -1063,13 +1073,14 @@ export interface ReportDefinition {
  *       "operator": "AND",
  *       "criteria": [
  *         {
- *           "column": { "title": "Quantity", "type": "TEXT_NUMBER" },
- *           "operator": "LESS_THAN",
- *           "values": ["12"]
+ *           "column": { "title": "Due Date", "type": "DATE" },
+ *           "operator": "GREATER_THAN",
+ *           "values": [{ "objectType": "DATE", "value": "2024-01-01" }]
  *         },
  *         {
- *           "column": { "title": "Sold Out", "type": "CHECKBOX" },
- *           "operator": "IS_CHECKED"
+ *           "column": { "title": "Assigned To", "type": "CONTACT_LIST" },
+ *           "operator": "EQUAL",
+ *           "values": [{ "objectType": "CURRENT_USER", "value": "" }]
  *         }
  *       ]
  *     }
@@ -1080,9 +1091,9 @@ export interface ReportDefinition {
  * It's equivalent to the following pseudo logic:
  *
  * ```
- * ("Price" > 11 AND "Primary" CONTAINS "PROJ-1")
+ * (Price > 100 AND Primary CONTAINS "PROJ-1")
  * OR
- * ("Quantity" < 12 AND "Sold Out" IS_CHECKED)
+ * (Due Date > 2024-01-01 AND Assigned To = CURRENT_USER)
  * ```
  */
 export interface ReportFilterExpression {
@@ -1101,6 +1112,31 @@ export interface ReportFilterExpression {
 }
 
 /**
+ * Represents a filter value object for special filter types.
+ * Used for date-based filters and current user filters.
+ */
+export interface ReportFilterValueObject {
+  /**
+   * Type of the object value.
+   * - `DATE`: For date-based filter values
+   * - `CURRENT_USER`: For filtering by the current user
+   */
+  objectType: 'DATE' | 'CURRENT_USER';
+  /**
+   * The value associated with the object type.
+   * For DATE objects, this would be a date string.
+   * For CURRENT_USER, this represents the user identifier.
+   */
+  value: string;
+}
+
+/**
+ * Union type for report filter values.
+ * Can be a string, number, null, or a filter value object.
+ */
+export type ReportFilterValue = string | number | null | ReportFilterValueObject;
+
+/**
  * Represents a report filter criterion.
  */
 export interface ReportFilterCriterion {
@@ -1114,8 +1150,29 @@ export interface ReportFilterCriterion {
   operator: ReportFilterConditionOperator | string;
   /**
    * List of filter values.
+   *
+   * Values can be:
+   * - `string`: Regular text values (nullable)
+   * - `number`: Numeric values
+   * - `null`: Explicit null values
+   * - `ReportFilterValueObject`: Special object values for dates or current user
+   *
+   * @example
+   * ```typescript
+   * // String values
+   * values: ["Complete", "In Progress"]
+   *
+   * // Numeric values
+   * values: [100, 200]
+   *
+   * // Date object values
+   * values: [{ objectType: "DATE", value: "2024-01-01" }]
+   *
+   * // Current user filter
+   * values: [{ objectType: "CURRENT_USER", value: "" }]
+   * ```
    */
-  values?: string[];
+  values?: ReportFilterValue[];
 }
 
 /**
