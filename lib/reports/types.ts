@@ -270,6 +270,53 @@ export interface ReportsApi {
     options: RemoveReportScopeOptions,
     callback?: RequestCallback<BaseResponseStatus>
   ) => Promise<BaseResponseStatus>;
+
+  /**
+   * Add columns to a report.
+   *
+   * This operation adds columns to a report specified by a report ID.
+   *
+   * **Note:** All indexes of the columns must be equal.
+   *
+   * @param options - {@link AddReportColumnsOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link AddReportColumnsResponse}\> - Optional callback function
+   * @returns Promise\<{@link AddReportColumnsResponse}\>
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** EDITOR or ADMIN access to the report
+   *
+   * **Additional notes:**
+   * - Maximum of 400 columns can be added
+   * - Column limit of 400 total columns per report
+   * - Cannot modify program reports via API
+   *
+   * It mirrors to the following Smartsheet REST API method: `POST /reports/{reportId}/columns`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.reports.addReportColumns({
+   *   reportId: 4583173393803140,
+   *   body: [
+   *     {
+   *       title: 'Item selected',
+   *       type: 'CHECKBOX',
+   *       index: 4
+   *     },
+   *     {
+   *       title: 'Sheet name',
+   *       type: 'TEXT_NUMBER',
+   *       sheetNameColumn: true,
+   *       index: 4
+   *     }
+   *   ]
+   * });
+   * ```
+   */
+  addReportColumns: (
+    options: AddReportColumnsOptions,
+    callback?: RequestCallback<AddReportColumnsResponse>
+  ) => Promise<AddReportColumnsResponse>;
 }
 
 // ============================================================================
@@ -880,4 +927,141 @@ export interface RemoveReportScopeOptions extends RequestOptions<never, ReportSc
    * Report ID.
    */
   reportId: number;
+}
+
+// ============================================================================
+// Add Report Columns
+// ============================================================================
+
+/**
+ * Auto-number format for report columns.
+ */
+export interface ReportColumnAutoNumberFormat {
+  /**
+   * Indicates zero-padding. It must be between 0 and 10 "0" (zero) characters.
+   */
+  fill: string;
+  /**
+   * The prefix. Can include these date tokens:
+   * - {DD}
+   * - {MM}
+   * - {YY}
+   * - {YYYY}
+   */
+  prefix: string;
+  /**
+   * The starting number for the auto-ID.
+   */
+  startingNumber: number;
+  /**
+   * The suffix. Can include these date tokens:
+   * - {DD}
+   * - {MM}
+   * - {YY}
+   * - {YYYY}
+   */
+  suffix: string;
+}
+
+/**
+ * Represents a report column.
+ */
+export interface ReportColumn {
+  /**
+   * The virtual ID of this report column.
+   */
+  virtualId?: number;
+  /**
+   * Column index or position. This number is zero-based. Indicates the position of the column in the generated report.
+   */
+  index: number;
+  /**
+   * Column title to be matched from the source sheets.
+   *
+   * Note:
+   * - If `primary` is **true** then this property can be used to customize the primary column title.
+   */
+  title: string;
+  /**
+   * Type of column to match. See [Column Types](/api/smartsheet/openapi/columns).
+   *
+   * Valid types:
+   * - CHECKBOX
+   * - DATE
+   * - DATETIME (only used with system columns CREATED_DATE and MODIFIED_DATE)
+   * - DURATION
+   * - CONTACT_LIST
+   * - MULTI_CONTACT_LIST
+   * - PICKLIST
+   * - MULTI_PICKLIST
+   * - PREDECESSOR
+   * - TEXT_NUMBER
+   */
+  type: string;
+  /**
+   * System column type to match. See [System Columns](/api/smartsheet/openapi/columns).
+   *
+   * Valid system column types:
+   * - AUTO_NUMBER (use with type: TEXT_NUMBER)
+   * - CREATED_BY (use with type: CONTACT_LIST)
+   * - CREATED_DATE (use with type: DATETIME)
+   * - MODIFIED_BY (use with type: CONTACT_LIST)
+   * - MODIFIED_DATE (use with type: DATETIME)
+   */
+  systemColumnType?: string;
+  /**
+   * Set to `true` to match the primary column. When `true`, `type` and `systemColumnType` are not required.
+   */
+  primary?: boolean;
+  /**
+   * Set to `true` to match the special "Sheet Name" report column. Must be used with `type: TEXT_NUMBER`.
+   */
+  sheetNameColumn?: boolean;
+  /**
+   * Indicates whether the column is hidden.
+   */
+  hidden?: boolean;
+  /**
+   * Version of the column type:
+   * - `0`: CONTACT_LIST, PICKLIST, or TEXT_NUMBER.
+   * - `1`: MULTI_CONTACT_LIST.
+   * - `2`: MULTI_PICKLIST.
+   */
+  version?: 0 | 1 | 2;
+  /**
+   * Display width of the column in pixels.
+   */
+  width?: number;
+  /**
+   * Indicates whether validation has been enabled for the column (value = **true**).
+   */
+  validation?: boolean;
+  /**
+   * Specifies how to format values for an auto-generated numbers column.
+   */
+  autoNumberFormat?: ReportColumnAutoNumberFormat;
+}
+
+/**
+ * Options for adding columns to a report.
+ */
+export interface AddReportColumnsOptions extends RequestOptions<undefined, ReportColumn[]> {
+  /**
+   * Report ID.
+   */
+  reportId: number;
+}
+
+/**
+ * Response from adding columns to a report.
+ */
+export interface AddReportColumnsResponse extends BaseResponseStatus {
+  /**
+   * Array of BulkItemFailure objects which represents the items that failed to be added or updated.
+   */
+  failedItems?: FailedItem[];
+  /**
+   * Array of report columns that were added.
+   */
+  result: ReportColumn[];
 }

@@ -21,6 +21,8 @@ import type {
   DeleteReportResponse,
   AddReportScopeOptions,
   RemoveReportScopeOptions,
+  AddReportColumnsOptions,
+  AddReportColumnsResponse,
 } from './types';
 import * as constants from '../utils/constants';
 
@@ -113,6 +115,14 @@ export function create(options: CreateOptions): ReportsApi {
     return requestor.delete({ ...optionsToSend, ...urlOptions, ...deleteOptions }, callback);
   };
 
+  const addReportColumns = (
+    postOptions: AddReportColumnsOptions,
+    callback?: RequestCallback<AddReportColumnsResponse>
+  ): Promise<AddReportColumnsResponse> => {
+    const urlOptions = { url: options.apiUrls.reports + '/' + postOptions.reportId + '/columns' };
+    return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
+  };
+
   return {
     listReports,
     getReport,
@@ -124,6 +134,7 @@ export function create(options: CreateOptions): ReportsApi {
     deleteReport,
     addReportScope,
     removeReportScope,
+    addReportColumns,
     ...shares.create(options),
   };
 }
