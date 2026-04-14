@@ -24,7 +24,7 @@ describe('Reports - addReportColumns endpoint tests', () => {
             title: 'Sheet name',
             type: 'TEXT_NUMBER',
             sheetNameColumn: true,
-            index: 5
+            index: 4
         }
     ];
 
@@ -37,21 +37,21 @@ describe('Reports - addReportColumns endpoint tests', () => {
         {
             title: 'Sheet name',
             type: 'TEXT_NUMBER',
-            index: 5
+            index: 4
         }
     ];
 
     // Comprehensive request body with all possible fields for marshalling validation
     const testColumnsCompleteStructure = [
         {
-            index: 0,
+            index: 4,
             title: 'Status Column',
             type: 'PICKLIST',
             hidden: false,
             width: 150
         },
         {
-            index: 1,
+            index: 4,
             title: 'Task Name',
             type: 'TEXT_NUMBER',
             primary: true,
@@ -59,7 +59,7 @@ describe('Reports - addReportColumns endpoint tests', () => {
             width: 200
         },
         {
-            index: 2,
+            index: 4,
             title: 'Created By',
             type: 'CONTACT_LIST',
             systemColumnType: 'CREATED_BY',
@@ -67,7 +67,7 @@ describe('Reports - addReportColumns endpoint tests', () => {
             width: 120
         },
         {
-            index: 3,
+            index: 4,
             title: 'Modified Date',
             type: 'DATETIME',
             systemColumnType: 'MODIFIED_DATE',
@@ -259,7 +259,7 @@ describe('Reports - addReportColumns endpoint tests', () => {
 
         // Validate first column (PICKLIST)
         expect(actualRequestBody[0]).toEqual({
-            index: 0,
+            index: 4,
             title: 'Status Column',
             type: 'PICKLIST',
             hidden: false,
@@ -268,7 +268,7 @@ describe('Reports - addReportColumns endpoint tests', () => {
 
         // Validate second column (primary TEXT_NUMBER)
         expect(actualRequestBody[1]).toEqual({
-            index: 1,
+            index: 4,
             title: 'Task Name',
             type: 'TEXT_NUMBER',
             primary: true,
@@ -278,7 +278,7 @@ describe('Reports - addReportColumns endpoint tests', () => {
 
         // Validate third column (system column CREATED_BY)
         expect(actualRequestBody[2]).toEqual({
-            index: 2,
+            index: 4,
             title: 'Created By',
             type: 'CONTACT_LIST',
             systemColumnType: 'CREATED_BY',
@@ -288,7 +288,7 @@ describe('Reports - addReportColumns endpoint tests', () => {
 
         // Validate fourth column (system column MODIFIED_DATE)
         expect(actualRequestBody[3]).toEqual({
-            index: 3,
+            index: 4,
             title: 'Modified Date',
             type: 'DATETIME',
             systemColumnType: 'MODIFIED_DATE',
