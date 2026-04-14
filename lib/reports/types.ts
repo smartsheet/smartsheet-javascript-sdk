@@ -900,6 +900,8 @@ export interface DeleteReportOptions extends RequestOptions<undefined, undefined
   reportId: number;
 }
 
+export type DeleteReportResponse = BaseResponseStatus;
+
 // ============================================================================
 // Add Report Scope
 // ============================================================================
@@ -914,7 +916,6 @@ export interface AddReportScopeOptions extends RequestOptions<never, ReportScope
   reportId: number;
 }
 
-export type DeleteReportResponse = BaseResponseStatus;
 // ============================================================================
 // Remove Report Scope
 // ============================================================================
@@ -965,6 +966,8 @@ export interface ReportColumnAutoNumberFormat {
 
 /**
  * Represents a report column.
+ *
+ * **Important:** When adding multiple columns at once, all columns must have the same index value.
  */
 export interface ReportColumn {
   /**
@@ -973,6 +976,8 @@ export interface ReportColumn {
   virtualId?: number;
   /**
    * Column index or position. This number is zero-based. Indicates the position of the column in the generated report.
+   *
+   * **Note:** When adding multiple columns, all indexes must be equal.
    */
   index: number;
   /**

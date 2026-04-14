@@ -193,6 +193,7 @@ describe('Client Unit Tests', () => {
 
     it('should have create methods', () => {
       expect(smartsheet.reports).toHaveProperty('addReportScope');
+      expect(smartsheet.reports).toHaveProperty('addReportColumns');
     });
 
     it('should have update methods', () => {
