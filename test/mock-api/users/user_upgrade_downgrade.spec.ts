@@ -17,6 +17,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', () => {
     const client = createClient();
     const TEST_UPGRADE_BODY = { seatType: SeatTypes.MEMBER };
     const TEST_DOWNGRADE_BODY = { seatType: SeatTypes.VIEWER };
+    const TEST_DOWNGRADE_TO_CONTRIBUTOR_BODY = { seatType: SeatTypes.CONTRIBUTOR };
 
     it('upgradeUser generated url is correct', async () => {
         const requestId = crypto.randomUUID();
@@ -193,5 +194,28 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', () => {
             expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
             expect(error.message).toBe(ERROR_400_MESSAGE);
         }
+    });
+
+    it('downgradeUser to CONTRIBUTOR seat type', async () => {
+        const requestId = crypto.randomUUID();
+        const options = {
+            userId: TEST_USER_ID,
+            planId: TEST_PLAN_ID,
+            body: TEST_DOWNGRADE_TO_CONTRIBUTOR_BODY,
+            customProperties: {
+                'x-request-id': requestId,
+                'x-test-name': '/users/downgrade-user/to-contributor'
+            }
+        };
+        const response = await client.users.downgradeUser(options);
+        const matchedRequest = await findWireMockRequest(requestId);
+
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE
+        });
+
+        const body = JSON.parse(matchedRequest.body);
+        expect(body).toEqual(TEST_DOWNGRADE_TO_CONTRIBUTOR_BODY);
     });
 });

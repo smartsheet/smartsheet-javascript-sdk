@@ -93,3 +93,11 @@ export const TEST_LICENSED_SHEET_CREATOR = true;
 export const TEST_GROUP_ADMIN = true;
 export const TEST_RESOURCE_VIEWER = true;
 export const TEST_IS_INTERNAL = true;
+
+// Contributor Seat Type Test User Properties
+export const TEST_CONTRIBUTOR_USER_ID = 125;
+export const TEST_CONTRIBUTOR_EMAIL = 'user3@example.com';
+export const TEST_CONTRIBUTOR_FIRST_NAME = 'User';
+export const TEST_CONTRIBUTOR_LAST_NAME = 'Three';
+export const TEST_CONTRIBUTOR_SEAT_TYPE_LAST_CHANGED_AT = '2025-10-15T08:22:13.456789Z';
+export const TEST_CONTRIBUTOR_SHEET_COUNT = 5;

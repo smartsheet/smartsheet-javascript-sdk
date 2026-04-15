@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
+### Added
+- Support for new CONTRIBUTOR seat type in `SeatTypes` enum
+- WireMock integration tests for CONTRIBUTOR seat type filtering and responses
+- WireMock integration test for downgrading users to CONTRIBUTOR seat type
+
 ### Fixed
 - `buildUrl` in [lib/utils/httpRequestor.js](lib/utils/httpRequestor.js) now accounts for the fact that `baseUrl` does not have a trailing slash.
 - Removed trailing slash from `getContact` to account for the fix above.

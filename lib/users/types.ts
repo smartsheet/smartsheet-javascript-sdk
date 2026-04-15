@@ -434,6 +434,7 @@ export enum SeatTypes {
   PROVISIONAL_MEMBER = 'PROVISIONAL_MEMBER',
   GUEST = 'GUEST',
   VIEWER = 'VIEWER',
+  CONTRIBUTOR = 'CONTRIBUTOR',
 }
 
 export interface UserProfile {
