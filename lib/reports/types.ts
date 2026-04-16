@@ -1115,7 +1115,7 @@ export interface ReportFilterExpression {
  * Represents a filter value object for special filter types.
  * Used for date-based filters and current user filters.
  */
-export interface ReportFilterValueObject {
+export interface ReportFilterObjectValue {
   /**
    * Type of the object value.
    * - `DATE`: For date-based filter values
@@ -1134,7 +1134,7 @@ export interface ReportFilterValueObject {
  * Union type for report filter values.
  * Can be a string, number, null, or a filter value object.
  */
-export type ReportFilterValue = string | number | null | ReportFilterValueObject;
+export type ReportFilterValue = string | number | null | ReportFilterObjectValue;
 
 /**
  * Represents a report filter criterion.
@@ -1155,7 +1155,7 @@ export interface ReportFilterCriterion {
    * - `string`: Regular text values (nullable)
    * - `number`: Numeric values
    * - `null`: Explicit null values
-   * - `ReportFilterValueObject`: Special object values for dates or current user
+   * - `ReportFilterObjectValue`: Special object values for dates or current user
    *
    * @example
    * ```typescript
@@ -1172,7 +1172,12 @@ export interface ReportFilterCriterion {
    * values: [{ objectType: "CURRENT_USER", value: "" }]
    * ```
    */
-  values?: ReportFilterValue[];
+  values?: (
+        | string
+        | number
+        | ReportFilterValue
+        | undefined
+    )[];
 }
 
 /**
@@ -1243,7 +1248,7 @@ export interface ReportColumnIdentifier {
   /**
    * Type of column to match. See [Column Types](/api/smartsheet/openapi/columns).
    */
-  type?: ReportColumnType | string;
+  type: ReportColumnType | string;
   /**
    * System column type to match. See [System Columns](/api/smartsheet/openapi/columns).
    */
