@@ -1168,12 +1168,7 @@ export interface ReportFilterCriterion {
    * values: [{ objectType: "CURRENT_USER", value: "" }]
    * ```
    */
-  values?: (
-        | string
-        | number
-        | ReportFilterValue
-        | undefined
-    )[];
+  values?: (string | number | ReportFilterValue | undefined)[];
 }
 
 /**
