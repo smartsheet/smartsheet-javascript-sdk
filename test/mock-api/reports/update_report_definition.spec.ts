@@ -16,7 +16,7 @@ describe('Reports - updateReportDefinition endpoint tests', () => {
 
     const testFilterOnlyBody = {
         filters: {
-            operator: 'AND',
+            operator: 'OR',
             criteria: [
                 {
                     column: { title: 'Status', type: 'PICKLIST' },
@@ -25,11 +25,89 @@ describe('Reports - updateReportDefinition endpoint tests', () => {
                 },
                 {
                     column: { title: 'Priority', type: 'TEXT_NUMBER' },
+                    operator: 'GREATER_THAN',
+                    values: [5]
+                },
+                {
+                    column: { title: 'Due Date', type: 'DATE' },
+                    operator: 'GREATER_THAN',
+                    values: [{ objectType: 'DATE', value: '2024-01-01' }]
+                },
+                {
+                    column: { title: 'Assigned To', type: 'CONTACT_LIST' },
+                    operator: 'EQUAL',
+                    values: [{ objectType: 'CURRENT_USER', value: '' }]
+                },
+                {
+                    column: { primary: true, type: 'TEXT_NUMBER' },
+                    operator: 'CONTAINS',
+                    values: ['PROJ-1']
+                },
+                {
+                    column: { systemColumnType: 'CREATED_BY', type: 'TEXT_NUMBER' },
+                    operator: 'NOT_EQUAL',
+                    values: ['System']
+                },
+                {
+                    column: { sheetNameColumn: true, type: 'TEXT_NUMBER' },
                     operator: 'IS_ONE_OF',
-                    values: ['High', 'Critical']
+                    values: ['Project A', 'Project B']
+                }
+            ],
+            nestedCriteria: [
+                {
+                    operator: 'AND',
+                    criteria: [
+                        {
+                            column: { title: 'Start Date', type: 'DATE' },
+                            operator: 'LAST_N_DAYS',
+                            values: [30]
+                        },
+                        {
+                            column: { title: 'Completed', type: 'CHECKBOX' },
+                            operator: 'IS_CHECKED',
+                            values: []
+                        }
+                    ]
                 }
             ]
-        }
+        },
+        groupingCriteria: [
+            {
+                column: { title: 'Department', type: 'PICKLIST' },
+                sortingDirection: 'ASCENDING',
+                isExpanded: true
+            },
+            {
+                column: { title: 'Priority', type: 'TEXT_NUMBER' },
+                sortingDirection: 'DESCENDING',
+                isExpanded: false
+            }
+        ],
+        summarizingCriteria: [
+            {
+                column: { title: 'Cost', type: 'TEXT_NUMBER' },
+                aggregationType: 'SUM'
+            },
+            {
+                column: { title: 'Duration', type: 'DURATION' },
+                aggregationType: 'AVG'
+            },
+            {
+                column: { title: 'Task Count', type: 'TEXT_NUMBER' },
+                aggregationType: 'COUNT'
+            }
+        ],
+        sortingCriteria: [
+            {
+                column: { title: 'Due Date', type: 'DATE' },
+                sortingDirection: 'ASCENDING'
+            },
+            {
+                column: { title: 'Priority', type: 'TEXT_NUMBER' },
+                sortingDirection: 'DESCENDING'
+            }
+        ]
     };
 
     it('updateReportDefinition generated url is correct', async () => {
@@ -63,21 +141,6 @@ describe('Reports - updateReportDefinition endpoint tests', () => {
         expect(matchedRequest.method).toEqual('PUT');
     });
 
-    it('updateReportDefinition sets query parameters correctly', async () => {
-        const requestId = crypto.randomUUID();
-        const options = {
-            reportId: TEST_REPORT_ID,
-            body: testFilterOnlyBody,
-            updateFilters: true,
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/reports/update-report-definition/all-response-body-properties'
-            }
-        };
-        await client.reports.updateReportDefinition(options);
-        const matchedRequest = await findWireMockRequest(requestId);
-        expect(matchedRequest.queryParams.updateFilters.values).toContain('true');
-    });
 
     it('updateReportDefinition all response body properties', async () => {
         const requestId = crypto.randomUUID();

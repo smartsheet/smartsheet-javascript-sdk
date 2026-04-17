@@ -190,7 +190,7 @@ export interface ReportsApi {
    * @returns Promise\<{@link BaseResponseStatus}\>
    *
    * @remarks
-   * It mirrors to the following Smartsheet REST API method: `PATCH /reports/{reportId}/definition`
+   * It mirrors to the following Smartsheet REST API method: `PUT /reports/{reportId}/definition`
    *
    * @example
    * ```typescript
@@ -907,10 +907,6 @@ export interface UpdateReportDefinitionOptions extends RequestOptions<undefined,
    * reportID of the report being accessed.
    */
   reportId: number;
-  /**
-   * Whether the `filters` property should be updated.
-   */
-  updateFilters?: boolean;
 }
 
 // ============================================================================
@@ -1227,22 +1223,23 @@ export interface ReportSortingCriterion {
 }
 
 /**
- * An object for matching a source sheet column for a report. It requires one of:
+ * An object for matching a source sheet column for a report.
  *
- * - [`type`, `title`] for **regular columns**
- * - [`type`, `systemColumnType`] for **system columns**
- * - [`type=TEXT_NUMBER`, `primary=true`] for the **primary column**
- * - [`type=TEXT_NUMBER`, `sheetNameColumn=true`] for the special **sheet name report column**
+ * **Column Matching Options:**
+ * - **Regular columns**: Specify `type` to match columns by type (optionally with `title` for additional matching).
+ * - **System columns**: Specify both `type` and `systemColumnType` to match system columns (e.g., Created By, Modified Date).
+ * - **Sheet name column**: Specify `type: TEXT_NUMBER` and `sheetNameColumn: true` to match the special "Sheet Name" column.
+ * - **Primary column**: Specify `primary: true` to match the primary column. When matching primary columns, `title` can be used to customize the primary column name in the rendered report.
  *
- * **Note:** You can combine multiple `CHECKBOX` columns or multiple `PICKLIST` columns from different sheets into a single report column, even if their underlying symbols differ. However, you can't combine a `CHECKBOX` column with a `PICKLIST` column, because they're different types.
+ * **Note:** Columns in the report are matched by the combination of `title` and `type` (and `systemColumnType` or `sheetNameColumn` if specified).
  *
- * **Note:** The system column type `AUTO_NUMBER` is matched together with columns having the same `title` and `type=TEXT_NUMBER`. Therefore, `title` is a required property in this case.
+ * **Note:** `symbol` is not used for matching and as a result `CHECKBOX` or `PICKLIST` columns with different symbols (from different sheets) can be combined into the same column in the report. You cannot combine `CHECKBOX` with `PICKLIST` into the same column in the report because they are different types.
  */
 export interface ReportColumnIdentifier {
   /**
-   * Title of a column to match.
+   * Column title to be matched from the source sheets.
    *
-   * **Note:** If you specified `primary=true` to match primary columns, you can set the resulting report column title to this value.
+   * **Note:** If `primary` is **true** then this property can be used to customize the primary column title.
    */
   title?: string;
   /**
@@ -1254,11 +1251,11 @@ export interface ReportColumnIdentifier {
    */
   systemColumnType?: ReportSystemColumnType | string;
   /**
-   * Set this to `true` to match the primary column.
+   * Set this to `true` to match the primary column. When `true`, `type` and `systemColumnType` are not required.
    */
   primary?: boolean;
   /**
-   * Set this to `true` to match the special "Sheet Name" report column.
+   * Set this to `true` to match the special "Sheet Name" report column. Must be used with `type: TEXT_NUMBER`.
    */
   sheetNameColumn?: boolean;
 }

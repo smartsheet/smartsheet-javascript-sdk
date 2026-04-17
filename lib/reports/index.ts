@@ -94,16 +94,13 @@ export function create(options: CreateOptions): ReportsApi {
   };
 
   const updateReportDefinition = (
-    patchOptions: UpdateReportDefinitionOptions,
+    putOptions: UpdateReportDefinitionOptions,
     callback?: RequestCallback<BaseResponseStatus>
   ): Promise<BaseResponseStatus> => {
     const urlOptions = {
-      url: options.apiUrls.reports + '/' + patchOptions.reportId + '/definition',
-      queryParameters: {
-        updateFilters: patchOptions.updateFilters,
-      },
+      url: options.apiUrls.reports + '/' + putOptions.reportId + '/definition',
     };
-    return requestor.put({ ...optionsToSend, ...urlOptions, ...patchOptions }, callback);
+    return requestor.put({ ...optionsToSend, ...urlOptions, ...putOptions }, callback);
   };
 
   const deleteReport = (deleteOptions: DeleteReportOptions, callback?: RequestCallback<DeleteReportResponse>) => {
