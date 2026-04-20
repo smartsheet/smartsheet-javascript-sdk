@@ -140,18 +140,58 @@ describe('Reports - addReportColumns endpoint tests', () => {
                     type: 'CHECKBOX',
                     hidden: false,
                     version: 0,
-                    width: 150
+                    width: 150,
+                    validation: false
                 },
                 {
                     virtualId: 12346,
                     index: 5,
                     title: 'Sheet name',
                     type: 'TEXT_NUMBER',
-                    systemColumnType: 'SHEET_NAME',
                     hidden: false,
                     version: 0,
                     width: 150,
-                    sheetNameColumn: true
+                    sheetNameColumn: true,
+                    validation: false
+                },
+                {
+                    virtualId: 12347,
+                    index: 6,
+                    title: 'Created By',
+                    type: 'CONTACT_LIST',
+                    systemColumnType: 'CREATED_BY',
+                    hidden: false,
+                    version: 0,
+                    width: 150,
+                    validation: false
+                },
+                {
+                    virtualId: 12348,
+                    index: 7,
+                    title: 'Primary',
+                    type: 'TEXT_NUMBER',
+                    primary: true,
+                    hidden: false,
+                    version: 0,
+                    width: 200,
+                    validation: false
+                },
+                {
+                    virtualId: 12349,
+                    index: 8,
+                    title: 'Row Number',
+                    type: 'TEXT_NUMBER',
+                    systemColumnType: 'AUTO_NUMBER',
+                    hidden: false,
+                    version: 0,
+                    width: 100,
+                    validation: false,
+                    autoNumberFormat: {
+                        fill: '000',
+                        prefix: 'TASK-',
+                        startingNumber: 1,
+                        suffix: ''
+                    }
                 }
             ]
         });
@@ -181,13 +221,46 @@ describe('Reports - addReportColumns endpoint tests', () => {
                     virtualId: 12345,
                     index: 4,
                     title: 'Item selected',
-                    type: 'CHECKBOX'
+                    type: 'CHECKBOX',
+                    version: 0
                 },
                 {
                     virtualId: 12346,
                     index: 5,
                     title: 'Sheet name',
-                    type: 'TEXT_NUMBER'
+                    type: 'TEXT_NUMBER',
+                    sheetNameColumn: true,
+                    version: 0
+                },
+                {
+                    virtualId: 12347,
+                    index: 6,
+                    title: 'Created By',
+                    type: 'CONTACT_LIST',
+                    systemColumnType: 'CREATED_BY',
+                    version: 0
+                },
+                {
+                    virtualId: 12348,
+                    index: 7,
+                    title: 'Primary',
+                    type: 'TEXT_NUMBER',
+                    primary: true,
+                    version: 0
+                },
+                {
+                    virtualId: 12349,
+                    index: 8,
+                    title: 'Row Number',
+                    type: 'TEXT_NUMBER',
+                    systemColumnType: 'AUTO_NUMBER',
+                    version: 0,
+                    autoNumberFormat: {
+                        fill: '000',
+                        prefix: 'TASK-',
+                        startingNumber: 1,
+                        suffix: ''
+                    }
                 }
             ]
         });
@@ -209,7 +282,7 @@ describe('Reports - addReportColumns endpoint tests', () => {
         try {
             await client.reports.addReportColumns(options);
             expect(true).toBe(false); // Expected an error to be thrown
-        } catch (error) {
+        } catch (error: any) {
             expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
             expect(error.message).toBe(ERROR_500_MESSAGE);
         }
@@ -228,7 +301,7 @@ describe('Reports - addReportColumns endpoint tests', () => {
         try {
             await client.reports.addReportColumns(options);
             expect(true).toBe(false); // Expected an error to be thrown
-        } catch (error) {
+        } catch (error: any) {
             expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
             expect(error.message).toBe(ERROR_400_MESSAGE);
         }
