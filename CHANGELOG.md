@@ -10,6 +10,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `buildUrl` in [lib/utils/httpRequestor.js](lib/utils/httpRequestor.js) now accounts for the fact that `baseUrl` does not have a trailing slash.
 - Removed trailing slash from `getContact` to account for the fix above.
 
+## Added
+- Added support for PUT /2.0/reports/{reportId}/definition endpoint
+- WireMock integration tests for contract testing for PUT /2.0/reports/{reportId}/definition endpoint
+- Support for POST /reports/{reportId}/scope endpoint
+- Support for DELETE /reports/{reportId}/scope endpoint
+- Support for DELETE /reports/{reportId} endpoint
+- Added support for POST /2.0/reports/{reportId}/columns endpoint
+
 ## [4.7.2] - 2026-03-17
 ### Fixed
 - App crashing after updating to v4.7.1 with logLevel set to 'info' [#158](https://github.com/smartsheet/smartsheet-javascript-sdk/issues/158)
@@ -21,8 +29,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - WireMock integration tests for contract testing for POST /2.0/users/{userId}/plans/{planId}/upgrade and POST /2.0/users/{userId}/plans/{planId}/downgrade
 - WireMock integration tests for contract testing for DELETE /2.0/users/{userId}/plans/{planId} endpoint
 - Remove trailing slashes from routes
-- Support for POST /reports/{reportId}/scope endpoint
-- Support for DELETE /reports/{reportId}/scope endpoint
 ### Updated
 - listAllUsers url generation
 - Folder structure for the Users related WireMock tests

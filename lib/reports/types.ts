@@ -177,6 +177,62 @@ export interface ReportsApi {
   ) => Promise<SetReportPublishStatusResponse>;
 
   /**
+   * Update a Report's definition based on the specified ID
+   *
+   * **Note:** This endpoint supports partial updates **only on root level** properties of the report definition,
+   * such as `filters`, `groupingCriteria` and `summarizingCriteria`. For example, you can update the report's filters
+   * without affecting its grouping criteria. However, nested properties within these objects,
+   * such as a specific filter or grouping criterion, cannot be updated individually and
+   * require a full replacement of the respective section.
+   *
+   * @param options - {@link UpdateReportDefinitionOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `PUT /reports/{reportId}/definition`
+   *
+   * @example
+   * ```typescript
+   * // Update report filters with different value types
+   * const result = await client.reports.updateReportDefinition({
+   *   reportId: 4583173393803140,
+   *   body: {
+   *     filters: {
+   *       operator: 'AND',
+   *       criteria: [
+   *         {
+   *           column: { title: 'Status', type: 'PICKLIST' },
+   *           operator: 'EQUAL',
+   *           values: ['Complete']  // String values
+   *         },
+   *         {
+   *           column: { title: 'Priority', type: 'TEXT_NUMBER' },
+   *           operator: 'GREATER_THAN',
+   *           values: [5]  // Numeric values
+   *         },
+   *         {
+   *           column: { title: 'Due Date', type: 'DATE' },
+   *           operator: 'GREATER_THAN',
+   *           values: [{ objectType: 'DATE', value: '2024-01-01' }]  // Date object
+   *         },
+   *         {
+   *           column: { title: 'Assigned To', type: 'CONTACT_LIST' },
+   *           operator: 'EQUAL',
+   *           values: [{ objectType: 'CURRENT_USER', value: '' }]  // Current user filter
+   *         }
+   *       ]
+   *     }
+   *   }
+   * });
+   * ```
+   */
+  updateReportDefinition: (
+    options: UpdateReportDefinitionOptions,
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
+
+  /**
    * Deletes the specified Report.
    *
    * @param options - {@link DeleteReportOptions} - Configuration options for the request
@@ -887,6 +943,363 @@ export interface SetReportPublishStatusResponse extends BaseResponseStatus {
    */
   failedItems?: FailedItem[];
   result: ReportPublish;
+}
+
+// ============================================================================
+// Update Report Definition
+// ============================================================================
+
+export interface UpdateReportDefinitionOptions extends RequestOptions<undefined, ReportDefinition> {
+  /**
+   * reportID of the report being accessed.
+   */
+  reportId: number;
+}
+
+// ============================================================================
+// Report Definition Enums
+// ============================================================================
+
+/**
+ * Boolean operator for filter expressions.
+ */
+export enum ReportFilterOperator {
+  AND = 'AND',
+  OR = 'OR',
+}
+
+/**
+ * Filter condition operators.
+ */
+export enum ReportFilterConditionOperator {
+  EQUAL = 'EQUAL',
+  NOT_EQUAL = 'NOT_EQUAL',
+  GREATER_THAN = 'GREATER_THAN',
+  LESS_THAN = 'LESS_THAN',
+  CONTAINS = 'CONTAINS',
+  BETWEEN = 'BETWEEN',
+  TODAY = 'TODAY',
+  PAST = 'PAST',
+  FUTURE = 'FUTURE',
+  LAST_N_DAYS = 'LAST_N_DAYS',
+  NEXT_N_DAYS = 'NEXT_N_DAYS',
+  IS_BLANK = 'IS_BLANK',
+  IS_NOT_BLANK = 'IS_NOT_BLANK',
+  IS_NUMBER = 'IS_NUMBER',
+  IS_NOT_NUMBER = 'IS_NOT_NUMBER',
+  IS_DATE = 'IS_DATE',
+  IS_NOT_DATE = 'IS_NOT_DATE',
+  IS_CHECKED = 'IS_CHECKED',
+  IS_UNCHECKED = 'IS_UNCHECKED',
+  IS_ONE_OF = 'IS_ONE_OF',
+  IS_NOT_ONE_OF = 'IS_NOT_ONE_OF',
+  LESS_THAN_OR_EQUAL = 'LESS_THAN_OR_EQUAL',
+  GREATER_THAN_OR_EQUAL = 'GREATER_THAN_OR_EQUAL',
+  DOES_NOT_CONTAIN = 'DOES_NOT_CONTAIN',
+  NOT_BETWEEN = 'NOT_BETWEEN',
+  NOT_TODAY = 'NOT_TODAY',
+  NOT_PAST = 'NOT_PAST',
+  NOT_FUTURE = 'NOT_FUTURE',
+  NOT_LAST_N_DAYS = 'NOT_LAST_N_DAYS',
+  NOT_NEXT_N_DAYS = 'NOT_NEXT_N_DAYS',
+  HAS_ANY_OF = 'HAS_ANY_OF',
+  HAS_NONE_OF = 'HAS_NONE_OF',
+  HAS_ALL_OF = 'HAS_ALL_OF',
+  NOT_ALL_OF = 'NOT_ALL_OF',
+  MULTI_IS_EQUAL = 'MULTI_IS_EQUAL',
+  MULTI_IS_NOT_EQUAL = 'MULTI_IS_NOT_EQUAL',
+}
+
+/**
+ * Sorting direction for grouping and sorting criteria.
+ */
+export enum ReportSortingDirection {
+  ASCENDING = 'ASCENDING',
+  DESCENDING = 'DESCENDING',
+}
+
+/**
+ * Aggregation types for report summarizing criteria.
+ */
+export enum ReportAggregationType {
+  SUM = 'SUM',
+  AVG = 'AVG',
+  MIN = 'MIN',
+  MAX = 'MAX',
+  COUNT = 'COUNT',
+  FIRST = 'FIRST',
+  LAST = 'LAST',
+}
+
+/**
+ * Column types for report column identifiers.
+ */
+export enum ReportColumnType {
+  CHECKBOX = 'CHECKBOX',
+  DATE = 'DATE',
+  DATETIME = 'DATETIME',
+  DURATION = 'DURATION',
+  CONTACT_LIST = 'CONTACT_LIST',
+  MULTI_CONTACT_LIST = 'MULTI_CONTACT_LIST',
+  PICKLIST = 'PICKLIST',
+  MULTI_PICKLIST = 'MULTI_PICKLIST',
+  PREDECESSOR = 'PREDECESSOR',
+  TEXT_NUMBER = 'TEXT_NUMBER',
+}
+
+/**
+ * System column types for report column identifiers.
+ */
+export enum ReportSystemColumnType {
+  CREATED_BY = 'CREATED_BY',
+  CREATED_DATE = 'CREATED_DATE',
+  MODIFIED_BY = 'MODIFIED_BY',
+  MODIFIED_DATE = 'MODIFIED_DATE',
+  AUTO_NUMBER = 'AUTO_NUMBER',
+}
+
+// ============================================================================
+// Report Definition Types
+// ============================================================================
+
+/**
+ * The report definition contains filters, grouping and sorting properties of the report.
+ *
+ * Note: When groupingCriteria is defined the primary column of the report will move to the index 0 when it is first rendered by the app.
+ */
+export interface ReportDefinition {
+  /**
+   * Report filter expression.
+   */
+  filters?: ReportFilterExpression;
+  /**
+   * List of report grouping criteria.
+   */
+  groupingCriteria?: ReportGroupingCriterion[];
+  /**
+   * List of report summarizing criteria.
+   */
+  summarizingCriteria?: ReportSummarizingCriterion[];
+  /**
+   * List of report sorting criteria.
+   */
+  sortingCriteria?: ReportSortingCriterion[];
+}
+
+/**
+ * An expression to filter on report columns. It is a recursive object that allows at most three levels.
+ *
+ * It must include `operator` and at least one of the following: `criteria` or `nestedCriteria`
+ *
+ * Here is a two-level example with different value types:
+ *
+ * ```json
+ * {
+ *   "operator": "OR",
+ *   "nestedCriteria": [
+ *     {
+ *       "operator": "AND",
+ *       "criteria": [
+ *         {
+ *           "column": { "title": "Price", "type": "TEXT_NUMBER" },
+ *           "operator": "GREATER_THAN",
+ *           "values": [100]
+ *         },
+ *         {
+ *           "column": { "primary": true },
+ *           "operator": "CONTAINS",
+ *           "values": ["PROJ-1"]
+ *         }
+ *       ]
+ *     },
+ *     {
+ *       "operator": "AND",
+ *       "criteria": [
+ *         {
+ *           "column": { "title": "Due Date", "type": "DATE" },
+ *           "operator": "GREATER_THAN",
+ *           "values": [{ "objectType": "DATE", "value": "2024-01-01" }]
+ *         },
+ *         {
+ *           "column": { "title": "Assigned To", "type": "CONTACT_LIST" },
+ *           "operator": "EQUAL",
+ *           "values": [{ "objectType": "CURRENT_USER", "value": "" }]
+ *         }
+ *       ]
+ *     }
+ *   ]
+ * }
+ * ```
+ *
+ * It's equivalent to the following pseudo logic:
+ *
+ * ```
+ * (Price > 100 AND Primary CONTAINS "PROJ-1")
+ * OR
+ * (Due Date > 2024-01-01 AND Assigned To = CURRENT_USER)
+ * ```
+ */
+export interface ReportFilterExpression {
+  /**
+   * The boolean operator to apply to the list of `criteria` and `nestedCriteria`.
+   */
+  operator: ReportFilterOperator | string;
+  /**
+   * A recursive list of report filter expressions. Each item is joined to the filter expression with the AND/OR operator defined on this level.
+   */
+  nestedCriteria?: ReportFilterExpression[];
+  /**
+   * Criteria objects specifying custom criteria against which to match cell values. Each item is joined to the filter expression with the AND/OR operator defined on this level.
+   */
+  criteria?: ReportFilterCriterion[];
+}
+
+/**
+ * Represents a filter value object for special filter types.
+ * Used for date-based filters and current user filters.
+ */
+export interface ReportFilterObjectValue {
+  /**
+   * Type of the object value.
+   * - `DATE`: For date-based filter values
+   * - `CURRENT_USER`: For filtering by the current user
+   */
+  objectType: 'DATE' | 'CURRENT_USER';
+  /**
+   * The value associated with the object type.
+   * For DATE objects, this would be a date string.
+   * For CURRENT_USER, this represents the user identifier.
+   */
+  value: string;
+}
+
+/**
+ * Union type for report filter values.
+ * Can be a string, number, null, or a filter value object.
+ */
+export type ReportFilterValue = string | number | null | ReportFilterObjectValue;
+
+/**
+ * Represents a report filter criterion.
+ */
+export interface ReportFilterCriterion {
+  /**
+   * Object used to match a sheet column for a report.
+   */
+  column: ReportColumnIdentifier;
+  /**
+   * Condition operator.
+   */
+  operator: ReportFilterConditionOperator | string;
+  /**
+   * List of filter values.
+   *
+   * Values can be:
+   * - `string`: Regular text values (nullable)
+   * - `number`: Numeric values
+   * - `null`: Explicit null values
+   * - `ReportFilterObjectValue`: Special object values for dates or current user
+   *
+   * @example
+   * ```typescript
+   * // String values
+   * values: ["Complete", "In Progress"]
+   *
+   * // Numeric values
+   * values: [100, 200]
+   *
+   * // Date object values
+   * values: [{ objectType: "DATE", value: "2024-01-01" }]
+   *
+   * // Current user filter
+   * values: [{ objectType: "CURRENT_USER", value: "" }]
+   * ```
+   */
+  values?: (string | number | ReportFilterValue | undefined)[];
+}
+
+/**
+ * Report grouping criterion.
+ */
+export interface ReportGroupingCriterion {
+  /**
+   * Object used to match a sheet column for a report.
+   */
+  column: ReportColumnIdentifier;
+  /**
+   * Sorting direction within the group.
+   */
+  sortingDirection: ReportSortingDirection | string;
+  /**
+   * Indicates whether the group is expanded in the UI.
+   */
+  isExpanded?: boolean;
+}
+
+/**
+ * Report summarizing criterion.
+ */
+export interface ReportSummarizingCriterion {
+  /**
+   * Object used to match a sheet column for a report.
+   */
+  column: ReportColumnIdentifier;
+  /**
+   * Type of aggregation.
+   */
+  aggregationType: ReportAggregationType | string;
+}
+
+/**
+ * Report sorting criterion.
+ */
+export interface ReportSortingCriterion {
+  /**
+   * Object used to match a sheet column for a report.
+   */
+  column: ReportColumnIdentifier;
+  /**
+   * Sorting direction.
+   */
+  sortingDirection: ReportSortingDirection | string;
+}
+
+/**
+ * An object for matching a source sheet column for a report.
+ *
+ * **Column Matching Options:**
+ * - **Regular columns**: Specify `type` to match columns by type (optionally with `title` for additional matching).
+ * - **System columns**: Specify both `type` and `systemColumnType` to match system columns (e.g., Created By, Modified Date).
+ * - **Sheet name column**: Specify `type: TEXT_NUMBER` and `sheetNameColumn: true` to match the special "Sheet Name" column.
+ * - **Primary column**: Specify `primary: true` to match the primary column. When matching primary columns, `title` can be used to customize the primary column name in the rendered report.
+ *
+ * **Note:** Columns in the report are matched by the combination of `title` and `type` (and `systemColumnType` or `sheetNameColumn` if specified).
+ *
+ * **Note:** `symbol` is not used for matching and as a result `CHECKBOX` or `PICKLIST` columns with different symbols (from different sheets) can be combined into the same column in the report. You cannot combine `CHECKBOX` with `PICKLIST` into the same column in the report because they are different types.
+ */
+export interface ReportColumnIdentifier {
+  /**
+   * Column title to be matched from the source sheets.
+   *
+   * **Note:** If `primary` is **true** then this property can be used to customize the primary column title.
+   */
+  title?: string;
+  /**
+   * Type of column to match. See [Column Types](/api/smartsheet/openapi/columns).
+   */
+  type: ReportColumnType | string;
+  /**
+   * System column type to match. See [System Columns](/api/smartsheet/openapi/columns).
+   */
+  systemColumnType?: ReportSystemColumnType | string;
+  /**
+   * Set this to `true` to match the primary column. When `true`, `type` and `systemColumnType` are not required.
+   */
+  primary?: boolean;
+  /**
+   * Set this to `true` to match the special "Sheet Name" report column. Must be used with `type: TEXT_NUMBER`.
+   */
+  sheetNameColumn?: boolean;
 }
 
 // ============================================================================
