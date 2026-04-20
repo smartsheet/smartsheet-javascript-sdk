@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+- Added support for PATCH /2.0/reports/{reportId}/definition endpoint
+- WireMock integration tests for contract testing for PATCH /2.0/reports/{reportId}/definition endpoint
+- Support for POST /reports/{reportId}/scope endpoint
+- Support for DELETE /reports/{reportId}/scope endpoint
+- Support for DELETE /reports/{reportId} endpoint
+
 ## [4.7.2] - 2026-03-17
 ### Fixed
 - App crashing after updating to v4.7.1 with logLevel set to 'info' [#158](https://github.com/smartsheet/smartsheet-javascript-sdk/issues/158)
@@ -16,8 +23,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - WireMock integration tests for contract testing for POST /2.0/users/{userId}/plans/{planId}/upgrade and POST /2.0/users/{userId}/plans/{planId}/downgrade
 - WireMock integration tests for contract testing for DELETE /2.0/users/{userId}/plans/{planId} endpoint
 - Remove trailing slashes from routes
-- Support for POST /reports/{reportId}/scope endpoint
-- Support for DELETE /reports/{reportId}/scope endpoint
 ### Updated
 - listAllUsers url generation
 - Folder structure for the Users related WireMock tests

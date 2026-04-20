@@ -17,6 +17,7 @@ import type {
   ReportPublish,
   SetReportPublishStatusOptions,
   SetReportPublishStatusResponse,
+  UpdateReportDefinitionOptions,
   DeleteReportOptions,
   DeleteReportResponse,
   AddReportScopeOptions,
@@ -92,6 +93,16 @@ export function create(options: CreateOptions): ReportsApi {
     return requestor.put({ ...optionsToSend, ...urlOptions, ...putOptions }, callback);
   };
 
+  const updateReportDefinition = (
+    putOptions: UpdateReportDefinitionOptions,
+    callback?: RequestCallback<BaseResponseStatus>
+  ): Promise<BaseResponseStatus> => {
+    const urlOptions = {
+      url: options.apiUrls.reports + '/' + putOptions.reportId + '/definition',
+    };
+    return requestor.put({ ...optionsToSend, ...urlOptions, ...putOptions }, callback);
+  };
+
   const deleteReport = (deleteOptions: DeleteReportOptions, callback?: RequestCallback<DeleteReportResponse>) => {
     const urlOptions = { url: options.apiUrls.reports + '/' + deleteOptions.reportId };
     return requestor.delete({ ...optionsToSend, ...urlOptions, ...deleteOptions }, callback);
@@ -121,6 +132,7 @@ export function create(options: CreateOptions): ReportsApi {
     getReportAsCSV,
     getReportPublishStatus,
     setReportPublishStatus,
+    updateReportDefinition,
     deleteReport,
     addReportScope,
     removeReportScope,
