@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [X.X.X] - Unreleased
+### Fixed
+- `buildUrl` in [lib/utils/httpRequestor.js](lib/utils/httpRequestor.js) now accounts for the fact that `baseUrl` does not have a trailing slash.
+- Removed trailing slash from `getContact` to account for the fix above.
+
+### Added
 - Added support for PATCH /2.0/reports/{reportId}/definition endpoint
 - WireMock integration tests for contract testing for PATCH /2.0/reports/{reportId}/definition endpoint
 - Support for POST /reports/{reportId}/scope endpoint
