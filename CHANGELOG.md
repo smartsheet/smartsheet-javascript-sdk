@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Support for POST /reports/{reportId}/scope endpoint
 - Support for DELETE /reports/{reportId}/scope endpoint
 - Support for DELETE /reports/{reportId} endpoint
+- Added support for POST /2.0/reports/{reportId}/columns endpoint
 
 ## [4.7.2] - 2026-03-17
 ### Fixed

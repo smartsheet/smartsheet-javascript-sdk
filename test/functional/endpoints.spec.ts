@@ -104,6 +104,7 @@ describe('Method Unit Tests', () => {
                 { name: 'getReportPublishStatus', stub: 'get', options: {reportId: 123}, expectedRequest: {url: "reports/123/publish" }},
                 { name: 'setReportPublishStatus', stub: 'put', options: {reportId: 123}, expectedRequest: {url: "reports/123/publish" }},
                 { name: 'deleteReport', stub: 'delete', options: {reportId:123}, expectedRequest: {url: "reports/123"}},
+                { name: 'addReportColumns', stub: 'post', options: {reportId: 123}, expectedRequest: {url: "reports/123/columns" }},
             ]
         },
         {
