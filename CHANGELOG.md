@@ -10,9 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `buildUrl` in [lib/utils/httpRequestor.js](lib/utils/httpRequestor.js) now accounts for the fact that `baseUrl` does not have a trailing slash.
 - Removed trailing slash from `getContact` to account for the fix above.
 
-## Added
-- Added support for PUT /2.0/reports/{reportId}/definition endpoint
-- WireMock integration tests for contract testing for PUT /2.0/reports/{reportId}/definition endpoint
+### Added
+- Added support for PATCH /2.0/reports/{reportId}/definition endpoint
+- WireMock integration tests for contract testing for PATCH /2.0/reports/{reportId}/definition endpoint
 - Support for POST /reports/{reportId}/scope endpoint
 - Support for DELETE /reports/{reportId}/scope endpoint
 - Support for DELETE /reports/{reportId} endpoint
