@@ -99,7 +99,7 @@ describe('Utils Unit Tests', () => {
       });
 
       it('url should contain the ID', () => {
-        const builtUrl = requestor.internal.buildUrl({url: 'url/', id: '123'});
+        const builtUrl = requestor.internal.buildUrl({url: 'url', id: '123'});
         expect(builtUrl).toBe(host + 'url/123');
       });
     });

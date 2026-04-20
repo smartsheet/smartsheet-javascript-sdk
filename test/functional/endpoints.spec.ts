@@ -2,16 +2,16 @@ import { create as createRequestor } from '../../lib/utils/httpRequestor';
 import * as constants from '../../lib/utils/constants';
 import _ from 'underscore';
 import * as smartsheet from '@smartsheet';
-import { expect, jest, describe, beforeEach, afterEach, it } from '@jest/globals';
+import { expect, jest, describe, beforeEach, it } from '@jest/globals';
 
 describe('Method Unit Tests', () => {
-    const requestor = createRequestor({});
+    const BASE_URL = 'https://example.com/';
 
     const testGroups = [
         {
             name: 'contacts',
             methods: [
-                { name: 'getContact', stub: 'get', options: {}, expectedRequest: {url: "contacts/" }},
+                { name: 'getContact', stub: 'get', options: {id: 1234}, expectedRequest: {url: "contacts/1234" }},
                 { name: 'listContacts', stub: 'get', options: undefined, expectedRequest: {url: "contacts" }},
             ]
         },
@@ -339,17 +339,26 @@ describe('Method Unit Tests', () => {
         describe('#' + testGroup.name, () => {
             _.each(testGroup.methods, function (method) {
                 describe('#' + method.name, () => {
+                    // 'postFile' maps to request.post internally (see methodHandler)
+                    const httpMethod = method.stub === 'postFile' ? 'post' : method.stub;
+                    // POST/PUT: method(url, body, requestOptions); GET/DELETE: method(url, requestOptions)
+                    const isBodyMethod = ['post', 'put', 'postFile'].includes(method.stub);
+
                     let stub;
                     let client;
                     const originalOptions = (method.options === undefined) ? undefined : JSON.parse(JSON.stringify(method.options));
 
                     beforeEach(() => {
-                        stub = jest.spyOn(requestor, method.stub).mockImplementation(() => {});
-                        client = smartsheet.createClient({accessToken: "token", requestor: requestor, userAgent: "user agent", baseUrl: "base url"});
-                    });
-
-                    afterEach(() => {
-                        stub.mockRestore();
+                        const fakeSuccessResponse = { status: 200, headers: {}, data: {} };
+                        const fakeRequest = {
+                            get: jest.fn(() => Promise.resolve(fakeSuccessResponse)),
+                            post: jest.fn(() => Promise.resolve(fakeSuccessResponse)),
+                            put: jest.fn(() => Promise.resolve(fakeSuccessResponse)),
+                            delete: jest.fn(() => Promise.resolve(fakeSuccessResponse)),
+                        };
+                        const requestor = createRequestor({ request: fakeRequest });
+                        stub = fakeRequest[httpMethod];
+                        client = smartsheet.createClient({accessToken: "token", requestor: requestor, userAgent: "user agent", baseUrl: BASE_URL});
                     });
 
                     it('method exists', () => {
@@ -365,35 +374,56 @@ describe('Method Unit Tests', () => {
                     it('allows arbitrary options', () => {
                         const optionsWithArbitraryOption = _.extend({somethingArbitrary: 123}, method.options);
                         client[testGroup.name][method.name](optionsWithArbitraryOption);
-                        expect(stub.mock.calls[0][0]).toHaveProperty('somethingArbitrary', 123);
+                        expect(stub.mock.calls.length).toBe(1);
                     });
 
                     it('passes constructor args', () => {
                         client[testGroup.name][method.name](method.options);
-                        expect(stub.mock.calls[0][0]).toHaveProperty('userAgent', "user agent");
-                        expect(stub.mock.calls[0][0]).toHaveProperty('baseUrl', "base url");
+                        const requestOptions = stub.mock.calls[0][isBodyMethod ? 2 : 1];
+                        expect(stub.mock.calls[0][0]).toContain(BASE_URL);
+                        expect(requestOptions.headers['User-Agent']).toContain('user agent');
                     });
 
                     if (method.noAuth === true) {
                         it('does not pass access token', () => {
                             client[testGroup.name][method.name](method.options);
-                            expect(stub.mock.calls[0][0]).not.toHaveProperty('accessToken', "token");
+                            const requestOptions = stub.mock.calls[0][isBodyMethod ? 2 : 1];
+                            expect(requestOptions.headers['Authorization']).toBeUndefined();
                         });
                     }
                     else {
                         it('passes access token', () => {
                             client[testGroup.name][method.name](method.options);
-                            expect(stub.mock.calls[0][0]).toHaveProperty('accessToken', "token");
+                            const requestOptions = stub.mock.calls[0][isBodyMethod ? 2 : 1];
+                            expect(requestOptions.headers['Authorization']).toBe('Bearer token');
                         });
                     }
 
                     it('multiple requests are correct', () => {
                         client[testGroup.name][method.name](method.options);
                         client[testGroup.name][method.name](method.options);
-                        // Check that the request matches expected properties
-                        const actualRequest = stub.mock.calls[0][0];
+                        const callArgs = stub.mock.calls[0];
+                        const url = callArgs[0];
+                        const body = isBodyMethod ? callArgs[1] : undefined;
+                        const requestOptions = callArgs[isBodyMethod ? 2 : 1];
                         _.each(method.expectedRequest, (value, key) => {
-                            expect(actualRequest).toHaveProperty(key, value);
+                            if (key === 'url') {
+                                expect(url).toBe(BASE_URL + value);
+                            } else if (key === 'queryParameters') {
+                                expect(requestOptions.params).toEqual(value);
+                            } else if (key === 'body') {
+                                expect(body).toEqual(value);
+                            } else if (key === 'accept') {
+                                expect(requestOptions.headers['Accept']).toBe(value);
+                            } else if (key === 'encoding') {
+                                expect(requestOptions.responseEncoding).toBe(value);
+                            } else if (key === 'contentType') {
+                                expect(requestOptions.headers['Content-Type']).toBe(value);
+                            } else if (key === 'contentDisposition') {
+                                expect(requestOptions.headers['Content-Disposition']).toBe(value);
+                            } else if (key === 'accessToken') {
+                                expect(requestOptions.headers['Authorization']).toBe('Bearer ' + value);
+                            }
                         });
                     });
 

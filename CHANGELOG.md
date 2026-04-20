@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [X.X.X] - Unreleased
+### Fixed
+- `buildUrl` in [lib/utils/httpRequestor.js](lib/utils/httpRequestor.js) now accounts for the fact that `baseUrl` does not have a trailing slash.
+- Removed trailing slash from `getContact` to account for the fix above.
+
 ## [4.7.2] - 2026-03-17
 ### Fixed
 - App crashing after updating to v4.7.1 with logLevel set to 'info' [#158](https://github.com/smartsheet/smartsheet-javascript-sdk/issues/158)

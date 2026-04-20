@@ -23,8 +23,7 @@ export function createContacts(options: CreateOptions): ContactsApi {
     options: RequestOptions<GetContactOptions, GetContactBody>,
     callback: RequestCallback<Contact>
   ) => {
-    const urlWithSlash = baseUrl + '/';
-    return requestor.get({ ...optionsToSend, url: urlWithSlash, ...options }, callback);
+    return requestor.get({ ...optionsToSend, url: baseUrl, ...options }, callback);
   };
 
   const listContacts = (
