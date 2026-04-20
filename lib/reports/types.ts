@@ -1032,7 +1032,9 @@ export enum ReportAggregationType {
 }
 
 /**
- * Column types for report column identifiers.
+ * Column types for report columns and column identifiers.
+ *
+ * Used by {@link ReportColumn} and {@link ReportColumnIdentifier}.
  */
 export enum ReportColumnType {
   CHECKBOX = 'CHECKBOX',
@@ -1048,7 +1050,9 @@ export enum ReportColumnType {
 }
 
 /**
- * System column types for report column identifiers.
+ * System column types for report columns and column identifiers.
+ *
+ * Used by {@link ReportColumn} and {@link ReportColumnIdentifier}.
  */
 export enum ReportSystemColumnType {
   CREATED_BY = 'CREATED_BY',
@@ -1403,30 +1407,20 @@ export interface ReportColumn {
   /**
    * Type of column to match. See [Column Types](/api/smartsheet/openapi/columns).
    *
-   * Valid types:
-   * - CHECKBOX
-   * - DATE
-   * - DATETIME (only used with system columns CREATED_DATE and MODIFIED_DATE)
-   * - DURATION
-   * - CONTACT_LIST
-   * - MULTI_CONTACT_LIST
-   * - PICKLIST
-   * - MULTI_PICKLIST
-   * - PREDECESSOR
-   * - TEXT_NUMBER
+   * Valid combinations with systemColumnType:
+   * - `type: TEXT_NUMBER` + `systemColumnType: AUTO_NUMBER`
+   * - `type: CONTACT_LIST` + `systemColumnType: CREATED_BY`
+   * - `type: DATETIME` + `systemColumnType: CREATED_DATE`
+   * - `type: CONTACT_LIST` + `systemColumnType: MODIFIED_BY`
+   * - `type: DATETIME` + `systemColumnType: MODIFIED_DATE`
    */
-  type: string;
+  type: ReportColumnType | string;
   /**
    * System column type to match. See [System Columns](/api/smartsheet/openapi/columns).
    *
-   * Valid system column types:
-   * - AUTO_NUMBER (use with type: TEXT_NUMBER)
-   * - CREATED_BY (use with type: CONTACT_LIST)
-   * - CREATED_DATE (use with type: DATETIME)
-   * - MODIFIED_BY (use with type: CONTACT_LIST)
-   * - MODIFIED_DATE (use with type: DATETIME)
+   * Must be used in combination with `type`. See valid combinations above.
    */
-  systemColumnType?: string;
+  systemColumnType?: ReportSystemColumnType | string;
   /**
    * Set to `true` to match the primary column. When `true`, `type` and `systemColumnType` are not required.
    */

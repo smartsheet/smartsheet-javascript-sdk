@@ -10,62 +10,70 @@ import {
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE
 } from './common_test_constants';
+import {
+    ReportColumnType,
+    ReportSystemColumnType,
+    ReportFilterOperator,
+    ReportFilterConditionOperator,
+    ReportSortingDirection,
+    ReportAggregationType
+} from '../../../lib/reports/types';
 
 describe('Reports - updateReportDefinition endpoint tests', () => {
     const client = createClient();
 
     const testFilterOnlyBody = {
         filters: {
-            operator: 'OR',
+            operator: ReportFilterOperator.OR,
             criteria: [
                 {
-                    column: { title: 'Status', type: 'PICKLIST' },
-                    operator: 'EQUAL',
+                    column: { title: 'Status', type: ReportColumnType.PICKLIST },
+                    operator: ReportFilterConditionOperator.EQUAL,
                     values: ['Complete']
                 },
                 {
-                    column: { title: 'Priority', type: 'TEXT_NUMBER' },
-                    operator: 'GREATER_THAN',
+                    column: { title: 'Priority', type: ReportColumnType.TEXT_NUMBER },
+                    operator: ReportFilterConditionOperator.GREATER_THAN,
                     values: [5]
                 },
                 {
-                    column: { title: 'Due Date', type: 'DATE' },
-                    operator: 'GREATER_THAN',
+                    column: { title: 'Due Date', type: ReportColumnType.DATE },
+                    operator: ReportFilterConditionOperator.GREATER_THAN,
                     values: [{ objectType: 'DATE', value: '2024-01-01' }]
                 },
                 {
-                    column: { title: 'Assigned To', type: 'CONTACT_LIST' },
-                    operator: 'EQUAL',
+                    column: { title: 'Assigned To', type: ReportColumnType.CONTACT_LIST },
+                    operator: ReportFilterConditionOperator.EQUAL,
                     values: [{ objectType: 'CURRENT_USER', value: '' }]
                 },
                 {
-                    column: { primary: true, type: 'TEXT_NUMBER' },
-                    operator: 'CONTAINS',
+                    column: { primary: true, type: ReportColumnType.TEXT_NUMBER },
+                    operator: ReportFilterConditionOperator.CONTAINS,
                     values: ['PROJ-1']
                 },
                 {
-                    column: { systemColumnType: 'CREATED_BY', type: 'TEXT_NUMBER' },
-                    operator: 'NOT_EQUAL',
+                    column: { systemColumnType: ReportSystemColumnType.CREATED_BY, type: ReportColumnType.TEXT_NUMBER },
+                    operator: ReportFilterConditionOperator.NOT_EQUAL,
                     values: ['System']
                 },
                 {
-                    column: { sheetNameColumn: true, type: 'TEXT_NUMBER' },
-                    operator: 'IS_ONE_OF',
+                    column: { sheetNameColumn: true, type: ReportColumnType.TEXT_NUMBER },
+                    operator: ReportFilterConditionOperator.IS_ONE_OF,
                     values: ['Project A', 'Project B']
                 }
             ],
             nestedCriteria: [
                 {
-                    operator: 'AND',
+                    operator: ReportFilterOperator.AND,
                     criteria: [
                         {
-                            column: { title: 'Start Date', type: 'DATE' },
-                            operator: 'LAST_N_DAYS',
+                            column: { title: 'Start Date', type: ReportColumnType.DATE },
+                            operator: ReportFilterConditionOperator.LAST_N_DAYS,
                             values: [30]
                         },
                         {
-                            column: { title: 'Completed', type: 'CHECKBOX' },
-                            operator: 'IS_CHECKED',
+                            column: { title: 'Completed', type: ReportColumnType.CHECKBOX },
+                            operator: ReportFilterConditionOperator.IS_CHECKED,
                             values: []
                         }
                     ]
@@ -74,38 +82,38 @@ describe('Reports - updateReportDefinition endpoint tests', () => {
         },
         groupingCriteria: [
             {
-                column: { title: 'Department', type: 'PICKLIST' },
-                sortingDirection: 'ASCENDING',
+                column: { title: 'Department', type: ReportColumnType.PICKLIST },
+                sortingDirection: ReportSortingDirection.ASCENDING,
                 isExpanded: true
             },
             {
-                column: { title: 'Priority', type: 'TEXT_NUMBER' },
-                sortingDirection: 'DESCENDING',
+                column: { title: 'Priority', type: ReportColumnType.TEXT_NUMBER },
+                sortingDirection: ReportSortingDirection.DESCENDING,
                 isExpanded: false
             }
         ],
         summarizingCriteria: [
             {
-                column: { title: 'Cost', type: 'TEXT_NUMBER' },
-                aggregationType: 'SUM'
+                column: { title: 'Cost', type: ReportColumnType.TEXT_NUMBER },
+                aggregationType: ReportAggregationType.SUM
             },
             {
-                column: { title: 'Duration', type: 'DURATION' },
-                aggregationType: 'AVG'
+                column: { title: 'Duration', type: ReportColumnType.DURATION },
+                aggregationType: ReportAggregationType.AVG
             },
             {
-                column: { title: 'Task Count', type: 'TEXT_NUMBER' },
-                aggregationType: 'COUNT'
+                column: { title: 'Task Count', type: ReportColumnType.TEXT_NUMBER },
+                aggregationType: ReportAggregationType.COUNT
             }
         ],
         sortingCriteria: [
             {
-                column: { title: 'Due Date', type: 'DATE' },
-                sortingDirection: 'ASCENDING'
+                column: { title: 'Due Date', type: ReportColumnType.DATE },
+                sortingDirection: ReportSortingDirection.ASCENDING
             },
             {
-                column: { title: 'Priority', type: 'TEXT_NUMBER' },
-                sortingDirection: 'DESCENDING'
+                column: { title: 'Priority', type: ReportColumnType.TEXT_NUMBER },
+                sortingDirection: ReportSortingDirection.DESCENDING
             }
         ]
     };

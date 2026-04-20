@@ -10,6 +10,7 @@ import {
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE
 } from './common_test_constants';
+import { ReportColumnType, ReportSystemColumnType } from '../../../lib/reports/types';
 
 describe('Reports - addReportColumns endpoint tests', () => {
     const client = createClient();
@@ -17,12 +18,12 @@ describe('Reports - addReportColumns endpoint tests', () => {
     const testColumnsAllProperties = [
         {
             title: 'Item selected',
-            type: 'CHECKBOX',
+            type: ReportColumnType.CHECKBOX,
             index: 4
         },
         {
             title: 'Sheet name',
-            type: 'TEXT_NUMBER',
+            type: ReportColumnType.TEXT_NUMBER,
             sheetNameColumn: true,
             index: 4
         }
@@ -31,12 +32,12 @@ describe('Reports - addReportColumns endpoint tests', () => {
     const testColumnsRequiredProperties = [
         {
             title: 'Item selected',
-            type: 'CHECKBOX',
+            type: ReportColumnType.CHECKBOX,
             index: 4
         },
         {
             title: 'Sheet name',
-            type: 'TEXT_NUMBER',
+            type: ReportColumnType.TEXT_NUMBER,
             index: 4
         }
     ];
@@ -46,14 +47,14 @@ describe('Reports - addReportColumns endpoint tests', () => {
         {
             index: 4,
             title: 'Status Column',
-            type: 'PICKLIST',
+            type: ReportColumnType.PICKLIST,
             hidden: false,
             width: 150
         },
         {
             index: 4,
             title: 'Task Name',
-            type: 'TEXT_NUMBER',
+            type: ReportColumnType.TEXT_NUMBER,
             primary: true,
             hidden: false,
             width: 200
@@ -61,23 +62,23 @@ describe('Reports - addReportColumns endpoint tests', () => {
         {
             index: 4,
             title: 'Created By',
-            type: 'CONTACT_LIST',
-            systemColumnType: 'CREATED_BY',
+            type: ReportColumnType.CONTACT_LIST,
+            systemColumnType: ReportSystemColumnType.CREATED_BY,
             hidden: false,
             width: 120
         },
         {
             index: 4,
             title: 'Modified Date',
-            type: 'DATETIME',
-            systemColumnType: 'MODIFIED_DATE',
+            type: ReportColumnType.DATETIME,
+            systemColumnType: ReportSystemColumnType.MODIFIED_DATE,
             hidden: true,
             width: 100
         },
         {
             index: 4,
             title: 'Sheet Name',
-            type: 'TEXT_NUMBER',
+            type: ReportColumnType.TEXT_NUMBER,
             sheetNameColumn: true,
             hidden: false,
             width: 180
