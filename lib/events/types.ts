@@ -75,6 +75,11 @@ export interface Event {
   objectId: string;
 
   /**
+   * Alphanumeric object identifier for v2.0+ support.
+   */
+  objectIdStr?: string;
+
+  /**
    * Date and time of the event. Defaults to ISO-8601 format.
    * See dates and times for more information.
    */
