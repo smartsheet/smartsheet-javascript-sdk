@@ -10,7 +10,7 @@ import {
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE
 } from './common_test_constants';
-import { ReportColumnType, ReportSystemColumnType } from '../../../lib/reports/types';
+import { ReportColumnType, SystemColumnType } from '../../../lib/reports/types';
 
 describe('Reports - addReportColumns endpoint tests', () => {
     const client = createClient();
@@ -63,7 +63,7 @@ describe('Reports - addReportColumns endpoint tests', () => {
             index: 4,
             title: 'Created By',
             type: ReportColumnType.CONTACT_LIST,
-            systemColumnType: ReportSystemColumnType.CREATED_BY,
+            systemColumnType: SystemColumnType.CREATED_BY,
             hidden: false,
             width: 120
         },
@@ -71,7 +71,7 @@ describe('Reports - addReportColumns endpoint tests', () => {
             index: 4,
             title: 'Modified Date',
             type: ReportColumnType.DATETIME,
-            systemColumnType: ReportSystemColumnType.MODIFIED_DATE,
+            systemColumnType: SystemColumnType.MODIFIED_DATE,
             hidden: true,
             width: 100
         },

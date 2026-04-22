@@ -1,3 +1,5 @@
+import type { SystemColumnType } from '../reports/types';
+
 /**
  * Represents a column in a sheet.
  */
@@ -69,8 +71,15 @@ export interface Column {
 
   /**
    * System column type.
+   *
+   * Valid system column types:
+   * - AUTO_NUMBER (use with type: TEXT_NUMBER)
+   * - CREATED_BY (use with type: CONTACT_LIST)
+   * - CREATED_DATE (use with type: DATETIME)
+   * - MODIFIED_BY (use with type: CONTACT_LIST)
+   * - MODIFIED_DATE (use with type: DATETIME)
    */
-  systemColumnType: string;
+  systemColumnType: SystemColumnType | string;
 
   /**
    * Array of tags for the column.
