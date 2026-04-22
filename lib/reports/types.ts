@@ -1050,11 +1050,11 @@ export enum ReportColumnType {
 }
 
 /**
- * System column types for report columns and column identifiers.
+ * System column types for columns, report columns, and column identifiers.
  *
- * Used by {@link ReportColumn} and {@link ReportColumnIdentifier}.
+ * Used by {@link Column}, {@link ReportColumn}, and {@link ReportColumnIdentifier}.
  */
-export enum ReportSystemColumnType {
+export enum SystemColumnType {
   CREATED_BY = 'CREATED_BY',
   CREATED_DATE = 'CREATED_DATE',
   MODIFIED_BY = 'MODIFIED_BY',
@@ -1295,7 +1295,7 @@ export interface ReportColumnIdentifier {
   /**
    * System column type to match. See [System Columns](/api/smartsheet/openapi/columns).
    */
-  systemColumnType?: ReportSystemColumnType | string;
+  systemColumnType?: SystemColumnType | string;
   /**
    * Set this to `true` to match the primary column. When `true`, `type` and `systemColumnType` are not required.
    */
@@ -1420,7 +1420,7 @@ export interface ReportColumn {
    *
    * Must be used in combination with `type`. See valid combinations above.
    */
-  systemColumnType?: ReportSystemColumnType | string;
+  systemColumnType?: SystemColumnType | string;
   /**
    * Set to `true` to match the primary column. When `true`, `type` and `systemColumnType` are not required.
    */

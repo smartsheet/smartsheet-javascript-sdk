@@ -12,7 +12,7 @@ import {
 } from './common_test_constants';
 import {
     ReportColumnType,
-    ReportSystemColumnType,
+    SystemColumnType,
     ReportFilterOperator,
     ReportFilterConditionOperator,
     ReportSortingDirection,
@@ -52,7 +52,7 @@ describe('Reports - updateReportDefinition endpoint tests', () => {
                     values: ['PROJ-1']
                 },
                 {
-                    column: { systemColumnType: ReportSystemColumnType.CREATED_BY, type: ReportColumnType.TEXT_NUMBER },
+                    column: { systemColumnType: SystemColumnType.CREATED_BY, type: ReportColumnType.TEXT_NUMBER },
                     operator: ReportFilterConditionOperator.NOT_EQUAL,
                     values: ['System']
                 },
