@@ -373,6 +373,63 @@ export interface ReportsApi {
     options: AddReportColumnsOptions,
     callback?: RequestCallback<AddReportColumnsResponse>
   ) => Promise<AddReportColumnsResponse>;
+
+  /**
+   * Create a new report by specifying name, destination, scope, columns and definition.
+   *
+   * This operation creates a new report with specified columns, scope (sheets/workspaces),
+   * and optional filters, grouping, and sorting.
+   *
+   * @param options - {@link CreateReportOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link CreateReportResponse}\> - Optional callback function
+   * @returns Promise\<{@link CreateReportResponse}\>
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** READ_SHEETS OAuth2 scope or API Token authentication
+   *
+   * **Additional notes:**
+   * - Report name must be 1-50 characters
+   * - Minimum 1 column required, maximum 400 columns
+   * - Minimum 1 scope item required, maximum 100 scope items
+   * - Destination must be a folder or workspace
+   *
+   * It mirrors to the following Smartsheet REST API method: `POST /reports`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.reports.createReport({
+   *   body: {
+   *     name: 'Q2 Project Status',
+   *     destination: {
+   *       destinationType: 'folder',
+   *       destinationId: 1234567890
+   *     },
+   *     columns: [
+   *       { title: 'Task Name', type: 'TEXT_NUMBER', primary: true, index: 0 },
+   *       { title: 'Status', type: 'PICKLIST', index: 1 }
+   *     ],
+   *     scope: [
+   *       { assetType: 'SHEET', assetId: 9876543210 }
+   *     ],
+   *     reportDefinition: {
+   *       filters: {
+   *         operator: 'AND',
+   *         criteria: [{
+   *           column: { title: 'Status', type: 'PICKLIST' },
+   *           operator: 'EQUAL',
+   *           values: ['In Progress']
+   *         }]
+   *       }
+   *     }
+   *   }
+   * });
+   * ```
+   */
+  createReport: (
+    options: CreateReportOptions,
+    callback?: RequestCallback<CreateReportResponse>
+  ) => Promise<CreateReportResponse>;
 }
 
 // ============================================================================
@@ -1476,4 +1533,105 @@ export interface AddReportColumnsResponse extends BaseResponseStatus {
    * Array of report columns that were added.
    */
   result: ReportColumn[];
+}
+
+// ============================================================================
+// Create Report
+// ============================================================================
+
+/**
+ * Type of destination container for create operations.
+ */
+export enum ReportDestinationType {
+  FOLDER = 'folder',
+  WORKSPACE = 'workspace',
+}
+
+/**
+ * Container destination for creating a report.
+ */
+export interface ReportDestination {
+  /**
+   * The ID of the destination container (folder or workspace).
+   */
+  destinationId: number;
+  /**
+   * Type of destination container.
+   */
+  destinationType: ReportDestinationType | string;
+}
+
+/**
+ * Request body for creating a report.
+ */
+export interface CreateReportBody {
+  /**
+   * Report name (1-50 characters).
+   */
+  name: string;
+  /**
+   * Array of report columns (1-400 items).
+   */
+  columns: ReportColumn[];
+  /**
+   * Array of scope items (sheets and/or workspaces) (1-100 items).
+   */
+  scope: ReportScopeAsset[];
+  /**
+   * Report definition containing filters, grouping, and sorting.
+   */
+  reportDefinition?: ReportDefinition;
+  /**
+   * If true, the report is a sheet summary report; otherwise it is a row report.
+   */
+  isSummaryReport?: boolean;
+  /**
+   * Destination container for the report.
+   */
+  destination: ReportDestination;
+}
+
+/**
+ * Result from creating a report.
+ */
+export interface CreateReportResult {
+  /**
+   * The report's unique identifier.
+   */
+  id: number;
+  /**
+   * The report's name.
+   */
+  name: string;
+  /**
+   * User's access level to the report.
+   */
+  accessLevel: string;
+  /**
+   * URL to the report in Smartsheet.
+   */
+  permalink: string;
+  /**
+   * If true, the report is a sheet summary report; otherwise it is a row report.
+   */
+  isSummaryReport: boolean;
+}
+
+/**
+ * Options for creating a report.
+ */
+export type CreateReportOptions = RequestOptions<undefined, CreateReportBody>;
+
+/**
+ * Response from creating a report.
+ */
+export interface CreateReportResponse extends BaseResponseStatus {
+  /**
+   * Array of BulkItemFailure objects which represents the items that failed to be added or updated.
+   */
+  failedItems?: FailedItem[];
+  /**
+   * Array containing the created report details.
+   */
+  result: CreateReportResult[];
 }

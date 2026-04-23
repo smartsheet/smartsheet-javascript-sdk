@@ -50,8 +50,8 @@ export const TEST_SOURCE_WORKSPACE_PERMALINK = 'https://app.smartsheet.com/works
 // Report Scope Assets
 export const TEST_SHEET_ID = 9876543210;
 export const TEST_WORKSPACE_ID = 1122334455;
-export const TEST_ASSET_TYPE_SHEET = 'SHEET';
-export const TEST_ASSET_TYPE_WORKSPACE = 'WORKSPACE';
+export const TEST_ASSET_TYPE_SHEET = 'sheet';
+export const TEST_ASSET_TYPE_WORKSPACE = 'workspace';
 
 // Report Columns (Column type requires all these properties)
 export const TEST_COLUMN_1_ID = 1111111111111111;

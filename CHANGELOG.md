@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Support for DELETE /reports/{reportId}/scope endpoint
 - Support for DELETE /reports/{reportId} endpoint
 - Added support for POST /2.0/reports/{reportId}/columns endpoint
+- Added support for POST /2.0/reports endpoint (create report)
+- WireMock integration tests for contract testing for POST /2.0/reports endpoint
 
 ## [4.7.2] - 2026-03-17
 ### Fixed
