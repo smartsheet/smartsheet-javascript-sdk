@@ -24,6 +24,8 @@ import type {
   RemoveReportScopeOptions,
   AddReportColumnsOptions,
   AddReportColumnsResponse,
+  CreateReportOptions,
+  CreateReportResponse,
 } from './types';
 import * as constants from '../utils/constants';
 
@@ -134,6 +136,14 @@ export function create(options: CreateOptions): ReportsApi {
     return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
   };
 
+  const createReport = (
+    postOptions: CreateReportOptions,
+    callback?: RequestCallback<CreateReportResponse>
+  ): Promise<CreateReportResponse> => {
+    const urlOptions = { url: options.apiUrls.reports };
+    return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
+  };
+
   return {
     listReports,
     getReport,
@@ -147,6 +157,7 @@ export function create(options: CreateOptions): ReportsApi {
     addReportScope,
     removeReportScope,
     addReportColumns,
+    createReport,
     ...shares.create(options),
   };
 }
