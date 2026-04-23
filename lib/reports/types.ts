@@ -1620,10 +1620,7 @@ export interface CreateReportResult {
 /**
  * Options for creating a report.
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface CreateReportOptions extends RequestOptions<undefined, CreateReportBody> {
-  // No additional options required - body contains all necessary data
-}
+export type CreateReportOptions = RequestOptions<undefined, CreateReportBody>;
 
 /**
  * Response from creating a report.
