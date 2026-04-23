@@ -721,8 +721,8 @@ Only returned in a response if readOnlyFullEnabled = true.
  * Asset types that can be included in a report's scope.
  */
 export enum ReportAssetType {
-  SHEET = 'SHEET',
-  WORKSPACE = 'WORKSPACE',
+  SHEET = 'sheet',
+  WORKSPACE = 'workspace',
 }
 
 /**
