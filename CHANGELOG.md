@@ -8,8 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [X.X.X] - Unreleased
 ### Added
 - Support for new CONTRIBUTOR seat type in `SeatTypes` enum
+- Support for `displayContributorSeatType` query parameter in `listAllUsers` and `listUserPlans` endpoints
 - WireMock integration tests for CONTRIBUTOR seat type filtering and responses
 - WireMock integration test for downgrading users to CONTRIBUTOR seat type
+- Comprehensive tests for `displayContributorSeatType` query parameter behavior
 
 ### Fixed
 - `buildUrl` in [lib/utils/httpRequestor.js](lib/utils/httpRequestor.js) now accounts for the fact that `baseUrl` does not have a trailing slash.
