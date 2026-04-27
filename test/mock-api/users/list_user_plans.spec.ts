@@ -11,7 +11,8 @@ import {
     ERROR_400_MESSAGE,
     TEST_PROVISIONAL_EXPIRATION_DATE,
     TEST_LAST_KEY,
-    TEST_MAX_ITEMS
+    TEST_MAX_ITEMS,
+    TEST_CONTRIBUTOR_PLAN_ID
 } from './common_test_constants';
 import { SeatTypes } from '@smartsheet/users/types';
 
@@ -57,13 +58,20 @@ describe('Users - listUserPlans endpoint tests', () => {
             }
         };
         const response = await client.users.listUserPlans(options);
-        
+
         expect(response).toEqual({
             lastKey: TEST_LAST_KEY,
             data: [
                 {
                     planId: TEST_PLAN_ID,
                     seatType: SeatTypes.MEMBER,
+                    seatTypeLastChangedAt: TEST_SEAT_TYPE_LAST_CHANGED_AT,
+                    provisionalExpirationDate: TEST_PROVISIONAL_EXPIRATION_DATE,
+                    isInternal: false
+                },
+                {
+                    planId: TEST_CONTRIBUTOR_PLAN_ID,
+                    seatType: SeatTypes.CONTRIBUTOR,
                     seatTypeLastChangedAt: TEST_SEAT_TYPE_LAST_CHANGED_AT,
                     provisionalExpirationDate: TEST_PROVISIONAL_EXPIRATION_DATE,
                     isInternal: false

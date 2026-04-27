@@ -101,3 +101,13 @@ export const TEST_CONTRIBUTOR_FIRST_NAME = 'User';
 export const TEST_CONTRIBUTOR_LAST_NAME = 'Three';
 export const TEST_CONTRIBUTOR_SEAT_TYPE_LAST_CHANGED_AT = '2025-10-15T08:22:13.456789Z';
 export const TEST_CONTRIBUTOR_SHEET_COUNT = 5;
+
+// Contributor User Properties for all-response-body-properties test
+export const TEST_CONTRIBUTOR_ALL_PROPS_USER_ID = 1234567890123457;
+export const TEST_CONTRIBUTOR_ALL_PROPS_EMAIL = 'contributor.user@smartsheet.com';
+export const TEST_CONTRIBUTOR_ALL_PROPS_FIRST_NAME = 'Contributor';
+export const TEST_CONTRIBUTOR_ALL_PROPS_LAST_NAME = 'User';
+export const TEST_CONTRIBUTOR_ALL_PROPS_NAME = 'Contributor User';
+
+// Contributor Plan Properties
+export const TEST_CONTRIBUTOR_PLAN_ID = 1234567890123457;

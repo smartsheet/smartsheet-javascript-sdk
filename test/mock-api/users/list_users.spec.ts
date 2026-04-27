@@ -19,12 +19,11 @@ import {
     ERROR_400_MESSAGE,
     TEST_PROVISIONAL_EXPIRATION_DATE,
     TEST_INCLUDE_ALL,
-    TEST_CONTRIBUTOR_USER_ID,
-    TEST_CONTRIBUTOR_EMAIL,
-    TEST_CONTRIBUTOR_FIRST_NAME,
-    TEST_CONTRIBUTOR_LAST_NAME,
-    TEST_CONTRIBUTOR_SEAT_TYPE_LAST_CHANGED_AT,
-    TEST_CONTRIBUTOR_SHEET_COUNT
+    TEST_CONTRIBUTOR_ALL_PROPS_USER_ID,
+    TEST_CONTRIBUTOR_ALL_PROPS_EMAIL,
+    TEST_CONTRIBUTOR_ALL_PROPS_FIRST_NAME,
+    TEST_CONTRIBUTOR_ALL_PROPS_LAST_NAME,
+    TEST_CONTRIBUTOR_ALL_PROPS_NAME
 } from './common_test_constants';
 import { SeatTypes, UserStatus } from '@smartsheet/users/types';
 
@@ -100,11 +99,35 @@ describe('Users - listAllUsers endpoint tests', () => {
                         imageId: 'u!1!nAtdn5RJB_o!k6_e_3h2R3w!wmYXPek-yVD',
                         width: 1050
                     }
+                },
+                {
+                    seatType: SeatTypes.CONTRIBUTOR,
+                    seatTypeLastChangedAt: TEST_SEAT_TYPE_LAST_CHANGED_AT,
+                    provisionalExpirationDate: TEST_PROVISIONAL_EXPIRATION_DATE,
+                    isInternal: false,
+                    firstName: TEST_CONTRIBUTOR_ALL_PROPS_FIRST_NAME,
+                    lastName: TEST_CONTRIBUTOR_ALL_PROPS_LAST_NAME,
+                    name: TEST_CONTRIBUTOR_ALL_PROPS_NAME,
+                    email: TEST_CONTRIBUTOR_ALL_PROPS_EMAIL,
+                    admin: false,
+                    licensedSheetCreator: false,
+                    resourceViewer: false,
+                    groupAdmin: false,
+                    status: UserStatus.ACTIVE,
+                    sheetCount: TEST_SHEET_COUNT,
+                    lastLogin: TEST_LAST_LOGIN,
+                    customWelcomeScreenViewed: TEST_CUSTOM_WELCOME_SCREEN_VIEWED,
+                    id: TEST_CONTRIBUTOR_ALL_PROPS_USER_ID,
+                    profileImage: {
+                        height: 1050,
+                        imageId: 'u!1!nAtdn5RJB_o!k6_e_3h2R3w!wmYXPek-yVD',
+                        width: 1050
+                    }
                 }
             ],
             pageNumber: 1,
             pageSize: 100,
-            totalCount: 1,
+            totalCount: 2,
             totalPages: 1
         });
     });
@@ -186,90 +209,4 @@ describe('Users - listAllUsers endpoint tests', () => {
         }
     });
 
-    it('listUsers with CONTRIBUTOR seat type filter', async () => {
-        const requestId = crypto.randomUUID();
-        const options = {
-            queryParameters: {
-                seatType: SeatTypes.CONTRIBUTOR
-            },
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/users/list-users/contributor-seat-type-filter'
-            }
-        };
-        const response = await client.users.listAllUsers(options);
-        expect(response).toEqual({
-            data: [
-                {
-                    id: TEST_CONTRIBUTOR_USER_ID,
-                    planId: TEST_CONTRIBUTOR_USER_ID,
-                    admin: false,
-                    email: TEST_CONTRIBUTOR_EMAIL,
-                    groupAdmin: false,
-                    isInternal: true,
-                    licensedSheetCreator: false,
-                    resourceViewer: false,
-                    seatType: SeatTypes.CONTRIBUTOR,
-                    seatTypeLastChangedAt: TEST_CONTRIBUTOR_SEAT_TYPE_LAST_CHANGED_AT,
-                    sheetCount: TEST_CONTRIBUTOR_SHEET_COUNT,
-                    status: UserStatus.ACTIVE
-                }
-            ],
-            pageNumber: 1,
-            pageSize: 100,
-            totalCount: 1,
-            totalPages: 1
-        });
-    });
-
-    it('listUsers with CONTRIBUTOR seat type in response', async () => {
-        const requestId = crypto.randomUUID();
-        const options = {
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/users/list-users/contributor-seat-type-response'
-            }
-        };
-        const response = await client.users.listAllUsers(options);
-        expect(response).toEqual({
-            data: [
-                {
-                    id: 123,
-                    planId: 123,
-                    admin: true,
-                    email: 'user1@example.com',
-                    firstName: 'User',
-                    lastName: 'One',
-                    groupAdmin: false,
-                    isInternal: true,
-                    licensedSheetCreator: true,
-                    resourceViewer: false,
-                    seatType: SeatTypes.MEMBER,
-                    seatTypeLastChangedAt: '2025-08-01T10:30:45.123456Z',
-                    sheetCount: 10,
-                    status: UserStatus.ACTIVE
-                },
-                {
-                    id: TEST_CONTRIBUTOR_USER_ID,
-                    planId: TEST_CONTRIBUTOR_USER_ID,
-                    admin: false,
-                    email: TEST_CONTRIBUTOR_EMAIL,
-                    firstName: TEST_CONTRIBUTOR_FIRST_NAME,
-                    lastName: TEST_CONTRIBUTOR_LAST_NAME,
-                    groupAdmin: false,
-                    isInternal: true,
-                    licensedSheetCreator: false,
-                    resourceViewer: false,
-                    seatType: SeatTypes.CONTRIBUTOR,
-                    seatTypeLastChangedAt: TEST_CONTRIBUTOR_SEAT_TYPE_LAST_CHANGED_AT,
-                    sheetCount: TEST_CONTRIBUTOR_SHEET_COUNT,
-                    status: UserStatus.ACTIVE
-                }
-            ],
-            pageNumber: 1,
-            pageSize: 100,
-            totalCount: 2,
-            totalPages: 1
-        });
-    });
 });

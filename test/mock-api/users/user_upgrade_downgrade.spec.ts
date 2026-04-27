@@ -204,7 +204,7 @@ describe('Users - upgradeUser & downgradeUser endpoint tests', () => {
             body: TEST_DOWNGRADE_TO_CONTRIBUTOR_BODY,
             customProperties: {
                 'x-request-id': requestId,
-                'x-test-name': '/users/downgrade-user/to-contributor'
+                'x-test-name': '/users/downgrade-user/all-response-body-properties'
             }
         };
         const response = await client.users.downgradeUser(options);
