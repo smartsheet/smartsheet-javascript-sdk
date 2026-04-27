@@ -146,14 +146,12 @@ describe('Reports - createReport endpoint tests', () => {
         expect(response).toEqual({
             message: TEST_SUCCESS_MESSAGE,
             resultCode: TEST_SUCCESS_RESULT_CODE,
-            result: [
-                {
-                    id: 4583614634583940,
-                    name: 'Q2 Earnings',
-                    accessLevel: 'OWNER',
-                    permalink: 'https://app.smartsheet.com/reports/c8gJxw87cXpRCvCC5PPw6jFhFRrf5r8PxCrxvW21'
-                }
-            ]
+            result: {
+                id: 987654321,
+                name: 'Q2 Earnings Report',
+                accessLevel: 'OWNER',
+                permalink: 'https://app.smartsheet.com/reports/c8gJxw87cXpRCvCC5PPw6jFhFRrf5r8PxCrxvW21'
+            }
         });
 
         const body = JSON.parse(matchedRequest.body);
@@ -175,15 +173,58 @@ describe('Reports - createReport endpoint tests', () => {
         expect(response).toEqual({
             message: TEST_SUCCESS_MESSAGE,
             resultCode: TEST_SUCCESS_RESULT_CODE,
-            result: [
-                {
-                    id: 4583614634583940,
-                    name: 'Q2 Earnings',
-                    accessLevel: 'OWNER',
-                    permalink: 'https://app.smartsheet.com/reports/c8gJxw87cXpRCvCC5PPw6jFhFRrf5r8PxCrxvW21',
-                    isSummaryReport: false
-                }
-            ]
+            result: {
+                id: 987654321,
+                name: 'Q2 Earnings Report',
+                accessLevel: 'OWNER',
+                permalink: 'https://app.smartsheet.com/reports/c8gJxw87cXpRCvCC5PPw6jFhFRrf5r8PxCrxvW21',
+                isSummaryReport: false,
+                columns: [
+                    {
+                        virtualId: 1234567890123456,
+                        index: 0,
+                        title: 'Primary column',
+                        type: 'TEXT_NUMBER',
+                        primary: true,
+                        hidden: false,
+                        version: 0,
+                        width: 200,
+                        validation: false
+                    },
+                    {
+                        virtualId: 2345678901234567,
+                        index: 1,
+                        title: 'Sheet name',
+                        type: 'TEXT_NUMBER',
+                        sheetNameColumn: true,
+                        hidden: false,
+                        version: 0,
+                        width: 150,
+                        validation: false
+                    },
+                    {
+                        virtualId: 3456789012345678,
+                        index: 2,
+                        title: 'Created at',
+                        type: 'DATETIME',
+                        systemColumnType: 'CREATED_DATE',
+                        hidden: false,
+                        version: 0,
+                        width: 150,
+                        validation: false
+                    },
+                    {
+                        virtualId: 4567890123456789,
+                        index: 3,
+                        title: 'Selected item',
+                        type: 'PICKLIST',
+                        hidden: false,
+                        version: 0,
+                        width: 150,
+                        validation: false
+                    }
+                ]
+            }
         });
 
         const body = JSON.parse(matchedRequest.body);
