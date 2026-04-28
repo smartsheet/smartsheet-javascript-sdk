@@ -1614,7 +1614,11 @@ export interface CreateReportResult {
   /**
    * If true, the report is a sheet summary report; otherwise it is a row report.
    */
-  isSummaryReport: boolean;
+  isSummaryReport?: boolean;
+  /**
+   * Array of report columns. Only included in the response when columns are created with the report.
+   */
+  columns?: ReportColumn[];
 }
 
 /**
@@ -1631,7 +1635,7 @@ export interface CreateReportResponse extends BaseResponseStatus {
    */
   failedItems?: FailedItem[];
   /**
-   * Array containing the created report details.
+   * The created report details.
    */
-  result: CreateReportResult[];
+  result: CreateReportResult;
 }
