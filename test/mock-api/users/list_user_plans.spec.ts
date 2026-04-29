@@ -25,7 +25,8 @@ describe('Users - listUserPlans endpoint tests', () => {
             userId: TEST_USER_ID,
             queryParameters: {
                 lastKey: TEST_LAST_KEY,
-                maxItems: TEST_MAX_ITEMS
+                maxItems: TEST_MAX_ITEMS,
+                displayContributorSeatType: true
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -40,7 +41,8 @@ describe('Users - listUserPlans endpoint tests', () => {
         const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
         expect(queryParamsObject).toEqual({
             lastKey: TEST_LAST_KEY,
-            maxItems: TEST_MAX_ITEMS.toString()
+            maxItems: TEST_MAX_ITEMS.toString(),
+            displayContributorSeatType: 'true'
         });
     });
 
