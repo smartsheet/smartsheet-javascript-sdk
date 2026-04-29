@@ -434,6 +434,7 @@ export enum SeatTypes {
   PROVISIONAL_MEMBER = 'PROVISIONAL_MEMBER',
   GUEST = 'GUEST',
   VIEWER = 'VIEWER',
+  CONTRIBUTOR = 'CONTRIBUTOR',
 }
 
 export interface UserProfile {
@@ -738,6 +739,14 @@ export interface ListUsersQueryParameters extends PaginationQueryParameters {
    * @defaultValue false
    */
   numericDates?: boolean;
+
+  /**
+   * Controls whether CONTRIBUTOR seat types are displayed in the response.
+   * - If true: VIEWER seat types are re-written to CONTRIBUTOR
+   * - If false: CONTRIBUTOR seat types are re-written to VIEWER (default behavior)
+   * @defaultValue false
+   */
+  displayContributorSeatType?: boolean;
 }
 
 export interface ListUsersData {
@@ -1421,6 +1430,13 @@ export interface ListUserPlansQueryParameters {
    * The maximum amount of items to return in the response.
    */
   maxItems?: number;
+  /**
+   * Controls whether CONTRIBUTOR seat types are displayed in the response.
+   * - If true: VIEWER seat types are re-written to CONTRIBUTOR
+   * - If false: CONTRIBUTOR seat types are re-written to VIEWER (default behavior)
+   * @defaultValue false
+   */
+  displayContributorSeatType?: boolean;
 }
 
 export interface ListUserPlansOptions extends RequestOptions<ListUserPlansQueryParameters, undefined> {

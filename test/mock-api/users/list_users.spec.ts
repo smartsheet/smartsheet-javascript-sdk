@@ -18,7 +18,12 @@ import {
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE,
     TEST_PROVISIONAL_EXPIRATION_DATE,
-    TEST_INCLUDE_ALL
+    TEST_INCLUDE_ALL,
+    TEST_CONTRIBUTOR_ALL_PROPS_USER_ID,
+    TEST_CONTRIBUTOR_ALL_PROPS_EMAIL,
+    TEST_CONTRIBUTOR_ALL_PROPS_FIRST_NAME,
+    TEST_CONTRIBUTOR_ALL_PROPS_LAST_NAME,
+    TEST_CONTRIBUTOR_ALL_PROPS_NAME
 } from './common_test_constants';
 import { SeatTypes, UserStatus } from '@smartsheet/users/types';
 
@@ -34,7 +39,8 @@ describe('Users - listAllUsers endpoint tests', () => {
                 seatType: SeatTypes.MEMBER,
                 includeAll: TEST_INCLUDE_ALL,
                 page: TEST_PAGE_NUMBER,
-                pageSize: TEST_PAGE_SIZE
+                pageSize: TEST_PAGE_SIZE,
+                displayContributorSeatType: true
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -53,7 +59,8 @@ describe('Users - listAllUsers endpoint tests', () => {
             seatType: SeatTypes.MEMBER,
             includeAll: TEST_INCLUDE_ALL.toString(),
             page: TEST_PAGE_NUMBER.toString(),
-            pageSize: TEST_PAGE_SIZE.toString()
+            pageSize: TEST_PAGE_SIZE.toString(),
+            displayContributorSeatType: 'true'
         });
     });
 
@@ -94,11 +101,35 @@ describe('Users - listAllUsers endpoint tests', () => {
                         imageId: 'u!1!nAtdn5RJB_o!k6_e_3h2R3w!wmYXPek-yVD',
                         width: 1050
                     }
+                },
+                {
+                    seatType: SeatTypes.CONTRIBUTOR,
+                    seatTypeLastChangedAt: TEST_SEAT_TYPE_LAST_CHANGED_AT,
+                    provisionalExpirationDate: TEST_PROVISIONAL_EXPIRATION_DATE,
+                    isInternal: false,
+                    firstName: TEST_CONTRIBUTOR_ALL_PROPS_FIRST_NAME,
+                    lastName: TEST_CONTRIBUTOR_ALL_PROPS_LAST_NAME,
+                    name: TEST_CONTRIBUTOR_ALL_PROPS_NAME,
+                    email: TEST_CONTRIBUTOR_ALL_PROPS_EMAIL,
+                    admin: false,
+                    licensedSheetCreator: false,
+                    resourceViewer: false,
+                    groupAdmin: false,
+                    status: UserStatus.ACTIVE,
+                    sheetCount: TEST_SHEET_COUNT,
+                    lastLogin: TEST_LAST_LOGIN,
+                    customWelcomeScreenViewed: TEST_CUSTOM_WELCOME_SCREEN_VIEWED,
+                    id: TEST_CONTRIBUTOR_ALL_PROPS_USER_ID,
+                    profileImage: {
+                        height: 1050,
+                        imageId: 'u!1!nAtdn5RJB_o!k6_e_3h2R3w!wmYXPek-yVD',
+                        width: 1050
+                    }
                 }
             ],
             pageNumber: 1,
             pageSize: 100,
-            totalCount: 1,
+            totalCount: 2,
             totalPages: 1
         });
     });
@@ -179,4 +210,5 @@ describe('Users - listAllUsers endpoint tests', () => {
             expect(error.message).toBe(ERROR_400_MESSAGE);
         }
     });
+
 });
