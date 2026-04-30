@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
+
+## [4.8.0] - 2026-04-30
 ### Added
 - Support for new CONTRIBUTOR seat type in `SeatTypes` enum
 - Support for `displayContributorSeatType` query parameter in `listAllUsers` and `listUserPlans` endpoints
