@@ -1,4 +1,5 @@
 import shareModule from '../share/share';
+import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { CreateOptions } from '../types/CreateOptions';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
@@ -16,6 +17,15 @@ import type {
   ReportPublish,
   SetReportPublishStatusOptions,
   SetReportPublishStatusResponse,
+  UpdateReportDefinitionOptions,
+  DeleteReportOptions,
+  DeleteReportResponse,
+  AddReportScopeOptions,
+  RemoveReportScopeOptions,
+  AddReportColumnsOptions,
+  AddReportColumnsResponse,
+  CreateReportOptions,
+  CreateReportResponse,
 } from './types';
 import * as constants from '../utils/constants';
 
@@ -87,6 +97,53 @@ export function create(options: CreateOptions): ReportsApi {
     return requestor.put({ ...optionsToSend, ...urlOptions, ...putOptions }, callback);
   };
 
+  const updateReportDefinition = (
+    putOptions: UpdateReportDefinitionOptions,
+    callback?: RequestCallback<BaseResponseStatus>
+  ): Promise<BaseResponseStatus> => {
+    const urlOptions = {
+      url: options.apiUrls.reports + '/' + putOptions.reportId + '/definition',
+    };
+    return requestor.put({ ...optionsToSend, ...urlOptions, ...putOptions }, callback);
+  };
+
+  const deleteReport = (deleteOptions: DeleteReportOptions, callback?: RequestCallback<DeleteReportResponse>) => {
+    const urlOptions = { url: options.apiUrls.reports + '/' + deleteOptions.reportId };
+    return requestor.delete({ ...optionsToSend, ...urlOptions, ...deleteOptions }, callback);
+  };
+
+  const addReportScope = (
+    postOptions: AddReportScopeOptions,
+    callback?: RequestCallback<BaseResponseStatus>
+  ): Promise<BaseResponseStatus> => {
+    const urlOptions = { url: options.apiUrls.reports + '/' + postOptions.reportId + '/scope' };
+    return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
+  };
+
+  const removeReportScope = (
+    deleteOptions: RemoveReportScopeOptions,
+    callback?: RequestCallback<BaseResponseStatus>
+  ): Promise<BaseResponseStatus> => {
+    const urlOptions = { url: options.apiUrls.reports + '/' + deleteOptions.reportId + '/scope' };
+    return requestor.delete({ ...optionsToSend, ...urlOptions, ...deleteOptions }, callback);
+  };
+
+  const addReportColumns = (
+    postOptions: AddReportColumnsOptions,
+    callback?: RequestCallback<AddReportColumnsResponse>
+  ): Promise<AddReportColumnsResponse> => {
+    const urlOptions = { url: options.apiUrls.reports + '/' + postOptions.reportId + '/columns' };
+    return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
+  };
+
+  const createReport = (
+    postOptions: CreateReportOptions,
+    callback?: RequestCallback<CreateReportResponse>
+  ): Promise<CreateReportResponse> => {
+    const urlOptions = { url: options.apiUrls.reports };
+    return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
+  };
+
   return {
     listReports,
     getReport,
@@ -95,6 +152,12 @@ export function create(options: CreateOptions): ReportsApi {
     getReportAsCSV,
     getReportPublishStatus,
     setReportPublishStatus,
+    updateReportDefinition,
+    deleteReport,
+    addReportScope,
+    removeReportScope,
+    addReportColumns,
+    createReport,
     ...shares.create(options),
   };
 }

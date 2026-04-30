@@ -47,6 +47,12 @@ export const TEST_SOURCE_WORKSPACE_NAME = 'Source Workspace';
 export const TEST_SOURCE_WORKSPACE_ACCESS_LEVEL = 'VIEWER';
 export const TEST_SOURCE_WORKSPACE_PERMALINK = 'https://app.smartsheet.com/workspaces/source-workspace';
 
+// Report Scope Assets
+export const TEST_SHEET_ID = 9876543210;
+export const TEST_WORKSPACE_ID = 1122334455;
+export const TEST_ASSET_TYPE_SHEET = 'sheet';
+export const TEST_ASSET_TYPE_WORKSPACE = 'workspace';
+
 // Report Columns (Column type requires all these properties)
 export const TEST_COLUMN_1_ID = 1111111111111111;
 export const TEST_COLUMN_1_INDEX = 0;

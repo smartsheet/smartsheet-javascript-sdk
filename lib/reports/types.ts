@@ -175,6 +175,261 @@ export interface ReportsApi {
     options: SetReportPublishStatusOptions,
     callback?: RequestCallback<SetReportPublishStatusResponse>
   ) => Promise<SetReportPublishStatusResponse>;
+
+  /**
+   * Update a Report's definition based on the specified ID
+   *
+   * **Note:** This endpoint supports partial updates **only on root level** properties of the report definition,
+   * such as `filters`, `groupingCriteria` and `summarizingCriteria`. For example, you can update the report's filters
+   * without affecting its grouping criteria. However, nested properties within these objects,
+   * such as a specific filter or grouping criterion, cannot be updated individually and
+   * require a full replacement of the respective section.
+   *
+   * @param options - {@link UpdateReportDefinitionOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `PUT /reports/{reportId}/definition`
+   *
+   * @example
+   * ```typescript
+   * // Update report filters with different value types
+   * const result = await client.reports.updateReportDefinition({
+   *   reportId: 4583173393803140,
+   *   body: {
+   *     filters: {
+   *       operator: 'AND',
+   *       criteria: [
+   *         {
+   *           column: { title: 'Status', type: 'PICKLIST' },
+   *           operator: 'EQUAL',
+   *           values: ['Complete']  // String values
+   *         },
+   *         {
+   *           column: { title: 'Priority', type: 'TEXT_NUMBER' },
+   *           operator: 'GREATER_THAN',
+   *           values: [5]  // Numeric values
+   *         },
+   *         {
+   *           column: { title: 'Due Date', type: 'DATE' },
+   *           operator: 'GREATER_THAN',
+   *           values: [{ objectType: 'DATE', value: '2024-01-01' }]  // Date object
+   *         },
+   *         {
+   *           column: { title: 'Assigned To', type: 'CONTACT_LIST' },
+   *           operator: 'EQUAL',
+   *           values: [{ objectType: 'CURRENT_USER', value: '' }]  // Current user filter
+   *         }
+   *       ]
+   *     }
+   *   }
+   * });
+   * ```
+   */
+  updateReportDefinition: (
+    options: UpdateReportDefinitionOptions,
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
+
+  /**
+   * Deletes the specified Report.
+   *
+   * @param options - {@link DeleteReportOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link DeleteReportResponse}\> - Optional callback function
+   * @returns Promise\<{@link DeleteReportResponse}\>
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `DELETE /2.0/reports/{reportId}`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.reports.deleteReport({
+   *   reportId: 11235813
+   * });
+   * ```
+   */
+  deleteReport: (
+    options: DeleteReportOptions,
+    callback?: RequestCallback<DeleteReportResponse>
+  ) => Promise<DeleteReportResponse>;
+
+  /**
+   * Add sheets and/or workspaces to a report's scope.
+   *
+   * This operation allows you to expand the data sources included in a report by adding
+   * sheets or workspaces. The report will then include data from these newly added sources.
+   *
+   * @param options - {@link AddReportScopeOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** ADMIN or OWNER access to the report
+   *
+   * **Additional notes:**
+   * - Maximum of 100 scope items can be added at once
+   * - Requires READ_SHEETS OAuth2 scope or API Token authentication
+   *
+   * It mirrors to the following Smartsheet REST API method: `POST /reports/{reportId}/scope`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.reports.addReportScope({
+   *   reportId: 1234567890,
+   *   body: [
+   *     { assetType: 'SHEET', assetId: 9876543210 },
+   *     { assetType: 'WORKSPACE', assetId: 1122334455 }
+   *   ]
+   * });
+   * console.log(result.message); // 'SUCCESS'
+   * ```
+   */
+  addReportScope: (
+    options: AddReportScopeOptions,
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
+
+  /**
+   * Remove sheets and/or workspaces from a report's scope.
+   *
+   * This operation allows you to remove data sources from a report. The report will
+   * no longer include data from these removed sources.
+   *
+   * @param options - {@link RemoveReportScopeOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** ADMIN or OWNER access to the report
+   *
+   * **Additional notes:**
+   * - Maximum of 100 scope items can be removed at once
+   * - Requires READ_SHEETS OAuth2 scope or API Token authentication
+   *
+   * It mirrors to the following Smartsheet REST API method: `DELETE /reports/{reportId}/scope`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.reports.removeReportScope({
+   *   reportId: 1234567890,
+   *   body: [
+   *     { assetType: 'SHEET', assetId: 9876543210 }
+   *   ]
+   * });
+   * console.log(result.message); // 'SUCCESS'
+   * ```
+   */
+  removeReportScope: (
+    options: RemoveReportScopeOptions,
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
+
+  /**
+   * Add columns to a report.
+   *
+   * This operation adds columns to a report specified by a report ID.
+   *
+   * **Note:** All indexes of the columns must be equal.
+   *
+   * @param options - {@link AddReportColumnsOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link AddReportColumnsResponse}\> - Optional callback function
+   * @returns Promise\<{@link AddReportColumnsResponse}\>
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** EDITOR or ADMIN access to the report
+   *
+   * **Additional notes:**
+   * - Maximum of 400 columns can be added
+   * - Column limit of 400 total columns per report
+   * - Cannot modify program reports via API
+   *
+   * It mirrors to the following Smartsheet REST API method: `POST /reports/{reportId}/columns`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.reports.addReportColumns({
+   *   reportId: 4583173393803140,
+   *   body: [
+   *     {
+   *       title: 'Item selected',
+   *       type: 'CHECKBOX',
+   *       index: 4
+   *     },
+   *     {
+   *       title: 'Sheet name',
+   *       type: 'TEXT_NUMBER',
+   *       sheetNameColumn: true,
+   *       index: 4
+   *     }
+   *   ]
+   * });
+   * ```
+   */
+  addReportColumns: (
+    options: AddReportColumnsOptions,
+    callback?: RequestCallback<AddReportColumnsResponse>
+  ) => Promise<AddReportColumnsResponse>;
+
+  /**
+   * Create a new report by specifying name, destination, scope, columns and definition.
+   *
+   * This operation creates a new report with specified columns, scope (sheets/workspaces),
+   * and optional filters, grouping, and sorting.
+   *
+   * @param options - {@link CreateReportOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link CreateReportResponse}\> - Optional callback function
+   * @returns Promise\<{@link CreateReportResponse}\>
+   *
+   * @remarks
+   * **Who can use this operation:**
+   * - **Permissions:** READ_SHEETS OAuth2 scope or API Token authentication
+   *
+   * **Additional notes:**
+   * - Report name must be 1-50 characters
+   * - Minimum 1 column required, maximum 400 columns
+   * - Minimum 1 scope item required, maximum 100 scope items
+   * - Destination must be a folder or workspace
+   *
+   * It mirrors to the following Smartsheet REST API method: `POST /reports`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.reports.createReport({
+   *   body: {
+   *     name: 'Q2 Project Status',
+   *     destination: {
+   *       destinationType: 'folder',
+   *       destinationId: 1234567890
+   *     },
+   *     columns: [
+   *       { title: 'Task Name', type: 'TEXT_NUMBER', primary: true, index: 0 },
+   *       { title: 'Status', type: 'PICKLIST', index: 1 }
+   *     ],
+   *     scope: [
+   *       { assetType: 'SHEET', assetId: 9876543210 }
+   *     ],
+   *     reportDefinition: {
+   *       filters: {
+   *         operator: 'AND',
+   *         criteria: [{
+   *           column: { title: 'Status', type: 'PICKLIST' },
+   *           operator: 'EQUAL',
+   *           values: ['In Progress']
+   *         }]
+   *       }
+   *     }
+   *   }
+   * });
+   * ```
+   */
+  createReport: (
+    options: CreateReportOptions,
+    callback?: RequestCallback<CreateReportResponse>
+  ) => Promise<CreateReportResponse>;
 }
 
 // ============================================================================
@@ -519,6 +774,30 @@ Only returned in a response if readOnlyFullEnabled = true.
   readOnlyFullShowToolbar?: boolean;
 }
 
+/**
+ * Asset types that can be included in a report's scope.
+ */
+export enum ReportAssetType {
+  SHEET = 'sheet',
+  WORKSPACE = 'workspace',
+}
+
+/**
+ * Represents an asset (sheet or workspace) in a report's scope.
+ */
+export interface ReportScopeAsset {
+  /**
+   * The asset type to be included in the scope of the report.
+   * @see ReportAssetType
+   */
+  assetType: ReportAssetType;
+
+  /**
+   * The ID of the asset according to its assetType.
+   */
+  assetId: number;
+}
+
 // ============================================================================
 // List Reports
 // ============================================================================
@@ -721,4 +1000,642 @@ export interface SetReportPublishStatusResponse extends BaseResponseStatus {
    */
   failedItems?: FailedItem[];
   result: ReportPublish;
+}
+
+// ============================================================================
+// Update Report Definition
+// ============================================================================
+
+export interface UpdateReportDefinitionOptions extends RequestOptions<undefined, ReportDefinition> {
+  /**
+   * reportID of the report being accessed.
+   */
+  reportId: number;
+}
+
+// ============================================================================
+// Report Definition Enums
+// ============================================================================
+
+/**
+ * Boolean operator for filter expressions.
+ */
+export enum ReportFilterOperator {
+  AND = 'AND',
+  OR = 'OR',
+}
+
+/**
+ * Filter condition operators.
+ */
+export enum ReportFilterConditionOperator {
+  EQUAL = 'EQUAL',
+  NOT_EQUAL = 'NOT_EQUAL',
+  GREATER_THAN = 'GREATER_THAN',
+  LESS_THAN = 'LESS_THAN',
+  CONTAINS = 'CONTAINS',
+  BETWEEN = 'BETWEEN',
+  TODAY = 'TODAY',
+  PAST = 'PAST',
+  FUTURE = 'FUTURE',
+  LAST_N_DAYS = 'LAST_N_DAYS',
+  NEXT_N_DAYS = 'NEXT_N_DAYS',
+  IS_BLANK = 'IS_BLANK',
+  IS_NOT_BLANK = 'IS_NOT_BLANK',
+  IS_NUMBER = 'IS_NUMBER',
+  IS_NOT_NUMBER = 'IS_NOT_NUMBER',
+  IS_DATE = 'IS_DATE',
+  IS_NOT_DATE = 'IS_NOT_DATE',
+  IS_CHECKED = 'IS_CHECKED',
+  IS_UNCHECKED = 'IS_UNCHECKED',
+  IS_ONE_OF = 'IS_ONE_OF',
+  IS_NOT_ONE_OF = 'IS_NOT_ONE_OF',
+  LESS_THAN_OR_EQUAL = 'LESS_THAN_OR_EQUAL',
+  GREATER_THAN_OR_EQUAL = 'GREATER_THAN_OR_EQUAL',
+  DOES_NOT_CONTAIN = 'DOES_NOT_CONTAIN',
+  NOT_BETWEEN = 'NOT_BETWEEN',
+  NOT_TODAY = 'NOT_TODAY',
+  NOT_PAST = 'NOT_PAST',
+  NOT_FUTURE = 'NOT_FUTURE',
+  NOT_LAST_N_DAYS = 'NOT_LAST_N_DAYS',
+  NOT_NEXT_N_DAYS = 'NOT_NEXT_N_DAYS',
+  HAS_ANY_OF = 'HAS_ANY_OF',
+  HAS_NONE_OF = 'HAS_NONE_OF',
+  HAS_ALL_OF = 'HAS_ALL_OF',
+  NOT_ALL_OF = 'NOT_ALL_OF',
+  MULTI_IS_EQUAL = 'MULTI_IS_EQUAL',
+  MULTI_IS_NOT_EQUAL = 'MULTI_IS_NOT_EQUAL',
+}
+
+/**
+ * Sorting direction for grouping and sorting criteria.
+ */
+export enum ReportSortingDirection {
+  ASCENDING = 'ASCENDING',
+  DESCENDING = 'DESCENDING',
+}
+
+/**
+ * Aggregation types for report summarizing criteria.
+ */
+export enum ReportAggregationType {
+  SUM = 'SUM',
+  AVG = 'AVG',
+  MIN = 'MIN',
+  MAX = 'MAX',
+  COUNT = 'COUNT',
+  FIRST = 'FIRST',
+  LAST = 'LAST',
+}
+
+/**
+ * Column types for report columns and column identifiers.
+ *
+ * Used by {@link ReportColumn} and {@link ReportColumnIdentifier}.
+ */
+export enum ReportColumnType {
+  CHECKBOX = 'CHECKBOX',
+  DATE = 'DATE',
+  DATETIME = 'DATETIME',
+  DURATION = 'DURATION',
+  CONTACT_LIST = 'CONTACT_LIST',
+  MULTI_CONTACT_LIST = 'MULTI_CONTACT_LIST',
+  PICKLIST = 'PICKLIST',
+  MULTI_PICKLIST = 'MULTI_PICKLIST',
+  PREDECESSOR = 'PREDECESSOR',
+  TEXT_NUMBER = 'TEXT_NUMBER',
+}
+
+/**
+ * System column types for columns, report columns, and column identifiers.
+ *
+ * Used by {@link Column}, {@link ReportColumn}, and {@link ReportColumnIdentifier}.
+ */
+export enum SystemColumnType {
+  CREATED_BY = 'CREATED_BY',
+  CREATED_DATE = 'CREATED_DATE',
+  MODIFIED_BY = 'MODIFIED_BY',
+  MODIFIED_DATE = 'MODIFIED_DATE',
+  AUTO_NUMBER = 'AUTO_NUMBER',
+}
+
+// ============================================================================
+// Report Definition Types
+// ============================================================================
+
+/**
+ * The report definition contains filters, grouping and sorting properties of the report.
+ *
+ * Note: When groupingCriteria is defined the primary column of the report will move to the index 0 when it is first rendered by the app.
+ */
+export interface ReportDefinition {
+  /**
+   * Report filter expression.
+   */
+  filters?: ReportFilterExpression;
+  /**
+   * List of report grouping criteria.
+   */
+  groupingCriteria?: ReportGroupingCriterion[];
+  /**
+   * List of report summarizing criteria.
+   */
+  summarizingCriteria?: ReportSummarizingCriterion[];
+  /**
+   * List of report sorting criteria.
+   */
+  sortingCriteria?: ReportSortingCriterion[];
+}
+
+/**
+ * An expression to filter on report columns. It is a recursive object that allows at most three levels.
+ *
+ * It must include `operator` and at least one of the following: `criteria` or `nestedCriteria`
+ *
+ * Here is a two-level example with different value types:
+ *
+ * ```json
+ * {
+ *   "operator": "OR",
+ *   "nestedCriteria": [
+ *     {
+ *       "operator": "AND",
+ *       "criteria": [
+ *         {
+ *           "column": { "title": "Price", "type": "TEXT_NUMBER" },
+ *           "operator": "GREATER_THAN",
+ *           "values": [100]
+ *         },
+ *         {
+ *           "column": { "primary": true },
+ *           "operator": "CONTAINS",
+ *           "values": ["PROJ-1"]
+ *         }
+ *       ]
+ *     },
+ *     {
+ *       "operator": "AND",
+ *       "criteria": [
+ *         {
+ *           "column": { "title": "Due Date", "type": "DATE" },
+ *           "operator": "GREATER_THAN",
+ *           "values": [{ "objectType": "DATE", "value": "2024-01-01" }]
+ *         },
+ *         {
+ *           "column": { "title": "Assigned To", "type": "CONTACT_LIST" },
+ *           "operator": "EQUAL",
+ *           "values": [{ "objectType": "CURRENT_USER", "value": "" }]
+ *         }
+ *       ]
+ *     }
+ *   ]
+ * }
+ * ```
+ *
+ * It's equivalent to the following pseudo logic:
+ *
+ * ```
+ * (Price > 100 AND Primary CONTAINS "PROJ-1")
+ * OR
+ * (Due Date > 2024-01-01 AND Assigned To = CURRENT_USER)
+ * ```
+ */
+export interface ReportFilterExpression {
+  /**
+   * The boolean operator to apply to the list of `criteria` and `nestedCriteria`.
+   */
+  operator: ReportFilterOperator | string;
+  /**
+   * A recursive list of report filter expressions. Each item is joined to the filter expression with the AND/OR operator defined on this level.
+   */
+  nestedCriteria?: ReportFilterExpression[];
+  /**
+   * Criteria objects specifying custom criteria against which to match cell values. Each item is joined to the filter expression with the AND/OR operator defined on this level.
+   */
+  criteria?: ReportFilterCriterion[];
+}
+
+/**
+ * Represents a filter value object for special filter types.
+ * Used for date-based filters and current user filters.
+ */
+export interface ReportFilterObjectValue {
+  /**
+   * Type of the object value.
+   * - `DATE`: For date-based filter values
+   * - `CURRENT_USER`: For filtering by the current user
+   */
+  objectType: 'DATE' | 'CURRENT_USER';
+  /**
+   * The value associated with the object type.
+   * For DATE objects, this would be a date string.
+   * For CURRENT_USER, this represents the user identifier.
+   */
+  value: string;
+}
+
+/**
+ * Union type for report filter values.
+ * Can be a string, number, null, or a filter value object.
+ */
+export type ReportFilterValue = string | number | null | ReportFilterObjectValue;
+
+/**
+ * Represents a report filter criterion.
+ */
+export interface ReportFilterCriterion {
+  /**
+   * Object used to match a sheet column for a report.
+   */
+  column: ReportColumnIdentifier;
+  /**
+   * Condition operator.
+   */
+  operator: ReportFilterConditionOperator | string;
+  /**
+   * List of filter values.
+   *
+   * Values can be:
+   * - `string`: Regular text values (nullable)
+   * - `number`: Numeric values
+   * - `null`: Explicit null values
+   * - `ReportFilterObjectValue`: Special object values for dates or current user
+   *
+   * @example
+   * ```typescript
+   * // String values
+   * values: ["Complete", "In Progress"]
+   *
+   * // Numeric values
+   * values: [100, 200]
+   *
+   * // Date object values
+   * values: [{ objectType: "DATE", value: "2024-01-01" }]
+   *
+   * // Current user filter
+   * values: [{ objectType: "CURRENT_USER", value: "" }]
+   * ```
+   */
+  values?: (string | number | ReportFilterValue | undefined)[];
+}
+
+/**
+ * Report grouping criterion.
+ */
+export interface ReportGroupingCriterion {
+  /**
+   * Object used to match a sheet column for a report.
+   */
+  column: ReportColumnIdentifier;
+  /**
+   * Sorting direction within the group.
+   */
+  sortingDirection: ReportSortingDirection | string;
+  /**
+   * Indicates whether the group is expanded in the UI.
+   */
+  isExpanded?: boolean;
+}
+
+/**
+ * Report summarizing criterion.
+ */
+export interface ReportSummarizingCriterion {
+  /**
+   * Object used to match a sheet column for a report.
+   */
+  column: ReportColumnIdentifier;
+  /**
+   * Type of aggregation.
+   */
+  aggregationType: ReportAggregationType | string;
+}
+
+/**
+ * Report sorting criterion.
+ */
+export interface ReportSortingCriterion {
+  /**
+   * Object used to match a sheet column for a report.
+   */
+  column: ReportColumnIdentifier;
+  /**
+   * Sorting direction.
+   */
+  sortingDirection: ReportSortingDirection | string;
+}
+
+/**
+ * An object for matching a source sheet column for a report.
+ *
+ * **Column Matching Options:**
+ * - **Regular columns**: Specify `type` to match columns by type (optionally with `title` for additional matching).
+ * - **System columns**: Specify both `type` and `systemColumnType` to match system columns (e.g., Created By, Modified Date).
+ * - **Sheet name column**: Specify `type: TEXT_NUMBER` and `sheetNameColumn: true` to match the special "Sheet Name" column.
+ * - **Primary column**: Specify `primary: true` to match the primary column. When matching primary columns, `title` can be used to customize the primary column name in the rendered report.
+ *
+ * **Note:** Columns in the report are matched by the combination of `title` and `type` (and `systemColumnType` or `sheetNameColumn` if specified).
+ *
+ * **Note:** `symbol` is not used for matching and as a result `CHECKBOX` or `PICKLIST` columns with different symbols (from different sheets) can be combined into the same column in the report. You cannot combine `CHECKBOX` with `PICKLIST` into the same column in the report because they are different types.
+ */
+export interface ReportColumnIdentifier {
+  /**
+   * Column title to be matched from the source sheets.
+   *
+   * **Note:** If `primary` is **true** then this property can be used to customize the primary column title.
+   */
+  title?: string;
+  /**
+   * Type of column to match. See [Column Types](/api/smartsheet/openapi/columns).
+   */
+  type: ReportColumnType | string;
+  /**
+   * System column type to match. See [System Columns](/api/smartsheet/openapi/columns).
+   */
+  systemColumnType?: SystemColumnType | string;
+  /**
+   * Set this to `true` to match the primary column. When `true`, `type` and `systemColumnType` are not required.
+   */
+  primary?: boolean;
+  /**
+   * Set this to `true` to match the special "Sheet Name" report column. Must be used with `type: TEXT_NUMBER`.
+   */
+  sheetNameColumn?: boolean;
+}
+
+// ============================================================================
+// Delete Report
+// ============================================================================
+
+export interface DeleteReportOptions extends RequestOptions<undefined, undefined> {
+  /**
+   * Report Id
+   */
+  reportId: number;
+}
+
+export type DeleteReportResponse = BaseResponseStatus;
+
+// ============================================================================
+// Add Report Scope
+// ============================================================================
+
+/**
+ * Options for adding report scope.
+ */
+export interface AddReportScopeOptions extends RequestOptions<never, ReportScopeAsset[]> {
+  /**
+   * Report ID.
+   */
+  reportId: number;
+}
+
+// ============================================================================
+// Remove Report Scope
+// ============================================================================
+
+/**
+ * Options for removing report scope.
+ */
+export interface RemoveReportScopeOptions extends RequestOptions<never, ReportScopeAsset[]> {
+  /**
+   * Report ID.
+   */
+  reportId: number;
+}
+
+// ============================================================================
+// Add Report Columns
+// ============================================================================
+
+/**
+ * Auto-number format for report columns.
+ */
+export interface ReportColumnAutoNumberFormat {
+  /**
+   * Indicates zero-padding. It must be between 0 and 10 "0" (zero) characters.
+   */
+  fill: string;
+  /**
+   * The prefix. Can include these date tokens:
+   * - {DD}
+   * - {MM}
+   * - {YY}
+   * - {YYYY}
+   */
+  prefix: string;
+  /**
+   * The starting number for the auto-ID.
+   */
+  startingNumber: number;
+  /**
+   * The suffix. Can include these date tokens:
+   * - {DD}
+   * - {MM}
+   * - {YY}
+   * - {YYYY}
+   */
+  suffix: string;
+}
+
+/**
+ * Represents a report column.
+ *
+ * **Important:** When adding multiple columns at once, all columns must have the same index value.
+ */
+export interface ReportColumn {
+  /**
+   * The virtual ID of this report column.
+   */
+  virtualId?: number;
+  /**
+   * Column index or position. This number is zero-based. Indicates the position of the column in the generated report.
+   *
+   * **Note:** When adding multiple columns, all indexes must be equal.
+   */
+  index: number;
+  /**
+   * Column title to be matched from the source sheets.
+   *
+   * Note:
+   * - If `primary` is **true** then this property can be used to customize the primary column title.
+   */
+  title: string;
+  /**
+   * Type of column to match. See [Column Types](/api/smartsheet/openapi/columns).
+   *
+   * Valid combinations with systemColumnType:
+   * - `type: TEXT_NUMBER` + `systemColumnType: AUTO_NUMBER`
+   * - `type: CONTACT_LIST` + `systemColumnType: CREATED_BY`
+   * - `type: DATETIME` + `systemColumnType: CREATED_DATE`
+   * - `type: CONTACT_LIST` + `systemColumnType: MODIFIED_BY`
+   * - `type: DATETIME` + `systemColumnType: MODIFIED_DATE`
+   */
+  type: ReportColumnType | string;
+  /**
+   * System column type to match. See [System Columns](/api/smartsheet/openapi/columns).
+   *
+   * Must be used in combination with `type`. See valid combinations above.
+   */
+  systemColumnType?: SystemColumnType | string;
+  /**
+   * Set to `true` to match the primary column. When `true`, `type` and `systemColumnType` are not required.
+   */
+  primary?: boolean;
+  /**
+   * Set to `true` to match the special "Sheet Name" report column. Must be used with `type: TEXT_NUMBER`.
+   */
+  sheetNameColumn?: boolean;
+  /**
+   * Indicates whether the column is hidden.
+   */
+  hidden?: boolean;
+  /**
+   * Version of the column type:
+   * - `0`: CONTACT_LIST, PICKLIST, or TEXT_NUMBER.
+   * - `1`: MULTI_CONTACT_LIST.
+   * - `2`: MULTI_PICKLIST.
+   */
+  version?: 0 | 1 | 2;
+  /**
+   * Display width of the column in pixels.
+   */
+  width?: number;
+  /**
+   * Indicates whether validation has been enabled for the column (value = **true**).
+   */
+  validation?: boolean;
+  /**
+   * Specifies how to format values for an auto-generated numbers column.
+   */
+  autoNumberFormat?: ReportColumnAutoNumberFormat;
+}
+
+/**
+ * Options for adding columns to a report.
+ */
+export interface AddReportColumnsOptions extends RequestOptions<undefined, ReportColumn[]> {
+  /**
+   * Report ID.
+   */
+  reportId: number;
+}
+
+/**
+ * Response from adding columns to a report.
+ */
+export interface AddReportColumnsResponse extends BaseResponseStatus {
+  /**
+   * Array of BulkItemFailure objects which represents the items that failed to be added or updated.
+   */
+  failedItems?: FailedItem[];
+  /**
+   * Array of report columns that were added.
+   */
+  result: ReportColumn[];
+}
+
+// ============================================================================
+// Create Report
+// ============================================================================
+
+/**
+ * Type of destination container for create operations.
+ */
+export enum ReportDestinationType {
+  FOLDER = 'folder',
+  WORKSPACE = 'workspace',
+}
+
+/**
+ * Container destination for creating a report.
+ */
+export interface ReportDestination {
+  /**
+   * The ID of the destination container (folder or workspace).
+   */
+  destinationId: number;
+  /**
+   * Type of destination container.
+   */
+  destinationType: ReportDestinationType | string;
+}
+
+/**
+ * Request body for creating a report.
+ */
+export interface CreateReportBody {
+  /**
+   * Report name (1-50 characters).
+   */
+  name: string;
+  /**
+   * Array of report columns (1-400 items).
+   */
+  columns: ReportColumn[];
+  /**
+   * Array of scope items (sheets and/or workspaces) (1-100 items).
+   */
+  scope: ReportScopeAsset[];
+  /**
+   * Report definition containing filters, grouping, and sorting.
+   */
+  reportDefinition?: ReportDefinition;
+  /**
+   * If true, the report is a sheet summary report; otherwise it is a row report.
+   */
+  isSummaryReport?: boolean;
+  /**
+   * Destination container for the report.
+   */
+  destination: ReportDestination;
+}
+
+/**
+ * Result from creating a report.
+ */
+export interface CreateReportResult {
+  /**
+   * The report's unique identifier.
+   */
+  id: number;
+  /**
+   * The report's name.
+   */
+  name: string;
+  /**
+   * User's access level to the report.
+   */
+  accessLevel: string;
+  /**
+   * URL to the report in Smartsheet.
+   */
+  permalink: string;
+  /**
+   * If true, the report is a sheet summary report; otherwise it is a row report.
+   */
+  isSummaryReport?: boolean;
+  /**
+   * Array of report columns. Only included in the response when columns are created with the report.
+   */
+  columns?: ReportColumn[];
+}
+
+/**
+ * Options for creating a report.
+ */
+export type CreateReportOptions = RequestOptions<undefined, CreateReportBody>;
+
+/**
+ * Response from creating a report.
+ */
+export interface CreateReportResponse extends BaseResponseStatus {
+  /**
+   * Array of BulkItemFailure objects which represents the items that failed to be added or updated.
+   */
+  failedItems?: FailedItem[];
+  /**
+   * The created report details.
+   */
+  result: CreateReportResult;
 }
