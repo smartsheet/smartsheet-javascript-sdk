@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
+### Added
+- Support for PUT /sheets/{sheetId}/dataclassification endpoint (Set Data Classification)
+- Support for DELETE /sheets/{sheetId}/dataclassification endpoint (Remove Data Classification)
+- Added `dataClassification` field to Sheet model
 
 ## [4.8.0] - 2026-04-30
 ### Added
