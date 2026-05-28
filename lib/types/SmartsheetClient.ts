@@ -9,7 +9,7 @@ import type { AlternateEmailsApi } from '../users/alternateemails_types';
 import type { UsersApi } from '../users/types';
 import type { WebhooksApi } from '../webhooks/types';
 import type { ImagesApi } from '../images/types';
-import type { ReportsApi } from '@smartsheet/reports/types';
+import type { ReportsApi } from '../reports/types';
 
 export interface SmartsheetClient {
   constants: any;
