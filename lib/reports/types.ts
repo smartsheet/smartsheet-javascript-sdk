@@ -757,7 +757,7 @@ Only returned in a response if readOnlyFullEnabled = true.
   /**
    * Indicates which view the user has set for a read-only, default view of the published report. Must be one of the following values: CALENDAR, CARD, or GRID.
    */
-  readOnlyFullDefaultView: string;
+  readOnlyFullDefaultView?: string;
   /**
    * (Required) If true, a rich version of the report is published with the ability to download row attachments and discussions.
    */
@@ -913,7 +913,7 @@ export interface SendReportViaEmailBody {
   /**
    * Email format details.
    */
-  formatDetails?: string;
+  formatDetails?: { paperSize: string };
   /**
    * Indicates whether to send a copy of the email to the sender.
    */

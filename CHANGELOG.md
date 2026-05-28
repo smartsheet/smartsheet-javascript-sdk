@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
+### Added
+- SDK architecte details in [ADVANCED.md](ADVANCED.md)
+- SDK testing standards in [TESTING.md](TESTING.md)
+- Added ReportsApi type to [SmartsheetClient](lib/types/SmartsheetClient.ts)
+
+### Fixed
+- Aligned the [reports mock api tests](test/mock-api/reports/) with the testing standards.
 
 ## [4.8.0] - 2026-04-30
 ### Added

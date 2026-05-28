@@ -1,3 +1,5 @@
+import { ReportColumnType } from '@smartsheet/reports/types';
+
 // Common Report IDs
 export const TEST_REPORT_ID = 4583173393803140;
 
@@ -42,7 +44,9 @@ export const TEST_SOURCE_SHEET_OWNER_ID = 1234567890123456;
 export const TEST_SOURCE_SHEET_OWNER = 'test.user@smartsheet.com';
 
 // Report Scope - Workspaces (WorkspaceListing type)
-export const TEST_SOURCE_WORKSPACE_ID = 9876543210987654;
+// Number() avoids the TS80008 "too large to represent accurately" diagnostic for literals > 2^53.
+// Both this and the WireMock JSON value round to the same IEEE 754 float, so assertions still match.
+export const TEST_SOURCE_WORKSPACE_ID = Number('9876543210987654');
 export const TEST_SOURCE_WORKSPACE_NAME = 'Source Workspace';
 export const TEST_SOURCE_WORKSPACE_ACCESS_LEVEL = 'VIEWER';
 export const TEST_SOURCE_WORKSPACE_PERMALINK = 'https://app.smartsheet.com/workspaces/source-workspace';
@@ -57,14 +61,14 @@ export const TEST_ASSET_TYPE_WORKSPACE = 'workspace';
 export const TEST_COLUMN_1_ID = 1111111111111111;
 export const TEST_COLUMN_1_INDEX = 0;
 export const TEST_COLUMN_1_TITLE = 'Task Name';
-export const TEST_COLUMN_1_TYPE = 'TEXT_NUMBER';
+export const TEST_COLUMN_1_TYPE = ReportColumnType.TEXT_NUMBER;
 export const TEST_COLUMN_1_PRIMARY = true;
 export const TEST_COLUMN_1_WIDTH = 150;
 
 export const TEST_COLUMN_2_ID = 2222222222222222;
 export const TEST_COLUMN_2_INDEX = 1;
 export const TEST_COLUMN_2_TITLE = 'Status';
-export const TEST_COLUMN_2_TYPE = 'PICKLIST';
+export const TEST_COLUMN_2_TYPE = ReportColumnType.PICKLIST;
 export const TEST_COLUMN_2_OPTIONS = ['Not Started', 'In Progress', 'Complete'];
 export const TEST_COLUMN_2_WIDTH = 100;
 
@@ -72,7 +76,7 @@ export const TEST_COLUMN_2_WIDTH = 100;
 export const TEST_EFFECTIVE_ATTACHMENT_OPTIONS = ['BOX', 'DROPBOX', 'GOOGLE_DRIVE', 'ONEDRIVE'];
 
 // Report Project Settings - Non Working Days
-export const TEST_NON_WORKING_DAYS = ["2019-12-25"];
+export const TEST_NON_WORKING_DAYS = ['2019-12-25'];
 export const TEST_WORKING_DAYS = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'];
 
 // Report Rows (Row type requires all these properties)
@@ -90,7 +94,7 @@ export const TEST_ROW_VERSION = 0;
 export const TEST_SUMMARY_FIELD_ID = 7777777777777777;
 export const TEST_SUMMARY_FIELD_INDEX = 0;
 export const TEST_SUMMARY_FIELD_TITLE = 'Total Tasks';
-export const TEST_SUMMARY_FIELD_TYPE = 'TEXT_NUMBER';
+export const TEST_SUMMARY_FIELD_TYPE = ReportColumnType.TEXT_NUMBER;
 export const TEST_SUMMARY_FIELD_DISPLAY_VALUE = '10';
 export const TEST_SUMMARY_FIELD_LOCKED = false;
 export const TEST_SUMMARY_FIELD_LOCKED_FOR_USER = false;
@@ -101,35 +105,35 @@ export const TEST_EMPTY_USER = { email: '', name: '' };
 
 // Empty AutoNumberFormat
 export const TEST_EMPTY_AUTO_NUMBER_FORMAT = {
-    fill: '',
-    prefix: '',
-    startingNumber: 0,
-    suffix: ''
+  fill: '',
+  prefix: '',
+  startingNumber: 0,
+  suffix: '',
 };
 
 // Empty Hyperlink
 export const TEST_EMPTY_HYPERLINK = {
-    reportId: 0,
-    sheetId: 0,
-    sightId: 0,
-    url: ''
+  reportId: 0,
+  sheetId: 0,
+  sightId: 0,
+  url: '',
 };
 
 // Empty ObjectValue
 export const TEST_EMPTY_OBJECT_VALUE = {
-    objectType: '',
-    value: ''
+  objectType: '',
+  value: '',
 };
 
 // Empty Proof
 export const TEST_EMPTY_PROOF = {
-    id: 0,
-    originalId: 0,
-    type: '',
-    documentType: '',
-    proofRequestUrl: '',
-    version: 0,
-    lastUpdatedAt: TEST_CREATED_AT,
-    lastUpdatedBy: TEST_EMPTY_USER,
-    isCompleted: false
+  id: 0,
+  originalId: 0,
+  type: '',
+  documentType: '',
+  proofRequestUrl: '',
+  version: 0,
+  lastUpdatedAt: TEST_CREATED_AT,
+  lastUpdatedBy: TEST_EMPTY_USER,
+  isCompleted: false,
 };
