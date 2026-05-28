@@ -3,83 +3,69 @@ import { createClient, findWireMockRequest } from '../utils/utils';
 import { expect } from '@jest/globals';
 import {
   TEST_REPORT_ID,
-  TEST_REPORT_NAME,
-  TEST_REPORT_PERMALINK,
-  TEST_REPORT_ACCESS_LEVEL,
-  TEST_MODIFIED_SINCE,
+  TEST_SUCCESS_MESSAGE,
+  TEST_SUCCESS_RESULT_CODE,
   ERROR_500_STATUS_CODE,
   ERROR_500_MESSAGE,
   ERROR_400_STATUS_CODE,
   ERROR_400_MESSAGE,
 } from './common_test_constants';
 
-describe('Reports - listReports endpoint tests', () => {
+describe('Reports - deleteReport endpoint tests', () => {
   const client = createClient();
 
   const expectedAllResponseProperties = {
-    data: [
-      {
-        id: TEST_REPORT_ID,
-        name: TEST_REPORT_NAME,
-        accessLevel: TEST_REPORT_ACCESS_LEVEL,
-        permalink: TEST_REPORT_PERMALINK,
-        isSummaryReport: true,
-      },
-    ],
-    pageNumber: 1,
-    pageSize: 100,
-    totalPages: 1,
-    totalCount: 1,
+    message: TEST_SUCCESS_MESSAGE,
+    resultCode: TEST_SUCCESS_RESULT_CODE,
   };
 
-  it('listReports generated url is correct', async () => {
+  it('deleteReport generated url is correct', async () => {
     const requestId = crypto.randomUUID();
     const options = {
-      queryParameters: {
-        modifiedSince: TEST_MODIFIED_SINCE,
-      },
+      reportId: TEST_REPORT_ID,
       customProperties: {
         'x-request-id': requestId,
-        'x-test-name': '/reports/list-reports/all-response-body-properties',
+        'x-test-name': '/reports/delete-report/all-response-body-properties',
       },
     };
-    await client.reports.listReports(options);
+    await client.reports.deleteReport(options);
     const matchedRequest = await findWireMockRequest(requestId);
     const parsedUrl = new URL(matchedRequest.absoluteUrl);
-    expect(parsedUrl.pathname).toEqual('/2.0/reports');
-    expect(matchedRequest.method).toEqual('GET');
-
+    expect(parsedUrl.pathname).toEqual('/2.0/reports/' + TEST_REPORT_ID);
+    expect(matchedRequest.method).toEqual('DELETE');
     const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
-    expect(queryParamsObject).toEqual({
-      modifiedSince: TEST_MODIFIED_SINCE,
-    });
+    expect(queryParamsObject).toEqual({});
   });
 
-  it('listReports all response body properties', async () => {
+  it('deleteReport all response body properties', async () => {
     const requestId = crypto.randomUUID();
     const options = {
+      reportId: TEST_REPORT_ID,
       customProperties: {
         'x-request-id': requestId,
-        'x-test-name': '/reports/list-reports/all-response-body-properties',
+        'x-test-name': '/reports/delete-report/all-response-body-properties',
       },
     };
-    const response = await client.reports.listReports(options);
+
+    const response = await client.reports.deleteReport(options);
     const matchedRequest = await findWireMockRequest(requestId);
 
     expect(matchedRequest.body).toEqual('');
     expect(response).toEqual(expectedAllResponseProperties);
   });
 
-  it('listReports error 500 response', async () => {
+  it('deleteReport error 500 response', async () => {
     const requestId = crypto.randomUUID();
     const options = {
+      reportId: TEST_REPORT_ID,
       customProperties: {
         'x-request-id': requestId,
         'x-test-name': '/errors/500-response',
       },
     };
+
     try {
-      await client.reports.listReports(options);
+      await client.reports.deleteReport(options);
       expect(true).toBe(false); // Expected an error to be thrown
     } catch (error: any) {
       expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
@@ -87,16 +73,18 @@ describe('Reports - listReports endpoint tests', () => {
     }
   });
 
-  it('listReports error 400 response', async () => {
+  it('deleteReport error 400 response', async () => {
     const requestId = crypto.randomUUID();
     const options = {
+      reportId: TEST_REPORT_ID,
       customProperties: {
         'x-request-id': requestId,
         'x-test-name': '/errors/400-response',
       },
     };
+
     try {
-      await client.reports.listReports(options);
+      await client.reports.deleteReport(options);
       expect(true).toBe(false); // Expected an error to be thrown
     } catch (error: any) {
       expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
