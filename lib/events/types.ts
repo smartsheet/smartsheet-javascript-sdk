@@ -75,6 +75,12 @@ export interface Event {
   objectId: string;
 
   /**
+   * The alphanumeric identifier of the object impacted by the event.
+   * Present for object types that use string-based identifiers.
+   */
+  objectIdStr?: string;
+
+  /**
    * Date and time of the event. Defaults to ISO-8601 format.
    * See dates and times for more information.
    */
