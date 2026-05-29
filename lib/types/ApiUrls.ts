@@ -11,8 +11,6 @@ export interface ApiUrls {
   server: string;
   sheets: string;
   sights: string;
-  templates: string;
-  templatesPublic: string;
   token: string;
   users: string;
   webhooks: string;

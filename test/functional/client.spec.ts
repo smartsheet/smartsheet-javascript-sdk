@@ -347,18 +347,6 @@ describe('Client Unit Tests', () => {
     });
   });
 
-  describe('#templates', () => {
-    it('should have templates object', () => {
-      expect(smartsheet).toHaveProperty('templates');
-      expect(Object.keys(smartsheet.templates)).toHaveLength(2);
-    });
-
-    it('should have get methods', () => {
-      expect(smartsheet.templates).toHaveProperty('listPublicTemplates');
-      expect(smartsheet.templates).toHaveProperty('listUserCreatedTemplates');
-    });
-  });
-
   describe('#tokens', () => {
     it('should have a tokens object', () => {
       expect(smartsheet).toHaveProperty('tokens');

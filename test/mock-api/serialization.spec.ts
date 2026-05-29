@@ -430,12 +430,6 @@ describe("Mock API SDK Tests", () => {
                 }
             },
             {
-                "name": "Serialization - Template",
-                "method": client.templates.listPublicTemplates,
-                "shouldError": false,
-                "options": {}
-            },
-            {
                 "name": "Serialization - Update Request",
                 "method": client.sheets.createUpdateRequest,
                 "shouldError": false,

@@ -264,13 +264,6 @@ describe('Method Unit Tests', () => {
             ]
         },
         {
-            name: 'templates',
-            methods: [
-                { name: 'listUserCreatedTemplates', stub: 'get', options: undefined, expectedRequest: {url: "templates"}},
-                { name: 'listPublicTemplates', stub: 'get', options: undefined, expectedRequest: {url: "templates/public"}},
-            ]
-        },
-        {
             name: 'tokens',
             methods: [
                 { name: 'getAccessToken', stub: 'post', options: {}, expectedRequest: {url: "token", queryParameters: {'grant_type': 'authorization_code'}}, noAuth: true},
