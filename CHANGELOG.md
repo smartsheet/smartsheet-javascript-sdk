@@ -10,9 +10,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - SDK architecte details in [ADVANCED.md](ADVANCED.md)
 - SDK testing standards in [TESTING.md](TESTING.md)
 - Added ReportsApi type to [SmartsheetClient](lib/types/SmartsheetClient.ts)
+- Added shared `TokenPaginationResponse<T>` interface in [lib/types/TokenPaginationResponse.ts](lib/types/TokenPaginationResponse.ts) for token-based paginated responses.
+
+### Changed
+- ⚠️ **BREAKING**: `ListSightsResponse` is now `TokenPaginationResponse<Sight>` instead of extending `TokenPaginationQueryParameters`. Response shape is unchanged (`{ lastKey, data }`), but the type alias replaces the previous interface.
 
 ### Removed
 - ⚠️ **BREAKING**: Removed deprecated `include`, `exclude`, and `skipRemap` query parameters from `createChildFolder`. These parameters were [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#deprecated-the-copy-related-query-parameters-for-create-folder-and-create-workspace) (sunset Mar-09-2026) and superseded by the dedicated `copyFolder` endpoint. The `CreateFolderQueryParameters` interface has been removed; `CreateChildFolderOptions` no longer accepts `queryParameters`.
+- ⚠️ **BREAKING**: Removed deprecated `includeAll`, `page`, `pageSize`, `modifiedSince`, and `paginationType` from `ListSightQueryParameters`, and removed `pageNumber`, `pageSize`, `totalPages`, and `totalCount` from `ListSightsResponse`. These were [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#deprecated-includeall-and-offset-based-pagination-for-dashboards) (sunset Jun-03-2026). Use token-based pagination via `maxItems` and `lastKey`.
 
 ### Fixed
 - Aligned the [reports mock api tests](test/mock-api/reports/) with the testing standards.

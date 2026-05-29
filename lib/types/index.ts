@@ -11,3 +11,4 @@ export * from './RequestCallback';
 export * from './RequestOptions';
 export * from './SmartsheetClient';
 export * from './TokenPaginationQueryParameters';
+export * from './TokenPaginationResponse';
