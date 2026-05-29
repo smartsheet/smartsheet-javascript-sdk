@@ -12,7 +12,6 @@ import {
     ERROR_500_MESSAGE,
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE,
-    TEST_INCLUDE_PARAM
 } from './common_test_constants';
 
 describe('Folders - createChildFolder endpoint tests', () => {
@@ -25,9 +24,6 @@ describe('Folders - createChildFolder endpoint tests', () => {
             body: {
                 name: TEST_NEW_FOLDER_NAME
             },
-            queryParameters: {
-                include: TEST_INCLUDE_PARAM
-            },
             customProperties: {
                 'x-request-id': requestId,
                 'x-test-name': '/folders/create-child-folder/all-response-body-properties'
@@ -39,9 +35,7 @@ describe('Folders - createChildFolder endpoint tests', () => {
         expect(parsedUrl.pathname).toEqual(`/2.0/folders/${TEST_FOLDER_ID}/folders`);
 
         const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
-        expect(queryParamsObject).toEqual({
-            include: TEST_INCLUDE_PARAM
-        });
+        expect(queryParamsObject).toEqual({});
     });
 
     it('createChildFolder all response body properties', async () => {
