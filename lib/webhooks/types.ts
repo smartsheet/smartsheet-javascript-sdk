@@ -67,13 +67,17 @@ export interface WebhooksApi {
    * @returns Promise\<{@link ListWebhooksResponse}\>
    *
    * @remarks
-   * **DEPRECATION - As early as the sunset date specified in the Changelog, webhooks will be sorted by
-   * creation date (most recent first) instead of name.**
+   * As of the Jun-03-2026 sunset date:
+   * - `pageSize` is server-capped at 10,000.
+   * - `totalCount` and `totalPages` on the response are returned as `-1`.
+   * - Webhooks are sorted by creation date (most recent first), no longer by name.
    *
    * **Note: In the response, each webhook's `events` field defaults to `["*.*"]`, regardless of its actual value.**
    * Alternatively, call GET /webhook/\{webhookId\} on an individual webhook to get its `events` value.
    *
    * It mirrors to the following Smartsheet REST API method: `GET /webhooks`
+   *
+   * See https://developers.smartsheet.com/api/smartsheet/changelog#2025-08-04
    *
    * @example
    * ```typescript
@@ -384,19 +388,15 @@ export interface GetWebhookOptions extends RequestOptions<undefined, undefined> 
 
 export interface ListWebhooksQueryParameters {
   /**
-   * @defaultValue false
-   * @deprecated As early as the sunset date specified in the Changelog, this parameter will be discontinued
-   * If true, include all results (do not paginate)
-   */
-  includeAll?: boolean;
-  /**
    * @defaultValue 1
-   * Which page to return
+   * Which page to return.
    */
   page?: number;
   /**
    * @defaultValue 100
-   * The maximum number of items to return per page
+   * The maximum number of items to return per page.
+   *
+   * Note: as of the Jun-03-2026 sunset, the server caps this at 10,000.
    */
   pageSize?: number;
 }
@@ -413,13 +413,15 @@ export interface ListWebhooksResponse {
    */
   pageSize?: number;
   /**
-   * @deprecated As early as the sunset date specified in the Changelog, this response property value will be `-1`
-   * The total number of pages
+   * The total number of pages.
+   *
+   * As of the Jun-03-2026 sunset, this value is returned as `-1` by the server.
    */
   totalPages?: number;
   /**
-   * @deprecated As early as the sunset date specified in the Changelog, this response property value will be `-1`
-   * The total number of webhooks
+   * The total number of webhooks.
+   *
+   * As of the Jun-03-2026 sunset, this value is returned as `-1` by the server.
    */
   totalCount?: number;
   /**
