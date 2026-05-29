@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - SDK testing standards in [TESTING.md](TESTING.md)
 - Added ReportsApi type to [SmartsheetClient](lib/types/SmartsheetClient.ts)
 
+### Removed
+- ⚠️ **BREAKING**: Removed deprecated `include`, `exclude`, and `skipRemap` query parameters from `createChildFolder`. These parameters were [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#deprecated-the-copy-related-query-parameters-for-create-folder-and-create-workspace) (sunset Mar-09-2026) and superseded by the dedicated `copyFolder` endpoint. The `CreateFolderQueryParameters` interface has been removed; `CreateChildFolderOptions` no longer accepts `queryParameters`.
+
 ### Fixed
 - Aligned the [reports mock api tests](test/mock-api/reports/) with the testing standards.
 

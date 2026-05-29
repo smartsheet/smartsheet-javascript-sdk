@@ -655,24 +655,7 @@ export interface CreateFolderBody {
   templates?: FolderTemplate[];
 }
 
-export interface CreateFolderQueryParameters {
-  /**
-   * A comma-separated list of elements to copy
-   */
-  include?: string;
-
-  /**
-   * When specified with a value of sheetHyperlinks, excludes this category from the response
-   */
-  exclude?: string;
-
-  /**
-   * A comma-separated list of references to NOT re-map for the newly created folder.
-   */
-  skipRemap?: string;
-}
-
-export interface CreateChildFolderOptions extends RequestOptions<CreateFolderQueryParameters, CreateFolderBody> {
+export interface CreateChildFolderOptions extends RequestOptions<undefined, CreateFolderBody> {
   /**
    * Parent Folder Id.
    */
