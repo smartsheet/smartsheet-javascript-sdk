@@ -3,14 +3,10 @@ import type { RequestCallback } from '../types/RequestCallback';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type {
   FoldersApi,
-  GetFolderOptions,
-  Folder,
   GetFolderMetadataOptions,
   GetFolderMetadataResponse,
   GetFolderChildrenOptions,
   GetFolderChildrenResponse,
-  ListChildFoldersOptions,
-  ListChildFoldersResponse,
   CreateChildFolderOptions,
   CreateFolderResponse,
   UpdateFolderOptions,
@@ -29,27 +25,6 @@ export function create(options: CreateOptions): FoldersApi {
     url: options.apiUrls.folders,
     urls: options.apiUrls,
     ...options.clientOptions,
-  };
-
-  /**
-   * @deprecated Use both getFolderMetadata and getFolderChildren instead.
-   */
-  const getFolder = (getOptions: GetFolderOptions, callback?: RequestCallback<Folder>): Promise<Folder> => {
-    console.warn('DEPRECATED: Folders.getFolder is deprecated. Use getFolderMetadata and getFolderChildren instead.');
-    const urlOptions = { url: options.apiUrls.folders + '/' + getOptions.folderId };
-    return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
-  };
-
-  /**
-   * @deprecated Use getFolderChildren with childrenResourceTypes=folders instead.
-   */
-  const listChildFolders = (
-    getOptions: ListChildFoldersOptions,
-    callback?: RequestCallback<ListChildFoldersResponse>
-  ): Promise<ListChildFoldersResponse> => {
-    console.warn('DEPRECATED: Folders.listChildFolders is deprecated. Use getFolderChildren instead.');
-    const urlOptions = { url: options.apiUrls.folders + '/' + getOptions.folderId + '/folders' };
-    return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
 
   const createChildFolder = (
@@ -109,10 +84,8 @@ export function create(options: CreateOptions): FoldersApi {
   };
 
   return {
-    getFolder,
     getFolderMetadata,
     getFolderChildren,
-    listChildFolders,
     createChildFolder,
     updateFolder,
     deleteFolder,

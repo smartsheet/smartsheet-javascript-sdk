@@ -87,14 +87,12 @@ describe('Client Unit Tests', () => {
   describe('#folders', () => {
     it('should have folders object', () => {
       expect(smartsheet).toHaveProperty('folders');
-      expect(Object.keys(smartsheet.folders)).toHaveLength(9);
+      expect(Object.keys(smartsheet.folders)).toHaveLength(7);
     });
 
     it('should have get methods', () => {
-      expect(smartsheet.folders).toHaveProperty('getFolder');
       expect(smartsheet.folders).toHaveProperty('getFolderMetadata');
       expect(smartsheet.folders).toHaveProperty('getFolderChildren');
-      expect(smartsheet.folders).toHaveProperty('listChildFolders');
     });
 
     it('should have create methods', () => {
@@ -425,16 +423,14 @@ describe('Client Unit Tests', () => {
   describe('#workspaces', () => {
     it('should have workspaces object', () => {
       expect(smartsheet).toHaveProperty('workspaces');
-      expect(Object.keys(smartsheet.workspaces)).toHaveLength(15);
+      expect(Object.keys(smartsheet.workspaces)).toHaveLength(13);
     });
 
     it('should have get methods', () => {
       expect(smartsheet.workspaces).toHaveProperty('getShare');
       expect(smartsheet.workspaces).toHaveProperty('listShares');
-      expect(smartsheet.workspaces).toHaveProperty('getWorkspace');
       expect(smartsheet.workspaces).toHaveProperty('getWorkspaceMetadata');
       expect(smartsheet.workspaces).toHaveProperty('getWorkspaceChildren');
-      expect(smartsheet.workspaces).toHaveProperty('listWorkspaceFolders');
       expect(smartsheet.workspaces).toHaveProperty('listWorkspaces');
     });
 

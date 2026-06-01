@@ -56,10 +56,8 @@ describe('Method Unit Tests', () => {
         {
             name: 'folders',
             methods: [
-                { name: 'getFolder', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123" }},
                 { name: 'getFolderMetadata', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123/metadata" }},
                 { name: 'getFolderChildren', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123/children" }},
-                { name: 'listChildFolders', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123/folders" }},
                 { name: 'createChildFolder', stub: 'post', options: {folderId: 123}, expectedRequest: {url: "folders/123/folders" }},
                 { name: 'updateFolder', stub: 'put', options: {folderId: 123}, expectedRequest: {url: "folders/123" }},
                 { name: 'deleteFolder', stub: 'delete', options: {folderId: 123}, expectedRequest: {url: "folders/123" }},
@@ -315,10 +313,8 @@ describe('Method Unit Tests', () => {
                 { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {paginationType: 'token', lastKey: 'abc123'}}, expectedRequest: {url: "workspaces", queryParameters: {paginationType: 'token', lastKey: 'abc123'}}},
                 { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {paginationType: 'token', maxItems: 500}}, expectedRequest: {url: "workspaces", queryParameters: {paginationType: 'token', maxItems: 500}}},
                 { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {paginationType: 'token', lastKey: 'abc123', maxItems: 100}}, expectedRequest: {url: "workspaces", queryParameters: {paginationType: 'token', lastKey: 'abc123', maxItems: 100}}},
-                { name: 'getWorkspace', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123"}},
                 { name: 'getWorkspaceMetadata', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/metadata"}},
                 { name: 'getWorkspaceChildren', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/children"}},
-                { name: 'listWorkspaceFolders', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/folders"}},
                 { name: 'createWorkspace', stub: 'post', options: {}, expectedRequest: {url: "workspaces"}},
                 { name: 'createFolder', stub: 'post', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/folders"}},
                 { name: 'deleteWorkspace', stub: 'delete', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123"}},
