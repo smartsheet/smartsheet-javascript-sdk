@@ -240,12 +240,6 @@ describe('Method Unit Tests', () => {
                 { name: 'deleteSentUpdateRequest', stub: 'delete', options: {sheetId: 123, sentUpdateRequestId: 234}, expectedRequest: {url: "sheets/123/sentupdaterequests/234"}},
                 { name: 'getSentUpdateRequest', stub: 'get', options: {sheetId: 123, sentUpdateRequestId: 234}, expectedRequest: {url: "sheets/123/sentupdaterequests/234"}},
                 { name: 'getAllSentUpdateRequests', stub: 'get', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/sentupdaterequests"}},
-                // shares
-                { name: 'getShare', stub: 'get', options: {sheetId: 123, shareId: 234}, expectedRequest: {url: "sheets/123/shares/234"}},
-                { name: 'listShares', stub: 'get', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/shares"}},
-                { name: 'share', stub: 'post', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/shares"}},
-                { name: 'deleteShare', stub: 'delete', options: {sheetId: 123, shareId: 234}, expectedRequest: {url: "sheets/123/shares/234"}},
-                { name: 'updateShare', stub: 'put', options: {sheetId: 123, shareId: 234}, expectedRequest: {url: "sheets/123/shares/234"}},
             ]
         },
         {

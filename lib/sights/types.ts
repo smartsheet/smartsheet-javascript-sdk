@@ -193,13 +193,6 @@ export interface SightsApi {
     options: SetSightPublishStatusOptions,
     callback?: RequestCallback<SetSightPublishStatusResponse>
   ) => Promise<SetSightPublishStatusResponse>;
-
-  // Deprecated sharing methods
-  getShare: any;
-  listShares: any;
-  share: any;
-  deleteShare: any;
-  updateShare: any;
 }
 
 // ============================================================================

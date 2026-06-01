@@ -178,7 +178,7 @@ describe('Client Unit Tests', () => {
   describe('#reports', () => {
     it('should have reports object', () => {
       expect(smartsheet).toHaveProperty('reports');
-      expect(Object.keys(smartsheet.reports)).toHaveLength(18);
+      expect(Object.keys(smartsheet.reports)).toHaveLength(13);
     });
 
     it('should have get methods', () => {
@@ -231,7 +231,6 @@ describe('Client Unit Tests', () => {
       expect(smartsheet.sheets).toHaveProperty('getPublishStatus');
       expect(smartsheet.sheets).toHaveProperty('getRowAttachments');
       expect(smartsheet.sheets).toHaveProperty('getRowDiscussions');
-      expect(smartsheet.sheets).toHaveProperty('getShare');
       expect(smartsheet.sheets).toHaveProperty('getSheet');
       expect(smartsheet.sheets).toHaveProperty('getSheetAsCSV');
       expect(smartsheet.sheets).toHaveProperty('getSheetAsExcel');
@@ -241,7 +240,6 @@ describe('Client Unit Tests', () => {
       expect(smartsheet.sheets).toHaveProperty('listAttachments');
       expect(smartsheet.sheets).toHaveProperty('listDiscussionAttachments');
       expect(smartsheet.sheets).toHaveProperty('listOrganizationSheets');
-      expect(smartsheet.sheets).toHaveProperty('listShares');
       expect(smartsheet.sheets).toHaveProperty('listSheets');
     });
 
@@ -287,7 +285,6 @@ describe('Client Unit Tests', () => {
     });
 
     it('should have Sheets update methods', () => {
-      expect(smartsheet.sheets).toHaveProperty('updateShare');
       expect(smartsheet.sheets).toHaveProperty('updateSheet');
       expect(smartsheet.sheets).toHaveProperty('editComment');
     });
@@ -300,7 +297,6 @@ describe('Client Unit Tests', () => {
       expect(smartsheet.sheets).toHaveProperty('deleteDiscussion');
       expect(smartsheet.sheets).toHaveProperty('deleteRow');
       expect(smartsheet.sheets).toHaveProperty('deleteRows');
-      expect(smartsheet.sheets).toHaveProperty('deleteShare');
       expect(smartsheet.sheets).toHaveProperty('deleteSheet');
     });
 
@@ -318,14 +314,12 @@ describe('Client Unit Tests', () => {
   describe('#Sights', () => {
     it('should have Sights object', () => {
       expect(smartsheet).toHaveProperty('sights');
-      expect(Object.keys(smartsheet.sights)).toHaveLength(13);
+      expect(Object.keys(smartsheet.sights)).toHaveLength(8);
     });
 
     it('should have Sights get methods', () => {
       expect(smartsheet.sights).toHaveProperty('getSight');
       expect(smartsheet.sights).toHaveProperty('listSights');
-      expect(smartsheet.sights).toHaveProperty('getShare');
-      expect(smartsheet.sights).toHaveProperty('listShares');
       expect(smartsheet.sights).toHaveProperty('getSightPublishStatus');
     });
 
@@ -341,7 +335,6 @@ describe('Client Unit Tests', () => {
 
     it('should have Sights delete methods', () => {
       expect(smartsheet.sights).toHaveProperty('deleteSight');
-      expect(smartsheet.sights).toHaveProperty('deleteShare');
     });
   });
 
@@ -423,31 +416,26 @@ describe('Client Unit Tests', () => {
   describe('#workspaces', () => {
     it('should have workspaces object', () => {
       expect(smartsheet).toHaveProperty('workspaces');
-      expect(Object.keys(smartsheet.workspaces)).toHaveLength(13);
+      expect(Object.keys(smartsheet.workspaces)).toHaveLength(8);
     });
 
     it('should have get methods', () => {
-      expect(smartsheet.workspaces).toHaveProperty('getShare');
-      expect(smartsheet.workspaces).toHaveProperty('listShares');
       expect(smartsheet.workspaces).toHaveProperty('getWorkspaceMetadata');
       expect(smartsheet.workspaces).toHaveProperty('getWorkspaceChildren');
       expect(smartsheet.workspaces).toHaveProperty('listWorkspaces');
     });
 
     it('should have create methods', () => {
-      expect(smartsheet.workspaces).toHaveProperty('share');
       expect(smartsheet.workspaces).toHaveProperty('createWorkspace');
       expect(smartsheet.workspaces).toHaveProperty('createFolder');
       expect(smartsheet.workspaces).toHaveProperty('copyWorkspace');
     });
 
     it('should have update methods', () => {
-      expect(smartsheet.workspaces).toHaveProperty('updateShare');
       expect(smartsheet.workspaces).toHaveProperty('updateWorkspace');
     });
 
     it('should have delete methods', () => {
-      expect(smartsheet.workspaces).toHaveProperty('deleteShare');
       expect(smartsheet.workspaces).toHaveProperty('deleteWorkspace');
     });
   });

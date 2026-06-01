@@ -359,26 +359,6 @@ describe("Mock API SDK Tests", () => {
                 }
             },
             {
-                "name": "Serialization - Share",
-                "method": client.sheets.share,
-                "shouldError": false,
-                "options": {
-                    "sheetId": 1,
-                    "body": [
-                        {
-                            "email": "john.doe@smartsheet.com",
-                            "accessLevel": "VIEWER",
-                            "subject": "Check out this sheet",
-                            "message": "Let me know what you think. Thanks!",
-                            "ccMe": true
-                        }
-                    ],
-                    "queryParameters": {
-                        "sendEmail": "true"
-                    }
-                }
-            },
-            {
                 "name": "Serialization - Send via Email",
                 "method": client.sheets.sendSheetViaEmail,
                 "shouldError": false,
