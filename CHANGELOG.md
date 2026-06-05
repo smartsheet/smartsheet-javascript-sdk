@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
 ### Added
+- Added optional `objectIdStr` field to `Event` interface to support alphanumeric object identifiers (AUD-903)
 - SDK architecte details in [ADVANCED.md](ADVANCED.md)
 - SDK testing standards in [TESTING.md](TESTING.md)
 - Added ReportsApi type to [SmartsheetClient](lib/types/SmartsheetClient.ts)
