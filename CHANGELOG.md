@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
+
+## [5.0.0] - 2026-06-08
 ### Added
 - Added optional `objectIdStr` field to `Event` interface to support alphanumeric object identifiers (AUD-903)
 - SDK architecte details in [ADVANCED.md](ADVANCED.md)
