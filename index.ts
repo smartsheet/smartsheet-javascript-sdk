@@ -17,7 +17,6 @@ import { create as createReports } from './lib/reports/index';
 import { create as createRequest } from './lib/request/index';
 import { create as createServer } from './lib/server/index';
 import { create as createSheets } from './lib/sheets/index';
-import { create as createTemplates } from './lib/templates/index';
 import { create as createTokens } from './lib/tokens/index';
 import { create as createUsers } from './lib/users/index';
 import { create as createWebhooks } from './lib/webhooks/index';
@@ -133,7 +132,6 @@ export const createClient: CreateClient = function (clientOptions) {
     sharing: createSharing(options),
     sheets: createSheets(options),
     sights: createSights(options),
-    templates: createTemplates(options),
     tokens: createTokens(options),
     users: createUsers(options),
     webhooks: createWebhooks(options),

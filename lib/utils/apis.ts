@@ -13,8 +13,6 @@ export const apiUrls: ApiUrls = {
   server: 'serverinfo',
   sheets: 'sheets',
   sights: 'sights',
-  templates: 'templates', // deprecated
-  templatesPublic: 'templates/public', // deprecated
   token: 'token',
   users: 'users',
   webhooks: 'webhooks',

@@ -27,7 +27,6 @@ export interface SmartsheetClient {
   sharing: SharingApi;
   sheets: any;
   sights: SightsApi;
-  templates: any;
   tokens: any;
   users: UsersApi & AlternateEmailsApi;
   webhooks: WebhooksApi;

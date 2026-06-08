@@ -1,4 +1,3 @@
-import shareModule from '../share/share';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { CreateOptions } from '../types/CreateOptions';
 import type { RequestCallback } from '../types/RequestCallback';
@@ -31,9 +30,6 @@ import * as constants from '../utils/constants';
 
 export function create(options: CreateOptions): ReportsApi {
   const requestor = options.requestor;
-
-  // Legacy shares module (deprecated)
-  const shares = shareModule(options.apiUrls.reports);
 
   const optionsToSend = {
     url: options.apiUrls.reports,
@@ -158,6 +154,5 @@ export function create(options: CreateOptions): ReportsApi {
     removeReportScope,
     addReportColumns,
     createReport,
-    ...shares.create(options),
   };
 }

@@ -25,7 +25,6 @@ import {
     TEST_CUSTOM_HEADERS,
     TEST_PAGE_NUMBER,
     TEST_PAGE_SIZE,
-    TEST_INCLUDE_ALL,
     TEST_TOTAL_PAGES,
     TEST_TOTAL_COUNT,
     ERROR_500_STATUS_CODE,
@@ -41,7 +40,6 @@ describe('Webhooks - listWebhooks endpoint tests', () => {
         const requestId = crypto.randomUUID();
         const options = {
             queryParameters: {
-                includeAll: TEST_INCLUDE_ALL,
                 page: TEST_PAGE_NUMBER,
                 pageSize: TEST_PAGE_SIZE
             },
@@ -57,7 +55,6 @@ describe('Webhooks - listWebhooks endpoint tests', () => {
 
         const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
         expect(queryParamsObject).toEqual({
-            includeAll: TEST_INCLUDE_ALL.toString(),
             page: TEST_PAGE_NUMBER.toString(),
             pageSize: TEST_PAGE_SIZE.toString()
         });

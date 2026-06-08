@@ -2,7 +2,7 @@ import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { APIAccessLevel } from '../types/ApiAccessLevel';
-import type { TokenPaginationQueryParameters } from '../types';
+import type { TokenPaginationQueryParameters, TokenPaginationResponse } from '../types';
 
 // ============================================================================
 // Sights API Interface
@@ -193,13 +193,6 @@ export interface SightsApi {
     options: SetSightPublishStatusOptions,
     callback?: RequestCallback<SetSightPublishStatusResponse>
   ) => Promise<SetSightPublishStatusResponse>;
-
-  // Deprecated sharing methods
-  getShare: any;
-  listShares: any;
-  share: any;
-  deleteShare: any;
-  updateShare: any;
 }
 
 // ============================================================================
@@ -460,79 +453,14 @@ export interface GetSightOptions extends RequestOptions<GetSightQueryParameters,
 
 export interface ListSightQueryParameters extends TokenPaginationQueryParameters {
   /**
-   * Specifies the type of pagination to use. When set to 'token', enables token-based pagination.
-   */
-  paginationType?: string;
-
-  /**
-   * @deprecated
-   * Include all results in the first page. page and page size
-   * will be ignored if includeAll is set to true.
-   *
-   * default false
-   */
-  includeAll?: boolean;
-
-  /**
-   * @deprecated
-   * When specified with a date and time value,
-   * response only includes the objects that are modified on
-   * or after the date and time specified.
-   */
-  modifiedSince?: string | number;
-
-  /**
    * If true, dates/times are sent and received as milliseconds since
    * the UNIX epoch (midnight on January 1, 1970 in UTC time).
    * @defaultValue false
    */
   numericDates?: boolean;
-
-  /**
-   * @deprecated
-   * Page of results to return.
-   *
-   * @defaultValue 1
-   */
-  page?: number;
-
-  /**
-   * @deprecated
-   * Number of results per page.
-   * Maximum page size is 10,000.
-   *
-   * @defaultValue 100
-   */
-  pageSize?: number;
 }
 
-export interface ListSightsResponse extends TokenPaginationQueryParameters {
-  /**
-   * Specifies the type of pagination to use. When set to 'token', enables token-based pagination.
-   */
-  paginationType?: string;
-  /**
-   * Current page number
-   */
-  pageNumber?: number;
-  /**
-   * Number of items per page
-   */
-  pageSize?: number;
-  /**
-   * Total number of pages
-   */
-  totalPages?: number;
-  /**
-   * Total number of Sights
-   */
-  totalCount?: number;
-  /**
-   * Array of Sight objects
-   * @see Sight
-   */
-  data: Sight[];
-}
+export type ListSightsResponse = TokenPaginationResponse<Sight>;
 
 // ============================================================================
 // Delete Sight

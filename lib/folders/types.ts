@@ -9,27 +9,6 @@ import type { FailedItem } from '../types/FailedItem';
 
 export interface FoldersApi {
   /**
-   * Gets a Folder object.
-   *
-   * @param options - {@link GetFolderOptions} - Configuration options for the request
-   * @param callback - {@link RequestCallback}\<{@link Folder}\> - Optional callback function
-   * @returns Promise\<{@link Folder}\>
-   *
-   * @deprecated Use both {@link getFolderMetadata} and {@link getFolderChildren} instead.
-   *
-   * @remarks
-   * It mirrors to the following Smartsheet REST API method: `GET /folders/{folderId}`
-   *
-   * @example
-   * ```typescript
-   * const folder = await client.folders.getFolder({
-   *   folderId: 7116448184199044
-   * });
-   * ```
-   */
-  getFolder: (options: GetFolderOptions, callback?: RequestCallback<Folder>) => Promise<Folder>;
-
-  /**
    * Gets the metadata of a folder.
    *
    * @param options - {@link GetFolderMetadataOptions} - Configuration options for the request
@@ -77,30 +56,6 @@ export interface FoldersApi {
     options: GetFolderChildrenOptions,
     callback?: RequestCallback<GetFolderChildrenResponse>
   ) => Promise<GetFolderChildrenResponse>;
-
-  /**
-   * Gets a list of folders in a given folder.
-   *
-   * @param options - {@link ListChildFoldersOptions} - Configuration options for the request
-   * @param callback - {@link RequestCallback}\<{@link ListChildFoldersResponse}\> - Optional callback function
-   * @returns Promise\<{@link ListChildFoldersResponse}\>
-   *
-   * @deprecated Use {@link getFolderChildren} with childrenResourceTypes=folders instead.
-   *
-   * @remarks
-   * It mirrors to the following Smartsheet REST API method: `GET /folders/{folderId}/folders`
-   *
-   * @example
-   * ```typescript
-   * const folders = await client.folders.listChildFolders({
-   *   folderId: 7116448184199044
-   * });
-   * ```
-   */
-  listChildFolders: (
-    options: ListChildFoldersOptions,
-    callback?: RequestCallback<ListChildFoldersResponse>
-  ) => Promise<ListChildFoldersResponse>;
 
   /**
    * Creates a new folder.
@@ -391,24 +346,6 @@ export interface ContainerDestination {
 }
 
 // ============================================================================
-// Get Folder (Deprecated)
-// ============================================================================
-
-export interface GetFolderQueryParameters {
-  /**
-   * Comma-separated list of elements to include (source).
-   */
-  include?: string;
-}
-
-export interface GetFolderOptions extends RequestOptions<GetFolderQueryParameters, undefined> {
-  /**
-   * Folder Id.
-   */
-  folderId: number;
-}
-
-// ============================================================================
 // Get Folder Metadata
 // ============================================================================
 
@@ -555,61 +492,6 @@ export interface GetFolderChildrenResponse {
 }
 
 // ============================================================================
-// List Child Folders (Deprecated)
-// ============================================================================
-
-export interface ListChildFoldersQueryParameters {
-  /**
-   * If true, include all results (do not paginate).
-   */
-  includeAll?: boolean;
-
-  /**
-   * Which page to return.
-   */
-  page?: number;
-
-  /**
-   * Maximum number of items per page.
-   */
-  pageSize?: number;
-}
-
-export interface ListChildFoldersOptions extends RequestOptions<ListChildFoldersQueryParameters, undefined> {
-  /**
-   * Folder Id.
-   */
-  folderId: number;
-}
-
-export interface ListChildFoldersResponse {
-  /**
-   * Array of Folder objects.
-   */
-  result: Folder[];
-
-  /**
-   * Current page number.
-   */
-  pageNumber?: number;
-
-  /**
-   * Number of items per page.
-   */
-  pageSize?: number;
-
-  /**
-   * Total number of pages.
-   */
-  totalPages?: number;
-
-  /**
-   * Total count of items.
-   */
-  totalCount?: number;
-}
-
-// ============================================================================
 // Create Child Folder
 // ============================================================================
 
@@ -655,24 +537,7 @@ export interface CreateFolderBody {
   templates?: FolderTemplate[];
 }
 
-export interface CreateFolderQueryParameters {
-  /**
-   * A comma-separated list of elements to copy
-   */
-  include?: string;
-
-  /**
-   * When specified with a value of sheetHyperlinks, excludes this category from the response
-   */
-  exclude?: string;
-
-  /**
-   * A comma-separated list of references to NOT re-map for the newly created folder.
-   */
-  skipRemap?: string;
-}
-
-export interface CreateChildFolderOptions extends RequestOptions<CreateFolderQueryParameters, CreateFolderBody> {
+export interface CreateChildFolderOptions extends RequestOptions<undefined, CreateFolderBody> {
   /**
    * Parent Folder Id.
    */
