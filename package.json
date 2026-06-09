@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "github:smartsheet/smartsheet-javascript-sdk"
+    "url": "git+https://github.com/smartsheet/smartsheet-javascript-sdk.git"
   },
   "keywords": [
     "Smartsheet",
