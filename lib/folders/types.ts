@@ -402,7 +402,7 @@ export interface GetFolderMetadataOptions extends RequestOptions<GetFolderMetada
 
 export interface GetFolderChildrenQueryParameters {
   /**
-   * Filter by resource type(s) (sheets, reports, sights, folders).
+   * Filter by resource type(s) (sheets, reports, sights, folders, templates).
    * Comma-separated string of types.
    */
   childrenResourceTypes?: string;
