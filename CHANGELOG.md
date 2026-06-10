@@ -7,14 +7,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
 
-### Fixed
-
-- Deprecation related corrections
-
-### Added
-
-- Hardcode `paginationType=token` for `listWorkspaces`.
-
 ## [5.0.0] - 2026-06-08
 ### Added
 - Added optional `objectIdStr` field to `Event` interface to support alphanumeric object identifiers (AUD-903)
