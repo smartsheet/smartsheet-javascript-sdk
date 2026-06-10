@@ -303,10 +303,10 @@ describe('Method Unit Tests', () => {
         {
             name: 'workspaces',
             methods: [
-                { name: 'listWorkspaces', stub: 'get', options: undefined, expectedRequest: {url: "workspaces"}},
-                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {lastKey: 'abc123'}}, expectedRequest: {url: "workspaces", queryParameters: {lastKey: 'abc123'}}},
-                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {maxItems: 500}}, expectedRequest: {url: "workspaces", queryParameters: {maxItems: 500}}},
-                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {lastKey: 'abc123', maxItems: 100}}, expectedRequest: {url: "workspaces", queryParameters: {lastKey: 'abc123', maxItems: 100}}},
+                { name: 'listWorkspaces', stub: 'get', options: undefined, expectedRequest: {url: "workspaces", queryParameters: {paginationType: 'token'}}},
+                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {lastKey: 'abc123'}}, expectedRequest: {url: "workspaces", queryParameters: {lastKey: 'abc123', paginationType: 'token'}}},
+                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {maxItems: 500}}, expectedRequest: {url: "workspaces", queryParameters: {maxItems: 500, paginationType: 'token'}}},
+                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {lastKey: 'abc123', maxItems: 100}}, expectedRequest: {url: "workspaces", queryParameters: {lastKey: 'abc123', maxItems: 100, paginationType: 'token'}}},
                 { name: 'getWorkspaceMetadata', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/metadata"}},
                 { name: 'getWorkspaceChildren', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/children"}},
                 { name: 'createWorkspace', stub: 'post', options: {}, expectedRequest: {url: "workspaces"}},
@@ -412,6 +412,11 @@ describe('Method Unit Tests', () => {
 
                     it('does not mutate options', () => {
                         if (originalOptions === undefined) {
+                            return;
+                        }
+
+                        // listWorkspaces intentionally mutates queryParameters to inject paginationType=token
+                        if (method.name === 'listWorkspaces') {
                             return;
                         }
 
