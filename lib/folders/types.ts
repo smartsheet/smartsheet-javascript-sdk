@@ -196,6 +196,28 @@ export interface FoldersApi {
     options: MoveFolderOptions,
     callback?: RequestCallback<MoveFolderResponse>
   ) => Promise<MoveFolderResponse>;
+
+  /**
+   * Gets the path from the workspace root to the specified folder.
+   *
+   * @param options - {@link GetFolderPathOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link FolderPathNode}\> - Optional callback function
+   * @returns Promise\<{@link FolderPathNode}\>
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `GET /folders/{folderId}/path`
+   *
+   * @example
+   * ```typescript
+   * const path = await client.folders.getFolderPath({
+   *   folderId: 7116448184199044
+   * });
+   * ```
+   */
+  getFolderPath: (
+    options: GetFolderPathOptions,
+    callback?: RequestCallback<FolderPathNode>
+  ) => Promise<FolderPathNode>;
 }
 
 // ============================================================================
@@ -715,4 +737,64 @@ export interface MoveFolderResponse extends BaseResponseStatus {
    * The moved folder object.
    */
   result: Folder;
+}
+
+// ============================================================================
+// Get Folder Path
+// ============================================================================
+
+export interface PathLeaf {
+  id: number;
+  name?: string;
+  permalink?: string;
+  accessLevel?: string;
+  createdAt?: string;
+  modifiedAt?: string;
+}
+
+export class FolderPathNode {
+  id: number;
+  name?: string;
+  permalink?: string;
+  accessLevel?: string;
+  folders?: FolderPathNode[];
+
+  constructor(data: Record<string, unknown>) {
+    this.id = data.id as number;
+    this.name = data.name as string | undefined;
+    this.permalink = data.permalink as string | undefined;
+    this.accessLevel = data.accessLevel as string | undefined;
+    if (Array.isArray(data.folders)) {
+      this.folders = (data.folders as Record<string, unknown>[]).map((f) => new FolderPathNode(f));
+    }
+  }
+
+  private _walkToLeaf(): FolderPathNode[] {
+    if (this.folders && this.folders.length > 0) {
+      return [this, ...this.folders[0]._walkToLeaf()];
+    }
+    return [this];
+  }
+
+  /** Returns the deepest FolderPathNode (the target folder). */
+  getFolder(): FolderPathNode {
+    const nodes = this._walkToLeaf();
+    return nodes[nodes.length - 1];
+  }
+
+  /** Returns a slash-separated path string of folder names from this node to the target folder. */
+  getFolderPath(): string {
+    const nodes = this._walkToLeaf();
+    return nodes
+      .map((n) => n.name)
+      .filter(Boolean)
+      .join('/');
+  }
+}
+
+export interface GetFolderPathOptions extends RequestOptions<undefined, undefined> {
+  /**
+   * Folder Id.
+   */
+  folderId: number;
 }

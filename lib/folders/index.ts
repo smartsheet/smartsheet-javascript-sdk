@@ -1,3 +1,4 @@
+import type { ApiError } from '../types/ApiError';
 import type { CreateOptions } from '../types/CreateOptions';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
@@ -16,7 +17,9 @@ import type {
   MoveFolderOptions,
   MoveFolderResponse,
   CopyFolderResponse,
+  GetFolderPathOptions,
 } from './types';
+import { FolderPathNode } from './types';
 
 export function create(options: CreateOptions): FoldersApi {
   const requestor = options.requestor;
@@ -83,6 +86,24 @@ export function create(options: CreateOptions): FoldersApi {
     return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
 
+  const getFolderPath = (
+    getOptions: GetFolderPathOptions,
+    callback?: RequestCallback<FolderPathNode>
+  ): Promise<FolderPathNode> => {
+    const urlOptions = { url: options.apiUrls.folders + '/' + getOptions.folderId + '/path' };
+    return requestor
+      .get({ ...optionsToSend, ...urlOptions, ...getOptions })
+      .then((data: Record<string, unknown>) => {
+        const node = new FolderPathNode(data);
+        if (callback) callback(undefined, node);
+        return node;
+      })
+      .catch((err: unknown) => {
+        if (callback) callback(err as ApiError, undefined);
+        return Promise.reject(err);
+      });
+  };
+
   return {
     getFolderMetadata,
     getFolderChildren,
@@ -91,5 +112,6 @@ export function create(options: CreateOptions): FoldersApi {
     deleteFolder,
     moveFolder,
     copyFolder,
+    getFolderPath,
   };
 }

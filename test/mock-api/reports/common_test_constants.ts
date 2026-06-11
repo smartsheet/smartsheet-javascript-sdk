@@ -1,5 +1,15 @@
 import { ReportColumnType } from '@smartsheet/reports/types';
 
+// Common Workspace Properties (used for path tests)
+export const TEST_PATH_WORKSPACE_ID = 4509918431602564;
+export const TEST_PATH_WORKSPACE_NAME = 'Sample Workspace';
+export const TEST_PATH_WORKSPACE_PERMALINK =
+    'https://api.smartsheet.com/workspaces/cpG82pf5v8FPrgFfJrFcrM56xCHVGhmV4P4xcQ71';
+
+// Common Path Timestamps
+export const TEST_REPORT_CREATED_AT = '2024-01-01T00:00:00Z';
+export const TEST_REPORT_MODIFIED_AT = '2024-06-01T00:00:00Z';
+
 // Common Report IDs
 export const TEST_REPORT_ID = 4583173393803140;
 

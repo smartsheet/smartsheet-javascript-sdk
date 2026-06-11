@@ -1,3 +1,4 @@
+import type { ApiError } from '../types/ApiError';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { CreateOptions } from '../types/CreateOptions';
 import type { RequestCallback } from '../types/RequestCallback';
@@ -25,7 +26,9 @@ import type {
   AddReportColumnsResponse,
   CreateReportOptions,
   CreateReportResponse,
+  GetReportPathOptions,
 } from './types';
+import { ReportPathNode } from './types';
 import * as constants from '../utils/constants';
 
 export function create(options: CreateOptions): ReportsApi {
@@ -140,6 +143,24 @@ export function create(options: CreateOptions): ReportsApi {
     return requestor.post({ ...optionsToSend, ...urlOptions, ...postOptions }, callback);
   };
 
+  const getReportPath = (
+    getOptions: GetReportPathOptions,
+    callback?: RequestCallback<ReportPathNode>
+  ): Promise<ReportPathNode> => {
+    const urlOptions = { url: options.apiUrls.reports + '/' + getOptions.reportId + '/path' };
+    return requestor
+      .get({ ...optionsToSend, ...urlOptions, ...getOptions })
+      .then((data: Record<string, unknown>) => {
+        const node = new ReportPathNode(data);
+        if (callback) callback(undefined, node);
+        return node;
+      })
+      .catch((err: unknown) => {
+        if (callback) callback(err as ApiError, undefined);
+        return Promise.reject(err);
+      });
+  };
+
   return {
     listReports,
     getReport,
@@ -154,5 +175,6 @@ export function create(options: CreateOptions): ReportsApi {
     removeReportScope,
     addReportColumns,
     createReport,
+    getReportPath,
   };
 }

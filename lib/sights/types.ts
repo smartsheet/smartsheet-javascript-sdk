@@ -193,6 +193,28 @@ export interface SightsApi {
     options: SetSightPublishStatusOptions,
     callback?: RequestCallback<SetSightPublishStatusResponse>
   ) => Promise<SetSightPublishStatusResponse>;
+
+  /**
+   * Gets the path from the workspace root to the specified sight (dashboard).
+   *
+   * @param options - {@link GetSightPathOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link SightPathNode}\> - Optional callback function
+   * @returns Promise\<{@link SightPathNode}\>
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `GET /sights/{sightId}/path`
+   *
+   * @example
+   * ```typescript
+   * const path = await client.sights.getSightPath({
+   *   sightId: 123456789
+   * });
+   * ```
+   */
+  getSightPath: (
+    options: GetSightPathOptions,
+    callback?: RequestCallback<SightPathNode>
+  ) => Promise<SightPathNode>;
 }
 
 // ============================================================================
@@ -584,4 +606,74 @@ export interface SetSightPublishStatusResponse extends BaseResponseStatus {
    * @see SightPublishStatus
    */
   result: SightPublishStatus;
+}
+
+// ============================================================================
+// Get Sight Path
+// ============================================================================
+
+export interface SightPathLeaf {
+  id: number;
+  name?: string;
+  permalink?: string;
+  accessLevel?: string;
+  createdAt?: string;
+  modifiedAt?: string;
+}
+
+export class SightPathNode {
+  id: number;
+  name?: string;
+  permalink?: string;
+  accessLevel?: string;
+  folders?: SightPathNode[];
+  sights?: SightPathLeaf[];
+
+  constructor(data: Record<string, unknown>) {
+    this.id = data.id as number;
+    this.name = data.name as string | undefined;
+    this.permalink = data.permalink as string | undefined;
+    this.accessLevel = data.accessLevel as string | undefined;
+    if (Array.isArray(data.folders)) {
+      this.folders = (data.folders as Record<string, unknown>[]).map((f) => new SightPathNode(f));
+    }
+    if (Array.isArray(data.sights)) {
+      this.sights = data.sights as SightPathLeaf[];
+    }
+  }
+
+  private walkToLeaf(): SightPathNode[] {
+    if (this.sights && this.sights.length > 0) return [this];
+    if (this.folders && this.folders.length > 0) {
+      return [this, ...this.folders[0].walkToLeaf()];
+    }
+    return [this];
+  }
+
+  /** Returns the target SightPathLeaf sight, or undefined if not reachable. */
+  getSight(): SightPathLeaf | undefined {
+    for (const node of this.walkToLeaf()) {
+      if (node.sights && node.sights.length > 0) return node.sights[0];
+    }
+    return undefined;
+  }
+
+  /** Returns a slash-separated path string from this node to the target sight. */
+  getSightPath(): string | undefined {
+    const nodes = this.walkToLeaf();
+    if (nodes.length === 0) return undefined;
+    const parts = nodes.map((n) => n.name).filter(Boolean) as string[];
+    const leaf = nodes[nodes.length - 1];
+    if (leaf.sights && leaf.sights.length > 0 && leaf.sights[0].name) {
+      parts[parts.length - 1] = leaf.sights[0].name;
+    }
+    return parts.length > 0 ? parts.join('/') : undefined;
+  }
+}
+
+export interface GetSightPathOptions extends RequestOptions<undefined, undefined> {
+  /**
+   * Sight Id.
+   */
+  sightId: number;
 }

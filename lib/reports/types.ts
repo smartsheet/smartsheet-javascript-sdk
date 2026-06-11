@@ -430,6 +430,28 @@ export interface ReportsApi {
     options: CreateReportOptions,
     callback?: RequestCallback<CreateReportResponse>
   ) => Promise<CreateReportResponse>;
+
+  /**
+   * Gets the path from the workspace root to the specified report.
+   *
+   * @param options - {@link GetReportPathOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link ReportPathNode}\> - Optional callback function
+   * @returns Promise\<{@link ReportPathNode}\>
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `GET /reports/{reportId}/path`
+   *
+   * @example
+   * ```typescript
+   * const path = await client.reports.getReportPath({
+   *   reportId: 4583173393803140
+   * });
+   * ```
+   */
+  getReportPath: (
+    options: GetReportPathOptions,
+    callback?: RequestCallback<ReportPathNode>
+  ) => Promise<ReportPathNode>;
 }
 
 // ============================================================================
@@ -1638,4 +1660,74 @@ export interface CreateReportResponse extends BaseResponseStatus {
    * The created report details.
    */
   result: CreateReportResult;
+}
+
+// ============================================================================
+// Get Report Path
+// ============================================================================
+
+export interface PathLeaf {
+  id: number;
+  name?: string;
+  permalink?: string;
+  accessLevel?: string;
+  createdAt?: string;
+  modifiedAt?: string;
+}
+
+export class ReportPathNode {
+  id: number;
+  name?: string;
+  permalink?: string;
+  accessLevel?: string;
+  folders?: ReportPathNode[];
+  reports?: PathLeaf[];
+
+  constructor(data: Record<string, unknown>) {
+    this.id = data.id as number;
+    this.name = data.name as string | undefined;
+    this.permalink = data.permalink as string | undefined;
+    this.accessLevel = data.accessLevel as string | undefined;
+    if (Array.isArray(data.folders)) {
+      this.folders = (data.folders as Record<string, unknown>[]).map((f) => new ReportPathNode(f));
+    }
+    if (Array.isArray(data.reports)) {
+      this.reports = data.reports as PathLeaf[];
+    }
+  }
+
+  private _walkToLeaf(): ReportPathNode[] {
+    if (this.reports && this.reports.length > 0) return [this];
+    if (this.folders && this.folders.length > 0) {
+      return [this, ...this.folders[0]._walkToLeaf()];
+    }
+    return [this];
+  }
+
+  /** Returns the target PathLeaf report, or undefined if not reachable. */
+  getReport(): PathLeaf | undefined {
+    for (const node of this._walkToLeaf()) {
+      if (node.reports && node.reports.length > 0) return node.reports[0];
+    }
+    return undefined;
+  }
+
+  /** Returns a slash-separated path string from this node to the target report. */
+  getReportPath(): string | undefined {
+    const nodes = this._walkToLeaf();
+    if (nodes.length === 0) return undefined;
+    const parts = nodes.map((n) => n.name).filter(Boolean) as string[];
+    const leaf = nodes[nodes.length - 1];
+    if (leaf.reports && leaf.reports.length > 0 && leaf.reports[0].name) {
+      parts[parts.length - 1] = leaf.reports[0].name;
+    }
+    return parts.length > 0 ? parts.join('/') : undefined;
+  }
+}
+
+export interface GetReportPathOptions extends RequestOptions<undefined, undefined> {
+  /**
+   * Report Id.
+   */
+  reportId: number;
 }

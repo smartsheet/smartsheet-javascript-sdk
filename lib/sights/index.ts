@@ -1,3 +1,4 @@
+import type { ApiError } from '../types/ApiError';
 import type { CreateOptions } from '../types/CreateOptions';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
@@ -19,7 +20,9 @@ import type {
   SightPublishStatus,
   SetSightPublishStatusOptions,
   SetSightPublishStatusResponse,
+  GetSightPathOptions,
 } from './types';
+import { SightPathNode } from './types';
 
 export function create(options: CreateOptions): SightsApi {
   const requestor = options.requestor;
@@ -77,6 +80,24 @@ export function create(options: CreateOptions): SightsApi {
     return requestor.put({ ...optionsToSend, ...urlOptions, ...putOptions }, callback);
   };
 
+  const getSightPath = (
+    getOptions: GetSightPathOptions,
+    callback?: RequestCallback<SightPathNode>
+  ): Promise<SightPathNode> => {
+    const urlOptions = { url: buildUrl(getOptions.sightId) + '/path' };
+    return requestor
+      .get({ ...optionsToSend, ...urlOptions, ...getOptions })
+      .then((data: Record<string, unknown>) => {
+        const node = new SightPathNode(data);
+        if (callback) callback(undefined, node);
+        return node;
+      })
+      .catch((err: unknown) => {
+        if (callback) callback(err as ApiError, undefined);
+        return Promise.reject(err);
+      });
+  };
+
   const buildUrl = (sightId?: number | string) => {
     if (sightId !== undefined) {
       return options.apiUrls.sights + '/' + sightId;
@@ -93,6 +114,7 @@ export function create(options: CreateOptions): SightsApi {
     moveSight,
     getSightPublishStatus,
     setSightPublishStatus,
+    getSightPath,
   };
 }
 
