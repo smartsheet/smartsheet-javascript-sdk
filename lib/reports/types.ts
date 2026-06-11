@@ -448,10 +448,7 @@ export interface ReportsApi {
    * });
    * ```
    */
-  getReportPath: (
-    options: GetReportPathOptions,
-    callback?: RequestCallback<ReportPathNode>
-  ) => Promise<ReportPathNode>;
+  getReportPath: (options: GetReportPathOptions, callback?: RequestCallback<ReportPathNode>) => Promise<ReportPathNode>;
 }
 
 // ============================================================================

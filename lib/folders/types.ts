@@ -214,10 +214,7 @@ export interface FoldersApi {
    * });
    * ```
    */
-  getFolderPath: (
-    options: GetFolderPathOptions,
-    callback?: RequestCallback<FolderPathNode>
-  ) => Promise<FolderPathNode>;
+  getFolderPath: (options: GetFolderPathOptions, callback?: RequestCallback<FolderPathNode>) => Promise<FolderPathNode>;
 }
 
 // ============================================================================

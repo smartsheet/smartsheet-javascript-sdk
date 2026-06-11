@@ -211,10 +211,7 @@ export interface SightsApi {
    * });
    * ```
    */
-  getSightPath: (
-    options: GetSightPathOptions,
-    callback?: RequestCallback<SightPathNode>
-  ) => Promise<SightPathNode>;
+  getSightPath: (options: GetSightPathOptions, callback?: RequestCallback<SightPathNode>) => Promise<SightPathNode>;
 }
 
 // ============================================================================
