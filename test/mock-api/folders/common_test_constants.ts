@@ -2,7 +2,7 @@
 export const TEST_PATH_WORKSPACE_ID = 4509918431602564;
 export const TEST_PATH_WORKSPACE_NAME = 'Sample Workspace';
 export const TEST_PATH_WORKSPACE_PERMALINK =
-    'https://api.smartsheet.com/workspaces/cpG82pf5v8FPrgFfJrFcrM56xCHVGhmV4P4xcQ71';
+    'https://app.smartsheet.com/workspaces/mock_workspace_id';
 
 // Common Folder IDs
 export const TEST_FOLDER_ID = 7116448184199044;

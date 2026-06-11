@@ -4,7 +4,7 @@ import { ReportColumnType } from '@smartsheet/reports/types';
 export const TEST_PATH_WORKSPACE_ID = 4509918431602564;
 export const TEST_PATH_WORKSPACE_NAME = 'Sample Workspace';
 export const TEST_PATH_WORKSPACE_PERMALINK =
-    'https://api.smartsheet.com/workspaces/cpG82pf5v8FPrgFfJrFcrM56xCHVGhmV4P4xcQ71';
+    'https://app.smartsheet.com/workspaces/mock_workspace_id';
 
 // Common Path Timestamps
 export const TEST_REPORT_CREATED_AT = '2024-01-01T00:00:00Z';
