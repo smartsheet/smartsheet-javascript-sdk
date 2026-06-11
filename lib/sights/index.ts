@@ -80,6 +80,13 @@ export function create(options: CreateOptions): SightsApi {
     return requestor.put({ ...optionsToSend, ...urlOptions, ...putOptions }, callback);
   };
 
+  const buildUrl = (sightId?: number | string) => {
+    if (sightId !== undefined) {
+      return options.apiUrls.sights + '/' + sightId;
+    }
+    return options.apiUrls.sights;
+  };
+
   const getSightPath = (
     getOptions: GetSightPathOptions,
     callback?: RequestCallback<SightPathNode>
@@ -96,13 +103,6 @@ export function create(options: CreateOptions): SightsApi {
         if (callback) callback(err as ApiError, undefined);
         return Promise.reject(err);
       });
-  };
-
-  const buildUrl = (sightId?: number | string) => {
-    if (sightId !== undefined) {
-      return options.apiUrls.sights + '/' + sightId;
-    }
-    return options.apiUrls.sights;
   };
 
   return {

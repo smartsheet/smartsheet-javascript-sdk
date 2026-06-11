@@ -1,3 +1,4 @@
+import type { PathLeaf } from '../types/PathLeaf';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
@@ -10,6 +11,7 @@ import type { CrossSheetReference } from '../cross-sheet-references/types';
 import type { SheetSummary } from '../sheet-summary/types';
 import type { SheetUserSettings } from '../sheets/types';
 import type { WorkspaceListing } from '../workspaces/types';
+import { APIAccessLevel } from '@smartsheet/types';
 
 // ============================================================================
 // Reports API Interface
@@ -1663,28 +1665,19 @@ export interface CreateReportResponse extends BaseResponseStatus {
 // Get Report Path
 // ============================================================================
 
-export interface PathLeaf {
-  id: number;
-  name?: string;
-  permalink?: string;
-  accessLevel?: string;
-  createdAt?: string;
-  modifiedAt?: string;
-}
-
 export class ReportPathNode {
   id: number;
-  name?: string;
-  permalink?: string;
-  accessLevel?: string;
+  name: string;
+  permalink: string;
+  accessLevel?: APIAccessLevel;
   folders?: ReportPathNode[];
   reports?: PathLeaf[];
 
   constructor(data: Record<string, unknown>) {
     this.id = data.id as number;
-    this.name = data.name as string | undefined;
-    this.permalink = data.permalink as string | undefined;
-    this.accessLevel = data.accessLevel as string | undefined;
+    this.name = data.name as string;
+    this.permalink = data.permalink as string;
+    this.accessLevel = data.accessLevel as APIAccessLevel | undefined;
     if (Array.isArray(data.folders)) {
       this.folders = (data.folders as Record<string, unknown>[]).map((f) => new ReportPathNode(f));
     }

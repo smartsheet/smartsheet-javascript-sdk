@@ -2,6 +2,7 @@ import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { FailedItem } from '../types/FailedItem';
+import { APIAccessLevel } from '@smartsheet/types';
 
 // ============================================================================
 // Folders API Interface
@@ -740,27 +741,18 @@ export interface MoveFolderResponse extends BaseResponseStatus {
 // Get Folder Path
 // ============================================================================
 
-export interface PathLeaf {
-  id: number;
-  name?: string;
-  permalink?: string;
-  accessLevel?: string;
-  createdAt?: string;
-  modifiedAt?: string;
-}
-
 export class FolderPathNode {
   id: number;
-  name?: string;
-  permalink?: string;
-  accessLevel?: string;
+  name: string;
+  permalink: string;
+  accessLevel?: APIAccessLevel;
   folders?: FolderPathNode[];
 
   constructor(data: Record<string, unknown>) {
     this.id = data.id as number;
-    this.name = data.name as string | undefined;
-    this.permalink = data.permalink as string | undefined;
-    this.accessLevel = data.accessLevel as string | undefined;
+    this.name = data.name as string;
+    this.permalink = data.permalink as string;
+    this.accessLevel = data.accessLevel as APIAccessLevel | undefined;
     if (Array.isArray(data.folders)) {
       this.folders = (data.folders as Record<string, unknown>[]).map((f) => new FolderPathNode(f));
     }

@@ -2,33 +2,27 @@
 // Get Sheet Path
 // ============================================================================
 
-export interface SheetPathLeaf {
-  id: number;
-  name?: string;
-  permalink?: string;
-  accessLevel?: string;
-  createdAt?: string;
-  modifiedAt?: string;
-}
+import type { PathLeaf } from '../types/PathLeaf';
+import type { APIAccessLevel } from '@smartsheet/types';
 
 export class SheetPathNode {
   id: number;
-  name?: string;
-  permalink?: string;
+  name: string;
+  permalink: string;
   accessLevel?: string;
   folders?: SheetPathNode[];
-  sheets?: SheetPathLeaf[];
+  sheets?: PathLeaf[];
 
   constructor(data: Record<string, unknown>) {
     this.id = data.id as number;
-    this.name = data.name as string | undefined;
-    this.permalink = data.permalink as string | undefined;
-    this.accessLevel = data.accessLevel as string | undefined;
+    this.name = data.name as string;
+    this.permalink = data.permalink as string;
+    this.accessLevel = data.accessLevel as APIAccessLevel | undefined;
     if (Array.isArray(data.folders)) {
       this.folders = (data.folders as Record<string, unknown>[]).map((f) => new SheetPathNode(f));
     }
     if (Array.isArray(data.sheets)) {
-      this.sheets = data.sheets as SheetPathLeaf[];
+      this.sheets = data.sheets as PathLeaf[];
     }
   }
 
@@ -40,8 +34,8 @@ export class SheetPathNode {
     return [this];
   }
 
-  /** Returns the target SheetPathLeaf sheet, or undefined if not reachable. */
-  getSheet(): SheetPathLeaf | undefined {
+  /** Returns the target PathLeaf sheet, or undefined if not reachable. */
+  getSheet(): PathLeaf | undefined {
     for (const node of this._walkToLeaf()) {
       if (node.sheets && node.sheets.length > 0) return node.sheets[0];
     }

@@ -2,6 +2,7 @@ import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { APIAccessLevel } from '../types/ApiAccessLevel';
+import type { PathLeaf } from '../types/PathLeaf';
 import type { TokenPaginationQueryParameters, TokenPaginationResponse } from '../types';
 
 // ============================================================================
@@ -609,33 +610,24 @@ export interface SetSightPublishStatusResponse extends BaseResponseStatus {
 // Get Sight Path
 // ============================================================================
 
-export interface SightPathLeaf {
-  id: number;
-  name?: string;
-  permalink?: string;
-  accessLevel?: string;
-  createdAt?: string;
-  modifiedAt?: string;
-}
-
 export class SightPathNode {
   id: number;
-  name?: string;
-  permalink?: string;
-  accessLevel?: string;
+  name: string;
+  permalink: string;
+  accessLevel?: APIAccessLevel;
   folders?: SightPathNode[];
-  sights?: SightPathLeaf[];
+  sights?: PathLeaf[];
 
   constructor(data: Record<string, unknown>) {
     this.id = data.id as number;
-    this.name = data.name as string | undefined;
-    this.permalink = data.permalink as string | undefined;
-    this.accessLevel = data.accessLevel as string | undefined;
+    this.name = data.name as string;
+    this.permalink = data.permalink as string;
+    this.accessLevel = data.accessLevel as APIAccessLevel | undefined;
     if (Array.isArray(data.folders)) {
       this.folders = (data.folders as Record<string, unknown>[]).map((f) => new SightPathNode(f));
     }
     if (Array.isArray(data.sights)) {
-      this.sights = data.sights as SightPathLeaf[];
+      this.sights = data.sights as PathLeaf[];
     }
   }
 
@@ -647,8 +639,8 @@ export class SightPathNode {
     return [this];
   }
 
-  /** Returns the target SightPathLeaf sight, or undefined if not reachable. */
-  getSight(): SightPathLeaf | undefined {
+  /** Returns the target PathLeaf sight, or undefined if not reachable. */
+  getSight(): PathLeaf | undefined {
     for (const node of this.walkToLeaf()) {
       if (node.sights && node.sights.length > 0) return node.sights[0];
     }
