@@ -5,15 +5,15 @@ on: [pull_request, workflow_dispatch]
 jobs:
   lint:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Node.js  
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: '24'
       - name: Install dependencies
-        run:  npm install 
+        run:  npm install
       - name: Run eslint
         run: npm run lint
       - name: Run prettier
