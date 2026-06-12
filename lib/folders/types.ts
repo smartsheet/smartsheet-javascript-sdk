@@ -2,7 +2,7 @@ import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { FailedItem } from '../types/FailedItem';
-import { APIAccessLevel } from '@smartsheet/types';
+import type { APIAccessLevel } from '@smartsheet/types';
 
 // ============================================================================
 // Folders API Interface
