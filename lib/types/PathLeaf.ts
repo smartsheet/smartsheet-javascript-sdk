@@ -1,4 +1,4 @@
-import type { APIAccessLevel } from '@smartsheet/types';
+import type { APIAccessLevel } from './ApiAccessLevel';
 
 export interface PathLeaf {
   id: number;

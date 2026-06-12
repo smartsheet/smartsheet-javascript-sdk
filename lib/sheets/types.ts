@@ -3,7 +3,7 @@
 // ============================================================================
 
 import type { PathLeaf } from '../types/PathLeaf';
-import type { APIAccessLevel } from '@smartsheet/types';
+import type { APIAccessLevel } from '../types/ApiAccessLevel';
 
 export class SheetPathNode {
   id: number;

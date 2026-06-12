@@ -11,7 +11,7 @@ import type { CrossSheetReference } from '../cross-sheet-references/types';
 import type { SheetSummary } from '../sheet-summary/types';
 import type { SheetUserSettings } from '../sheets/types';
 import type { WorkspaceListing } from '../workspaces/types';
-import type { APIAccessLevel } from '@smartsheet/types';
+import type { APIAccessLevel } from '../types/ApiAccessLevel';
 
 // ============================================================================
 // Reports API Interface
