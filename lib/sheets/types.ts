@@ -9,7 +9,7 @@ export class SheetPathNode {
   id: number;
   name: string;
   permalink: string;
-  accessLevel?: string;
+  accessLevel?: APIAccessLevel;
   folders?: SheetPathNode[];
   sheets?: PathLeaf[];
 
@@ -26,32 +26,34 @@ export class SheetPathNode {
     }
   }
 
-  private _walkToLeaf(): SheetPathNode[] {
-    if (this.sheets && this.sheets.length > 0) return [this];
-    if (this.folders && this.folders.length > 0) {
-      return [this, ...this.folders[0]._walkToLeaf()];
-    }
-    return [this];
-  }
-
   /** Returns the target PathLeaf sheet, or undefined if not reachable. */
-  getSheet(): PathLeaf | undefined {
-    for (const node of this._walkToLeaf()) {
-      if (node.sheets && node.sheets.length > 0) return node.sheets[0];
+  getLeafSheet(): PathLeaf | undefined {
+    if (this.sheets && this.sheets.length > 0) {
+      return this.sheets[0];
     }
+
+    if (this.folders && this.folders.length > 0) {
+      return this.folders[0].getLeafSheet();
+    }
+
     return undefined;
   }
 
-  /** Returns a slash-separated path string from this node to the target sheet. */
-  getSheetPath(): string | undefined {
-    const nodes = this._walkToLeaf();
-    if (nodes.length === 0) return undefined;
-    const parts = nodes.map((n) => n.name).filter(Boolean) as string[];
-    const leaf = nodes[nodes.length - 1];
-    if (leaf.sheets && leaf.sheets.length > 0 && leaf.sheets[0].name) {
-      parts[parts.length - 1] = leaf.sheets[0].name;
+  /**
+   * Returns a Unix-like slash-separated path string from this node to the target sheet.
+   *
+   * @example '/Workspace/Folder/Sheet'
+   **/
+  getLeafSheetPath(): string | undefined {
+    if (this.sheets && this.sheets.length > 0) {
+      return `/${this.sheets[0].name}`;
     }
-    return parts.length > 0 ? parts.join('/') : undefined;
+
+    if (this.folders && this.folders.length > 0) {
+      return `/${this.name}${this.folders[0].getLeafSheetPath()}`;
+    }
+
+    return undefined;
   }
 }
 

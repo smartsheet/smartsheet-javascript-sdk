@@ -758,26 +758,26 @@ export class FolderPathNode {
     }
   }
 
-  private _walkToLeaf(): FolderPathNode[] {
-    if (this.folders && this.folders.length > 0) {
-      return [this, ...this.folders[0]._walkToLeaf()];
-    }
-    return [this];
-  }
-
   /** Returns the deepest FolderPathNode (the target folder). */
-  getFolder(): FolderPathNode {
-    const nodes = this._walkToLeaf();
-    return nodes[nodes.length - 1];
+  getLeafFolder(): FolderPathNode {
+    if (this.folders && this.folders.length > 0) {
+      return this.folders[0].getLeafFolder();
+    }
+
+    return this;
   }
 
-  /** Returns a slash-separated path string of folder names from this node to the target folder. */
-  getFolderPath(): string {
-    const nodes = this._walkToLeaf();
-    return nodes
-      .map((n) => n.name)
-      .filter(Boolean)
-      .join('/');
+  /**
+   * Returns a Unix-like slash-separated path string from this node to the target folder.
+   *
+   * @example '/Workspace/Folder/Subfolder'
+   **/
+  getLeafFolderPath(): string {
+    if (this.folders && this.folders.length > 0) {
+      return `/${this.name}${this.folders[0].getLeafFolderPath()}`;
+    }
+
+    return `/${this.name}`;
   }
 }
 

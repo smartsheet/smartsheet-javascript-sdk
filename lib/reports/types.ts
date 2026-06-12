@@ -1686,32 +1686,34 @@ export class ReportPathNode {
     }
   }
 
-  private _walkToLeaf(): ReportPathNode[] {
-    if (this.reports && this.reports.length > 0) return [this];
-    if (this.folders && this.folders.length > 0) {
-      return [this, ...this.folders[0]._walkToLeaf()];
-    }
-    return [this];
-  }
-
   /** Returns the target PathLeaf report, or undefined if not reachable. */
-  getReport(): PathLeaf | undefined {
-    for (const node of this._walkToLeaf()) {
-      if (node.reports && node.reports.length > 0) return node.reports[0];
+  getLeafReport(): PathLeaf | undefined {
+    if (this.reports && this.reports.length > 0) {
+      return this.reports[0];
     }
+
+    if (this.folders && this.folders.length > 0) {
+      return this.folders[0].getLeafReport();
+    }
+
     return undefined;
   }
 
-  /** Returns a slash-separated path string from this node to the target report. */
-  getReportPath(): string | undefined {
-    const nodes = this._walkToLeaf();
-    if (nodes.length === 0) return undefined;
-    const parts = nodes.map((n) => n.name).filter(Boolean) as string[];
-    const leaf = nodes[nodes.length - 1];
-    if (leaf.reports && leaf.reports.length > 0 && leaf.reports[0].name) {
-      parts[parts.length - 1] = leaf.reports[0].name;
+  /**
+   * Returns a Unix-like slash-separated path string from this node to the target report.
+   *
+   * @example '/Workspace/Folder/Report'
+   **/
+  getLeafReportPath(): string | undefined {
+    if (this.reports && this.reports.length > 0) {
+      return `/${this.reports[0].name}`;
     }
-    return parts.length > 0 ? parts.join('/') : undefined;
+
+    if (this.folders && this.folders.length > 0) {
+      return `/${this.name}${this.folders[0].getLeafReportPath()}`;
+    }
+
+    return undefined;
   }
 }
 

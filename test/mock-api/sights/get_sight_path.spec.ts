@@ -125,7 +125,7 @@ describe('Sights - getSightPath endpoint tests', () => {
         const response = await client.sights.getSightPath(options);
 
         expect(response).toBeInstanceOf(SightPathNode);
-        expect(response.getSight()).toEqual({
+        expect(response.getLeafSight()).toEqual({
             id: 3456789012345678,
             name: 'Project Dashboard',
             permalink: 'https://app.smartsheet.com/dashboards/3456789012345678',
@@ -133,7 +133,7 @@ describe('Sights - getSightPath endpoint tests', () => {
             createdAt: TEST_SIGHT_CREATED_AT,
             modifiedAt: TEST_SIGHT_MODIFIED_AT,
         });
-        expect(response.getSightPath()).toEqual('Sample Workspace/Project Plans/Project Dashboard');
+        expect(response.getLeafSightPath()).toEqual('/Sample Workspace/Project Plans/Project Dashboard');
     });
 
     it('getSightPath error 500 response', async () => {

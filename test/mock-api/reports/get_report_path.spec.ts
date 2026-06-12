@@ -125,7 +125,7 @@ describe('Reports - getReportPath endpoint tests', () => {
         const response = await client.reports.getReportPath(options);
 
         expect(response).toBeInstanceOf(ReportPathNode);
-        expect(response.getReport()).toEqual({
+        expect(response.getLeafReport()).toEqual({
             id: 3456789012345678,
             name: 'Project Report',
             permalink: 'https://app.smartsheet.com/reports/3456789012345678',
@@ -133,7 +133,7 @@ describe('Reports - getReportPath endpoint tests', () => {
             createdAt: TEST_REPORT_CREATED_AT,
             modifiedAt: TEST_REPORT_MODIFIED_AT,
         });
-        expect(response.getReportPath()).toEqual('Sample Workspace/Project Plans/Project Report');
+        expect(response.getLeafReportPath()).toEqual('/Sample Workspace/Project Plans/Project Report');
     });
 
     it('getReportPath error 500 response', async () => {

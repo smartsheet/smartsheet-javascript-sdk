@@ -631,32 +631,34 @@ export class SightPathNode {
     }
   }
 
-  private walkToLeaf(): SightPathNode[] {
-    if (this.sights && this.sights.length > 0) return [this];
-    if (this.folders && this.folders.length > 0) {
-      return [this, ...this.folders[0].walkToLeaf()];
-    }
-    return [this];
-  }
-
   /** Returns the target PathLeaf sight, or undefined if not reachable. */
-  getSight(): PathLeaf | undefined {
-    for (const node of this.walkToLeaf()) {
-      if (node.sights && node.sights.length > 0) return node.sights[0];
+  getLeafSight(): PathLeaf | undefined {
+    if (this.sights && this.sights.length > 0) {
+      return this.sights[0];
     }
+
+    if (this.folders && this.folders.length > 0) {
+      return this.folders[0].getLeafSight();
+    }
+
     return undefined;
   }
 
-  /** Returns a slash-separated path string from this node to the target sight. */
-  getSightPath(): string | undefined {
-    const nodes = this.walkToLeaf();
-    if (nodes.length === 0) return undefined;
-    const parts = nodes.map((n) => n.name).filter(Boolean) as string[];
-    const leaf = nodes[nodes.length - 1];
-    if (leaf.sights && leaf.sights.length > 0 && leaf.sights[0].name) {
-      parts[parts.length - 1] = leaf.sights[0].name;
+  /**
+   * Returns a Unix-like slash-separated path string from this node to the target sight.
+   *
+   * @example '/Workspace/Folder/Dashboard'
+   **/
+  getLeafSightPath(): string | undefined {
+    if (this.sights && this.sights.length > 0) {
+      return `/${this.sights[0].name}`;
     }
-    return parts.length > 0 ? parts.join('/') : undefined;
+
+    if (this.folders && this.folders.length > 0) {
+      return `/${this.name}${this.folders[0].getLeafSightPath()}`;
+    }
+
+    return undefined;
   }
 }
 

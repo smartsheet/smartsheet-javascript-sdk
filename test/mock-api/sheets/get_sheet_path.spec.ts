@@ -125,7 +125,7 @@ describe('Sheets - getSheetPath endpoint tests', () => {
         const response = await client.sheets.getSheetPath(options);
 
         expect(response).toBeInstanceOf(SheetPathNode);
-        expect(response.getSheet()).toEqual({
+        expect(response.getLeafSheet()).toEqual({
             id: 3456789012345678,
             name: 'Project Plan',
             permalink: 'https://app.smartsheet.com/sheets/3456789012345678',
@@ -133,7 +133,7 @@ describe('Sheets - getSheetPath endpoint tests', () => {
             createdAt: TEST_SHEET_CREATED_AT,
             modifiedAt: TEST_SHEET_MODIFIED_AT,
         });
-        expect(response.getSheetPath()).toEqual('Sample Workspace/Project Plans/Project Plan');
+        expect(response.getLeafSheetPath()).toEqual('/Sample Workspace/Project Plans/Project Plan');
     });
 
     it('getSheetPath error 500 response', async () => {

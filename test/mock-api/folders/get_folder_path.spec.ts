@@ -117,13 +117,13 @@ describe('Folders - getFolderPath endpoint tests', () => {
         const response = await client.folders.getFolderPath(options);
 
         expect(response).toBeInstanceOf(FolderPathNode);
-        expect(response.getFolder()).toEqual({
+        expect(response.getLeafFolder()).toEqual({
             id: 3456789012345678,
             name: 'Project Plans Sub-Subfolder',
             permalink: 'https://app.smartsheet.com/folders/3456789012345678',
         });
-        expect(response.getFolderPath()).toEqual(
-            'Sample Workspace/Project Plans/Project Plans Subfolder/Project Plans Sub-Subfolder'
+        expect(response.getLeafFolderPath()).toEqual(
+            '/Sample Workspace/Project Plans/Project Plans Subfolder/Project Plans Sub-Subfolder'
         );
     });
 
