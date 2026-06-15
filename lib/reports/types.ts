@@ -488,10 +488,7 @@ export interface ReportsApi {
    * const column = await client.reports.getReportColumn({ reportId: 4583173393803140, columnVirtualId: 123 });
    * ```
    */
-  getReportColumn: (
-    options: GetReportColumnOptions,
-    callback?: RequestCallback<ReportColumn>
-  ) => Promise<ReportColumn>;
+  getReportColumn: (options: GetReportColumnOptions, callback?: RequestCallback<ReportColumn>) => Promise<ReportColumn>;
 
   /**
    * Updates a column of a Report.
