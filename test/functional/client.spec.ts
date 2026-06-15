@@ -178,7 +178,7 @@ describe('Client Unit Tests', () => {
   describe('#reports', () => {
     it('should have reports object', () => {
       expect(smartsheet).toHaveProperty('reports');
-      expect(Object.keys(smartsheet.reports)).toHaveLength(13);
+      expect(Object.keys(smartsheet.reports)).toHaveLength(19);
     });
 
     it('should have get methods', () => {
@@ -187,6 +187,10 @@ describe('Client Unit Tests', () => {
       expect(smartsheet.reports).toHaveProperty('getReportAsExcel');
       expect(smartsheet.reports).toHaveProperty('getReportAsCSV');
       expect(smartsheet.reports).toHaveProperty('getReportPublishStatus');
+      expect(smartsheet.reports).toHaveProperty('listReportScope');
+      expect(smartsheet.reports).toHaveProperty('listReportColumns');
+      expect(smartsheet.reports).toHaveProperty('getReportColumn');
+      expect(smartsheet.reports).toHaveProperty('getReportDefinition');
     });
 
     it('should have create methods', () => {
@@ -198,11 +202,13 @@ describe('Client Unit Tests', () => {
     it('should have update methods', () => {
       expect(smartsheet.reports).toHaveProperty('setReportPublishStatus');
       expect(smartsheet.reports).toHaveProperty('sendReportViaEmail');
+      expect(smartsheet.reports).toHaveProperty('updateReportColumn');
     });
 
     it('should have delete methods', () => {
       expect(smartsheet.reports).toHaveProperty('deleteReport');
       expect(smartsheet.reports).toHaveProperty('removeReportScope');
+      expect(smartsheet.reports).toHaveProperty('deleteReportColumn');
     });
   });
 

@@ -1,6 +1,8 @@
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
+import type { TokenPaginationQueryParameters } from '../types/TokenPaginationQueryParameters';
+import type { TokenPaginationResponse } from '../types/TokenPaginationResponse';
 import type { FailedItem } from '../types/FailedItem';
 import type { Attachment } from '../attachments/types';
 import type { Column } from '../columns/types';
@@ -430,6 +432,130 @@ export interface ReportsApi {
     options: CreateReportOptions,
     callback?: RequestCallback<CreateReportResponse>
   ) => Promise<CreateReportResponse>;
+
+  /**
+   * Gets the scope of a Report.
+   *
+   * @param options - {@link ListReportScopeOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link ListReportScopeResponse}\> - Optional callback function
+   * @returns Promise\<{@link ListReportScopeResponse}\>
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `GET /reports/{reportId}/scope`
+   *
+   * @example
+   * ```typescript
+   * const scope = await client.reports.listReportScope({ reportId: 4583173393803140 });
+   * ```
+   */
+  listReportScope: (
+    options: ListReportScopeOptions,
+    callback?: RequestCallback<ListReportScopeResponse>
+  ) => Promise<ListReportScopeResponse>;
+
+  /**
+   * Gets the columns of a Report.
+   *
+   * @param options - {@link ListReportColumnsOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link ListReportColumnsResponse}\> - Optional callback function
+   * @returns Promise\<{@link ListReportColumnsResponse}\>
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `GET /reports/{reportId}/columns`
+   *
+   * @example
+   * ```typescript
+   * const columns = await client.reports.listReportColumns({ reportId: 4583173393803140 });
+   * ```
+   */
+  listReportColumns: (
+    options: ListReportColumnsOptions,
+    callback?: RequestCallback<ListReportColumnsResponse>
+  ) => Promise<ListReportColumnsResponse>;
+
+  /**
+   * Gets a single column of a Report.
+   *
+   * @param options - {@link GetReportColumnOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link ReportColumn}\> - Optional callback function
+   * @returns Promise\<{@link ReportColumn}\>
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `GET /reports/{reportId}/columns/{columnVirtualId}`
+   *
+   * @example
+   * ```typescript
+   * const column = await client.reports.getReportColumn({ reportId: 4583173393803140, columnVirtualId: 123 });
+   * ```
+   */
+  getReportColumn: (
+    options: GetReportColumnOptions,
+    callback?: RequestCallback<ReportColumn>
+  ) => Promise<ReportColumn>;
+
+  /**
+   * Updates a column of a Report.
+   *
+   * @param options - {@link UpdateReportColumnOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link UpdateReportColumnResponse}\> - Optional callback function
+   * @returns Promise\<{@link UpdateReportColumnResponse}\>
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `PUT /reports/{reportId}/columns/{columnVirtualId}`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.reports.updateReportColumn({
+   *   reportId: 4583173393803140,
+   *   columnVirtualId: 123,
+   *   body: { title: 'New Title', hidden: false }
+   * });
+   * ```
+   */
+  updateReportColumn: (
+    options: UpdateReportColumnOptions,
+    callback?: RequestCallback<UpdateReportColumnResponse>
+  ) => Promise<UpdateReportColumnResponse>;
+
+  /**
+   * Deletes a column from a Report.
+   *
+   * @param options - {@link DeleteReportColumnOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `DELETE /reports/{reportId}/columns/{columnVirtualId}`
+   *
+   * @example
+   * ```typescript
+   * const result = await client.reports.deleteReportColumn({ reportId: 4583173393803140, columnVirtualId: 123 });
+   * ```
+   */
+  deleteReportColumn: (
+    options: DeleteReportColumnOptions,
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
+
+  /**
+   * Gets the definition of a Report.
+   *
+   * @param options - {@link GetReportDefinitionOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link ReportDefinition}\> - Optional callback function
+   * @returns Promise\<{@link ReportDefinition}\>
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `GET /reports/{reportId}/definition`
+   *
+   * @example
+   * ```typescript
+   * const definition = await client.reports.getReportDefinition({ reportId: 4583173393803140 });
+   * ```
+   */
+  getReportDefinition: (
+    options: GetReportDefinitionOptions,
+    callback?: RequestCallback<ReportDefinition>
+  ) => Promise<ReportDefinition>;
 }
 
 // ============================================================================
@@ -1231,7 +1357,7 @@ export interface ReportFilterObjectValue {
    * For DATE objects, this would be a date string.
    * For CURRENT_USER, this represents the user identifier.
    */
-  value: string;
+  value?: string;
 }
 
 /**
@@ -1638,4 +1764,112 @@ export interface CreateReportResponse extends BaseResponseStatus {
    * The created report details.
    */
   result: CreateReportResult;
+}
+
+// ============================================================================
+// Get Report Scope
+// ============================================================================
+
+export interface ListReportScopeOptions extends RequestOptions<TokenPaginationQueryParameters, undefined> {
+  /**
+   * Report ID.
+   */
+  reportId: number;
+}
+
+export type ListReportScopeResponse = TokenPaginationResponse<ReportScopeAsset>;
+
+// ============================================================================
+// Get Report Columns
+// ============================================================================
+
+export interface ListReportColumnsOptions extends RequestOptions<TokenPaginationQueryParameters, undefined> {
+  /**
+   * Report ID.
+   */
+  reportId: number;
+}
+
+export type ListReportColumnsResponse = TokenPaginationResponse<ReportColumn>;
+
+// ============================================================================
+// Get Report Column
+// ============================================================================
+
+export interface GetReportColumnOptions extends RequestOptions<undefined, undefined> {
+  /**
+   * Report ID.
+   */
+  reportId: number;
+  /**
+   * The virtual ID of the report column.
+   */
+  columnVirtualId: number;
+}
+
+// ============================================================================
+// Update Report Column
+// ============================================================================
+
+export interface UpdateReportColumnRequest {
+  /**
+   * Column title.
+   */
+  title?: string;
+  /**
+   * Column index or position.
+   */
+  index?: number;
+  /**
+   * Indicates whether the column is hidden.
+   */
+  hidden?: boolean;
+  /**
+   * Display width of the column in pixels.
+   */
+  width?: number;
+}
+
+export interface UpdateReportColumnOptions extends RequestOptions<undefined, UpdateReportColumnRequest> {
+  /**
+   * Report ID.
+   */
+  reportId: number;
+  /**
+   * The virtual ID of the report column.
+   */
+  columnVirtualId: number;
+}
+
+export interface UpdateReportColumnResponse extends BaseResponseStatus {
+  /**
+   * The updated report column.
+   */
+  result: ReportColumn;
+}
+
+// ============================================================================
+// Delete Report Column
+// ============================================================================
+
+export interface DeleteReportColumnOptions extends RequestOptions<undefined, undefined> {
+  /**
+   * Report ID.
+   */
+  reportId: number;
+  /**
+   * The virtual ID of the report column.
+   */
+  columnVirtualId: number;
+}
+
+// ============================================================================
+// Get Report Definition
+// ============================================================================
+
+export interface GetReportDefinitionOptions extends RequestOptions<undefined, undefined> {
+  /**
+   * Report ID.
+   */
+  reportId: number;
 }
