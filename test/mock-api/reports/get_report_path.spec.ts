@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
 import { expect } from '@jest/globals';
 import { APIAccessLevel } from '@smartsheet/types';
+import { getLeafReport, getLeafReportPath } from '@smartsheet/reports/types';
 import {
     TEST_REPORT_ID,
     TEST_REPORT_CREATED_AT,
@@ -14,7 +15,6 @@ import {
     ERROR_400_STATUS_CODE,
     ERROR_400_MESSAGE,
 } from './common_test_constants';
-import { ReportPathNode } from '@smartsheet/reports/types';
 
 describe('Reports - getReportPath endpoint tests', () => {
     const client = createClient();
@@ -113,7 +113,7 @@ describe('Reports - getReportPath endpoint tests', () => {
         });
     });
 
-    it('getReportPath returns ReportPathNode instance with getReport and getReportPath methods', async () => {
+    it('getReportPath returns ReportPathNode compatible with getLeafReport and getLeafReportPath', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             reportId: TEST_REPORT_ID,
@@ -124,8 +124,7 @@ describe('Reports - getReportPath endpoint tests', () => {
         };
         const response = await client.reports.getReportPath(options);
 
-        expect(response).toBeInstanceOf(ReportPathNode);
-        expect(response.getLeafReport()).toEqual({
+        expect(getLeafReport(response)).toEqual({
             id: 3456789012345678,
             name: 'Project Report',
             permalink: 'https://app.smartsheet.com/reports/3456789012345678',
@@ -133,7 +132,7 @@ describe('Reports - getReportPath endpoint tests', () => {
             createdAt: TEST_REPORT_CREATED_AT,
             modifiedAt: TEST_REPORT_MODIFIED_AT,
         });
-        expect(response.getLeafReportPath()).toEqual('/Sample Workspace/Project Plans/Project Report');
+        expect(getLeafReportPath(response)).toEqual('/Sample Workspace/Project Plans/Project Report');
     });
 
     it('getReportPath error 500 response', async () => {

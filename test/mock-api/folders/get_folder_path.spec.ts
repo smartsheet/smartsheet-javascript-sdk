@@ -12,7 +12,7 @@ import {
     ERROR_400_MESSAGE,
 } from './common_test_constants';
 import { APIAccessLevel } from '@smartsheet/types';
-import { FolderPathNode } from '@smartsheet/folders/types';
+import { getLeafFolder, getLeafFolderPath } from '@smartsheet/folders/types';
 
 describe('Folders - getFolderPath endpoint tests', () => {
     const client = createClient();
@@ -105,7 +105,7 @@ describe('Folders - getFolderPath endpoint tests', () => {
         });
     });
 
-    it('getFolderPath returns FolderPathNode instance with getFolder and getFolderPath methods', async () => {
+    it('getFolderPath returns FolderPathNode compatible with getLeafFolder and getLeafFolderPath', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             folderId: TEST_FOLDER_ID,
@@ -116,13 +116,12 @@ describe('Folders - getFolderPath endpoint tests', () => {
         };
         const response = await client.folders.getFolderPath(options);
 
-        expect(response).toBeInstanceOf(FolderPathNode);
-        expect(response.getLeafFolder()).toEqual({
+        expect(getLeafFolder(response)).toEqual({
             id: 3456789012345678,
             name: 'Project Plans Sub-Subfolder',
             permalink: 'https://app.smartsheet.com/folders/3456789012345678',
         });
-        expect(response.getLeafFolderPath()).toEqual(
+        expect(getLeafFolderPath(response)).toEqual(
             '/Sample Workspace/Project Plans/Project Plans Subfolder/Project Plans Sub-Subfolder'
         );
     });

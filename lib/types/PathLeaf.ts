@@ -1,10 +1,7 @@
-import type { APIAccessLevel } from './ApiAccessLevel';
+import type { PathNode } from './PathNode';
 
-export interface PathLeaf {
-  id: number;
-  name: string;
-  permalink: string;
-  accessLevel: APIAccessLevel;
+export interface PathLeaf extends PathNode {
+  accessLevel: NonNullable<PathNode['accessLevel']>;
   createdAt: string;
   modifiedAt: string;
 }

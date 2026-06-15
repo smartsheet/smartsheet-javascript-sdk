@@ -22,7 +22,7 @@ import type {
   SetSightPublishStatusResponse,
   GetSightPathOptions,
 } from './types';
-import { SightPathNode } from './types';
+import type { SightPathNode } from './types';
 
 export function create(options: CreateOptions): SightsApi {
   const requestor = options.requestor;
@@ -94,10 +94,9 @@ export function create(options: CreateOptions): SightsApi {
     const urlOptions = { url: buildUrl(getOptions.sightId) + '/path' };
     return requestor
       .get({ ...optionsToSend, ...urlOptions, ...getOptions })
-      .then((data: Record<string, unknown>) => {
-        const node = new SightPathNode(data);
-        if (callback) callback(undefined, node);
-        return node;
+      .then((data: SightPathNode) => {
+        if (callback) callback(undefined, data);
+        return data;
       })
       .catch((err: unknown) => {
         if (callback) callback(err as ApiError, undefined);

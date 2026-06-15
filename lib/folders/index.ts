@@ -19,7 +19,7 @@ import type {
   CopyFolderResponse,
   GetFolderPathOptions,
 } from './types';
-import { FolderPathNode } from './types';
+import type { FolderPathNode } from './types';
 
 export function create(options: CreateOptions): FoldersApi {
   const requestor = options.requestor;
@@ -93,10 +93,9 @@ export function create(options: CreateOptions): FoldersApi {
     const urlOptions = { url: options.apiUrls.folders + '/' + getOptions.folderId + '/path' };
     return requestor
       .get({ ...optionsToSend, ...urlOptions, ...getOptions })
-      .then((data: Record<string, unknown>) => {
-        const node = new FolderPathNode(data);
-        if (callback) callback(undefined, node);
-        return node;
+      .then((data: FolderPathNode) => {
+        if (callback) callback(undefined, data);
+        return data;
       })
       .catch((err: unknown) => {
         if (callback) callback(err as ApiError, undefined);

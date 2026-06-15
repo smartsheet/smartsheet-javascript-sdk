@@ -28,7 +28,7 @@ import type {
   CreateReportResponse,
   GetReportPathOptions,
 } from './types';
-import { ReportPathNode } from './types';
+import type { ReportPathNode } from './types';
 import * as constants from '../utils/constants';
 
 export function create(options: CreateOptions): ReportsApi {
@@ -150,10 +150,9 @@ export function create(options: CreateOptions): ReportsApi {
     const urlOptions = { url: options.apiUrls.reports + '/' + getOptions.reportId + '/path' };
     return requestor
       .get({ ...optionsToSend, ...urlOptions, ...getOptions })
-      .then((data: Record<string, unknown>) => {
-        const node = new ReportPathNode(data);
-        if (callback) callback(undefined, node);
-        return node;
+      .then((data: ReportPathNode) => {
+        if (callback) callback(undefined, data);
+        return data;
       })
       .catch((err: unknown) => {
         if (callback) callback(err as ApiError, undefined);

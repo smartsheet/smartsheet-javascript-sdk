@@ -3,58 +3,45 @@
 // ============================================================================
 
 import type { PathLeaf } from '../types/PathLeaf';
-import type { APIAccessLevel } from '../types/ApiAccessLevel';
+import type { PathNode } from '../types/PathNode';
 
-export class SheetPathNode {
-  id: number;
-  name: string;
-  permalink: string;
-  accessLevel?: APIAccessLevel;
+export interface SheetPathNode extends PathNode {
   folders?: SheetPathNode[];
   sheets?: PathLeaf[];
+}
 
-  constructor(data: Record<string, unknown>) {
-    this.id = data.id as number;
-    this.name = data.name as string;
-    this.permalink = data.permalink as string;
-    this.accessLevel = data.accessLevel as APIAccessLevel | undefined;
-    if (Array.isArray(data.folders)) {
-      this.folders = (data.folders as Record<string, unknown>[]).map((f) => new SheetPathNode(f));
-    }
-    if (Array.isArray(data.sheets)) {
-      this.sheets = data.sheets as PathLeaf[];
-    }
+/**
+ * Returns the target {@link PathLeaf} sheet, or undefined if not reachable.
+ * Use this for quick access to the leaf sheet object from a path response.
+ */
+export function getLeafSheet(node: SheetPathNode): PathLeaf | undefined {
+  if (node.sheets && node.sheets.length > 0) {
+    return node.sheets[0];
   }
 
-  /** Returns the target PathLeaf sheet, or undefined if not reachable. */
-  getLeafSheet(): PathLeaf | undefined {
-    if (this.sheets && this.sheets.length > 0) {
-      return this.sheets[0];
-    }
-
-    if (this.folders && this.folders.length > 0) {
-      return this.folders[0].getLeafSheet();
-    }
-
-    return undefined;
+  if (node.folders && node.folders.length > 0) {
+    return getLeafSheet(node.folders[0]);
   }
 
-  /**
-   * Returns a Unix-like slash-separated path string from this node to the target sheet.
-   *
-   * @example '/Workspace/Folder/Sheet'
-   **/
-  getLeafSheetPath(): string | undefined {
-    if (this.sheets && this.sheets.length > 0) {
-      return `/${this.sheets[0].name}`;
-    }
+  return undefined;
+}
 
-    if (this.folders && this.folders.length > 0) {
-      return `/${this.name}${this.folders[0].getLeafSheetPath()}`;
-    }
-
-    return undefined;
+/**
+ * Returns a Unix-like slash-separated path string from the given node to the target sheet.
+ * Use this for quick access to the full path string of the leaf sheet from a path response.
+ *
+ * @example '/Workspace/Folder/Sheet'
+ */
+export function getLeafSheetPath(node: SheetPathNode): string | undefined {
+  if (node.sheets && node.sheets.length > 0) {
+    return `/${node.sheets[0].name}`;
   }
+
+  if (node.folders && node.folders.length > 0) {
+    return `/${node.name}${getLeafSheetPath(node.folders[0])}`;
+  }
+
+  return undefined;
 }
 
 export interface SheetUserSettings {

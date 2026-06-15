@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
 import { expect } from '@jest/globals';
 import { APIAccessLevel } from '@smartsheet/types';
-import { SightPathNode } from '@smartsheet/sights/types';
+import { getLeafSight, getLeafSightPath } from '@smartsheet/sights/types';
 import {
     TEST_SIGHT_ID,
     TEST_SIGHT_CREATED_AT,
@@ -113,7 +113,7 @@ describe('Sights - getSightPath endpoint tests', () => {
         });
     });
 
-    it('getSightPath returns SightPathNode instance with getSight and getSightPath methods', async () => {
+    it('getSightPath returns SightPathNode compatible with getLeafSight and getLeafSightPath', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             sightId: TEST_SIGHT_ID,
@@ -124,8 +124,7 @@ describe('Sights - getSightPath endpoint tests', () => {
         };
         const response = await client.sights.getSightPath(options);
 
-        expect(response).toBeInstanceOf(SightPathNode);
-        expect(response.getLeafSight()).toEqual({
+        expect(getLeafSight(response)).toEqual({
             id: 3456789012345678,
             name: 'Project Dashboard',
             permalink: 'https://app.smartsheet.com/dashboards/3456789012345678',
@@ -133,7 +132,7 @@ describe('Sights - getSightPath endpoint tests', () => {
             createdAt: TEST_SIGHT_CREATED_AT,
             modifiedAt: TEST_SIGHT_MODIFIED_AT,
         });
-        expect(response.getLeafSightPath()).toEqual('/Sample Workspace/Project Plans/Project Dashboard');
+        expect(getLeafSightPath(response)).toEqual('/Sample Workspace/Project Plans/Project Dashboard');
     });
 
     it('getSightPath error 500 response', async () => {

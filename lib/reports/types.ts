@@ -1,4 +1,5 @@
 import type { PathLeaf } from '../types/PathLeaf';
+import type { PathNode } from '../types/PathNode';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
@@ -11,7 +12,6 @@ import type { CrossSheetReference } from '../cross-sheet-references/types';
 import type { SheetSummary } from '../sheet-summary/types';
 import type { SheetUserSettings } from '../sheets/types';
 import type { WorkspaceListing } from '../workspaces/types';
-import type { APIAccessLevel } from '../types/ApiAccessLevel';
 
 // ============================================================================
 // Reports API Interface
@@ -1665,56 +1665,43 @@ export interface CreateReportResponse extends BaseResponseStatus {
 // Get Report Path
 // ============================================================================
 
-export class ReportPathNode {
-  id: number;
-  name: string;
-  permalink: string;
-  accessLevel?: APIAccessLevel;
+export interface ReportPathNode extends PathNode {
   folders?: ReportPathNode[];
   reports?: PathLeaf[];
+}
 
-  constructor(data: Record<string, unknown>) {
-    this.id = data.id as number;
-    this.name = data.name as string;
-    this.permalink = data.permalink as string;
-    this.accessLevel = data.accessLevel as APIAccessLevel | undefined;
-    if (Array.isArray(data.folders)) {
-      this.folders = (data.folders as Record<string, unknown>[]).map((f) => new ReportPathNode(f));
-    }
-    if (Array.isArray(data.reports)) {
-      this.reports = data.reports as PathLeaf[];
-    }
+/**
+ * Returns the target {@link PathLeaf} report, or undefined if not reachable.
+ * Use this for quick access to the leaf report object from a path response.
+ */
+export function getLeafReport(node: ReportPathNode): PathLeaf | undefined {
+  if (node.reports && node.reports.length > 0) {
+    return node.reports[0];
   }
 
-  /** Returns the target PathLeaf report, or undefined if not reachable. */
-  getLeafReport(): PathLeaf | undefined {
-    if (this.reports && this.reports.length > 0) {
-      return this.reports[0];
-    }
-
-    if (this.folders && this.folders.length > 0) {
-      return this.folders[0].getLeafReport();
-    }
-
-    return undefined;
+  if (node.folders && node.folders.length > 0) {
+    return getLeafReport(node.folders[0]);
   }
 
-  /**
-   * Returns a Unix-like slash-separated path string from this node to the target report.
-   *
-   * @example '/Workspace/Folder/Report'
-   **/
-  getLeafReportPath(): string | undefined {
-    if (this.reports && this.reports.length > 0) {
-      return `/${this.reports[0].name}`;
-    }
+  return undefined;
+}
 
-    if (this.folders && this.folders.length > 0) {
-      return `/${this.name}${this.folders[0].getLeafReportPath()}`;
-    }
-
-    return undefined;
+/**
+ * Returns a Unix-like slash-separated path string from the given node to the target report.
+ * Use this for quick access to the full path string of the leaf report from a path response.
+ *
+ * @example '/Workspace/Folder/Report'
+ */
+export function getLeafReportPath(node: ReportPathNode): string | undefined {
+  if (node.reports && node.reports.length > 0) {
+    return `/${node.reports[0].name}`;
   }
+
+  if (node.folders && node.folders.length > 0) {
+    return `/${node.name}${getLeafReportPath(node.folders[0])}`;
+  }
+
+  return undefined;
 }
 
 export interface GetReportPathOptions extends RequestOptions<undefined, undefined> {

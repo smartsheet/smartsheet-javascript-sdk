@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
 import { expect } from '@jest/globals';
 import { APIAccessLevel } from '@smartsheet/types';
-import { SheetPathNode } from '@smartsheet/sheets/types';
+import { getLeafSheet, getLeafSheetPath } from '@smartsheet/sheets/types';
 import {
     TEST_SHEET_ID,
     TEST_SHEET_CREATED_AT,
@@ -113,7 +113,7 @@ describe('Sheets - getSheetPath endpoint tests', () => {
         });
     });
 
-    it('getSheetPath returns SheetPathNode instance with getSheet and getSheetPath methods', async () => {
+    it('getSheetPath returns SheetPathNode compatible with getLeafSheet and getLeafSheetPath', async () => {
         const requestId = crypto.randomUUID();
         const options = {
             sheetId: TEST_SHEET_ID,
@@ -124,8 +124,7 @@ describe('Sheets - getSheetPath endpoint tests', () => {
         };
         const response = await client.sheets.getSheetPath(options);
 
-        expect(response).toBeInstanceOf(SheetPathNode);
-        expect(response.getLeafSheet()).toEqual({
+        expect(getLeafSheet(response)).toEqual({
             id: 3456789012345678,
             name: 'Project Plan',
             permalink: 'https://app.smartsheet.com/sheets/3456789012345678',
@@ -133,7 +132,7 @@ describe('Sheets - getSheetPath endpoint tests', () => {
             createdAt: TEST_SHEET_CREATED_AT,
             modifiedAt: TEST_SHEET_MODIFIED_AT,
         });
-        expect(response.getLeafSheetPath()).toEqual('/Sample Workspace/Project Plans/Project Plan');
+        expect(getLeafSheetPath(response)).toEqual('/Sample Workspace/Project Plans/Project Plan');
     });
 
     it('getSheetPath error 500 response', async () => {

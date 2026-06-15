@@ -2,7 +2,7 @@ import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { FailedItem } from '../types/FailedItem';
-import type { APIAccessLevel } from '../types/ApiAccessLevel';
+import type { PathNode } from '../types/PathNode';
 
 // ============================================================================
 // Folders API Interface
@@ -741,44 +741,34 @@ export interface MoveFolderResponse extends BaseResponseStatus {
 // Get Folder Path
 // ============================================================================
 
-export class FolderPathNode {
-  id: number;
-  name: string;
-  permalink: string;
-  accessLevel?: APIAccessLevel;
+export interface FolderPathNode extends PathNode {
   folders?: FolderPathNode[];
+}
 
-  constructor(data: Record<string, unknown>) {
-    this.id = data.id as number;
-    this.name = data.name as string;
-    this.permalink = data.permalink as string;
-    this.accessLevel = data.accessLevel as APIAccessLevel | undefined;
-    if (Array.isArray(data.folders)) {
-      this.folders = (data.folders as Record<string, unknown>[]).map((f) => new FolderPathNode(f));
-    }
+/**
+ * Returns the deepest {@link FolderPathNode} (the target folder).
+ * Use this for quick access to the leaf folder object from a path response.
+ */
+export function getLeafFolder(node: FolderPathNode): FolderPathNode {
+  if (node.folders && node.folders.length > 0) {
+    return getLeafFolder(node.folders[0]);
   }
 
-  /** Returns the deepest FolderPathNode (the target folder). */
-  getLeafFolder(): FolderPathNode {
-    if (this.folders && this.folders.length > 0) {
-      return this.folders[0].getLeafFolder();
-    }
+  return node;
+}
 
-    return this;
+/**
+ * Returns a Unix-like slash-separated path string from the given node to the target folder.
+ * Use this for quick access to the full path string of the leaf folder from a path response.
+ *
+ * @example '/Workspace/Folder/Subfolder'
+ */
+export function getLeafFolderPath(node: FolderPathNode): string {
+  if (node.folders && node.folders.length > 0) {
+    return `/${node.name}${getLeafFolderPath(node.folders[0])}`;
   }
 
-  /**
-   * Returns a Unix-like slash-separated path string from this node to the target folder.
-   *
-   * @example '/Workspace/Folder/Subfolder'
-   **/
-  getLeafFolderPath(): string {
-    if (this.folders && this.folders.length > 0) {
-      return `/${this.name}${this.folders[0].getLeafFolderPath()}`;
-    }
-
-    return `/${this.name}`;
-  }
+  return `/${node.name}`;
 }
 
 export interface GetFolderPathOptions extends RequestOptions<undefined, undefined> {

@@ -8,6 +8,7 @@ export * from './CreateOptions';
 export * from './FailedItem';
 export * from './ObjectValue';
 export * from './PathLeaf';
+export * from './PathNode';
 export * from './RequestCallback';
 export * from './RequestOptions';
 export * from './SmartsheetClient';

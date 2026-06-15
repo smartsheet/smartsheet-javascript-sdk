@@ -3,6 +3,7 @@ import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { APIAccessLevel } from '../types/ApiAccessLevel';
 import type { PathLeaf } from '../types/PathLeaf';
+import type { PathNode } from '../types/PathNode';
 import type { TokenPaginationQueryParameters, TokenPaginationResponse } from '../types';
 
 // ============================================================================
@@ -610,56 +611,43 @@ export interface SetSightPublishStatusResponse extends BaseResponseStatus {
 // Get Sight Path
 // ============================================================================
 
-export class SightPathNode {
-  id: number;
-  name: string;
-  permalink: string;
-  accessLevel?: APIAccessLevel;
+export interface SightPathNode extends PathNode {
   folders?: SightPathNode[];
   sights?: PathLeaf[];
+}
 
-  constructor(data: Record<string, unknown>) {
-    this.id = data.id as number;
-    this.name = data.name as string;
-    this.permalink = data.permalink as string;
-    this.accessLevel = data.accessLevel as APIAccessLevel | undefined;
-    if (Array.isArray(data.folders)) {
-      this.folders = (data.folders as Record<string, unknown>[]).map((f) => new SightPathNode(f));
-    }
-    if (Array.isArray(data.sights)) {
-      this.sights = data.sights as PathLeaf[];
-    }
+/**
+ * Returns the target {@link PathLeaf} sight, or undefined if not reachable.
+ * Use this for quick access to the leaf sight object from a path response.
+ */
+export function getLeafSight(node: SightPathNode): PathLeaf | undefined {
+  if (node.sights && node.sights.length > 0) {
+    return node.sights[0];
   }
 
-  /** Returns the target PathLeaf sight, or undefined if not reachable. */
-  getLeafSight(): PathLeaf | undefined {
-    if (this.sights && this.sights.length > 0) {
-      return this.sights[0];
-    }
-
-    if (this.folders && this.folders.length > 0) {
-      return this.folders[0].getLeafSight();
-    }
-
-    return undefined;
+  if (node.folders && node.folders.length > 0) {
+    return getLeafSight(node.folders[0]);
   }
 
-  /**
-   * Returns a Unix-like slash-separated path string from this node to the target sight.
-   *
-   * @example '/Workspace/Folder/Dashboard'
-   **/
-  getLeafSightPath(): string | undefined {
-    if (this.sights && this.sights.length > 0) {
-      return `/${this.sights[0].name}`;
-    }
+  return undefined;
+}
 
-    if (this.folders && this.folders.length > 0) {
-      return `/${this.name}${this.folders[0].getLeafSightPath()}`;
-    }
-
-    return undefined;
+/**
+ * Returns a Unix-like slash-separated path string from the given node to the target sight.
+ * Use this for quick access to the full path string of the leaf sight from a path response.
+ *
+ * @example '/Workspace/Folder/Dashboard'
+ */
+export function getLeafSightPath(node: SightPathNode): string | undefined {
+  if (node.sights && node.sights.length > 0) {
+    return `/${node.sights[0].name}`;
   }
+
+  if (node.folders && node.folders.length > 0) {
+    return `/${node.name}${getLeafSightPath(node.folders[0])}`;
+  }
+
+  return undefined;
 }
 
 export interface GetSightPathOptions extends RequestOptions<undefined, undefined> {
