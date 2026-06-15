@@ -1,4 +1,3 @@
-import type { ApiError } from '../types/ApiError';
 import type { CreateOptions } from '../types/CreateOptions';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
@@ -92,16 +91,7 @@ export function create(options: CreateOptions): SightsApi {
     callback?: RequestCallback<SightPathNode>
   ): Promise<SightPathNode> => {
     const urlOptions = { url: buildUrl(getOptions.sightId) + '/path' };
-    return requestor
-      .get({ ...optionsToSend, ...urlOptions, ...getOptions })
-      .then((data: SightPathNode) => {
-        if (callback) callback(undefined, data);
-        return data;
-      })
-      .catch((err: unknown) => {
-        if (callback) callback(err as ApiError, undefined);
-        return Promise.reject(err);
-      });
+    return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
 
   return {

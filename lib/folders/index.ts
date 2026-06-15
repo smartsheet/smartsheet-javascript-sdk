@@ -1,4 +1,3 @@
-import type { ApiError } from '../types/ApiError';
 import type { CreateOptions } from '../types/CreateOptions';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
@@ -91,16 +90,7 @@ export function create(options: CreateOptions): FoldersApi {
     callback?: RequestCallback<FolderPathNode>
   ): Promise<FolderPathNode> => {
     const urlOptions = { url: options.apiUrls.folders + '/' + getOptions.folderId + '/path' };
-    return requestor
-      .get({ ...optionsToSend, ...urlOptions, ...getOptions })
-      .then((data: FolderPathNode) => {
-        if (callback) callback(undefined, data);
-        return data;
-      })
-      .catch((err: unknown) => {
-        if (callback) callback(err as ApiError, undefined);
-        return Promise.reject(err);
-      });
+    return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
 
   return {

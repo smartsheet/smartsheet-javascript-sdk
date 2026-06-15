@@ -1,4 +1,3 @@
-import type { ApiError } from '../types/ApiError';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { CreateOptions } from '../types/CreateOptions';
 import type { RequestCallback } from '../types/RequestCallback';
@@ -148,16 +147,7 @@ export function create(options: CreateOptions): ReportsApi {
     callback?: RequestCallback<ReportPathNode>
   ): Promise<ReportPathNode> => {
     const urlOptions = { url: options.apiUrls.reports + '/' + getOptions.reportId + '/path' };
-    return requestor
-      .get({ ...optionsToSend, ...urlOptions, ...getOptions })
-      .then((data: ReportPathNode) => {
-        if (callback) callback(undefined, data);
-        return data;
-      })
-      .catch((err: unknown) => {
-        if (callback) callback(err as ApiError, undefined);
-        return Promise.reject(err);
-      });
+    return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
 
   return {
