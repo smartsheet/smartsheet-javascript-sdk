@@ -94,25 +94,6 @@ describe('Reports - getReportColumn endpoint tests', () => {
     expect(matchedRequest.body).toEqual('');
   });
 
-  it('getReportColumn error 500 response', async () => {
-    const requestId = crypto.randomUUID();
-    const options = {
-      reportId: TEST_REPORT_ID,
-      columnVirtualId: TEST_COLUMN_VIRTUAL_ID,
-      customProperties: {
-        'x-request-id': requestId,
-        'x-test-name': '/errors/500-response',
-      },
-    };
-    try {
-      await client.reports.getReportColumn(options);
-      expect(true).toBe(false); // Expected an error to be thrown
-    } catch (error: any) {
-      expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
-      expect(error.message).toBe(ERROR_500_MESSAGE);
-    }
-  });
-
   it('getReportColumn error 400 response', async () => {
     const requestId = crypto.randomUUID();
     const options = {
@@ -129,6 +110,25 @@ describe('Reports - getReportColumn endpoint tests', () => {
     } catch (error: any) {
       expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
       expect(error.message).toBe(ERROR_400_MESSAGE);
+    }
+  });
+
+  it('getReportColumn error 500 response', async () => {
+    const requestId = crypto.randomUUID();
+    const options = {
+      reportId: TEST_REPORT_ID,
+      columnVirtualId: TEST_COLUMN_VIRTUAL_ID,
+      customProperties: {
+        'x-request-id': requestId,
+        'x-test-name': '/errors/500-response',
+      },
+    };
+    try {
+      await client.reports.getReportColumn(options);
+      expect(true).toBe(false); // Expected an error to be thrown
+    } catch (error: any) {
+      expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
+      expect(error.message).toBe(ERROR_500_MESSAGE);
     }
   });
 });
