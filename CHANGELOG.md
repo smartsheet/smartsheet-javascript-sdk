@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
 
+### Added
+- Added support for GET /2.0/reports/{reportId}/scope endpoint (`listReportScope`)
+- Added support for GET /2.0/reports/{reportId}/columns endpoint (`listReportColumns`)
+- Added support for GET /2.0/reports/{reportId}/columns/{columnVirtualId} endpoint (`getReportColumn`)
+- Added support for PUT /2.0/reports/{reportId}/columns/{columnVirtualId} endpoint (`updateReportColumn`)
+- Added support for DELETE /2.0/reports/{reportId}/columns/{columnVirtualId} endpoint (`deleteReportColumn`)
+- Added support for GET /2.0/reports/{reportId}/definition endpoint (`getReportDefinition`)
+
 ## [5.0.1] - 2026-06-10
 
 ### Fixed
