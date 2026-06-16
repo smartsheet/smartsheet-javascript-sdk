@@ -12,7 +12,7 @@ import {
     ERROR_400_MESSAGE,
 } from './common_test_constants';
 import { APIAccessLevel } from '@smartsheet/types';
-import { getLeafFolder, getLeafFolderPath } from '@smartsheet/folders/types';
+import { getLeafFolder, getLeafFolderPath } from '@smartsheet/folders/helpers';
 
 describe('Folders - getFolderPath endpoint tests', () => {
     const client = createClient();

@@ -5,43 +5,17 @@
 import type { PathLeaf } from '../types/PathLeaf';
 import type { PathNode } from '../types/PathNode';
 
+/**
+ * Represents a node in the path tree from the workspace root to the target sheet.
+ * Returned by `getSheetPath`. Use {@link getLeafSheet} to extract the leaf sheet object,
+ * or {@link getLeafSheetPath} to get the full slash-separated path string.
+ *
+ * @see getLeafSheet
+ * @see getLeafSheetPath
+ */
 export interface SheetPathNode extends PathNode {
   folders?: SheetPathNode[];
   sheets?: PathLeaf[];
-}
-
-/**
- * Returns the target {@link PathLeaf} sheet, or undefined if not reachable.
- * Use this for quick access to the leaf sheet object from a path response.
- */
-export function getLeafSheet(node: SheetPathNode): PathLeaf | undefined {
-  if (node.sheets && node.sheets.length > 0) {
-    return node.sheets[0];
-  }
-
-  if (node.folders && node.folders.length > 0) {
-    return getLeafSheet(node.folders[0]);
-  }
-
-  return undefined;
-}
-
-/**
- * Returns a Unix-like slash-separated path string from the given node to the target sheet.
- * Use this for quick access to the full path string of the leaf sheet from a path response.
- *
- * @example '/Workspace/Folder/Sheet'
- */
-export function getLeafSheetPath(node: SheetPathNode): string | undefined {
-  if (node.sheets && node.sheets.length > 0) {
-    return `/${node.sheets[0].name}`;
-  }
-
-  if (node.folders && node.folders.length > 0) {
-    return `/${node.name}${getLeafSheetPath(node.folders[0])}`;
-  }
-
-  return undefined;
 }
 
 export interface SheetUserSettings {

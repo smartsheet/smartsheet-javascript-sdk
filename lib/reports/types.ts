@@ -1665,45 +1665,25 @@ export interface CreateReportResponse extends BaseResponseStatus {
 // Get Report Path
 // ============================================================================
 
+/**
+ * Represents a node in the path tree from the workspace root to the target report.
+ * Returned by `getReportPath`. Use {@link getLeafReport} to extract the leaf report object,
+ * or {@link getLeafReportPath} to get the full slash-separated path string.
+ *
+ * @see getLeafReport
+ * @see getLeafReportPath
+ */
 export interface ReportPathNode extends PathNode {
   folders?: ReportPathNode[];
   reports?: PathLeaf[];
 }
 
 /**
- * Returns the target {@link PathLeaf} report, or undefined if not reachable.
- * Use this for quick access to the leaf report object from a path response.
- */
-export function getLeafReport(node: ReportPathNode): PathLeaf | undefined {
-  if (node.reports && node.reports.length > 0) {
-    return node.reports[0];
-  }
-
-  if (node.folders && node.folders.length > 0) {
-    return getLeafReport(node.folders[0]);
-  }
-
-  return undefined;
-}
-
-/**
- * Returns a Unix-like slash-separated path string from the given node to the target report.
- * Use this for quick access to the full path string of the leaf report from a path response.
+ * Options for getting the path from the workspace root to the specified report.
  *
- * @example '/Workspace/Folder/Report'
+ * @remarks
+ * It mirrors to the following Smartsheet REST API method: `GET /reports/{reportId}/path`
  */
-export function getLeafReportPath(node: ReportPathNode): string | undefined {
-  if (node.reports && node.reports.length > 0) {
-    return `/${node.reports[0].name}`;
-  }
-
-  if (node.folders && node.folders.length > 0) {
-    return `/${node.name}${getLeafReportPath(node.folders[0])}`;
-  }
-
-  return undefined;
-}
-
 export interface GetReportPathOptions extends RequestOptions<undefined, undefined> {
   /**
    * Report Id.

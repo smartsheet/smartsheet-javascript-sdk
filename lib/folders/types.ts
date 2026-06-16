@@ -741,36 +741,24 @@ export interface MoveFolderResponse extends BaseResponseStatus {
 // Get Folder Path
 // ============================================================================
 
+/**
+ * Represents a node in the path tree from the workspace root to the target folder.
+ * Returned by `getFolderPath`. Use {@link getLeafFolder} to extract the deepest folder object,
+ * or {@link getLeafFolderPath} to get the full slash-separated path string.
+ *
+ * @see getLeafFolder
+ * @see getLeafFolderPath
+ */
 export interface FolderPathNode extends PathNode {
   folders?: FolderPathNode[];
 }
 
 /**
- * Returns the deepest {@link FolderPathNode} (the target folder).
- * Use this for quick access to the leaf folder object from a path response.
- */
-export function getLeafFolder(node: FolderPathNode): FolderPathNode {
-  if (node.folders && node.folders.length > 0) {
-    return getLeafFolder(node.folders[0]);
-  }
-
-  return node;
-}
-
-/**
- * Returns a Unix-like slash-separated path string from the given node to the target folder.
- * Use this for quick access to the full path string of the leaf folder from a path response.
+ * Options for getting the path from the workspace root to the specified folder.
  *
- * @example '/Workspace/Folder/Subfolder'
+ * @remarks
+ * It mirrors to the following Smartsheet REST API method: `GET /folders/{folderId}/path`
  */
-export function getLeafFolderPath(node: FolderPathNode): string {
-  if (node.folders && node.folders.length > 0) {
-    return `/${node.name}${getLeafFolderPath(node.folders[0])}`;
-  }
-
-  return `/${node.name}`;
-}
-
 export interface GetFolderPathOptions extends RequestOptions<undefined, undefined> {
   /**
    * Folder Id.

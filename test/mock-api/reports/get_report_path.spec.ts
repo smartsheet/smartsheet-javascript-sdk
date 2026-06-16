@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
 import { expect } from '@jest/globals';
 import { APIAccessLevel } from '@smartsheet/types';
-import { getLeafReport, getLeafReportPath } from '@smartsheet/reports/types';
+import { getLeafReport, getLeafReportPath } from '@smartsheet/reports/helpers';
 import {
     TEST_REPORT_ID,
     TEST_REPORT_CREATED_AT,

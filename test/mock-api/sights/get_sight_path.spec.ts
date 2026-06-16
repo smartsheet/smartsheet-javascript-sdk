@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
 import { expect } from '@jest/globals';
 import { APIAccessLevel } from '@smartsheet/types';
-import { getLeafSight, getLeafSightPath } from '@smartsheet/sights/types';
+import { getLeafSight, getLeafSightPath } from '@smartsheet/sights/helpers';
 import {
     TEST_SIGHT_ID,
     TEST_SIGHT_CREATED_AT,

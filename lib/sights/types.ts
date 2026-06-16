@@ -611,45 +611,25 @@ export interface SetSightPublishStatusResponse extends BaseResponseStatus {
 // Get Sight Path
 // ============================================================================
 
+/**
+ * Represents a node in the path tree from the workspace root to the target sight (dashboard).
+ * Returned by `getSightPath`. Use {@link getLeafSight} to extract the leaf sight object,
+ * or {@link getLeafSightPath} to get the full slash-separated path string.
+ *
+ * @see getLeafSight
+ * @see getLeafSightPath
+ */
 export interface SightPathNode extends PathNode {
   folders?: SightPathNode[];
   sights?: PathLeaf[];
 }
 
 /**
- * Returns the target {@link PathLeaf} sight, or undefined if not reachable.
- * Use this for quick access to the leaf sight object from a path response.
- */
-export function getLeafSight(node: SightPathNode): PathLeaf | undefined {
-  if (node.sights && node.sights.length > 0) {
-    return node.sights[0];
-  }
-
-  if (node.folders && node.folders.length > 0) {
-    return getLeafSight(node.folders[0]);
-  }
-
-  return undefined;
-}
-
-/**
- * Returns a Unix-like slash-separated path string from the given node to the target sight.
- * Use this for quick access to the full path string of the leaf sight from a path response.
+ * Options for getting the path from the workspace root to the specified sight (dashboard).
  *
- * @example '/Workspace/Folder/Dashboard'
+ * @remarks
+ * It mirrors to the following Smartsheet REST API method: `GET /sights/{sightId}/path`
  */
-export function getLeafSightPath(node: SightPathNode): string | undefined {
-  if (node.sights && node.sights.length > 0) {
-    return `/${node.sights[0].name}`;
-  }
-
-  if (node.folders && node.folders.length > 0) {
-    return `/${node.name}${getLeafSightPath(node.folders[0])}`;
-  }
-
-  return undefined;
-}
-
 export interface GetSightPathOptions extends RequestOptions<undefined, undefined> {
   /**
    * Sight Id.
