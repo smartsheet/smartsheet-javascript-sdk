@@ -1,3 +1,5 @@
+import type { PathLeaf } from '../types/PathLeaf';
+import type { PathNode } from '../types/PathNode';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
@@ -430,6 +432,25 @@ export interface ReportsApi {
     options: CreateReportOptions,
     callback?: RequestCallback<CreateReportResponse>
   ) => Promise<CreateReportResponse>;
+
+  /**
+   * Gets the path from the workspace root to the specified report.
+   *
+   * @param options - {@link GetReportPathOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link ReportPathNode}\> - Optional callback function
+   * @returns Promise\<{@link ReportPathNode}\>
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `GET /reports/{reportId}/path`
+   *
+   * @example
+   * ```typescript
+   * const path = await client.reports.getReportPath({
+   *   reportId: 4583173393803140
+   * });
+   * ```
+   */
+  getReportPath: (options: GetReportPathOptions, callback?: RequestCallback<ReportPathNode>) => Promise<ReportPathNode>;
 }
 
 // ============================================================================
@@ -1638,4 +1659,34 @@ export interface CreateReportResponse extends BaseResponseStatus {
    * The created report details.
    */
   result: CreateReportResult;
+}
+
+// ============================================================================
+// Get Report Path
+// ============================================================================
+
+/**
+ * Represents a node in the path tree from the workspace root to the target report.
+ * Returned by `getReportPath`. Use {@link getLeafReport} to extract the leaf report object,
+ * or {@link getLeafReportPath} to get the full slash-separated path string.
+ *
+ * @see getLeafReport
+ * @see getLeafReportPath
+ */
+export interface ReportPathNode extends PathNode {
+  folders?: ReportPathNode[];
+  reports?: PathLeaf[];
+}
+
+/**
+ * Options for getting the path from the workspace root to the specified report.
+ *
+ * @remarks
+ * It mirrors to the following Smartsheet REST API method: `GET /reports/{reportId}/path`
+ */
+export interface GetReportPathOptions extends RequestOptions<undefined, undefined> {
+  /**
+   * Report Id.
+   */
+  reportId: number;
 }

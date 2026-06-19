@@ -19,7 +19,9 @@ import type {
   SightPublishStatus,
   SetSightPublishStatusOptions,
   SetSightPublishStatusResponse,
+  GetSightPathOptions,
 } from './types';
+import type { SightPathNode } from './types';
 
 export function create(options: CreateOptions): SightsApi {
   const requestor = options.requestor;
@@ -84,6 +86,14 @@ export function create(options: CreateOptions): SightsApi {
     return options.apiUrls.sights;
   };
 
+  const getSightPath = (
+    getOptions: GetSightPathOptions,
+    callback?: RequestCallback<SightPathNode>
+  ): Promise<SightPathNode> => {
+    const urlOptions = { url: buildUrl(getOptions.sightId) + '/path' };
+    return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
+  };
+
   return {
     listSights,
     getSight,
@@ -93,6 +103,7 @@ export function create(options: CreateOptions): SightsApi {
     moveSight,
     getSightPublishStatus,
     setSightPublishStatus,
+    getSightPath,
   };
 }
 

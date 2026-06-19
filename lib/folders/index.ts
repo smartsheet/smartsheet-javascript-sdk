@@ -16,7 +16,9 @@ import type {
   MoveFolderOptions,
   MoveFolderResponse,
   CopyFolderResponse,
+  GetFolderPathOptions,
 } from './types';
+import type { FolderPathNode } from './types';
 
 export function create(options: CreateOptions): FoldersApi {
   const requestor = options.requestor;
@@ -83,6 +85,14 @@ export function create(options: CreateOptions): FoldersApi {
     return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
 
+  const getFolderPath = (
+    getOptions: GetFolderPathOptions,
+    callback?: RequestCallback<FolderPathNode>
+  ): Promise<FolderPathNode> => {
+    const urlOptions = { url: options.apiUrls.folders + '/' + getOptions.folderId + '/path' };
+    return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
+  };
+
   return {
     getFolderMetadata,
     getFolderChildren,
@@ -91,5 +101,6 @@ export function create(options: CreateOptions): FoldersApi {
     deleteFolder,
     moveFolder,
     copyFolder,
+    getFolderPath,
   };
 }
