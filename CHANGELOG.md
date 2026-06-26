@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
 
+## [5.1.0] - 2026-06-26
+
 ### Added
 
 - Added support for GET /2.0/sheets/{sheetId}/path endpoint (`getSheetPath`)
