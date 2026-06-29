@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
 
+## [5.1.0] - 2026-06-26
+
+### Added
+
+- Added support for GET /2.0/sheets/{sheetId}/path endpoint (`getSheetPath`)
+- Added support for GET /2.0/reports/{reportId}/path endpoint (`getReportPath`)
+- Added support for GET /2.0/sights/{sightId}/path endpoint (`getSightPath`)
+- Added support for GET /2.0/folders/{folderId}/path endpoint (`getFolderPath`)
+- Added helper functions `getLeaf<Asset>()` and `getLeaf<Asset>Path()` for convenient traversal of the path node objects
+
 ## [5.0.1] - 2026-06-10
 
 ### Fixed

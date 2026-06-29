@@ -2,6 +2,8 @@ import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { APIAccessLevel } from '../types/ApiAccessLevel';
+import type { PathLeaf } from '../types/PathLeaf';
+import type { PathNode } from '../types/PathNode';
 import type { TokenPaginationQueryParameters, TokenPaginationResponse } from '../types';
 
 // ============================================================================
@@ -193,6 +195,25 @@ export interface SightsApi {
     options: SetSightPublishStatusOptions,
     callback?: RequestCallback<SetSightPublishStatusResponse>
   ) => Promise<SetSightPublishStatusResponse>;
+
+  /**
+   * Gets the path from the workspace root to the specified sight (dashboard).
+   *
+   * @param options - {@link GetSightPathOptions} - Configuration options for the request
+   * @param callback - {@link RequestCallback}\<{@link SightPathNode}\> - Optional callback function
+   * @returns Promise\<{@link SightPathNode}\>
+   *
+   * @remarks
+   * It mirrors to the following Smartsheet REST API method: `GET /sights/{sightId}/path`
+   *
+   * @example
+   * ```typescript
+   * const path = await client.sights.getSightPath({
+   *   sightId: 123456789
+   * });
+   * ```
+   */
+  getSightPath: (options: GetSightPathOptions, callback?: RequestCallback<SightPathNode>) => Promise<SightPathNode>;
 }
 
 // ============================================================================
@@ -584,4 +605,34 @@ export interface SetSightPublishStatusResponse extends BaseResponseStatus {
    * @see SightPublishStatus
    */
   result: SightPublishStatus;
+}
+
+// ============================================================================
+// Get Sight Path
+// ============================================================================
+
+/**
+ * Represents a node in the path tree from the workspace root to the target sight (dashboard).
+ * Returned by `getSightPath`. Use {@link getLeafSight} to extract the leaf sight object,
+ * or {@link getLeafSightPath} to get the full slash-separated path string.
+ *
+ * @see getLeafSight
+ * @see getLeafSightPath
+ */
+export interface SightPathNode extends PathNode {
+  folders?: SightPathNode[];
+  sights?: PathLeaf[];
+}
+
+/**
+ * Options for getting the path from the workspace root to the specified sight (dashboard).
+ *
+ * @remarks
+ * It mirrors to the following Smartsheet REST API method: `GET /sights/{sightId}/path`
+ */
+export interface GetSightPathOptions extends RequestOptions<undefined, undefined> {
+  /**
+   * Sight Id.
+   */
+  sightId: number;
 }
