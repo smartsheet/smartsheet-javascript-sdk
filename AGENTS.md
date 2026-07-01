@@ -320,7 +320,7 @@ Cutting a new SDK release: determining the correct semver bump, updating the cha
 
 ### Skill Reference
 
-**Skill file:** `.claude/skills/release/SKILL.md`
+**Skill file:** `.claude/skills/releasing-smartsheet-javascript-sdk/SKILL.md`
 
 This skill provides the complete release workflow. Read it for the step-by-step process, verification checklist, and rollback procedure.
 
@@ -363,7 +363,7 @@ Do NOT use for:
 |---|---|
 | `CHANGELOG.md` | New versioned header inserted below the permanent `Unreleased` line |
 | `package.json` | `"version"` bumped |
-| `package-lock.json` | Regenerated via `npm install` |
+| `package-lock.json` | Two `"version"` fields updated manually (root + `packages[""]`) |
 
 #### CI / Publishing
 

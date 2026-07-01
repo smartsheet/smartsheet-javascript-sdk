@@ -1,5 +1,5 @@
 ---
-name: release
+name: releasing-smartsheet-javascript-sdk
 description: Use when cutting a new release of the Smartsheet JavaScript SDK — version bump, changelog, tag, and GitHub Release
 ---
 
@@ -83,13 +83,9 @@ After:
 
 Change the `"version"` field to the new version.
 
-### 5. Regenerate package-lock.json
+### 5. Update package-lock.json
 
-```bash
-npm install
-```
-
-This syncs the lockfile without installing new deps.
+Manually update the two `"version"` fields at the top of `package-lock.json` to match the new version — the root `"version"` and the `"version"` inside `"packages": {"": {...}}`. Do **not** run `npm install` as it can introduce unintended dependency changes if the wrong Node version is active.
 
 ### 6. Verify the build
 
@@ -137,7 +133,7 @@ Confirm the version appears and `dist/` contains the expected files.
 - [ ] Semver bump is correct for the changes included
 - [ ] `CHANGELOG.md`: new versioned header inserted below the permanent `Unreleased` line
 - [ ] `package.json` version matches new version
-- [ ] `package-lock.json` regenerated
+- [ ] `package-lock.json` two `"version"` fields updated manually
 - [ ] PR title: `Prepare for release vX.X.X`
 - [ ] CI passed on the PR (lint + coverage on Node 20/22/24)
 - [ ] PR merged to `mainline`
