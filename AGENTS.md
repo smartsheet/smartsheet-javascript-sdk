@@ -6,6 +6,7 @@ This repository uses workflow-specific agents to handle different phases of SDK 
 
 - **Implementation Agent** - Adding or modifying API endpoints
 - **Review Agent** - Reviewing endpoint implementations before merge
+- **Release Agent** - Cutting a new SDK release (version bump, changelog, tag, GitHub Release)
 
 ---
 
@@ -311,6 +312,80 @@ curl -s https://developers.smartsheet.com/_spec/api/smartsheet/openapi.json | jq
 
 ---
 
+## Release Agent
+
+### Purpose
+
+Cutting a new SDK release: determining the correct semver bump, updating the changelog, bumping the version, creating the release PR, tagging, and publishing via GitHub Release. npm publishing is automated by CI once the GitHub Release is published.
+
+### Skill Reference
+
+**Skill file:** `.claude/skills/release/SKILL.md`
+
+This skill provides the complete release workflow. Read it for the step-by-step process, verification checklist, and rollback procedure.
+
+**Authoritative reference:** `RELEASE.md` in the repository root.
+
+### When to Use
+
+Use the Release Agent when:
+- User asks to cut a release or publish a new version
+- Accumulated changes on `mainline` need to be shipped
+- A hotfix needs to be released urgently
+
+Do NOT use for:
+- Implementing features or fixing bugs (merge those first)
+- CI or tooling changes without a version bump
+
+### Project Context
+
+#### Versioning
+
+**Scheme:** [Semantic Versioning](https://semver.org/)
+
+- `major` — breaking changes (removed exports, changed method signatures)
+- `minor` — new endpoints, non-breaking additions
+- `patch` — bug fixes, dependency updates
+
+**Current version source:** `package.json` `"version"` field
+
+#### Changelog Convention
+
+**Format:** [Keep a Changelog](https://keepachangelog.com/)
+
+**Location:** `CHANGELOG.md`
+
+**Rule:** The top of the file always has a permanent empty `## [X.X.X] - Unreleased` block that is never removed. When releasing, insert the new versioned header (e.g. `## [5.2.0] - YYYY-MM-DD`) directly below it.
+
+#### Files Changed in Every Release
+
+| File | Change |
+|---|---|
+| `CHANGELOG.md` | New versioned header inserted below the permanent `Unreleased` line |
+| `package.json` | `"version"` bumped |
+| `package-lock.json` | Regenerated via `npm install` |
+
+#### CI / Publishing
+
+**Trigger:** `build-publish.yaml` runs on `release.types: [published]`
+
+**Steps (automated):**
+1. `npm ci`
+2. `npm run build`
+3. `npm publish` (OIDC trusted publishing — no stored npm token)
+
+**Tag creation:** Set the tag (`vX.X.X`) via the **"Create new tag on publish"** option in the GitHub Release UI — no separate `git tag` step. Use the **"Generate release notes"** button to populate the release body.
+
+**Important:** The GitHub Release must be **published**, not saved as a draft, or CI will not trigger.
+
+#### PR Title Convention
+
+```
+Prepare for release vX.X.X
+```
+
+---
+
 ## Project-Specific Context
 
 This section provides shared context that applies to all agents working in this repository.
@@ -335,6 +410,7 @@ This section provides shared context that applies to all agents working in this 
 | `README.md` | Installation, basic usage, example code | Getting started, understanding client initialization |
 | `ADVANCED.md` | SDK architecture, request lifecycle, patterns | Implementing endpoints, understanding internal flows |
 | `TESTING.md` | Test structure, standardized cases, WireMock integration | Writing tests, understanding test requirements |
+| `RELEASE.md` | Release procedure, version bump, changelog, tagging | Cutting a new SDK release |
 
 ### Test Infrastructure
 
