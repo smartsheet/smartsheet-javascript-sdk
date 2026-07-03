@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
 
+### Deprecated
+
+- Deprecated `Event.objectId`; use `Event.objectIdStr` instead. `objectId` is numeric only and contains -1 for non-numeric identifiers. It is not scheduled for removal.
+
 ## [5.1.0] - 2026-06-26
 
 ### Added

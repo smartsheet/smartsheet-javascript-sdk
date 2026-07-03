@@ -504,6 +504,18 @@ Note that the `moreAvailable` attribute in a response indicates whether more eve
 
 Many events have additional information available as a part of the event. That information can be accessed from the data stored in the `additionalDetails` attribute. Information about the additional details provided can be found [here](https://smartsheet-platform.github.io/event-reporting-docs/).
 
+Each event identifies the object it affected. Use the `objectIdStr` property, which holds the object identifier as a string and supports both numeric and non-numeric identifiers. The older `objectId` property is deprecated and kept only for backward compatibility: when the identifier is numeric it contains the number, and when the identifier is non-numeric it contains `-1` while the real value is available in `objectIdStr`. New code should read `objectIdStr`.
+
+```javascript
+result.data.forEach((event) => {
+  // Preferred: works for all identifier types
+  console.log(event.objectIdStr);
+
+  // Deprecated: numeric only; returns -1 for non-numeric identifiers
+  // console.log(event.objectId);
+});
+```
+
 
 ```javascript
 // Initialize the client
