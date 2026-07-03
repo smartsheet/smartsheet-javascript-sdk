@@ -113,6 +113,34 @@ describe('Reports - listReportColumns endpoint tests', () => {
     });
   });
 
+  it('listReportColumns with level generated url is correct', async () => {
+    const requestId = crypto.randomUUID();
+    const options = {
+      reportId: TEST_REPORT_ID,
+      queryParameters: {
+        lastKey: TEST_LAST_KEY,
+        maxItems: TEST_MAX_ITEMS,
+        level: 3
+      },
+      customProperties: {
+        'x-request-id': requestId,
+        'x-test-name': '/reports/list-report-columns/all-response-body-properties',
+      },
+    };
+    await client.reports.listReportColumns(options);
+    const matchedRequest = await findWireMockRequest(requestId);
+
+    const parsedUrl = new URL(matchedRequest.absoluteUrl);
+    expect(parsedUrl.pathname).toEqual(`/2.0/reports/${TEST_REPORT_ID}/columns`);
+    expect(matchedRequest.method).toEqual('GET');
+    const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+    expect(queryParamsObject).toEqual({
+      lastKey: TEST_LAST_KEY,
+      maxItems: TEST_MAX_ITEMS.toString(),
+      level: '3'
+    });
+  });
+
   it('listReportColumns all response body properties', async () => {
     const requestId = crypto.randomUUID();
     const options = {

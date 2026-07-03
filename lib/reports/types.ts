@@ -1780,7 +1780,14 @@ export type ListReportScopeResponse = TokenPaginationResponse<ReportScopeAsset>;
 // Get Report Columns
 // ============================================================================
 
-export interface ListReportColumnsOptions extends RequestOptions<TokenPaginationQueryParameters, undefined> {
+export interface ListReportColumnsQueryParameters extends TokenPaginationQueryParameters {
+  /**
+   * Compatibility level.
+   */
+  level?: number;
+}
+
+export interface ListReportColumnsOptions extends RequestOptions<ListReportColumnsQueryParameters, undefined> {
   /**
    * Report ID.
    */
@@ -1793,7 +1800,14 @@ export type ListReportColumnsResponse = TokenPaginationResponse<ReportColumn>;
 // Get Report Column
 // ============================================================================
 
-export interface GetReportColumnOptions extends RequestOptions<undefined, undefined> {
+export interface GetReportColumnQueryParameters {
+  /**
+   * Compatibility level.
+   */
+  level?: number;
+}
+
+export interface GetReportColumnOptions extends RequestOptions<GetReportColumnQueryParameters, undefined> {
   /**
    * Report ID.
    */

@@ -60,6 +60,31 @@ describe('Reports - getReportColumn endpoint tests', () => {
     expect(queryParamsObject).toEqual({});
   });
 
+  it('getReportColumn with level generated url is correct', async () => {
+    const requestId = crypto.randomUUID();
+    const options = {
+      reportId: TEST_REPORT_ID,
+      columnVirtualId: TEST_COLUMN_VIRTUAL_ID,
+      queryParameters: {
+        level: 3
+      },
+      customProperties: {
+        'x-request-id': requestId,
+        'x-test-name': '/reports/get-report-column/all-response-body-properties',
+      },
+    };
+    await client.reports.getReportColumn(options);
+    const matchedRequest = await findWireMockRequest(requestId);
+
+    const parsedUrl = new URL(matchedRequest.absoluteUrl);
+    expect(parsedUrl.pathname).toEqual(`/2.0/reports/${TEST_REPORT_ID}/columns/${TEST_COLUMN_VIRTUAL_ID}`);
+    expect(matchedRequest.method).toEqual('GET');
+    const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+    expect(queryParamsObject).toEqual({
+      level: '3'
+    });
+  });
+
   it('getReportColumn all response body properties', async () => {
     const requestId = crypto.randomUUID();
     const options = {
