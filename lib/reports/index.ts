@@ -26,6 +26,17 @@ import type {
   CreateReportOptions,
   CreateReportResponse,
   GetReportPathOptions,
+  ListReportScopeOptions,
+  ListReportScopeResponse,
+  ListReportColumnsOptions,
+  ListReportColumnsResponse,
+  GetReportColumnOptions,
+  ReportColumn,
+  UpdateReportColumnOptions,
+  UpdateReportColumnResponse,
+  DeleteReportColumnOptions,
+  GetReportDefinitionOptions,
+  ReportDefinition,
 } from './types';
 import type { ReportPathNode } from './types';
 import * as constants from '../utils/constants';
@@ -150,6 +161,60 @@ export function create(options: CreateOptions): ReportsApi {
     return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
   };
 
+  const listReportScope = (
+    getOptions: ListReportScopeOptions,
+    callback?: RequestCallback<ListReportScopeResponse>
+  ): Promise<ListReportScopeResponse> => {
+    const urlOptions = { url: options.apiUrls.reports + '/' + getOptions.reportId + '/scope' };
+    return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
+  };
+
+  const listReportColumns = (
+    getOptions: ListReportColumnsOptions,
+    callback?: RequestCallback<ListReportColumnsResponse>
+  ): Promise<ListReportColumnsResponse> => {
+    const urlOptions = { url: options.apiUrls.reports + '/' + getOptions.reportId + '/columns' };
+    return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
+  };
+
+  const getReportColumn = (
+    getOptions: GetReportColumnOptions,
+    callback?: RequestCallback<ReportColumn>
+  ): Promise<ReportColumn> => {
+    const urlOptions = {
+      url: options.apiUrls.reports + '/' + getOptions.reportId + '/columns/' + getOptions.columnVirtualId,
+    };
+    return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
+  };
+
+  const updateReportColumn = (
+    putOptions: UpdateReportColumnOptions,
+    callback?: RequestCallback<UpdateReportColumnResponse>
+  ): Promise<UpdateReportColumnResponse> => {
+    const urlOptions = {
+      url: options.apiUrls.reports + '/' + putOptions.reportId + '/columns/' + putOptions.columnVirtualId,
+    };
+    return requestor.put({ ...optionsToSend, ...urlOptions, ...putOptions }, callback);
+  };
+
+  const deleteReportColumn = (
+    deleteOptions: DeleteReportColumnOptions,
+    callback?: RequestCallback<BaseResponseStatus>
+  ): Promise<BaseResponseStatus> => {
+    const urlOptions = {
+      url: options.apiUrls.reports + '/' + deleteOptions.reportId + '/columns/' + deleteOptions.columnVirtualId,
+    };
+    return requestor.delete({ ...optionsToSend, ...urlOptions, ...deleteOptions }, callback);
+  };
+
+  const getReportDefinition = (
+    getOptions: GetReportDefinitionOptions,
+    callback?: RequestCallback<ReportDefinition>
+  ): Promise<ReportDefinition> => {
+    const urlOptions = { url: options.apiUrls.reports + '/' + getOptions.reportId + '/definition' };
+    return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
+  };
+
   return {
     listReports,
     getReport,
@@ -165,5 +230,11 @@ export function create(options: CreateOptions): ReportsApi {
     addReportColumns,
     createReport,
     getReportPath,
+    listReportScope,
+    listReportColumns,
+    getReportColumn,
+    updateReportColumn,
+    deleteReportColumn,
+    getReportDefinition,
   };
 }
