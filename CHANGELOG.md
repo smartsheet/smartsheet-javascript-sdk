@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
 
+## [5.2.0] - 2026-07-09
+
 ### Added
 - Added support for GET /2.0/reports/{reportId}/scope endpoint (`listReportScope`)
 - Added support for GET /2.0/reports/{reportId}/columns endpoint (`listReportColumns`)
