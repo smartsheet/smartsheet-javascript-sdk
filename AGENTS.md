@@ -6,6 +6,7 @@ This repository uses workflow-specific agents to handle different phases of SDK 
 
 - **Implementation Agent** - Adding or modifying API endpoints
 - **Review Agent** - Reviewing endpoint implementations before merge
+- **Release Agent** - Cutting a new SDK release (version bump, changelog, tag, GitHub Release)
 
 ---
 
@@ -311,6 +312,31 @@ curl -s https://developers.smartsheet.com/_spec/api/smartsheet/openapi.json | jq
 
 ---
 
+## Release Agent
+
+### Purpose
+
+Cutting a new SDK release: determining the correct semver bump, updating the changelog, bumping the version, creating the release PR, tagging, and publishing via GitHub Release.
+
+### Skill Reference
+
+**Skill file:** `.claude/skills/releasing-smartsheet-javascript-sdk/SKILL.md`
+
+**Full procedure:** `RELEASE.md` in the repository root — single source of truth for every step, decision rule, and checklist item.
+
+### When to Use
+
+Use the Release Agent when:
+- User asks to cut a release or publish a new version
+- Accumulated changes on `mainline` need to be shipped
+- A hotfix needs to be released urgently
+
+Do NOT use for:
+- Implementing features or fixing bugs (merge those first)
+- CI or tooling changes without a version bump
+
+---
+
 ## Project-Specific Context
 
 This section provides shared context that applies to all agents working in this repository.
@@ -335,6 +361,7 @@ This section provides shared context that applies to all agents working in this 
 | `README.md` | Installation, basic usage, example code | Getting started, understanding client initialization |
 | `ADVANCED.md` | SDK architecture, request lifecycle, patterns | Implementing endpoints, understanding internal flows |
 | `TESTING.md` | Test structure, standardized cases, WireMock integration | Writing tests, understanding test requirements |
+| `RELEASE.md` | Release procedure, version bump, changelog, tagging | Cutting a new SDK release |
 
 ### Test Infrastructure
 

@@ -87,12 +87,13 @@ describe('Client Unit Tests', () => {
   describe('#folders', () => {
     it('should have folders object', () => {
       expect(smartsheet).toHaveProperty('folders');
-      expect(Object.keys(smartsheet.folders)).toHaveLength(7);
+      expect(Object.keys(smartsheet.folders)).toHaveLength(8);
     });
 
     it('should have get methods', () => {
       expect(smartsheet.folders).toHaveProperty('getFolderMetadata');
       expect(smartsheet.folders).toHaveProperty('getFolderChildren');
+      expect(smartsheet.folders).toHaveProperty('getFolderPath');
     });
 
     it('should have create methods', () => {
@@ -187,6 +188,7 @@ describe('Client Unit Tests', () => {
       expect(smartsheet.reports).toHaveProperty('getReportAsExcel');
       expect(smartsheet.reports).toHaveProperty('getReportAsCSV');
       expect(smartsheet.reports).toHaveProperty('getReportPublishStatus');
+      expect(smartsheet.reports).toHaveProperty('getReportPath');
       expect(smartsheet.reports).toHaveProperty('listReportScope');
       expect(smartsheet.reports).toHaveProperty('listReportColumns');
       expect(smartsheet.reports).toHaveProperty('getReportColumn');
@@ -320,13 +322,14 @@ describe('Client Unit Tests', () => {
   describe('#Sights', () => {
     it('should have Sights object', () => {
       expect(smartsheet).toHaveProperty('sights');
-      expect(Object.keys(smartsheet.sights)).toHaveLength(8);
+      expect(Object.keys(smartsheet.sights)).toHaveLength(9);
     });
 
     it('should have Sights get methods', () => {
       expect(smartsheet.sights).toHaveProperty('getSight');
       expect(smartsheet.sights).toHaveProperty('listSights');
       expect(smartsheet.sights).toHaveProperty('getSightPublishStatus');
+      expect(smartsheet.sights).toHaveProperty('getSightPath');
     });
 
     it('should have Sights update methods', () => {

@@ -15,6 +15,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added support for DELETE /2.0/reports/{reportId}/columns/{columnVirtualId} endpoint (`deleteReportColumn`)
 - Added support for GET /2.0/reports/{reportId}/definition endpoint (`getReportDefinition`)
 
+### Deprecated
+
+- Deprecated `Event.objectId`; use `Event.objectIdStr` instead. `objectId` is numeric only and contains -1 for non-numeric identifiers. It is not scheduled for removal.
+
+## [5.1.0] - 2026-06-26
+
+### Added
+
+- Added support for GET /2.0/sheets/{sheetId}/path endpoint (`getSheetPath`)
+- Added support for GET /2.0/reports/{reportId}/path endpoint (`getReportPath`)
+- Added support for GET /2.0/sights/{sightId}/path endpoint (`getSightPath`)
+- Added support for GET /2.0/folders/{folderId}/path endpoint (`getFolderPath`)
+- Added helper functions `getLeaf<Asset>()` and `getLeaf<Asset>Path()` for convenient traversal of the path node objects
+
 ## [5.0.1] - 2026-06-10
 
 ### Fixed
