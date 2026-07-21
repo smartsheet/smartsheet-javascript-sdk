@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
 
+### Fixed
+
+- Fixed all `sharing` methods (`listAssetShares`, `getAssetShare`, `shareAsset`, `updateAssetShare`, `deleteAssetShare`) failing with `404 Not Found` because query parameters (`assetType`/`assetId`) were baked into the request URL and then re-applied by the HTTP layer, producing a duplicated, malformed query string. Query parameters are now applied once. ([#195](https://github.com/smartsheet/smartsheet-javascript-sdk/issues/195))
+- Fixed `sharing.updateAssetShare` throwing at runtime because the HTTP requestor did not expose a `patch` method.
+
 ## [5.2.0] - 2026-07-09
 
 ### Added
