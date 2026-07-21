@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
 
+### Changed
+- Documented `proofs` as a valid `include` value for `getReport`
+
 ## [5.2.0] - 2026-07-09
 
 ### Added
