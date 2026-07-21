@@ -37,8 +37,7 @@ describe('Sharing - getAssetShare endpoint tests', () => {
     expect(parsedUrl.pathname).toEqual(`/2.0/shares/${TEST_SHARE_ID}`);
     expect(matchedRequest.method).toEqual('GET');
 
-    const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
-    expect(queryParamsObject).toEqual(EXPECTED_SHEET_ASSET_QUERY);
+    expect(parsedUrl.searchParams).toEqual(EXPECTED_SHEET_ASSET_QUERY);
   });
 
   it('getAssetShare all response body properties', async () => {

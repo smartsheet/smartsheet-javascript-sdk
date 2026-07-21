@@ -49,11 +49,12 @@ export const TEST_SHEET_ASSET_QUERY = {
   assetId: TEST_ASSET_ID,
 };
 
-// Expected query parameters after URLSearchParams serialization (all values become strings)
-export const EXPECTED_SHEET_ASSET_QUERY = {
+// Expected query string for a sheet asset, built as URLSearchParams so assertions
+// verify key cardinality (a duplicated assetType/assetId would fail the comparison).
+export const EXPECTED_SHEET_ASSET_QUERY = new URLSearchParams({
   assetType: AssetType.SHEET,
   assetId: TEST_ASSET_ID.toString(),
-};
+});
 
 // Common error status codes and messages
 export const ERROR_500_STATUS_CODE = 500;

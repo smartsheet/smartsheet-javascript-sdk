@@ -66,12 +66,12 @@ describe('Sharing - shareAsset endpoint tests', () => {
     expect(parsedUrl.pathname).toEqual('/2.0/shares');
     expect(matchedRequest.method).toEqual('POST');
 
-    const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
-    expect(queryParamsObject).toEqual({
+    const expectedQueryParams = new URLSearchParams({
       assetType: AssetType.SHEET,
       assetId: TEST_ASSET_ID.toString(),
       sendEmail: 'true',
     });
+    expect(parsedUrl.searchParams).toEqual(expectedQueryParams);
   });
 
   it('shareAsset all response body properties', async () => {

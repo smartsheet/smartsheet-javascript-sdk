@@ -48,13 +48,13 @@ describe('Sharing - listAssetShares endpoint tests', () => {
     expect(parsedUrl.pathname).toEqual('/2.0/shares');
     expect(matchedRequest.method).toEqual('GET');
 
-    const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
-    expect(queryParamsObject).toEqual({
+    const expectedQueryParams = new URLSearchParams({
       assetType: AssetType.SHEET,
       assetId: TEST_ASSET_ID.toString(),
       maxItems: TEST_MAX_ITEMS.toString(),
       sharingInclude: TEST_SHARING_INCLUDE,
     });
+    expect(parsedUrl.searchParams).toEqual(expectedQueryParams);
   });
 
   it('listAssetShares all response body properties', async () => {
