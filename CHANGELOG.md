@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
 
+### Security
+
+- Bumped `axios` to `^1.18.0` to resolve six security advisories (GHSA-gcfj-64vw-6mp9, GHSA-jqh4-m9w3-8hp9, GHSA-hcpx-6fm6-wx23, GHSA-mwf2-3pr3-8698, GHSA-f4gw-2p7v-4548, GHSA-xj6q-8x83-jv6g), all patched in axios 1.18.0.
+
 ### Fixed
 
 - Fixed all `sharing` methods (`listAssetShares`, `getAssetShare`, `shareAsset`, `updateAssetShare`, `deleteAssetShare`) failing with `404 Not Found` because query parameters (`assetType`/`assetId`) were baked into the request URL and then re-applied by the HTTP layer, producing a duplicated, malformed query string. Query parameters are now applied once. ([#195](https://github.com/smartsheet/smartsheet-javascript-sdk/issues/195))
