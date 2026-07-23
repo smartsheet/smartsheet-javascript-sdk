@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Security
 
 - Bumped `axios` to `^1.18.0` to resolve six security advisories (GHSA-gcfj-64vw-6mp9, GHSA-jqh4-m9w3-8hp9, GHSA-hcpx-6fm6-wx23, GHSA-mwf2-3pr3-8698, GHSA-f4gw-2p7v-4548, GHSA-xj6q-8x83-jv6g), all patched in axios 1.18.0.
+- Updated transitive development dependencies via lockfile refresh to resolve ten advisories in `js-yaml`, `brace-expansion`, `fast-uri`, and `@babel/core`. These are dev-only dependencies (linting, testing, build tooling) and are not shipped in the published `dist/`, so runtime consumers were never exposed.
 
 ### Fixed
 
