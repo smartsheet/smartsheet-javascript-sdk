@@ -1437,6 +1437,13 @@ export interface ListUserPlansQueryParameters {
    * @defaultValue false
    */
   displayContributorSeatType?: boolean;
+  /**
+   * A comma-separated list of elements to include in the response. The only
+   * accepted value is `planNames`, which populates `planName` on each returned
+   * plan with the name of its owning organization. An unrecognized value
+   * returns a 400.
+   */
+  include?: 'planNames';
 }
 
 export interface ListUserPlansOptions extends RequestOptions<ListUserPlansQueryParameters, undefined> {
@@ -1459,6 +1466,16 @@ export interface ListUserPlansResponse {
      * Plan Id.
      */
     planId: number;
+    /**
+     * Name of the organization that owns the plan. Returned only when
+     * `include=planNames` is requested, and omitted for a plan whose owning
+     * organization has no name.
+     *
+     * @remarks
+     * Organization names are cached for roughly four hours downstream, so a
+     * recently renamed organization may briefly report its previous name.
+     */
+    planName?: string;
     /**
      * User's seat type.
      * @see SeatTypes

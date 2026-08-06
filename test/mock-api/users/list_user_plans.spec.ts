@@ -12,7 +12,9 @@ import {
     TEST_PROVISIONAL_EXPIRATION_DATE,
     TEST_LAST_KEY,
     TEST_MAX_ITEMS,
-    TEST_CONTRIBUTOR_PLAN_ID
+    TEST_CONTRIBUTOR_PLAN_ID,
+    TEST_INCLUDE_PLAN_NAMES,
+    TEST_PLAN_NAME
 } from './common_test_constants';
 import { SeatTypes } from '@smartsheet/users/types';
 
@@ -26,7 +28,8 @@ describe('Users - listUserPlans endpoint tests', () => {
             queryParameters: {
                 lastKey: TEST_LAST_KEY,
                 maxItems: TEST_MAX_ITEMS,
-                displayContributorSeatType: true
+                displayContributorSeatType: true,
+                include: TEST_INCLUDE_PLAN_NAMES
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -42,7 +45,8 @@ describe('Users - listUserPlans endpoint tests', () => {
         expect(queryParamsObject).toEqual({
             lastKey: TEST_LAST_KEY,
             maxItems: TEST_MAX_ITEMS.toString(),
-            displayContributorSeatType: 'true'
+            displayContributorSeatType: 'true',
+            include: TEST_INCLUDE_PLAN_NAMES
         });
     });
 
@@ -52,7 +56,8 @@ describe('Users - listUserPlans endpoint tests', () => {
             userId: TEST_USER_ID,
             queryParameters: {
                 lastKey: TEST_LAST_KEY,
-                maxItems: TEST_MAX_ITEMS
+                maxItems: TEST_MAX_ITEMS,
+                include: TEST_INCLUDE_PLAN_NAMES
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -66,12 +71,15 @@ describe('Users - listUserPlans endpoint tests', () => {
             data: [
                 {
                     planId: TEST_PLAN_ID,
+                    planName: TEST_PLAN_NAME,
                     seatType: SeatTypes.MEMBER,
                     seatTypeLastChangedAt: TEST_SEAT_TYPE_LAST_CHANGED_AT,
                     provisionalExpirationDate: TEST_PROVISIONAL_EXPIRATION_DATE,
                     isInternal: false
                 },
                 {
+                    // Omits the optional planName, as a plan whose owning
+                    // organization has no name does.
                     planId: TEST_CONTRIBUTOR_PLAN_ID,
                     seatType: SeatTypes.CONTRIBUTOR,
                     seatTypeLastChangedAt: TEST_SEAT_TYPE_LAST_CHANGED_AT,
@@ -80,6 +88,7 @@ describe('Users - listUserPlans endpoint tests', () => {
                 }
             ]
         });
+        expect(response.data[1].planName).toBeUndefined();
     });
 
     it('listUserPlans required response body properties', async () => {
@@ -92,7 +101,7 @@ describe('Users - listUserPlans endpoint tests', () => {
             }
         };
         const response = await client.users.listUserPlans(options);
-        
+
         expect(response).toEqual({
             data: [
                 {
@@ -102,6 +111,7 @@ describe('Users - listUserPlans endpoint tests', () => {
                 }
             ]
         });
+        expect(response.data[0].planName).toBeUndefined();
     });
 
     it('listUserPlans error 500 response', async () => {

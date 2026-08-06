@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
 
+### Added
+
+- Added support for the `include` query parameter on `users.listUserPlans` (`GET /2.0/users/{userId}/plans`). The only accepted value is `planNames`.
+- Added an optional `planName` field to each plan in `ListUserPlansResponse`, populated with the owning organization's name when `include=planNames` is requested.
+
 ### Security
 
 - Bumped `axios` to `^1.18.0` to resolve six security advisories (GHSA-gcfj-64vw-6mp9, GHSA-jqh4-m9w3-8hp9, GHSA-hcpx-6fm6-wx23, GHSA-mwf2-3pr3-8698, GHSA-f4gw-2p7v-4548, GHSA-xj6q-8x83-jv6g), all patched in axios 1.18.0.
