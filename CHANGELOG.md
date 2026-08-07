@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Added support for the `include` query parameter on `users.listUserPlans` (`GET /2.0/users/{userId}/plans`). The only accepted value is `planNames`.
-- Added an optional `planName` field to each plan in `ListUserPlansResponse`, populated with the owning organization's name when `include=planNames` is requested.
+- Added support for the `include` query parameter on `users.listUserPlans` (`GET /2.0/users/{userId}/plans`). The only accepted value is `planName`.
+- Added an optional `planName` field to each plan in `ListUserPlansResponse`, populated with the owning organization's name when `include=planName` is requested.
 
 ### Security
 

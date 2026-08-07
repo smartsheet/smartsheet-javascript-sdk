@@ -13,7 +13,7 @@ import {
     TEST_LAST_KEY,
     TEST_MAX_ITEMS,
     TEST_CONTRIBUTOR_PLAN_ID,
-    TEST_INCLUDE_PLAN_NAMES,
+    TEST_INCLUDE_PLAN_NAME,
     TEST_PLAN_NAME
 } from './common_test_constants';
 import { SeatTypes } from '@smartsheet/users/types';
@@ -29,7 +29,7 @@ describe('Users - listUserPlans endpoint tests', () => {
                 lastKey: TEST_LAST_KEY,
                 maxItems: TEST_MAX_ITEMS,
                 displayContributorSeatType: true,
-                include: TEST_INCLUDE_PLAN_NAMES
+                include: TEST_INCLUDE_PLAN_NAME
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -46,7 +46,7 @@ describe('Users - listUserPlans endpoint tests', () => {
             lastKey: TEST_LAST_KEY,
             maxItems: TEST_MAX_ITEMS.toString(),
             displayContributorSeatType: 'true',
-            include: TEST_INCLUDE_PLAN_NAMES
+            include: TEST_INCLUDE_PLAN_NAME
         });
     });
 
@@ -57,7 +57,7 @@ describe('Users - listUserPlans endpoint tests', () => {
             queryParameters: {
                 lastKey: TEST_LAST_KEY,
                 maxItems: TEST_MAX_ITEMS,
-                include: TEST_INCLUDE_PLAN_NAMES
+                include: TEST_INCLUDE_PLAN_NAME
             },
             customProperties: {
                 'x-request-id': requestId,
