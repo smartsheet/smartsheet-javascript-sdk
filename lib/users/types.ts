@@ -1420,6 +1420,10 @@ export interface DowngradeUserOptions extends RequestOptions<undefined, Downgrad
 // List User Plans
 // ============================================================================
 
+export enum ListUserPlansInclusion {
+  PLAN_NAME = 'planName',
+}
+
 export interface ListUserPlansQueryParameters {
   /**
    * The lastKey token returned from the previous page of results.
@@ -1438,12 +1442,14 @@ export interface ListUserPlansQueryParameters {
    */
   displayContributorSeatType?: boolean;
   /**
-   * A comma-separated list of elements to include in the response. The only
-   * accepted value is `planName`, which populates `planName` on each returned
-   * plan with the name of its owning organization. An unrecognized value, or
-   * the same value more than once, returns a 400.
+   * The elements to include in the response, either as an array of
+   * {@link ListUserPlansInclusion} values or as an already comma-separated
+   * string. {@link ListUserPlansInclusion.PLAN_NAME} populates `planName` on
+   * each returned plan with the name of its owning organization. An
+   * unrecognized value, or the same value more than once, returns a 400.
+   * @see ListUserPlansInclusion
    */
-  include?: 'planName';
+  include?: string | ListUserPlansInclusion[];
 }
 
 export interface ListUserPlansOptions extends RequestOptions<ListUserPlansQueryParameters, undefined> {

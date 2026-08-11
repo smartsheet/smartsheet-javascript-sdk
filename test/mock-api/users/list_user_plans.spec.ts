@@ -12,11 +12,12 @@ import {
     TEST_PROVISIONAL_EXPIRATION_DATE,
     TEST_LAST_KEY,
     TEST_MAX_ITEMS,
-    TEST_CONTRIBUTOR_PLAN_ID,
-    TEST_INCLUDE_PLAN_NAME,
-    TEST_PLAN_NAME
+    TEST_CONTRIBUTOR_PLAN_ID
 } from './common_test_constants';
-import { SeatTypes } from '@smartsheet/users/types';
+import { ListUserPlansInclusion, SeatTypes } from '@smartsheet/users/types';
+
+const TEST_INCLUDE_PLAN_NAME = [ListUserPlansInclusion.PLAN_NAME];
+const TEST_PLAN_NAME = 'Acme Corporation';
 
 describe('Users - listUserPlans endpoint tests', () => {
     const client = createClient();
@@ -46,8 +47,30 @@ describe('Users - listUserPlans endpoint tests', () => {
             lastKey: TEST_LAST_KEY,
             maxItems: TEST_MAX_ITEMS.toString(),
             displayContributorSeatType: 'true',
-            include: TEST_INCLUDE_PLAN_NAME
+            // The inclusion array is joined into a single comma-separated
+            // value rather than repeated as include[]=.
+            include: ListUserPlansInclusion.PLAN_NAME
         });
+    });
+
+    it('listUserPlans accepts include as a comma-separated string', async () => {
+        const requestId = crypto.randomUUID();
+        const options = {
+            userId: TEST_USER_ID,
+            queryParameters: {
+                include: ListUserPlansInclusion.PLAN_NAME as string
+            },
+            customProperties: {
+                'x-request-id': requestId,
+                'x-test-name': '/users/list-user-plans/all-response-body-properties'
+            }
+        };
+        await client.users.listUserPlans(options);
+        const matchedRequest = await findWireMockRequest(requestId);
+        const parsedUrl = new URL(matchedRequest.absoluteUrl);
+
+        const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+        expect(queryParamsObject).toEqual({ include: ListUserPlansInclusion.PLAN_NAME });
     });
 
     it('listUserPlans all response body properties', async () => {

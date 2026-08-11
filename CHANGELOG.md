@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Added support for the `include` query parameter on `users.listUserPlans` (`GET /2.0/users/{userId}/plans`). The only accepted value is `planName`.
+- Added support for the `include` query parameter on `users.listUserPlans` (`GET /2.0/users/{userId}/plans`), accepting either an array of `ListUserPlansInclusion` values or a comma-separated string. Arrays are joined into a single comma-separated value. The only currently accepted value is `ListUserPlansInclusion.PLAN_NAME` (`planName`).
 - Added an optional `planName` field to each plan in `ListUserPlansResponse`, populated with the owning organization's name when `include=planName` is requested.
 
 ### Security

@@ -52,8 +52,6 @@ export const ADD_PROFILE_IMAGE_REQUEST_BODY = Buffer.from('fake-image-data');
 export const TEST_LAST_KEY = '12345678901234569';
 export const TEST_MAX_ITEMS = 100;
 export const TEST_INCLUDE_ALL = false;
-export const TEST_INCLUDE_PLAN_NAME = 'planName' as const;
-export const TEST_PLAN_NAME = 'Acme Corporation';
 
 // Common Query Parameters for remove_user
 export const TEST_TRANSFER_TO_USER_ID = 9876543210987654;
