@@ -1420,6 +1420,10 @@ export interface DowngradeUserOptions extends RequestOptions<undefined, Downgrad
 // List User Plans
 // ============================================================================
 
+export enum ListUserPlansInclusion {
+  PLAN_NAME = 'planName',
+}
+
 export interface ListUserPlansQueryParameters {
   /**
    * The lastKey token returned from the previous page of results.
@@ -1437,6 +1441,15 @@ export interface ListUserPlansQueryParameters {
    * @defaultValue false
    */
   displayContributorSeatType?: boolean;
+  /**
+   * The elements to include in the response, either as an array of
+   * {@link ListUserPlansInclusion} values or as an already comma-separated
+   * string. {@link ListUserPlansInclusion.PLAN_NAME} populates `planName` on
+   * each returned plan with the name of its owning organization. An
+   * unrecognized value, or the same value more than once, returns a 400.
+   * @see ListUserPlansInclusion
+   */
+  include?: string | ListUserPlansInclusion[];
 }
 
 export interface ListUserPlansOptions extends RequestOptions<ListUserPlansQueryParameters, undefined> {
@@ -1459,6 +1472,16 @@ export interface ListUserPlansResponse {
      * Plan Id.
      */
     planId: number;
+    /**
+     * Name of the organization that owns the plan. Returned only when
+     * `include=planName` is requested, and omitted for a plan whose owning
+     * organization has no name.
+     *
+     * @remarks
+     * Organization names are cached for roughly four hours downstream, so a
+     * recently renamed organization may briefly report its previous name.
+     */
+    planName?: string;
     /**
      * User's seat type.
      * @see SeatTypes
