@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
 
+## [5.3.0] - 2026-08-12
+
 ### Added
 
 - Added support for the `include` query parameter on `users.listUserPlans` (`GET /2.0/users/{userId}/plans`), accepting either an array of `ListUserPlansInclusion` values or a comma-separated string. Arrays are joined into a single comma-separated value. The only currently accepted value is `ListUserPlansInclusion.PLAN_NAME` (`planName`).
