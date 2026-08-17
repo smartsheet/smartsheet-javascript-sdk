@@ -3,6 +3,7 @@ export interface ApiUrls {
   events: string;
   favorites: string;
   folders: string;
+  governance: string;
   groups: string;
   home: string;
   imageUrls: string;
