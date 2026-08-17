@@ -3,6 +3,7 @@ import type { CreateOptions } from './lib/types/CreateOptions';
 import { apiUrls } from './lib/utils/apis';
 import { createContacts } from './lib/contacts/index';
 import { createEvents } from './lib/events/index';
+import { createGovernance } from './lib/governance/index';
 import { createSearch } from './lib/search/index';
 import { createSharing } from './lib/sharing/index';
 import { createSights } from './lib/sights/index';
@@ -113,6 +114,7 @@ export const createClient: CreateClient = function (clientOptions) {
     events: createEvents(options),
     favorites: createFavorites(options),
     folders: createFolders(options),
+    governance: createGovernance(options),
     groups: createGroups(options),
     /**
      * @deprecated
