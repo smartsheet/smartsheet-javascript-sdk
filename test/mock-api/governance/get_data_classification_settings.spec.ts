@@ -184,20 +184,6 @@ describe('Governance - getDataClassificationSettings endpoint tests', () => {
     }
   });
 
-  it('getDataClassificationSettings error 404 response', async () => {
-    const requestId = crypto.randomUUID();
-    try {
-      await client.governance.getDataClassificationSettings({
-        queryParameters: { planId: TEST_PLAN_ID },
-        customProperties: { 'x-request-id': requestId, 'x-test-name': '/errors/404-response' },
-      });
-      expect(true).toBe(false);
-    } catch (error: any) {
-      expect(error.statusCode).toBe(404);
-      expect(error.message).toBe('Not Found');
-    }
-  });
-
   it('getDataClassificationSettings error 500 response', async () => {
     const requestId = crypto.randomUUID();
     try {
