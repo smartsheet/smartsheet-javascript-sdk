@@ -7,8 +7,20 @@ export interface GetDataClassificationSettingsQueryParameters {
   planId: number;
 }
 
+export enum ApproverType {
+  GROUPS = 'GROUPS',
+  USERS = 'USERS',
+  WORKSPACE_ADMINS = 'WORKSPACE_ADMINS',
+}
+
+export enum DowngradeApprovalMode {
+  NONE = 'NONE',
+  APPROVAL_NEEDED = 'APPROVAL_NEEDED',
+  CUSTOM = 'CUSTOM',
+}
+
 export interface ApproverEntry {
-  type: 'GROUPS' | 'USERS' | 'WORKSPACE_ADMINS';
+  type: ApproverType;
   ids: number[];
 }
 
@@ -18,7 +30,7 @@ export interface LabelApproverEntry {
 }
 
 export interface DowngradeApprovalSettings {
-  mode: 'NONE' | 'APPROVAL_NEEDED' | 'CUSTOM';
+  mode: DowngradeApprovalMode;
   approvers?: ApproverEntry[];
   labelApprovers?: LabelApproverEntry[];
 }
