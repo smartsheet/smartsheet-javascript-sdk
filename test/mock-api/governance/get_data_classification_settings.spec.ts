@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
 import { expect } from '@jest/globals';
+import { ApproverType, DowngradeApprovalMode } from '../../../lib/governance/types';
 
 const TEST_PLAN_ID = 41878788;
 const TEST_ORG_ID = 1244212;
@@ -61,13 +62,13 @@ describe('Governance - getDataClassificationSettings endpoint tests', () => {
         },
       ],
       downgradeApprovalSettings: {
-        mode: 'CUSTOM',
+        mode: DowngradeApprovalMode.CUSTOM,
         labelApprovers: [
           {
             labelId: '4aa85f64-5717-4562-b3fc-2c963f66afa7',
             approvers: [
-              { type: 'USERS', ids: [7001] },
-              { type: 'WORKSPACE_ADMINS', ids: [] },
+              { type: ApproverType.USERS, ids: [7001] },
+              { type: ApproverType.WORKSPACE_ADMINS, ids: [] },
             ],
           },
         ],
@@ -100,7 +101,7 @@ describe('Governance - getDataClassificationSettings endpoint tests', () => {
           isDefault: false,
         },
       ],
-      downgradeApprovalSettings: { mode: 'NONE' },
+      downgradeApprovalSettings: { mode: DowngradeApprovalMode.NONE },
     });
   });
 
@@ -118,7 +119,7 @@ describe('Governance - getDataClassificationSettings endpoint tests', () => {
       planId: TEST_PLAN_ID,
       isDisabled: true,
       labels: [],
-      downgradeApprovalSettings: { mode: 'NONE' },
+      downgradeApprovalSettings: { mode: DowngradeApprovalMode.NONE },
     });
   });
 
@@ -147,10 +148,10 @@ describe('Governance - getDataClassificationSettings endpoint tests', () => {
         },
       ],
       downgradeApprovalSettings: {
-        mode: 'APPROVAL_NEEDED',
+        mode: DowngradeApprovalMode.APPROVAL_NEEDED,
         approvers: [
-          { type: 'GROUPS', ids: [5001, 5002] },
-          { type: 'USERS', ids: [7001] },
+          { type: ApproverType.GROUPS, ids: [5001, 5002] },
+          { type: ApproverType.USERS, ids: [7001] },
         ],
       },
     });
