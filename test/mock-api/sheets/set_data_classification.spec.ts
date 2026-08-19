@@ -56,6 +56,31 @@ describe('Sheets - setDataClassification endpoint tests', () => {
         expect(body).toEqual(testBody);
     });
 
+    it('setDataClassification accepts a custom, non-canonical label', async () => {
+        const requestId = crypto.randomUUID();
+        const customLabelBody = {
+            dataClassification: 'Top Secret'
+        };
+        const options = {
+            sheetId: TEST_SHEET_ID,
+            body: customLabelBody,
+            customProperties: {
+                'x-request-id': requestId,
+                'x-test-name': '/sheets/set-data-classification/all-response-body-properties'
+            }
+        };
+        const response = await client.sheets.setDataClassification(options);
+        const matchedRequest = await findWireMockRequest(requestId);
+
+        expect(response).toEqual({
+            message: TEST_SUCCESS_MESSAGE,
+            resultCode: TEST_SUCCESS_RESULT_CODE
+        });
+
+        const body = JSON.parse(matchedRequest.body);
+        expect(body).toEqual(customLabelBody);
+    });
+
     it('setDataClassification error 500 response', async () => {
         const requestId = crypto.randomUUID();
         const options = {

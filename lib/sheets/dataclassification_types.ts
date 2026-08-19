@@ -25,7 +25,7 @@ export interface DataClassificationApi {
    * const result = await client.sheets.setDataClassification({
    *   sheetId: 123456789012345,
    *   body: {
-   *     dataClassification: DataClassificationType.CONFIDENTIAL
+   *     dataClassification: 'Confidential'
    *   }
    * });
    * ```
@@ -62,25 +62,16 @@ export interface DataClassificationApi {
 }
 
 // ============================================================================
-// Enums
-// ============================================================================
-
-export enum DataClassificationType {
-  PUBLIC = 'PUBLIC',
-  INTERNAL = 'INTERNAL',
-  CONFIDENTIAL = 'CONFIDENTIAL',
-  SECRET = 'SECRET',
-}
-
-// ============================================================================
 // Set Data Classification
 // ============================================================================
 
 export interface SetDataClassificationBody {
   /**
-   * The data classification of a sheet.
+   * The data classification of a sheet. This is a free-form label chosen from
+   * the classification labels published by a plan admin in Admin Center, and
+   * is not restricted to a fixed set of values.
    */
-  dataClassification: DataClassificationType;
+  dataClassification: string;
 }
 
 export interface SetDataClassificationOptions extends RequestOptions<undefined, SetDataClassificationBody> {
