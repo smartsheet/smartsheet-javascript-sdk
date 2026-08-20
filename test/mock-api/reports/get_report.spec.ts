@@ -1,118 +1,147 @@
 import crypto from 'crypto';
 import { createClient, findWireMockRequest } from '../utils/utils';
 import { expect } from '@jest/globals';
+import { ReportColumnType, SystemColumnType } from '@smartsheet/reports/types';
 import {
-    TEST_REPORT_ID,
-    TEST_REPORT_NAME,
-    TEST_REPORT_OWNER,
-    TEST_REPORT_OWNER_ID,
-    TEST_REPORT_PERMALINK,
-    TEST_REPORT_ACCESS_LEVEL,
-    TEST_REPORT_OWNER_ALL_PROPS,
-    TEST_REPORT_OWNER_ID_ALL_PROPS,
-    TEST_REPORT_ACCESS_LEVEL_ALL_PROPS,
-    TEST_REPORT_PERMALINK_ALL_PROPS,
-    TEST_CREATED_AT,
-    TEST_MODIFIED_AT,
-    TEST_MODIFIED_AT_ALL_PROPS,
-    ERROR_500_STATUS_CODE,
-    ERROR_500_MESSAGE,
-    ERROR_400_STATUS_CODE,
-    ERROR_400_MESSAGE,
-    TEST_SOURCE_SHEET_ID,
-    TEST_SOURCE_SHEET_NAME,
-    TEST_SOURCE_SHEET_ACCESS_LEVEL,
-    TEST_SOURCE_SHEET_PERMALINK,
-    TEST_SOURCE_SHEET_FROM_ID,
-    TEST_SOURCE_SHEET_OWNER_ID,
-    TEST_SOURCE_SHEET_OWNER,
-    TEST_SOURCE_WORKSPACE_ID,
-    TEST_SOURCE_WORKSPACE_NAME,
-    TEST_SOURCE_WORKSPACE_ACCESS_LEVEL,
-    TEST_SOURCE_WORKSPACE_PERMALINK,
-    TEST_COLUMN_1_ID,
-    TEST_COLUMN_1_INDEX,
-    TEST_COLUMN_1_TITLE,
-    TEST_COLUMN_1_TYPE,
-    TEST_COLUMN_1_PRIMARY,
-    TEST_COLUMN_1_WIDTH,
-    TEST_COLUMN_2_ID,
-    TEST_COLUMN_2_INDEX,
-    TEST_COLUMN_2_TITLE,
-    TEST_COLUMN_2_TYPE,
-    TEST_COLUMN_2_OPTIONS,
-    TEST_COLUMN_2_WIDTH,
-    TEST_EFFECTIVE_ATTACHMENT_OPTIONS,
-    TEST_NON_WORKING_DAYS,
-    TEST_WORKING_DAYS,
-    TEST_ROW_ID,
-    TEST_ROW_SHEET_ID,
-    TEST_ROW_NUMBER,
-    TEST_ROW_SIBLING_ID,
-    TEST_ROW_ACCESS_LEVEL,
-    TEST_ROW_EXPANDED,
-    TEST_ROW_LOCKED,
-    TEST_ROW_LOCKED_FOR_USER,
-    TEST_ROW_VERSION,
-    TEST_SUMMARY_FIELD_ID,
-    TEST_SUMMARY_FIELD_INDEX,
-    TEST_SUMMARY_FIELD_TITLE,
-    TEST_SUMMARY_FIELD_TYPE,
-    TEST_SUMMARY_FIELD_DISPLAY_VALUE,
-    TEST_SUMMARY_FIELD_LOCKED,
-    TEST_SUMMARY_FIELD_LOCKED_FOR_USER,
-    TEST_SUMMARY_FIELD_VALIDATION,
-    TEST_EMPTY_USER,
-    TEST_EMPTY_AUTO_NUMBER_FORMAT,
-    TEST_EMPTY_HYPERLINK,
-    TEST_EMPTY_OBJECT_VALUE,
-    TEST_EMPTY_PROOF
+  TEST_REPORT_ID,
+  TEST_REPORT_NAME,
+  TEST_REPORT_OWNER,
+  TEST_REPORT_OWNER_ID,
+  TEST_REPORT_PERMALINK,
+  TEST_REPORT_ACCESS_LEVEL,
+  TEST_REPORT_OWNER_ALL_PROPS,
+  TEST_REPORT_OWNER_ID_ALL_PROPS,
+  TEST_REPORT_ACCESS_LEVEL_ALL_PROPS,
+  TEST_REPORT_PERMALINK_ALL_PROPS,
+  TEST_CREATED_AT,
+  TEST_MODIFIED_AT,
+  TEST_MODIFIED_AT_ALL_PROPS,
+  ERROR_500_STATUS_CODE,
+  ERROR_500_MESSAGE,
+  ERROR_400_STATUS_CODE,
+  ERROR_400_MESSAGE,
+  TEST_SOURCE_SHEET_ID,
+  TEST_SOURCE_SHEET_NAME,
+  TEST_SOURCE_SHEET_ACCESS_LEVEL,
+  TEST_SOURCE_SHEET_PERMALINK,
+  TEST_SOURCE_SHEET_FROM_ID,
+  TEST_SOURCE_SHEET_OWNER_ID,
+  TEST_SOURCE_SHEET_OWNER,
+  TEST_SOURCE_WORKSPACE_ID,
+  TEST_SOURCE_WORKSPACE_NAME,
+  TEST_SOURCE_WORKSPACE_ACCESS_LEVEL,
+  TEST_SOURCE_WORKSPACE_PERMALINK,
+  TEST_COLUMN_1_ID,
+  TEST_COLUMN_1_INDEX,
+  TEST_COLUMN_1_TITLE,
+  TEST_COLUMN_1_TYPE,
+  TEST_COLUMN_1_PRIMARY,
+  TEST_COLUMN_1_WIDTH,
+  TEST_COLUMN_2_ID,
+  TEST_COLUMN_2_INDEX,
+  TEST_COLUMN_2_TITLE,
+  TEST_COLUMN_2_TYPE,
+  TEST_COLUMN_2_OPTIONS,
+  TEST_COLUMN_2_WIDTH,
+  TEST_EFFECTIVE_ATTACHMENT_OPTIONS,
+  TEST_NON_WORKING_DAYS,
+  TEST_WORKING_DAYS,
+  TEST_ROW_ID,
+  TEST_ROW_SHEET_ID,
+  TEST_ROW_NUMBER,
+  TEST_ROW_SIBLING_ID,
+  TEST_ROW_ACCESS_LEVEL,
+  TEST_ROW_EXPANDED,
+  TEST_ROW_LOCKED,
+  TEST_ROW_LOCKED_FOR_USER,
+  TEST_ROW_VERSION,
+  TEST_SUMMARY_FIELD_ID,
+  TEST_SUMMARY_FIELD_INDEX,
+  TEST_SUMMARY_FIELD_TITLE,
+  TEST_SUMMARY_FIELD_TYPE,
+  TEST_SUMMARY_FIELD_DISPLAY_VALUE,
+  TEST_SUMMARY_FIELD_LOCKED,
+  TEST_SUMMARY_FIELD_LOCKED_FOR_USER,
+  TEST_SUMMARY_FIELD_VALIDATION,
+  TEST_EMPTY_USER,
+  TEST_EMPTY_AUTO_NUMBER_FORMAT,
+  TEST_EMPTY_HYPERLINK,
+  TEST_EMPTY_OBJECT_VALUE,
+  TEST_EMPTY_PROOF,
 } from './common_test_constants';
 
 describe('Reports - getReport endpoint tests', () => {
-    const client = createClient();
+  const client = createClient();
 
-    it('getReport generated url is correct', async () => {
-        const requestId = crypto.randomUUID();
-        const options = {
-            reportId: TEST_REPORT_ID,
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/reports/get-report/required-response-body-properties'
-            }
-        };
-        await client.reports.getReport(options);
-        const matchedRequest = await findWireMockRequest(requestId);
-        const parsedUrl = new URL(matchedRequest.absoluteUrl);
-        expect(parsedUrl.pathname).toEqual(`/2.0/reports/${TEST_REPORT_ID}`);
-    });
+  it('getReport generated url is correct', async () => {
+    const requestId = crypto.randomUUID();
+    const options = {
+      reportId: TEST_REPORT_ID,
+      customProperties: {
+        'x-request-id': requestId,
+        'x-test-name': '/reports/get-report/all-response-body-properties',
+      },
+    };
+    await client.reports.getReport(options);
+    const matchedRequest = await findWireMockRequest(requestId);
+    const parsedUrl = new URL(matchedRequest.absoluteUrl);
+    expect(parsedUrl.pathname).toEqual(`/2.0/reports/${TEST_REPORT_ID}`);
+    expect(matchedRequest.method).toEqual('GET');
+    const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+    expect(queryParamsObject).toEqual({});
+  });
 
-    it('getReport all response body properties', async () => {
-        const requestId = crypto.randomUUID();
-        const options = {
-            reportId: TEST_REPORT_ID,
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/reports/get-report/all-response-body-properties'
-            }
-        };
-        const response = await client.reports.getReport(options);
-        
-        expect(response).toEqual({
-            id: TEST_REPORT_ID,
-            name: TEST_REPORT_NAME,
-            accessLevel: TEST_REPORT_ACCESS_LEVEL_ALL_PROPS,
-            permalink: TEST_REPORT_PERMALINK_ALL_PROPS,
+  it('getReport all response body properties', async () => {
+    const requestId = crypto.randomUUID();
+    const options = {
+      reportId: TEST_REPORT_ID,
+      customProperties: {
+        'x-request-id': requestId,
+        'x-test-name': '/reports/get-report/all-response-body-properties',
+      },
+    };
+    const response = await client.reports.getReport(options);
+    const matchedRequest = await findWireMockRequest(requestId);
+
+    expect(matchedRequest.body).toEqual('');
+    expect(response).toEqual({
+      id: TEST_REPORT_ID,
+      name: TEST_REPORT_NAME,
+      accessLevel: TEST_REPORT_ACCESS_LEVEL_ALL_PROPS,
+      permalink: TEST_REPORT_PERMALINK_ALL_PROPS,
+      createdAt: TEST_CREATED_AT,
+      modifiedAt: TEST_MODIFIED_AT_ALL_PROPS,
+      isSummaryReport: false,
+      readOnly: false,
+      favorite: true,
+      owner: TEST_REPORT_OWNER_ALL_PROPS,
+      ownerId: TEST_REPORT_OWNER_ID_ALL_PROPS,
+      fromId: 9876543210,
+      totalRowCount: 150,
+      version: 5,
+      cellImageUploadEnabled: true,
+      dependenciesEnabled: false,
+      ganttEnabled: false,
+      hasSummaryFields: true,
+      isMultiPicklistEnabled: true,
+      resourceManagementEnabled: false,
+      resourceManagementType: 'NONE',
+      showParentRowsForFilters: true,
+      effectiveAttachmentOptions: ['FILE', 'LINK'],
+      scope: {
+        sheets: [
+          {
+            id: 1001,
+            name: 'Source Sheet',
+            accessLevel: 'ADMIN',
+            permalink: 'https://app.smartsheet.com/sheets/source',
+            fromId: 1000,
+            ownerId: 9876543210,
             createdAt: TEST_CREATED_AT,
             modifiedAt: TEST_MODIFIED_AT_ALL_PROPS,
-            isSummaryReport: false,
-            readOnly: false,
+            version: 1,
             favorite: true,
-            owner: TEST_REPORT_OWNER_ALL_PROPS,
-            ownerId: TEST_REPORT_OWNER_ID_ALL_PROPS,
-            fromId: 9876543210,
-            totalRowCount: 150,
-            version: 5,
+            readOnly: false,
             cellImageUploadEnabled: true,
             dependenciesEnabled: false,
             ganttEnabled: false,
@@ -121,312 +150,31 @@ describe('Reports - getReport endpoint tests', () => {
             resourceManagementEnabled: false,
             resourceManagementType: 'NONE',
             showParentRowsForFilters: true,
-            effectiveAttachmentOptions: ['FILE', 'LINK'],
-            scope: {
-                sheets: [{
-                    id: 1001,
-                    name: 'Source Sheet',
-                    accessLevel: 'ADMIN',
-                    permalink: 'https://app.smartsheet.com/sheets/source',
-                    fromId: 1000,
-                    ownerId: 9876543210,
-                    createdAt: TEST_CREATED_AT,
-                    modifiedAt: TEST_MODIFIED_AT_ALL_PROPS,
-                    version: 1,
-                    favorite: true,
-                    readOnly: false,
-                    cellImageUploadEnabled: true,
-                    dependenciesEnabled: false,
-                    ganttEnabled: false,
-                    hasSummaryFields: true,
-                    isMultiPicklistEnabled: true,
-                    resourceManagementEnabled: false,
-                    resourceManagementType: 'NONE',
-                    showParentRowsForFilters: true,
-                    totalRowCount: 50,
-                    owner: TEST_REPORT_OWNER_ALL_PROPS,
-                    effectiveAttachmentOptions: ['FILE'],
-                    attachments: [{
-                        id: 2001,
-                        parentId: 1001,
-                        name: 'attachment.pdf',
-                        attachmentType: 'FILE',
-                        attachmentSubType: 'DOCUMENT',
-                        mimeType: 'application/pdf',
-                        parentType: 'SHEET',
-                        createdAt: TEST_CREATED_AT,
-                        createdBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
-                        sizeInKb: 1024,
-                        url: 'https://example.com/attachment.pdf',
-                        urlExpiresInMillis: 1609459200000
-                    }],
-                    columns: [{
-                        id: 7001,
-                        index: 0,
-                        title: 'Task Name',
-                        type: 'TEXT_NUMBER',
-                        primary: true,
-                        width: 150,
-                        locked: false,
-                        lockedForUser: false,
-                        validation: true,
-                        version: 1,
-                        hidden: false,
-                        symbol: 'STAR',
-                        description: 'Task column',
-                        format: ',,1,1,,,,,,,,,,,,,',
-                        formula: '',
-                        systemColumnType: 'AUTO_NUMBER',
-                        autoNumberFormat: {
-                            fill: '0001',
-                            prefix: 'TASK-',
-                            startingNumber: 1,
-                            suffix: ''
-                        },
-                        options: ['Option1', 'Option2'],
-                        tags: ['CALENDAR_START_DATE'],
-                        contactOptions: [{
-                            email: 'contact@example.com',
-                            name: 'Contact Name'
-                        }]
-                    }],
-                    rows: [{
-                        id: 8001,
-                        rowNumber: 1,
-                        sheetId: 1001,
-                        siblingId: 8002,
-                        accessLevel: 'ADMIN',
-                        expanded: true,
-                        filteredOut: false,
-                        inCriticalPath: false,
-                        locked: false,
-                        lockedForUser: false,
-                        createdAt: TEST_CREATED_AT,
-                        modifiedAt: TEST_MODIFIED_AT_ALL_PROPS,
-                        version: 1,
-                        format: ',,1,1,,,,,,,,,,,,,',
-                        conditionalFormat: ',,1,1,,,,,,,,,,,,,',
-                        permaLink: 'https://app.smartsheet.com/sheets/row/8001',
-                        createdBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
-                        modifiedBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
-                        cells: [{
-                            columnId: 7001,
-                            rowId: 8001,
-                            columnType: 'TEXT_NUMBER',
-                            value: 'Task 1',
-                            displayValue: 'Task 1',
-                            format: ',,1,1,,,,,,,,,,,,,',
-                            conditionalFormat: ',,1,1,,,,,,,,,,,,,',
-                            formula: '',
-                            strict: false,
-                            overrideValidation: false,
-                            hyperlink: {
-                                url: 'https://example.com',
-                                reportId: 0,
-                                sheetId: 0,
-                                sightId: 0
-                            },
-                            image: {
-                                id: 'img123',
-                                altText: 'Image',
-                                height: 100,
-                                width: 100
-                            },
-                            linkInFromCell: {
-                                columnId: 7001,
-                                rowId: 8001,
-                                sheetId: 1001,
-                                sheetName: 'Source',
-                                status: 'OK'
-                            },
-                            linksOutToCells: [{
-                                columnId: 7002,
-                                rowId: 8002,
-                                sheetId: 1002,
-                                sheetName: 'Target',
-                                status: 'OK'
-                            }],
-                            objectValue: {
-                                objectType: 'DATE',
-                                value: '2025-03-03'
-                            }
-                        }],
-                        columns: [],
-                        attachments: [],
-                        discussions: [],
-                        proof: {
-                            id: 9001,
-                            originalId: 9000,
-                            name: 'Proof',
-                            type: 'DOCUMENT',
-                            documentType: 'PDF',
-                            proofRequestUrl: 'https://example.com/proof',
-                            version: 1,
-                            lastUpdatedAt: TEST_CREATED_AT,
-                            lastUpdatedBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
-                            isCompleted: true,
-                            attachments: [],
-                            discussions: []
-                        }
-                    }],
-                    discussions: [{
-                        id: 5001,
-                        title: 'Discussion',
-                        commentCount: 1,
-                        accessLevel: 'ADMIN',
-                        parentId: 8001,
-                        parentType: 'ROW',
-                        readOnly: false,
-                        lastCommentedAt: TEST_CREATED_AT,
-                        createdBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
-                        lastCommentedUser: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
-                        comments: [{
-                            id: 6001,
-                            discussionId: 5001,
-                            text: 'Comment text',
-                            createdAt: TEST_CREATED_AT,
-                            modifiedAt: TEST_CREATED_AT,
-                            createdBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
-                            attachments: []
-                        }],
-                        commentAttachments: []
-                    }],
-                    crossSheetReferences: [{
-                        id: 3001,
-                        name: 'Cross Ref',
-                        startColumnId: 7001,
-                        endColumnId: 7002,
-                        startRowId: 8001,
-                        endRowId: 8002,
-                        sourceSheetId: 1001,
-                        status: 'OK'
-                    }],
-                    projectSettings: {
-                        workingDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'],
-                        nonWorkingDays: ['2019-12-25'],
-                        lengthOfDay: 8
-                    },
-                    userSettings: {
-                        criticalPathEnabled: false,
-                        displaySummaryTasks: true
-                    },
-                    userPermissions: {
-                        summaryPermissions: 'ADMIN'
-                    },
-                    source: {
-                        id: 1001,
-                        type: 'sheet'
-                    },
-                    summary: {
-                        fields: [{
-                            id: 10001,
-                            title: 'Summary Field',
-                            type: 'TEXT_NUMBER',
-                            index: 0,
-                            locked: false,
-                            lockedForUser: false,
-                            validation: true,
-                            displayValue: 'Value',
-                            format: ',,1,1,,,,,,,,,,,,,',
-                            formula: '=SUM([Col1]:[Col2])',
-                            symbol: 'STAR',
-                            createdAt: TEST_CREATED_AT,
-                            modifiedAt: TEST_MODIFIED_AT_ALL_PROPS,
-                            createdBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
-                            modifiedBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
-                            hyperlink: {
-                                url: 'https://example.com',
-                                reportId: 0,
-                                sheetId: 0,
-                                sightId: 0
-                            },
-                            image: {
-                                id: 'sumimg123',
-                                altText: 'Summary Image',
-                                height: 50,
-                                width: 50
-                            },
-                            objectValue: {
-                                objectType: 'NUMBER',
-                                value: '100'
-                            },
-                            options: ['Opt1'],
-                            contactOptions: []
-                        }]
-                    },
-                    workspace: {
-                        id: 2001,
-                        name: 'Workspace',
-                        accessLevel: 'ADMIN',
-                        permalink: 'https://app.smartsheet.com/workspaces/test'
-                    }
-                }],
-                workspaces: [{
-                    id: 2001,
-                    name: 'Workspace',
-                    accessLevel: 'ADMIN',
-                    permalink: 'https://app.smartsheet.com/workspaces/test'
-                }]
-            },
-            sourceSheets: [{
-                id: 1001,
-                name: 'Source Sheet',
-                accessLevel: 'ADMIN',
-                permalink: 'https://app.smartsheet.com/sheets/source',
-                fromId: 1000,
-                ownerId: 9876543210,
+            totalRowCount: 50,
+            owner: TEST_REPORT_OWNER_ALL_PROPS,
+            effectiveAttachmentOptions: ['FILE'],
+            attachments: [
+              {
+                id: 2001,
+                parentId: 1001,
+                name: 'attachment.pdf',
+                attachmentType: 'FILE',
+                attachmentSubType: 'DOCUMENT',
+                mimeType: 'application/pdf',
+                parentType: 'SHEET',
                 createdAt: TEST_CREATED_AT,
-                modifiedAt: TEST_MODIFIED_AT_ALL_PROPS,
-                version: 1,
-                favorite: true,
-                readOnly: false,
-                cellImageUploadEnabled: true,
-                dependenciesEnabled: false,
-                ganttEnabled: false,
-                hasSummaryFields: true,
-                isMultiPicklistEnabled: true,
-                resourceManagementEnabled: false,
-                resourceManagementType: 'NONE',
-                showParentRowsForFilters: true,
-                totalRowCount: 50,
-                owner: TEST_REPORT_OWNER_ALL_PROPS,
-                effectiveAttachmentOptions: ['FILE'],
-                attachments: [],
-                columns: [],
-                rows: [],
-                discussions: [],
-                crossSheetReferences: [],
-                projectSettings: {
-                    workingDays: ['MONDAY'],
-                    nonWorkingDays: ['2019-12-25'],
-                    lengthOfDay: 8
-                },
-                userSettings: {
-                    criticalPathEnabled: false,
-                    displaySummaryTasks: true
-                },
-                userPermissions: {
-                    summaryPermissions: 'ADMIN'
-                },
-                source: {
-                    id: 1001,
-                    type: 'sheet'
-                },
-                summary: {
-                    fields: []
-                },
-                workspace: {
-                    id: 2001,
-                    name: 'Workspace',
-                    accessLevel: 'ADMIN',
-                    permalink: 'https://app.smartsheet.com/workspaces/test'
-                }
-            }],
-            columns: [{
+                createdBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
+                sizeInKb: 1024,
+                url: 'https://example.com/attachment.pdf',
+                urlExpiresInMillis: 1609459200000,
+              },
+            ],
+            columns: [
+              {
                 id: 7001,
                 index: 0,
                 title: 'Task Name',
-                type: 'TEXT_NUMBER',
+                type: ReportColumnType.TEXT_NUMBER,
                 primary: true,
                 width: 150,
                 locked: false,
@@ -438,24 +186,28 @@ describe('Reports - getReport endpoint tests', () => {
                 description: 'Task column',
                 format: ',,1,1,,,,,,,,,,,,,',
                 formula: '',
-                systemColumnType: 'AUTO_NUMBER',
+                systemColumnType: SystemColumnType.AUTO_NUMBER,
                 autoNumberFormat: {
-                    fill: '0001',
-                    prefix: 'TASK-',
-                    startingNumber: 1,
-                    suffix: ''
+                  fill: '0001',
+                  prefix: 'TASK-',
+                  startingNumber: 1,
+                  suffix: '',
                 },
-                options: ['Option1'],
+                options: ['Option1', 'Option2'],
                 tags: ['CALENDAR_START_DATE'],
-                contactOptions: [{
+                contactOptions: [
+                  {
                     email: 'contact@example.com',
-                    name: 'Contact Name'
-                }]
-            }],
-            rows: [{
+                    name: 'Contact Name',
+                  },
+                ],
+              },
+            ],
+            rows: [
+              {
                 id: 8001,
                 rowNumber: 1,
-                sheetId: TEST_REPORT_ID,
+                sheetId: 1001,
                 siblingId: 8002,
                 accessLevel: 'ADMIN',
                 expanded: true,
@@ -471,10 +223,11 @@ describe('Reports - getReport endpoint tests', () => {
                 permaLink: 'https://app.smartsheet.com/sheets/row/8001',
                 createdBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
                 modifiedBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
-                cells: [{
+                cells: [
+                  {
                     columnId: 7001,
                     rowId: 8001,
-                    columnType: 'TEXT_NUMBER',
+                    columnType: ReportColumnType.TEXT_NUMBER,
                     value: 'Task 1',
                     displayValue: 'Task 1',
                     format: ',,1,1,,,,,,,,,,,,,',
@@ -483,69 +236,60 @@ describe('Reports - getReport endpoint tests', () => {
                     strict: false,
                     overrideValidation: false,
                     hyperlink: {
-                        url: 'https://example.com',
-                        reportId: 0,
-                        sheetId: 0,
-                        sightId: 0
+                      url: 'https://example.com',
+                      reportId: 0,
+                      sheetId: 0,
+                      sightId: 0,
                     },
                     image: {
-                        id: 'img123',
-                        altText: 'Image',
-                        height: 100,
-                        width: 100
+                      id: 'img123',
+                      altText: 'Image',
+                      height: 100,
+                      width: 100,
                     },
                     linkInFromCell: {
-                        columnId: 7001,
-                        rowId: 8001,
-                        sheetId: 1001,
-                        sheetName: 'Source',
-                        status: 'OK'
+                      columnId: 7001,
+                      rowId: 8001,
+                      sheetId: 1001,
+                      sheetName: 'Source',
+                      status: 'OK',
                     },
-                    linksOutToCells: [{
+                    linksOutToCells: [
+                      {
                         columnId: 7002,
                         rowId: 8002,
                         sheetId: 1002,
                         sheetName: 'Target',
-                        status: 'OK'
-                    }],
+                        status: 'OK',
+                      },
+                    ],
                     objectValue: {
-                        objectType: 'DATE',
-                        value: '2025-03-03'
-                    }
-                }],
+                      objectType: 'DATE',
+                      value: '2025-03-03',
+                    },
+                  },
+                ],
                 columns: [],
                 attachments: [],
                 discussions: [],
                 proof: {
-                    id: 9001,
-                    originalId: 9000,
-                    name: 'Proof',
-                    type: 'DOCUMENT',
-                    documentType: 'PDF',
-                    proofRequestUrl: 'https://example.com/proof',
-                    version: 1,
-                    lastUpdatedAt: TEST_CREATED_AT,
-                    lastUpdatedBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
-                    isCompleted: true,
-                    attachments: [],
-                    discussions: []
-                }
-            }],
-            attachments: [{
-                id: 2001,
-                parentId: TEST_REPORT_ID,
-                name: 'attachment.pdf',
-                attachmentType: 'FILE',
-                attachmentSubType: 'DOCUMENT',
-                mimeType: 'application/pdf',
-                parentType: 'REPORT',
-                createdAt: TEST_CREATED_AT,
-                createdBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
-                sizeInKb: 1024,
-                url: 'https://example.com/attachment.pdf',
-                urlExpiresInMillis: 1609459200000
-            }],
-            discussions: [{
+                  id: 9001,
+                  originalId: 9000,
+                  name: 'Proof',
+                  type: 'DOCUMENT',
+                  documentType: 'PDF',
+                  proofRequestUrl: 'https://example.com/proof',
+                  version: 1,
+                  lastUpdatedAt: TEST_CREATED_AT,
+                  lastUpdatedBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
+                  isCompleted: true,
+                  attachments: [],
+                  discussions: [],
+                },
+              },
+            ],
+            discussions: [
+              {
                 id: 5001,
                 title: 'Discussion',
                 commentCount: 1,
@@ -556,18 +300,22 @@ describe('Reports - getReport endpoint tests', () => {
                 lastCommentedAt: TEST_CREATED_AT,
                 createdBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
                 lastCommentedUser: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
-                comments: [{
+                comments: [
+                  {
                     id: 6001,
                     discussionId: 5001,
                     text: 'Comment text',
                     createdAt: TEST_CREATED_AT,
                     modifiedAt: TEST_CREATED_AT,
                     createdBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
-                    attachments: []
-                }],
-                commentAttachments: []
-            }],
-            crossSheetReferences: [{
+                    attachments: [],
+                  },
+                ],
+                commentAttachments: [],
+              },
+            ],
+            crossSheetReferences: [
+              {
                 id: 3001,
                 name: 'Cross Ref',
                 startColumnId: 7001,
@@ -575,304 +323,624 @@ describe('Reports - getReport endpoint tests', () => {
                 startRowId: 8001,
                 endRowId: 8002,
                 sourceSheetId: 1001,
-                status: 'OK'
-            }],
-            workspace: {
-                id: 2001,
-                name: 'Workspace',
-                accessLevel: 'ADMIN',
-                permalink: 'https://app.smartsheet.com/workspaces/test'
-            },
+                status: 'OK',
+              },
+            ],
             projectSettings: {
-                workingDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'],
-                nonWorkingDays: ['2019-12-25'],
-                lengthOfDay: 8
+              workingDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'],
+              nonWorkingDays: ['2019-12-25'],
+              lengthOfDay: 8,
             },
             userSettings: {
-                criticalPathEnabled: false,
-                displaySummaryTasks: true
+              criticalPathEnabled: false,
+              displaySummaryTasks: true,
             },
             userPermissions: {
-                summaryPermissions: 'ADMIN'
+              summaryPermissions: 'ADMIN',
             },
             source: {
-                id: TEST_REPORT_ID,
-                type: 'report'
+              id: 1001,
+              type: 'sheet',
             },
             summary: {
-                fields: [{
-                    id: 10001,
-                    title: 'Summary Field',
-                    type: 'TEXT_NUMBER',
-                    index: 0,
-                    locked: false,
-                    lockedForUser: false,
-                    validation: true,
-                    displayValue: 'Value',
-                    format: ',,1,1,,,,,,,,,,,,,',
-                    formula: '=SUM([Col1]:[Col2])',
-                    symbol: 'STAR',
-                    createdAt: TEST_CREATED_AT,
-                    modifiedAt: TEST_MODIFIED_AT_ALL_PROPS,
-                    createdBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
-                    modifiedBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
-                    hyperlink: {
-                        url: 'https://example.com',
-                        reportId: 0,
-                        sheetId: 0,
-                        sightId: 0
-                    },
-                    image: {
-                        id: 'sumimg123',
-                        altText: 'Summary Image',
-                        height: 50,
-                        width: 50
-                    },
-                    objectValue: {
-                        objectType: 'NUMBER',
-                        value: '100'
-                    },
-                    options: ['Opt1'],
-                    contactOptions: []
-                }]
-            }
-        });
-    });
-
-    it('getReport required response body properties', async () => {
-        const requestId = crypto.randomUUID();
-        const options = {
-            reportId: TEST_REPORT_ID,
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/reports/get-report/required-response-body-properties'
-            }
-        };
-        const response = await client.reports.getReport(options);
-        
-        expect(response).toEqual({
-            scope: {
-                sheets: [{
-                    id: TEST_SOURCE_SHEET_ID,
-                    fromId: TEST_SOURCE_SHEET_FROM_ID,
-                    ownerId: TEST_SOURCE_SHEET_OWNER_ID,
-                    accessLevel: TEST_SOURCE_SHEET_ACCESS_LEVEL,
-                    cellImageUploadEnabled: false,
-                    columns: [],
-                    createdAt: TEST_CREATED_AT,
-                    dependenciesEnabled: false,
-                    effectiveAttachmentOptions: [],
-                    ganttEnabled: false,
-                    hasSummaryFields: false,
-                    isMultiPicklistEnabled: false,
-                    modifiedAt: TEST_MODIFIED_AT,
-                    name: TEST_SOURCE_SHEET_NAME,
-                    owner: TEST_SOURCE_SHEET_OWNER,
-                    permalink: TEST_SOURCE_SHEET_PERMALINK,
-                    projectSettings: {
-                        lengthOfDay: 8,
-                        nonWorkingDays: [],
-                        workingDays: TEST_WORKING_DAYS
-                    },
-                    readOnly: false,
-                    resourceManagementEnabled: false,
-                    resourceManagementType: 'NONE',
-                    rows: [],
-                    showParentRowsForFilters: false,
-                    source: {
-                        id: TEST_SOURCE_SHEET_ID,
-                        type: 'sheet'
-                    },
-                    summary: {
-                        fields: []
-                    },
-                    totalRowCount: 0,
-                    userPermissions: {
-                        summaryPermissions: 'VIEWER'
-                    },
-                    userSettings: {
-                        criticalPathEnabled: false,
-                        displaySummaryTasks: false
-                    },
-                    version: 1,
-                    workspace: {
-                        id: 0,
-                        name: 'Test Workspace',
-                        accessLevel: 'VIEWER',
-                        permalink: 'https://app.smartsheet.com/workspaces/test'
-                    }
-                }],
-                workspaces: [{
-                    id: TEST_SOURCE_WORKSPACE_ID,
-                    name: TEST_SOURCE_WORKSPACE_NAME,
-                    accessLevel: TEST_SOURCE_WORKSPACE_ACCESS_LEVEL,
-                    permalink: TEST_SOURCE_WORKSPACE_PERMALINK
-                }]
+              fields: [
+                {
+                  id: 10001,
+                  title: 'Summary Field',
+                  type: ReportColumnType.TEXT_NUMBER,
+                  index: 0,
+                  locked: false,
+                  lockedForUser: false,
+                  validation: true,
+                  displayValue: 'Value',
+                  format: ',,1,1,,,,,,,,,,,,,',
+                  formula: '=SUM([Col1]:[Col2])',
+                  symbol: 'STAR',
+                  createdAt: TEST_CREATED_AT,
+                  modifiedAt: TEST_MODIFIED_AT_ALL_PROPS,
+                  createdBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
+                  modifiedBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
+                  hyperlink: {
+                    url: 'https://example.com',
+                    reportId: 0,
+                    sheetId: 0,
+                    sightId: 0,
+                  },
+                  image: {
+                    id: 'sumimg123',
+                    altText: 'Summary Image',
+                    height: 50,
+                    width: 50,
+                  },
+                  objectValue: {
+                    objectType: 'NUMBER',
+                    value: '100',
+                  },
+                  options: ['Opt1'],
+                  contactOptions: [],
+                },
+              ],
             },
-            isSummaryReport: false,
-            id: TEST_REPORT_ID,
-            fromId: 0,
-            ownerId: TEST_REPORT_OWNER_ID,
-            accessLevel: TEST_REPORT_ACCESS_LEVEL,
+            workspace: {
+              id: 2001,
+              name: 'Workspace',
+              accessLevel: 'ADMIN',
+              permalink: 'https://app.smartsheet.com/workspaces/test',
+            },
+          },
+        ],
+        workspaces: [
+          {
+            id: 2001,
+            name: 'Workspace',
+            accessLevel: 'ADMIN',
+            permalink: 'https://app.smartsheet.com/workspaces/test',
+          },
+        ],
+      },
+      sourceSheets: [
+        {
+          id: 1001,
+          name: 'Source Sheet',
+          accessLevel: 'ADMIN',
+          permalink: 'https://app.smartsheet.com/sheets/source',
+          fromId: 1000,
+          ownerId: 9876543210,
+          createdAt: TEST_CREATED_AT,
+          modifiedAt: TEST_MODIFIED_AT_ALL_PROPS,
+          version: 1,
+          favorite: true,
+          readOnly: false,
+          cellImageUploadEnabled: true,
+          dependenciesEnabled: false,
+          ganttEnabled: false,
+          hasSummaryFields: true,
+          isMultiPicklistEnabled: true,
+          resourceManagementEnabled: false,
+          resourceManagementType: 'NONE',
+          showParentRowsForFilters: true,
+          totalRowCount: 50,
+          owner: TEST_REPORT_OWNER_ALL_PROPS,
+          effectiveAttachmentOptions: ['FILE'],
+          attachments: [],
+          columns: [],
+          rows: [],
+          discussions: [],
+          crossSheetReferences: [],
+          projectSettings: {
+            workingDays: ['MONDAY'],
+            nonWorkingDays: ['2019-12-25'],
+            lengthOfDay: 8,
+          },
+          userSettings: {
+            criticalPathEnabled: false,
+            displaySummaryTasks: true,
+          },
+          userPermissions: {
+            summaryPermissions: 'ADMIN',
+          },
+          source: {
+            id: 1001,
+            type: 'sheet',
+          },
+          summary: {
+            fields: [],
+          },
+          workspace: {
+            id: 2001,
+            name: 'Workspace',
+            accessLevel: 'ADMIN',
+            permalink: 'https://app.smartsheet.com/workspaces/test',
+          },
+        },
+      ],
+      columns: [
+        {
+          id: 7001,
+          index: 0,
+          title: 'Task Name',
+          type: ReportColumnType.TEXT_NUMBER,
+          primary: true,
+          width: 150,
+          locked: false,
+          lockedForUser: false,
+          validation: true,
+          version: 1,
+          hidden: false,
+          symbol: 'STAR',
+          description: 'Task column',
+          format: ',,1,1,,,,,,,,,,,,,',
+          formula: '',
+          systemColumnType: SystemColumnType.AUTO_NUMBER,
+          autoNumberFormat: {
+            fill: '0001',
+            prefix: 'TASK-',
+            startingNumber: 1,
+            suffix: '',
+          },
+          options: ['Option1'],
+          tags: ['CALENDAR_START_DATE'],
+          contactOptions: [
+            {
+              email: 'contact@example.com',
+              name: 'Contact Name',
+            },
+          ],
+        },
+      ],
+      rows: [
+        {
+          id: 8001,
+          rowNumber: 1,
+          sheetId: TEST_REPORT_ID,
+          siblingId: 8002,
+          accessLevel: 'ADMIN',
+          expanded: true,
+          filteredOut: false,
+          inCriticalPath: false,
+          locked: false,
+          lockedForUser: false,
+          createdAt: TEST_CREATED_AT,
+          modifiedAt: TEST_MODIFIED_AT_ALL_PROPS,
+          version: 1,
+          format: ',,1,1,,,,,,,,,,,,,',
+          conditionalFormat: ',,1,1,,,,,,,,,,,,,',
+          permaLink: 'https://app.smartsheet.com/sheets/row/8001',
+          createdBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
+          modifiedBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
+          cells: [
+            {
+              columnId: 7001,
+              rowId: 8001,
+              columnType: ReportColumnType.TEXT_NUMBER,
+              value: 'Task 1',
+              displayValue: 'Task 1',
+              format: ',,1,1,,,,,,,,,,,,,',
+              conditionalFormat: ',,1,1,,,,,,,,,,,,,',
+              formula: '',
+              strict: false,
+              overrideValidation: false,
+              hyperlink: {
+                url: 'https://example.com',
+                reportId: 0,
+                sheetId: 0,
+                sightId: 0,
+              },
+              image: {
+                id: 'img123',
+                altText: 'Image',
+                height: 100,
+                width: 100,
+              },
+              linkInFromCell: {
+                columnId: 7001,
+                rowId: 8001,
+                sheetId: 1001,
+                sheetName: 'Source',
+                status: 'OK',
+              },
+              linksOutToCells: [
+                {
+                  columnId: 7002,
+                  rowId: 8002,
+                  sheetId: 1002,
+                  sheetName: 'Target',
+                  status: 'OK',
+                },
+              ],
+              objectValue: {
+                objectType: 'DATE',
+                value: '2025-03-03',
+              },
+            },
+          ],
+          columns: [],
+          attachments: [],
+          discussions: [],
+          proof: {
+            id: 9001,
+            originalId: 9000,
+            name: 'Proof',
+            type: 'DOCUMENT',
+            documentType: 'PDF',
+            proofRequestUrl: 'https://example.com/proof',
+            version: 1,
+            lastUpdatedAt: TEST_CREATED_AT,
+            lastUpdatedBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
+            isCompleted: true,
+            attachments: [],
+            discussions: [],
+          },
+        },
+      ],
+      attachments: [
+        {
+          id: 2001,
+          parentId: TEST_REPORT_ID,
+          name: 'attachment.pdf',
+          attachmentType: 'FILE',
+          attachmentSubType: 'DOCUMENT',
+          mimeType: 'application/pdf',
+          parentType: 'REPORT',
+          createdAt: TEST_CREATED_AT,
+          createdBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
+          sizeInKb: 1024,
+          url: 'https://example.com/attachment.pdf',
+          urlExpiresInMillis: 1609459200000,
+        },
+      ],
+      discussions: [
+        {
+          id: 5001,
+          title: 'Discussion',
+          commentCount: 1,
+          accessLevel: 'ADMIN',
+          parentId: 8001,
+          parentType: 'ROW',
+          readOnly: false,
+          lastCommentedAt: TEST_CREATED_AT,
+          createdBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
+          lastCommentedUser: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
+          comments: [
+            {
+              id: 6001,
+              discussionId: 5001,
+              text: 'Comment text',
+              createdAt: TEST_CREATED_AT,
+              modifiedAt: TEST_CREATED_AT,
+              createdBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
+              attachments: [],
+            },
+          ],
+          commentAttachments: [],
+        },
+      ],
+      crossSheetReferences: [
+        {
+          id: 3001,
+          name: 'Cross Ref',
+          startColumnId: 7001,
+          endColumnId: 7002,
+          startRowId: 8001,
+          endRowId: 8002,
+          sourceSheetId: 1001,
+          status: 'OK',
+        },
+      ],
+      workspace: {
+        id: 2001,
+        name: 'Workspace',
+        accessLevel: 'ADMIN',
+        permalink: 'https://app.smartsheet.com/workspaces/test',
+      },
+      projectSettings: {
+        workingDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'],
+        nonWorkingDays: ['2019-12-25'],
+        lengthOfDay: 8,
+      },
+      userSettings: {
+        criticalPathEnabled: false,
+        displaySummaryTasks: true,
+      },
+      userPermissions: {
+        summaryPermissions: 'ADMIN',
+      },
+      source: {
+        id: TEST_REPORT_ID,
+        type: 'report',
+      },
+      summary: {
+        fields: [
+          {
+            id: 10001,
+            title: 'Summary Field',
+            type: ReportColumnType.TEXT_NUMBER,
+            index: 0,
+            locked: false,
+            lockedForUser: false,
+            validation: true,
+            displayValue: 'Value',
+            format: ',,1,1,,,,,,,,,,,,,',
+            formula: '=SUM([Col1]:[Col2])',
+            symbol: 'STAR',
+            createdAt: TEST_CREATED_AT,
+            modifiedAt: TEST_MODIFIED_AT_ALL_PROPS,
+            createdBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
+            modifiedBy: { email: 'jane.doe@smartsheet.com', name: 'Jane Doe' },
+            hyperlink: {
+              url: 'https://example.com',
+              reportId: 0,
+              sheetId: 0,
+              sightId: 0,
+            },
+            image: {
+              id: 'sumimg123',
+              altText: 'Summary Image',
+              height: 50,
+              width: 50,
+            },
+            objectValue: {
+              objectType: 'NUMBER',
+              value: '100',
+            },
+            options: ['Opt1'],
+            contactOptions: [],
+          },
+        ],
+      },
+    });
+  });
+
+  it('getReport required response body properties', async () => {
+    const requestId = crypto.randomUUID();
+    const options = {
+      reportId: TEST_REPORT_ID,
+      customProperties: {
+        'x-request-id': requestId,
+        'x-test-name': '/reports/get-report/required-response-body-properties',
+      },
+    };
+    const response = await client.reports.getReport(options);
+    const matchedRequest = await findWireMockRequest(requestId);
+
+    expect(matchedRequest.body).toEqual('');
+    expect(response).toEqual({
+      scope: {
+        sheets: [
+          {
+            id: TEST_SOURCE_SHEET_ID,
+            fromId: TEST_SOURCE_SHEET_FROM_ID,
+            ownerId: TEST_SOURCE_SHEET_OWNER_ID,
+            accessLevel: TEST_SOURCE_SHEET_ACCESS_LEVEL,
             cellImageUploadEnabled: false,
-            columns: [{
-                autoNumberFormat: TEST_EMPTY_AUTO_NUMBER_FORMAT,
-                contactOptions: [],
-                description: '',
-                formula: '',
-                hidden: false,
-                id: TEST_COLUMN_1_ID,
-                index: TEST_COLUMN_1_INDEX,
-                locked: false,
-                lockedForUser: false,
-                options: [],
-                primary: TEST_COLUMN_1_PRIMARY,
-                systemColumnType: '',
-                tags: [],
-                title: TEST_COLUMN_1_TITLE,
-                type: TEST_COLUMN_1_TYPE,
-                validation: false,
-                version: 0,
-                width: TEST_COLUMN_1_WIDTH
-            }, {
-                autoNumberFormat: TEST_EMPTY_AUTO_NUMBER_FORMAT,
-                contactOptions: [],
-                description: '',
-                formula: '',
-                hidden: false,
-                id: TEST_COLUMN_2_ID,
-                index: TEST_COLUMN_2_INDEX,
-                locked: false,
-                lockedForUser: false,
-                options: TEST_COLUMN_2_OPTIONS,
-                systemColumnType: '',
-                tags: [],
-                title: TEST_COLUMN_2_TITLE,
-                type: TEST_COLUMN_2_TYPE,
-                validation: false,
-                version: 0,
-                width: TEST_COLUMN_2_WIDTH
-            }],
+            columns: [],
             createdAt: TEST_CREATED_AT,
             dependenciesEnabled: false,
-            effectiveAttachmentOptions: TEST_EFFECTIVE_ATTACHMENT_OPTIONS,
+            effectiveAttachmentOptions: [],
             ganttEnabled: false,
             hasSummaryFields: false,
             isMultiPicklistEnabled: false,
             modifiedAt: TEST_MODIFIED_AT,
-            name: TEST_REPORT_NAME,
-            owner: TEST_REPORT_OWNER,
-            permalink: TEST_REPORT_PERMALINK,
+            name: TEST_SOURCE_SHEET_NAME,
+            owner: TEST_SOURCE_SHEET_OWNER,
+            permalink: TEST_SOURCE_SHEET_PERMALINK,
             projectSettings: {
-                lengthOfDay: 8,
-                nonWorkingDays: TEST_NON_WORKING_DAYS,
-                workingDays: TEST_WORKING_DAYS
+              lengthOfDay: 8,
+              nonWorkingDays: [],
+              workingDays: TEST_WORKING_DAYS,
             },
             readOnly: false,
             resourceManagementEnabled: false,
             resourceManagementType: 'NONE',
-            rows: [{
-                id: TEST_ROW_ID,
-                sheetId: TEST_ROW_SHEET_ID,
-                siblingId: TEST_ROW_SIBLING_ID,
-                accessLevel: TEST_ROW_ACCESS_LEVEL,
-                cells: [{
-                    columnId: TEST_COLUMN_1_ID,
-                    rowId: TEST_ROW_ID,
-                    displayValue: 'Task 1',
-                    formula: '',
-                    hyperlink: TEST_EMPTY_HYPERLINK,
-                    objectValue: TEST_EMPTY_OBJECT_VALUE,
-                    strict: false,
-                    value: 'Task 1'
-                }, {
-                    columnId: TEST_COLUMN_2_ID,
-                    rowId: TEST_ROW_ID,
-                    displayValue: 'In Progress',
-                    formula: '',
-                    hyperlink: TEST_EMPTY_HYPERLINK,
-                    objectValue: TEST_EMPTY_OBJECT_VALUE,
-                    strict: false,
-                    value: 'In Progress'
-                }],
-                columns: [],
-                createdAt: TEST_CREATED_AT,
-                createdBy: TEST_EMPTY_USER,
-                expanded: TEST_ROW_EXPANDED,
-                locked: TEST_ROW_LOCKED,
-                lockedForUser: TEST_ROW_LOCKED_FOR_USER,
-                modifiedAt: TEST_MODIFIED_AT,
-                modifiedBy: TEST_EMPTY_USER,
-                proof: TEST_EMPTY_PROOF,
-                rowNumber: TEST_ROW_NUMBER,
-                version: TEST_ROW_VERSION
-            }],
+            rows: [],
             showParentRowsForFilters: false,
-            source: { id: 0, type: 'sheet' },
+            source: {
+              id: TEST_SOURCE_SHEET_ID,
+              type: 'sheet',
+            },
             summary: {
-                fields: [{
-                    id: TEST_SUMMARY_FIELD_ID,
-                    contactOptions: [],
-                    createdAt: TEST_CREATED_AT,
-                    createdBy: TEST_EMPTY_USER,
-                    displayValue: TEST_SUMMARY_FIELD_DISPLAY_VALUE,
-                    index: TEST_SUMMARY_FIELD_INDEX,
-                    locked: TEST_SUMMARY_FIELD_LOCKED,
-                    lockedForUser: TEST_SUMMARY_FIELD_LOCKED_FOR_USER,
-                    modifiedAt: TEST_MODIFIED_AT,
-                    modifiedBy: TEST_EMPTY_USER,
-                    objectValue: TEST_EMPTY_OBJECT_VALUE,
-                    title: TEST_SUMMARY_FIELD_TITLE,
-                    type: TEST_SUMMARY_FIELD_TYPE,
-                    validation: TEST_SUMMARY_FIELD_VALIDATION
-                }]
+              fields: [],
             },
             totalRowCount: 0,
-            userPermissions: { summaryPermissions: 'VIEWER' },
-            userSettings: { criticalPathEnabled: false, displaySummaryTasks: false },
+            userPermissions: {
+              summaryPermissions: 'VIEWER',
+            },
+            userSettings: {
+              criticalPathEnabled: false,
+              displaySummaryTasks: false,
+            },
             version: 1,
             workspace: {
-                id: 0,
-                name: 'Test Workspace',
-                accessLevel: 'VIEWER',
-                permalink: 'https://app.smartsheet.com/workspaces/test'
-            }
-        });
+              id: 0,
+              name: 'Test Workspace',
+              accessLevel: 'VIEWER',
+              permalink: 'https://app.smartsheet.com/workspaces/test',
+            },
+          },
+        ],
+        workspaces: [
+          {
+            id: TEST_SOURCE_WORKSPACE_ID,
+            name: TEST_SOURCE_WORKSPACE_NAME,
+            accessLevel: TEST_SOURCE_WORKSPACE_ACCESS_LEVEL,
+            permalink: TEST_SOURCE_WORKSPACE_PERMALINK,
+          },
+        ],
+      },
+      isSummaryReport: false,
+      id: TEST_REPORT_ID,
+      fromId: 0,
+      ownerId: TEST_REPORT_OWNER_ID,
+      accessLevel: TEST_REPORT_ACCESS_LEVEL,
+      cellImageUploadEnabled: false,
+      columns: [
+        {
+          autoNumberFormat: TEST_EMPTY_AUTO_NUMBER_FORMAT,
+          contactOptions: [],
+          description: '',
+          formula: '',
+          hidden: false,
+          id: TEST_COLUMN_1_ID,
+          index: TEST_COLUMN_1_INDEX,
+          locked: false,
+          lockedForUser: false,
+          options: [],
+          primary: TEST_COLUMN_1_PRIMARY,
+          systemColumnType: '',
+          tags: [],
+          title: TEST_COLUMN_1_TITLE,
+          type: TEST_COLUMN_1_TYPE,
+          validation: false,
+          version: 0,
+          width: TEST_COLUMN_1_WIDTH,
+        },
+        {
+          autoNumberFormat: TEST_EMPTY_AUTO_NUMBER_FORMAT,
+          contactOptions: [],
+          description: '',
+          formula: '',
+          hidden: false,
+          id: TEST_COLUMN_2_ID,
+          index: TEST_COLUMN_2_INDEX,
+          locked: false,
+          lockedForUser: false,
+          options: TEST_COLUMN_2_OPTIONS,
+          systemColumnType: '',
+          tags: [],
+          title: TEST_COLUMN_2_TITLE,
+          type: TEST_COLUMN_2_TYPE,
+          validation: false,
+          version: 0,
+          width: TEST_COLUMN_2_WIDTH,
+        },
+      ],
+      createdAt: TEST_CREATED_AT,
+      dependenciesEnabled: false,
+      effectiveAttachmentOptions: TEST_EFFECTIVE_ATTACHMENT_OPTIONS,
+      ganttEnabled: false,
+      hasSummaryFields: false,
+      isMultiPicklistEnabled: false,
+      modifiedAt: TEST_MODIFIED_AT,
+      name: TEST_REPORT_NAME,
+      owner: TEST_REPORT_OWNER,
+      permalink: TEST_REPORT_PERMALINK,
+      projectSettings: {
+        lengthOfDay: 8,
+        nonWorkingDays: TEST_NON_WORKING_DAYS,
+        workingDays: TEST_WORKING_DAYS,
+      },
+      readOnly: false,
+      resourceManagementEnabled: false,
+      resourceManagementType: 'NONE',
+      rows: [
+        {
+          id: TEST_ROW_ID,
+          sheetId: TEST_ROW_SHEET_ID,
+          siblingId: TEST_ROW_SIBLING_ID,
+          accessLevel: TEST_ROW_ACCESS_LEVEL,
+          cells: [
+            {
+              columnId: TEST_COLUMN_1_ID,
+              rowId: TEST_ROW_ID,
+              displayValue: 'Task 1',
+              formula: '',
+              hyperlink: TEST_EMPTY_HYPERLINK,
+              objectValue: TEST_EMPTY_OBJECT_VALUE,
+              strict: false,
+              value: 'Task 1',
+            },
+            {
+              columnId: TEST_COLUMN_2_ID,
+              rowId: TEST_ROW_ID,
+              displayValue: 'In Progress',
+              formula: '',
+              hyperlink: TEST_EMPTY_HYPERLINK,
+              objectValue: TEST_EMPTY_OBJECT_VALUE,
+              strict: false,
+              value: 'In Progress',
+            },
+          ],
+          columns: [],
+          createdAt: TEST_CREATED_AT,
+          createdBy: TEST_EMPTY_USER,
+          expanded: TEST_ROW_EXPANDED,
+          locked: TEST_ROW_LOCKED,
+          lockedForUser: TEST_ROW_LOCKED_FOR_USER,
+          modifiedAt: TEST_MODIFIED_AT,
+          modifiedBy: TEST_EMPTY_USER,
+          proof: TEST_EMPTY_PROOF,
+          rowNumber: TEST_ROW_NUMBER,
+          version: TEST_ROW_VERSION,
+        },
+      ],
+      showParentRowsForFilters: false,
+      source: { id: 0, type: 'sheet' },
+      summary: {
+        fields: [
+          {
+            id: TEST_SUMMARY_FIELD_ID,
+            contactOptions: [],
+            createdAt: TEST_CREATED_AT,
+            createdBy: TEST_EMPTY_USER,
+            displayValue: TEST_SUMMARY_FIELD_DISPLAY_VALUE,
+            index: TEST_SUMMARY_FIELD_INDEX,
+            locked: TEST_SUMMARY_FIELD_LOCKED,
+            lockedForUser: TEST_SUMMARY_FIELD_LOCKED_FOR_USER,
+            modifiedAt: TEST_MODIFIED_AT,
+            modifiedBy: TEST_EMPTY_USER,
+            objectValue: TEST_EMPTY_OBJECT_VALUE,
+            title: TEST_SUMMARY_FIELD_TITLE,
+            type: TEST_SUMMARY_FIELD_TYPE,
+            validation: TEST_SUMMARY_FIELD_VALIDATION,
+          },
+        ],
+      },
+      totalRowCount: 0,
+      userPermissions: { summaryPermissions: 'VIEWER' },
+      userSettings: { criticalPathEnabled: false, displaySummaryTasks: false },
+      version: 1,
+      workspace: {
+        id: 0,
+        name: 'Test Workspace',
+        accessLevel: 'VIEWER',
+        permalink: 'https://app.smartsheet.com/workspaces/test',
+      },
     });
+  });
 
-    it('getReport error 500 response', async () => {
-        const requestId = crypto.randomUUID();
-        const options = {
-            reportId: TEST_REPORT_ID,
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/errors/500-response'
-            }
-        };
-        try {
-            await client.reports.getReport(options);
-            expect(true).toBe(false); // Expected an error to be thrown
-        } catch (error) {
-            expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
-            expect(error.message).toBe(ERROR_500_MESSAGE);
-        }
-    });
+  it('getReport error 500 response', async () => {
+    const requestId = crypto.randomUUID();
+    const options = {
+      reportId: TEST_REPORT_ID,
+      customProperties: {
+        'x-request-id': requestId,
+        'x-test-name': '/errors/500-response',
+      },
+    };
+    try {
+      await client.reports.getReport(options);
+      expect(true).toBe(false); // Expected an error to be thrown
+    } catch (error: any) {
+      expect(error.statusCode).toBe(ERROR_500_STATUS_CODE);
+      expect(error.message).toBe(ERROR_500_MESSAGE);
+    }
+  });
 
-    it('getReport error 400 response', async () => {
-        const requestId = crypto.randomUUID();
-        const options = {
-            reportId: TEST_REPORT_ID,
-            customProperties: {
-                'x-request-id': requestId,
-                'x-test-name': '/errors/400-response'
-            }
-        };
-        try {
-            await client.reports.getReport(options);
-            expect(true).toBe(false); // Expected an error to be thrown
-        } catch (error) {
-            expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
-            expect(error.message).toBe(ERROR_400_MESSAGE);
-        }
-    });
+  it('getReport error 400 response', async () => {
+    const requestId = crypto.randomUUID();
+    const options = {
+      reportId: TEST_REPORT_ID,
+      customProperties: {
+        'x-request-id': requestId,
+        'x-test-name': '/errors/400-response',
+      },
+    };
+    try {
+      await client.reports.getReport(options);
+      expect(true).toBe(false); // Expected an error to be thrown
+    } catch (error: any) {
+      expect(error.statusCode).toBe(ERROR_400_STATUS_CODE);
+      expect(error.message).toBe(ERROR_400_MESSAGE);
+    }
+  });
 });

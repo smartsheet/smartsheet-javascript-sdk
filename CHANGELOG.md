@@ -11,6 +11,81 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Support for DELETE /sheets/{sheetId}/dataclassification endpoint (Remove Data Classification)
 - Added `dataClassification` field to Sheet model
 
+## [5.3.0] - 2026-08-12
+
+### Added
+
+- Added support for the `include` query parameter on `users.listUserPlans` (`GET /2.0/users/{userId}/plans`), accepting either an array of `ListUserPlansInclusion` values or a comma-separated string. Arrays are joined into a single comma-separated value. The only currently accepted value is `ListUserPlansInclusion.PLAN_NAME` (`planName`).
+- Added an optional `planName` field to each plan in `ListUserPlansResponse`, populated with the owning organization's name when `include=planName` is requested.
+
+### Security
+
+- Bumped `axios` to `^1.18.0` to resolve six security advisories (GHSA-gcfj-64vw-6mp9, GHSA-jqh4-m9w3-8hp9, GHSA-hcpx-6fm6-wx23, GHSA-mwf2-3pr3-8698, GHSA-f4gw-2p7v-4548, GHSA-xj6q-8x83-jv6g), all patched in axios 1.18.0.
+- Updated transitive development dependencies via lockfile refresh to resolve ten advisories in `js-yaml`, `brace-expansion`, `fast-uri`, and `@babel/core`. These are dev-only dependencies (linting, testing, build tooling) and are not shipped in the published `dist/`, so runtime consumers were never exposed.
+
+### Fixed
+
+- Fixed all `sharing` methods (`listAssetShares`, `getAssetShare`, `shareAsset`, `updateAssetShare`, `deleteAssetShare`) failing with `404 Not Found` because query parameters (`assetType`/`assetId`) were baked into the request URL and then re-applied by the HTTP layer, producing a duplicated, malformed query string. Query parameters are now applied once. ([#195](https://github.com/smartsheet/smartsheet-javascript-sdk/issues/195))
+- Fixed `sharing.updateAssetShare` throwing at runtime because the HTTP requestor did not expose a `patch` method.
+
+## [5.2.0] - 2026-07-09
+
+### Added
+- Added support for GET /2.0/reports/{reportId}/scope endpoint (`listReportScope`)
+- Added support for GET /2.0/reports/{reportId}/columns endpoint (`listReportColumns`)
+- Added support for GET /2.0/reports/{reportId}/columns/{columnVirtualId} endpoint (`getReportColumn`)
+- Added support for PUT /2.0/reports/{reportId}/columns/{columnVirtualId} endpoint (`updateReportColumn`)
+- Added support for DELETE /2.0/reports/{reportId}/columns/{columnVirtualId} endpoint (`deleteReportColumn`)
+- Added support for GET /2.0/reports/{reportId}/definition endpoint (`getReportDefinition`)
+
+### Deprecated
+
+- Deprecated `Event.objectId`; use `Event.objectIdStr` instead. `objectId` is numeric only and contains -1 for non-numeric identifiers. It is not scheduled for removal.
+
+## [5.1.0] - 2026-06-26
+
+### Added
+
+- Added support for GET /2.0/sheets/{sheetId}/path endpoint (`getSheetPath`)
+- Added support for GET /2.0/reports/{reportId}/path endpoint (`getReportPath`)
+- Added support for GET /2.0/sights/{sightId}/path endpoint (`getSightPath`)
+- Added support for GET /2.0/folders/{folderId}/path endpoint (`getFolderPath`)
+- Added helper functions `getLeaf<Asset>()` and `getLeaf<Asset>Path()` for convenient traversal of the path node objects
+
+## [5.0.1] - 2026-06-10
+
+### Fixed
+
+- Deprecation related corrections
+
+### Added
+
+- Hardcode `paginationType=token` for `listWorkspaces`.
+
+## [5.0.0] - 2026-06-08
+### Added
+- Added optional `objectIdStr` field to `Event` interface to support alphanumeric object identifiers (AUD-903)
+- SDK architecte details in [ADVANCED.md](ADVANCED.md)
+- SDK testing standards in [TESTING.md](TESTING.md)
+- Added ReportsApi type to [SmartsheetClient](lib/types/SmartsheetClient.ts)
+- Added shared `TokenPaginationResponse<T>` interface in [lib/types/TokenPaginationResponse.ts](lib/types/TokenPaginationResponse.ts) for token-based paginated responses.
+
+### Changed
+- ⚠️ **BREAKING**: `ListSightsResponse` is now `TokenPaginationResponse<Sight>` instead of extending `TokenPaginationQueryParameters`. Response shape is unchanged (`{ lastKey, data }`), but the type alias replaces the previous interface.
+- `listWebhooks` JSDoc updated to reflect Smartsheet API behavior changes effective Jun-03-2026: `pageSize` is server-capped at 10,000, `totalCount` and `totalPages` are returned as `-1`, and webhooks are sorted by creation date (most recent first) instead of name. SDK type signatures unchanged. See [Smartsheet API changelog 2025-08-04](https://developers.smartsheet.com/api/smartsheet/changelog#2025-08-04).
+
+### Removed
+- ⚠️ **BREAKING**: Removed deprecated `include`, `exclude`, and `skipRemap` query parameters from `createChildFolder`. These parameters were [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#deprecated-the-copy-related-query-parameters-for-create-folder-and-create-workspace) (sunset Mar-09-2026) and superseded by the dedicated `copyFolder` endpoint. The `CreateFolderQueryParameters` interface has been removed; `CreateChildFolderOptions` no longer accepts `queryParameters`.
+- ⚠️ **BREAKING**: Removed deprecated `includeAll`, `page`, `pageSize`, `modifiedSince`, and `paginationType` from `ListSightQueryParameters`, and removed `pageNumber`, `pageSize`, `totalPages`, and `totalCount` from `ListSightsResponse`. These were [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#deprecated-includeall-and-offset-based-pagination-for-dashboards) (sunset Jun-03-2026). Use token-based pagination via `maxItems` and `lastKey`.
+- ⚠️ **BREAKING**: Removed deprecated `includeAll` from `ListWebhooksQueryParameters`. This was [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#2025-08-04) (sunset Jun-03-2026). Use offset-based pagination via `page` and `pageSize` (server-capped at 10,000).
+- ⚠️ **BREAKING**: Removed deprecated `includeAll`, `page`, `pageSize`, and `paginationType` from `listWorkspaces` query parameters, along with the accompanying `[DEPRECATED]` and `[VALIDATION ERROR]` `console.warn` calls. These were [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#2025-08-04) (sunset Jun-03-2026). The `listWorkspaces` response no longer exposes `pageNumber`, `pageSize`, `totalPages`, or `totalCount`. Use token-based pagination via `maxItems` and `lastKey`.
+- ⚠️ **BREAKING**: Removed `listPublicTemplates` and `listUserCreatedTemplates` from the `templates` resource. The `templates` factory and the `client.templates` accessor have been removed entirely. The underlying `GET /templates` and `GET /templates/public` endpoints were [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#2025-08-04) (sunset Jun-03-2026). Migrate to `getWorkspaceChildren` / `getFolderChildren` with `childrenResourceTypes` including `teamplates,sheets` to list templates within a specific workspace or folder.
+- ⚠️ **BREAKING**: Removed `getFolder` and `listChildFolders` from the `folders` resource, and `getWorkspace` and `listWorkspaceFolders` from the `workspaces` resource. The `GetFolderQueryParameters`, `GetFolderOptions`, `ListChildFoldersQueryParameters`, `ListChildFoldersOptions`, and `ListChildFoldersResponse` types have been removed. The underlying `GET /folders/{folderId}`, `GET /folders/{folderId}/folders`, `GET /workspaces/{workspaceId}`, and `GET /workspaces/{workspaceId}/folders` endpoints were [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#2025-08-04) (sunset Jun-03-2026). Migrate to `getFolderMetadata` + `getFolderChildren` and `getWorkspaceMetadata` + `getWorkspaceChildren`. Use `childrenResourceTypes` to filter the children response (e.g., `folders` to replicate the old list-folders behavior).
+- ⚠️ **BREAKING**: Removed the deprecated `shares` methods (`listShares`, `getShare`, `share`, `updateShare`, `deleteShare`) from the `sheets`, `reports`, `sights`, and `workspaces` resources. The underlying asset-specific sharing endpoints were [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#2025-08-04) (sunset Jun-03-2026). Migrate to `client.sharing` (`listAssetShares`, `getAssetShare`, `shareAsset`, `updateAssetShare`, `deleteAssetShare`), passing `assetType` and `assetId`. Note updates now use `PATCH` instead of `PUT`.
+
+### Fixed
+- Aligned the [reports mock api tests](test/mock-api/reports/) with the testing standards.
+
 ## [4.8.0] - 2026-04-30
 ### Added
 - Support for new CONTRIBUTOR seat type in `SeatTypes` enum

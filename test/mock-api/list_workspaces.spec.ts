@@ -7,14 +7,13 @@ describe('Mock API SDK Tests - List Workspaces', () => {
     const scenarios = [
       {
         "name": "List Workspaces - First Page with Pagination",
-          "method": client.workspaces.listWorkspaces,
-          "shouldError": false,
-          "options": {
-            "queryParameters": {
-              "paginationType": "token",
-              "maxItems": "100"
-            }
+        "method": client.workspaces.listWorkspaces,
+        "shouldError": false,
+        "options": {
+          "queryParameters": {
+            "maxItems": "100"
           }
+        }
       },
       {
         "name": "List Workspaces - Middle Page with Pagination",
@@ -22,7 +21,6 @@ describe('Mock API SDK Tests - List Workspaces', () => {
         "shouldError": false,
         "options": {
           "queryParameters": {
-            "paginationType": "token",
             "lastKey": "eyJsYXN0SWQiOjEwMDJ9",
             "maxItems": "100"
           }
@@ -34,7 +32,6 @@ describe('Mock API SDK Tests - List Workspaces', () => {
         "shouldError": false,
         "options": {
           "queryParameters": {
-            "paginationType": "token",
             "lastKey": "eyJsYXN0SWQiOjEwMDR9",
             "maxItems": "100"
           }
@@ -44,13 +41,7 @@ describe('Mock API SDK Tests - List Workspaces', () => {
         "name": "List Workspaces - No Pagination Parameters",
         "method": client.workspaces.listWorkspaces,
         "shouldError": false,
-        "options": {
-          "queryParameters": {
-            "paginationType": "token",
-            "lastKey": "eyJsYXN0SWQiOjEwMDR9",
-            "maxItems": "100"
-          }
-        }
+        "options": {}
       },
     ];
 

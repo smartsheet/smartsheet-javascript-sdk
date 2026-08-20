@@ -1,6 +1,6 @@
 {
   "name": "smartsheet",
-  "version": "4.8.0",
+  "version": "5.3.0",
   "description": "Smartsheet JavaScript client SDK",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "github:smartsheet/smartsheet-javascript-sdk"
+    "url": "git+https://github.com/smartsheet/smartsheet-javascript-sdk.git"
   },
   "keywords": [
     "Smartsheet",
@@ -35,7 +35,7 @@
   },
   "homepage": "http://developers.smartsheet.com",
   "dependencies": {
-    "axios": "^1.13.5",
+    "axios": "^1.18.0",
     "extend": "^3.0.2",
     "mime": "^3.0.0",
     "underscore": "^1.8.2",

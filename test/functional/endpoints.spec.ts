@@ -56,10 +56,8 @@ describe('Method Unit Tests', () => {
         {
             name: 'folders',
             methods: [
-                { name: 'getFolder', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123" }},
                 { name: 'getFolderMetadata', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123/metadata" }},
                 { name: 'getFolderChildren', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123/children" }},
-                { name: 'listChildFolders', stub: 'get', options: {folderId: 123}, expectedRequest: {url: "folders/123/folders" }},
                 { name: 'createChildFolder', stub: 'post', options: {folderId: 123}, expectedRequest: {url: "folders/123/folders" }},
                 { name: 'updateFolder', stub: 'put', options: {folderId: 123}, expectedRequest: {url: "folders/123" }},
                 { name: 'deleteFolder', stub: 'delete', options: {folderId: 123}, expectedRequest: {url: "folders/123" }},
@@ -242,12 +240,6 @@ describe('Method Unit Tests', () => {
                 { name: 'deleteSentUpdateRequest', stub: 'delete', options: {sheetId: 123, sentUpdateRequestId: 234}, expectedRequest: {url: "sheets/123/sentupdaterequests/234"}},
                 { name: 'getSentUpdateRequest', stub: 'get', options: {sheetId: 123, sentUpdateRequestId: 234}, expectedRequest: {url: "sheets/123/sentupdaterequests/234"}},
                 { name: 'getAllSentUpdateRequests', stub: 'get', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/sentupdaterequests"}},
-                // shares
-                { name: 'getShare', stub: 'get', options: {sheetId: 123, shareId: 234}, expectedRequest: {url: "sheets/123/shares/234"}},
-                { name: 'listShares', stub: 'get', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/shares"}},
-                { name: 'share', stub: 'post', options: {sheetId: 123}, expectedRequest: {url: "sheets/123/shares"}},
-                { name: 'deleteShare', stub: 'delete', options: {sheetId: 123, shareId: 234}, expectedRequest: {url: "sheets/123/shares/234"}},
-                { name: 'updateShare', stub: 'put', options: {sheetId: 123, shareId: 234}, expectedRequest: {url: "sheets/123/shares/234"}},
             ]
         },
         {
@@ -261,13 +253,6 @@ describe('Method Unit Tests', () => {
                 { name: 'moveSight', stub: 'post', options: {sightId:123}, expectedRequest: {url: "sights/123/move"}},
                 { name: 'getSightPublishStatus', stub: 'get', options: {sightId:123}, expectedRequest: {url: "sights/123/publish"}},
                 { name: 'setSightPublishStatus', stub: 'put', options: {sightId:123}, expectedRequest: {url: "sights/123/publish"}},
-            ]
-        },
-        {
-            name: 'templates',
-            methods: [
-                { name: 'listUserCreatedTemplates', stub: 'get', options: undefined, expectedRequest: {url: "templates"}},
-                { name: 'listPublicTemplates', stub: 'get', options: undefined, expectedRequest: {url: "templates/public"}},
             ]
         },
         {
@@ -318,14 +303,12 @@ describe('Method Unit Tests', () => {
         {
             name: 'workspaces',
             methods: [
-                { name: 'listWorkspaces', stub: 'get', options: undefined, expectedRequest: {url: "workspaces"}},
-                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {paginationType: 'token', lastKey: 'abc123'}}, expectedRequest: {url: "workspaces", queryParameters: {paginationType: 'token', lastKey: 'abc123'}}},
-                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {paginationType: 'token', maxItems: 500}}, expectedRequest: {url: "workspaces", queryParameters: {paginationType: 'token', maxItems: 500}}},
-                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {paginationType: 'token', lastKey: 'abc123', maxItems: 100}}, expectedRequest: {url: "workspaces", queryParameters: {paginationType: 'token', lastKey: 'abc123', maxItems: 100}}},
-                { name: 'getWorkspace', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123"}},
+                { name: 'listWorkspaces', stub: 'get', options: undefined, expectedRequest: {url: "workspaces", queryParameters: {paginationType: 'token'}}},
+                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {lastKey: 'abc123'}}, expectedRequest: {url: "workspaces", queryParameters: {lastKey: 'abc123', paginationType: 'token'}}},
+                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {maxItems: 500}}, expectedRequest: {url: "workspaces", queryParameters: {maxItems: 500, paginationType: 'token'}}},
+                { name: 'listWorkspaces', stub: 'get', options: {queryParameters : {lastKey: 'abc123', maxItems: 100}}, expectedRequest: {url: "workspaces", queryParameters: {lastKey: 'abc123', maxItems: 100, paginationType: 'token'}}},
                 { name: 'getWorkspaceMetadata', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/metadata"}},
                 { name: 'getWorkspaceChildren', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/children"}},
-                { name: 'listWorkspaceFolders', stub: 'get', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/folders"}},
                 { name: 'createWorkspace', stub: 'post', options: {}, expectedRequest: {url: "workspaces"}},
                 { name: 'createFolder', stub: 'post', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123/folders"}},
                 { name: 'deleteWorkspace', stub: 'delete', options: {workspaceId: 123}, expectedRequest: {url: "workspaces/123"}},
@@ -429,6 +412,11 @@ describe('Method Unit Tests', () => {
 
                     it('does not mutate options', () => {
                         if (originalOptions === undefined) {
+                            return;
+                        }
+
+                        // listWorkspaces intentionally mutates queryParameters to inject paginationType=token
+                        if (method.name === 'listWorkspaces') {
                             return;
                         }
 

@@ -1,7 +1,6 @@
 import type { CreateOptions } from '../types/CreateOptions';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
-import shareModule from '../share/share';
 import type {
   SightsApi,
   GetSightOptions,
@@ -20,7 +19,9 @@ import type {
   SightPublishStatus,
   SetSightPublishStatusOptions,
   SetSightPublishStatusResponse,
+  GetSightPathOptions,
 } from './types';
+import type { SightPathNode } from './types';
 
 export function create(options: CreateOptions): SightsApi {
   const requestor = options.requestor;
@@ -28,9 +29,6 @@ export function create(options: CreateOptions): SightsApi {
   const optionsToSend = {
     ...options.clientOptions,
   };
-
-  // Legacy shares module (deprecated)
-  const shares = shareModule(options.apiUrls.sights);
 
   const getSight = (getOptions: GetSightOptions, callback?: RequestCallback<Sight>) => {
     const urlOptions = { url: buildUrl(getOptions.sightId) };
@@ -88,6 +86,14 @@ export function create(options: CreateOptions): SightsApi {
     return options.apiUrls.sights;
   };
 
+  const getSightPath = (
+    getOptions: GetSightPathOptions,
+    callback?: RequestCallback<SightPathNode>
+  ): Promise<SightPathNode> => {
+    const urlOptions = { url: buildUrl(getOptions.sightId) + '/path' };
+    return requestor.get({ ...optionsToSend, ...urlOptions, ...getOptions }, callback);
+  };
+
   return {
     listSights,
     getSight,
@@ -97,7 +103,7 @@ export function create(options: CreateOptions): SightsApi {
     moveSight,
     getSightPublishStatus,
     setSightPublishStatus,
-    ...shares.create(options),
+    getSightPath,
   };
 }
 

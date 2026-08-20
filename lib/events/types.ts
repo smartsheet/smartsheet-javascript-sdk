@@ -71,8 +71,18 @@ export interface Event {
 
   /**
    * The identifier of the object impacted by the event.
+   *
+   * @deprecated Use {@link Event.objectIdStr} instead. `objectId` is numeric only and
+   * contains -1 for non-numeric identifiers. It is not scheduled for removal, but new
+   * code should read `objectIdStr`, which represents all identifier values.
    */
   objectId: string;
+
+  /**
+   * The alphanumeric identifier of the object impacted by the event.
+   * Present for object types that use string-based identifiers.
+   */
+  objectIdStr?: string;
 
   /**
    * Date and time of the event. Defaults to ISO-8601 format.

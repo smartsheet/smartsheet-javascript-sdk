@@ -8,3 +8,7 @@ npm-debug.log
 .vscode/
 dist/
 *.iml
+# Claude Code settings
+.claude/settings.local.json
+# Superpowers documentation
+docs/superpowers

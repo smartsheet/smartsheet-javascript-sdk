@@ -109,7 +109,17 @@ export function create(options: CreateOptions): UsersApi & AlternateEmailsApi {
 
   const listUserPlans = (getOptions: ListUserPlansOptions, callback?: RequestCallback<ListUserPlansResponse>) => {
     const urlOptions = { url: buildListUserPlansUrl(getOptions) };
-    const requestOptions = { ...optionsToSend, ...urlOptions, ...getOptions };
+
+    // Transform include array to comma-separated string if needed
+    const processedOptions = { ...getOptions };
+    if (processedOptions.queryParameters?.include && Array.isArray(processedOptions.queryParameters.include)) {
+      processedOptions.queryParameters = {
+        ...processedOptions.queryParameters,
+        include: processedOptions.queryParameters.include.join(','),
+      };
+    }
+
+    const requestOptions = { ...optionsToSend, ...urlOptions, ...processedOptions };
     return requestor.get(requestOptions, callback);
   };
 

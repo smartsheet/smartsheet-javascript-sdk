@@ -202,7 +202,7 @@ export const createSharing = (options: CreateOptions): SharingApi => {
   };
 
   // Base URL for shares endpoints
-  const baseUrl = '/shares';
+  const baseUrl = 'shares';
 
   /**
    * List all shares for a specified asset
@@ -214,27 +214,9 @@ export const createSharing = (options: CreateOptions): SharingApi => {
     options: ListSharesOptions,
     callback?: RequestCallback<ListSharesResponse>
   ): Promise<ListSharesResponse> => {
-    const { queryParameters } = options;
+    const urlOptions = { url: baseUrl };
 
-    // Build the base URL with required parameters
-    const urlParams = new URLSearchParams();
-    urlParams.append('assetType', queryParameters.assetType.toString());
-    urlParams.append('assetId', queryParameters.assetId.toString());
-
-    // Add optional query parameters
-    if (queryParameters.maxItems) {
-      urlParams.append('maxItems', queryParameters.maxItems.toString());
-    }
-    if (queryParameters.lastKey) {
-      urlParams.append('lastKey', queryParameters.lastKey);
-    }
-    if (queryParameters.sharingInclude) {
-      urlParams.append('sharingInclude', queryParameters.sharingInclude);
-    }
-
-    const url = `${baseUrl}?${urlParams.toString()}`;
-
-    return requestor.get({ ...optionsToSend, url, ...options }, callback);
+    return requestor.get({ ...optionsToSend, ...urlOptions, ...options }, callback);
   };
 
   /**
@@ -247,11 +229,9 @@ export const createSharing = (options: CreateOptions): SharingApi => {
     options: GetShareOptions,
     callback?: RequestCallback<ShareResponse>
   ): Promise<ShareResponse> => {
-    const { shareId, queryParameters } = options;
+    const urlOptions = { url: `${baseUrl}/${options.shareId}` };
 
-    const url = `${baseUrl}/${shareId}?assetType=${queryParameters.assetType}&assetId=${queryParameters.assetId}`;
-
-    return requestor.get({ ...optionsToSend, url, ...options }, callback);
+    return requestor.get({ ...optionsToSend, ...urlOptions, ...options }, callback);
   };
 
   /**
@@ -261,14 +241,9 @@ export const createSharing = (options: CreateOptions): SharingApi => {
    * @returns Promise with shares success result
    */
   const shareAsset = (options: ShareAssetOptions, callback?: RequestCallback<SharesResult>): Promise<SharesResult> => {
-    const { body, queryParameters } = options;
+    const urlOptions = { url: baseUrl };
 
-    let url = `${baseUrl}?assetType=${queryParameters.assetType}&assetId=${queryParameters.assetId}`;
-    if (queryParameters.sendEmail) {
-      url += '&sendEmail=true';
-    }
-
-    return requestor.post({ ...optionsToSend, url, body, ...options }, callback);
+    return requestor.post({ ...optionsToSend, ...urlOptions, ...options }, callback);
   };
 
   /**
@@ -281,11 +256,9 @@ export const createSharing = (options: CreateOptions): SharingApi => {
     options: UpdateShareOptions,
     callback?: RequestCallback<ShareResponse>
   ): Promise<ShareResponse> => {
-    const { shareId, queryParameters, body } = options;
+    const urlOptions = { url: `${baseUrl}/${options.shareId}` };
 
-    const url = `${baseUrl}/${shareId}?assetType=${queryParameters.assetType}&assetId=${queryParameters.assetId}`;
-
-    return requestor.patch({ ...optionsToSend, url, body, ...options }, callback);
+    return requestor.patch({ ...optionsToSend, ...urlOptions, ...options }, callback);
   };
 
   /**
@@ -295,11 +268,9 @@ export const createSharing = (options: CreateOptions): SharingApi => {
    * @returns Promise with success result
    */
   const deleteAssetShare = (options: DeleteShareOptions, callback?: RequestCallback<any>): Promise<any> => {
-    const { shareId, queryParameters } = options;
+    const urlOptions = { url: `${baseUrl}/${options.shareId}` };
 
-    const url = `${baseUrl}/${shareId}?assetType=${queryParameters.assetType}&assetId=${queryParameters.assetId}`;
-
-    return requestor.delete({ ...optionsToSend, url, ...options }, callback);
+    return requestor.delete({ ...optionsToSend, ...urlOptions, ...options }, callback);
   };
 
   return {
