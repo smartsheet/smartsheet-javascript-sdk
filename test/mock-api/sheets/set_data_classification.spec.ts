@@ -32,6 +32,9 @@ describe('Sheets - setDataClassification endpoint tests', () => {
         const matchedRequest = await findWireMockRequest(requestId);
         const parsedUrl = new URL(matchedRequest.absoluteUrl);
         expect(parsedUrl.pathname).toEqual(`/2.0/sheets/${TEST_SHEET_ID}/dataclassification`);
+        expect(matchedRequest.method).toEqual('PUT');
+        const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+        expect(queryParamsObject).toEqual({});
     });
 
     it('setDataClassification all response body properties', async () => {

@@ -27,6 +27,9 @@ describe('Sheets - deleteDataClassification endpoint tests', () => {
         const matchedRequest = await findWireMockRequest(requestId);
         const parsedUrl = new URL(matchedRequest.absoluteUrl);
         expect(parsedUrl.pathname).toEqual(`/2.0/sheets/${TEST_SHEET_ID}/dataclassification`);
+        expect(matchedRequest.method).toEqual('DELETE');
+        const queryParamsObject = Object.fromEntries(parsedUrl.searchParams);
+        expect(queryParamsObject).toEqual({});
     });
 
     it('deleteDataClassification all response body properties', async () => {
