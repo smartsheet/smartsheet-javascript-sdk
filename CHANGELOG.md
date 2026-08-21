@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
 
+### Added
+
+- `SearchResultType` enum: added 9 new values for the search-service API path — `GridRow` (`GRID_ROW`), `Attachment` (`ATTACHMENT`), `SheetV2` (`SHEET`), `WorkspaceV2` (`WORKSPACE`), `Form` (`FORM`), `CollectionTitle` (`COLLECTION_TITLE`), `PortfolioTitle` (`PORTFOLIO_TITLE`), `ProjectTitle` (`PROJECT_TITLE`), `ScenarioPlanTitle` (`SCENARIO_PLAN_TITLE`).
+- New optional fields on `SearchResult`: `workspaceId`, `containerId`, `modifyDateTime`, `primaryColumnCellText` (GRID_ROW only), `attachmentSource` (ATTACHMENT only), `attachmentDescription` (ATTACHMENT only), `isTemplate` (SHEET only).
+- `SearchResponse` now includes `searchResults` (new API field), `workspaces`, and `personalWorkspaceId`. The legacy `results` field is kept for backward compatibility.
+
 ## [5.3.0] - 2026-08-12
 
 ### Added
