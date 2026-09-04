@@ -171,6 +171,39 @@ describe('Governance - getDataClassificationSettings endpoint tests', () => {
     }
   });
 
+  it('getDataClassificationSettings with assetType+assetId sends correct query params', async () => {
+    const requestId = crypto.randomUUID();
+    const TEST_ASSET_ID = 112398785741;
+    await client.governance.getDataClassificationSettings({
+      queryParameters: { assetType: 'sheet', assetId: TEST_ASSET_ID },
+      customProperties: {
+        'x-request-id': requestId,
+        'x-test-name': '/governance/get-data-classification-settings/all-response-body-properties',
+      },
+    });
+    const matchedRequest = await findWireMockRequest(requestId);
+    const parsedUrl = new URL(matchedRequest.absoluteUrl);
+    expect(parsedUrl.pathname).toEqual('/2.0/governance/data-classification/settings');
+    expect(Object.fromEntries(parsedUrl.searchParams)).toEqual({
+      assetType: 'sheet',
+      assetId: String(TEST_ASSET_ID),
+    });
+  });
+
+  it('getDataClassificationSettings with assetType+assetId returns settings', async () => {
+    const requestId = crypto.randomUUID();
+    const TEST_ASSET_ID = 112398785741;
+    const response = await client.governance.getDataClassificationSettings({
+      queryParameters: { assetType: 'sheet', assetId: TEST_ASSET_ID },
+      customProperties: {
+        'x-request-id': requestId,
+        'x-test-name': '/governance/get-data-classification-settings/all-response-body-properties',
+      },
+    });
+    expect(response).toBeDefined();
+    expect(response.planId).toBe(TEST_PLAN_ID);
+  });
+
   it('getDataClassificationSettings error 403 response', async () => {
     const requestId = crypto.randomUUID();
     try {
