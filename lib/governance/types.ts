@@ -3,8 +3,14 @@ import type { RequestCallback } from '../types/RequestCallback';
 
 // === Get Data Classification Settings ===
 
+/**
+ * Requires either planId, or both assetType + assetId.
+ * assetType accepted values: 'sheet', 'report', 'sight' (dashboard).
+ */
 export interface GetDataClassificationSettingsQueryParameters {
-  planId: number;
+  planId?: number;
+  assetType?: string;
+  assetId?: number;
 }
 
 export enum ApproverType {
