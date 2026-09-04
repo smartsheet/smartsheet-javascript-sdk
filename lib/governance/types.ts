@@ -7,11 +7,9 @@ import type { RequestCallback } from '../types/RequestCallback';
  * Requires either planId, or both assetType + assetId.
  * assetType accepted values: 'sheet', 'report', 'sight' (dashboard).
  */
-export interface GetDataClassificationSettingsQueryParameters {
-  planId?: number;
-  assetType?: string;
-  assetId?: number;
-}
+export type GetDataClassificationSettingsQueryParameters =
+  | { planId: number; assetType?: never; assetId?: never }
+  | { planId?: never; assetType: 'sheet' | 'report' | 'sight'; assetId: number };
 
 export enum ApproverType {
   GROUPS = 'GROUPS',
