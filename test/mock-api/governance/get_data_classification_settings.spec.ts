@@ -200,8 +200,43 @@ describe('Governance - getDataClassificationSettings endpoint tests', () => {
         'x-test-name': '/governance/get-data-classification-settings/all-response-body-properties',
       },
     });
-    expect(response).toBeDefined();
-    expect(response.planId).toBe(TEST_PLAN_ID);
+    expect(response).toEqual({
+      orgId: TEST_ORG_ID,
+      planId: TEST_PLAN_ID,
+      isDisabled: false,
+      guidelinesUrl: 'https://wiki.example.com/classification-guide',
+      allowManualChange: true,
+      labels: [
+        {
+          id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+          name: 'Confidential',
+          description: 'Highly sensitive information',
+          color: '#FFE0E3',
+          sensitivityOrder: 1,
+          isDefault: false,
+        },
+        {
+          id: '4aa85f64-5717-4562-b3fc-2c963f66afa7',
+          name: 'Internal',
+          description: 'For internal use only',
+          color: '#E0F0FF',
+          sensitivityOrder: 2,
+          isDefault: true,
+        },
+      ],
+      downgradeApprovalSettings: {
+        mode: DowngradeApprovalMode.CUSTOM,
+        labelApprovers: [
+          {
+            labelId: '4aa85f64-5717-4562-b3fc-2c963f66afa7',
+            approvers: [
+              { type: ApproverType.USERS, ids: [7001] },
+              { type: ApproverType.WORKSPACE_ADMINS, ids: [] },
+            ],
+          },
+        ],
+      },
+    });
   });
 
   it('getDataClassificationSettings error 403 response', async () => {
