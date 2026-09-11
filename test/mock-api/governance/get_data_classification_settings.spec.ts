@@ -3,8 +3,8 @@ import { createClient, findWireMockRequest } from '../utils/utils';
 import { expect } from '@jest/globals';
 import { ApproverType, DowngradeApprovalMode } from '../../../lib/governance/types';
 
-const TEST_PLAN_ID = 41878788;
-const TEST_ORG_ID = 1244212;
+const TEST_PLAN_ID = 1148023251199876;
+const TEST_ORG_ID = 1556806293055364;
 
 describe('Governance - getDataClassificationSettings endpoint tests', () => {
   const client = createClient();
@@ -48,7 +48,7 @@ describe('Governance - getDataClassificationSettings endpoint tests', () => {
           id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
           name: 'Confidential',
           description: 'Highly sensitive information',
-          color: '#FFE0E3',
+          color: '#ffe0e3',
           sensitivityOrder: 1,
           isDefault: false,
         },
@@ -56,7 +56,7 @@ describe('Governance - getDataClassificationSettings endpoint tests', () => {
           id: '4aa85f64-5717-4562-b3fc-2c963f66afa7',
           name: 'Internal',
           description: 'For internal use only',
-          color: '#E0F0FF',
+          color: '#b9f4c3',
           sensitivityOrder: 2,
           isDefault: true,
         },
@@ -67,7 +67,7 @@ describe('Governance - getDataClassificationSettings endpoint tests', () => {
           {
             labelId: '4aa85f64-5717-4562-b3fc-2c963f66afa7',
             approvers: [
-              { type: ApproverType.USERS, ids: [7001] },
+              { type: ApproverType.USERS, ids: [5448085317937028] },
               { type: ApproverType.WORKSPACE_ADMINS, ids: [] },
             ],
           },
@@ -96,7 +96,7 @@ describe('Governance - getDataClassificationSettings endpoint tests', () => {
         {
           id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
           name: 'Confidential',
-          color: '#FFE0E3',
+          color: '#ffe0e3',
           sensitivityOrder: 1,
           isDefault: false,
         },
@@ -142,7 +142,7 @@ describe('Governance - getDataClassificationSettings endpoint tests', () => {
         {
           id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
           name: 'Confidential',
-          color: '#FFE0E3',
+          color: '#ffe0e3',
           sensitivityOrder: 1,
           isDefault: false,
         },
@@ -150,8 +150,8 @@ describe('Governance - getDataClassificationSettings endpoint tests', () => {
       downgradeApprovalSettings: {
         mode: DowngradeApprovalMode.APPROVAL_NEEDED,
         approvers: [
-          { type: ApproverType.GROUPS, ids: [5001, 5002] },
-          { type: ApproverType.USERS, ids: [7001] },
+          { type: ApproverType.GROUPS, ids: [5129226945881988, 2877427132196740] },
+          { type: ApproverType.USERS, ids: [5448085317937028] },
         ],
       },
     });
@@ -211,7 +211,7 @@ describe('Governance - getDataClassificationSettings endpoint tests', () => {
           id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
           name: 'Confidential',
           description: 'Highly sensitive information',
-          color: '#FFE0E3',
+          color: '#ffe0e3',
           sensitivityOrder: 1,
           isDefault: false,
         },
@@ -219,7 +219,7 @@ describe('Governance - getDataClassificationSettings endpoint tests', () => {
           id: '4aa85f64-5717-4562-b3fc-2c963f66afa7',
           name: 'Internal',
           description: 'For internal use only',
-          color: '#E0F0FF',
+          color: '#b9f4c3',
           sensitivityOrder: 2,
           isDefault: true,
         },
@@ -230,7 +230,7 @@ describe('Governance - getDataClassificationSettings endpoint tests', () => {
           {
             labelId: '4aa85f64-5717-4562-b3fc-2c963f66afa7',
             approvers: [
-              { type: ApproverType.USERS, ids: [7001] },
+              { type: ApproverType.USERS, ids: [5448085317937028] },
               { type: ApproverType.WORKSPACE_ADMINS, ids: [] },
             ],
           },
