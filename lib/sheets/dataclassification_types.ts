@@ -11,8 +11,8 @@ export interface DataClassificationApi {
    * Sets the data classification on a sheet.
    *
    * @param options - {@link SetDataClassificationOptions} - Configuration options for the request
-   * @param callback - {@link RequestCallback}\<{@link SetDataClassificationResponse}\> - Optional callback function
-   * @returns Promise\<{@link SetDataClassificationResponse}\>
+   * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
+   * @returns Promise\<{@link BaseResponseStatus}\>
    *
    * @remarks
    * **Who can use this operation:**
@@ -32,8 +32,8 @@ export interface DataClassificationApi {
    */
   setDataClassification: (
     options: SetDataClassificationOptions,
-    callback?: RequestCallback<SetDataClassificationResponse>
-  ) => Promise<SetDataClassificationResponse>;
+    callback?: RequestCallback<BaseResponseStatus>
+  ) => Promise<BaseResponseStatus>;
 }
 
 // ============================================================================
@@ -55,5 +55,3 @@ export interface SetDataClassificationOptions extends RequestOptions<undefined, 
    */
   sheetId: number;
 }
-
-export type SetDataClassificationResponse = BaseResponseStatus;
