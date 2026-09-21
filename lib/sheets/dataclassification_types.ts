@@ -43,8 +43,7 @@ export interface DataClassificationApi {
 export interface SetDataClassificationBody {
   /**
    * The data classification of a sheet. This is a free-form label chosen from
-   * the classification labels published by a plan admin in Admin Center, and
-   * is not restricted to a fixed set of values.
+   * the classification labels published by a plan admin in Admin Center
    */
   dataClassification: string;
 }
