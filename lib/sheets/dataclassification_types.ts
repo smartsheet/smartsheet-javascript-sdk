@@ -34,31 +34,6 @@ export interface DataClassificationApi {
     options: SetDataClassificationOptions,
     callback?: RequestCallback<SetDataClassificationResponse>
   ) => Promise<SetDataClassificationResponse>;
-
-  /**
-   * Removes the data classification from a sheet. Requires ADMIN or OWNER access.
-   *
-   * @param options - {@link DeleteDataClassificationOptions} - Configuration options for the request
-   * @param callback - {@link RequestCallback}\<{@link DeleteDataClassificationResponse}\> - Optional callback function
-   * @returns Promise\<{@link DeleteDataClassificationResponse}\>
-   *
-   * @remarks
-   * **Who can use this operation:**
-   * - **Permissions:** ADMIN or OWNER access on the sheet
-   *
-   * It mirrors to the following Smartsheet REST API method: `DELETE /sheets/{sheetId}/dataclassification`
-   *
-   * @example
-   * ```typescript
-   * const result = await client.sheets.deleteDataClassification({
-   *   sheetId: 123456789012345
-   * });
-   * ```
-   */
-  deleteDataClassification: (
-    options: DeleteDataClassificationOptions,
-    callback?: RequestCallback<DeleteDataClassificationResponse>
-  ) => Promise<DeleteDataClassificationResponse>;
 }
 
 // ============================================================================
@@ -82,16 +57,3 @@ export interface SetDataClassificationOptions extends RequestOptions<undefined, 
 }
 
 export type SetDataClassificationResponse = BaseResponseStatus;
-
-// ============================================================================
-// Delete Data Classification
-// ============================================================================
-
-export interface DeleteDataClassificationOptions extends RequestOptions<undefined, undefined> {
-  /**
-   * Sheet Id.
-   */
-  sheetId: number;
-}
-
-export type DeleteDataClassificationResponse = BaseResponseStatus;
