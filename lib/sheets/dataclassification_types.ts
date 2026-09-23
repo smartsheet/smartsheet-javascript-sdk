@@ -25,7 +25,8 @@ export interface DataClassificationApi {
    * const result = await client.sheets.setDataClassification({
    *   sheetId: 123456789012345,
    *   body: {
-   *     dataClassification: 'Confidential'
+   *     dataClassification: 'Confidential',
+   *     justification: 'Contains customer PII'
    *   }
    * });
    * ```
@@ -46,6 +47,11 @@ export interface SetDataClassificationBody {
    * the classification labels published by a plan admin in Admin Center
    */
   dataClassification: string;
+
+  /**
+   * The justification for setting this data classification on the sheet.
+   */
+  justification: string;
 }
 
 export interface SetDataClassificationOptions extends RequestOptions<undefined, SetDataClassificationBody> {

@@ -15,7 +15,8 @@ describe('Sheets - setDataClassification endpoint tests', () => {
     const client = createClient();
 
     const testBody = {
-        dataClassification: 'CONFIDENTIAL'
+        dataClassification: 'CONFIDENTIAL',
+        justification: 'Contains customer PII'
     };
 
     it('setDataClassification generated url is correct', async () => {
@@ -62,7 +63,8 @@ describe('Sheets - setDataClassification endpoint tests', () => {
     it('setDataClassification accepts a custom, non-canonical label', async () => {
         const requestId = crypto.randomUUID();
         const customLabelBody = {
-            dataClassification: 'Top Secret'
+            dataClassification: 'Top Secret',
+            justification: 'Contains customer PII'
         };
         const options = {
             sheetId: TEST_SHEET_ID,
