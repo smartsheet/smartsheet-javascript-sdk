@@ -2,6 +2,7 @@ import type { FoldersApi } from '../folders/types';
 import type { FavoritesApi } from '../favorites/types';
 import type { ContactsApi } from '../contacts/types';
 import type { EventsApi } from '../events/types';
+import type { GovernanceApi } from '../governance/types';
 import type { SearchApi } from '../search/types';
 import type { SharingApi } from '../sharing/index';
 import type { SightsApi } from '../sights/types';
@@ -17,6 +18,7 @@ export interface SmartsheetClient {
   events: EventsApi;
   folders: FoldersApi;
   favorites: FavoritesApi;
+  governance: GovernanceApi;
   groups: any;
   home: any;
   images: ImagesApi;

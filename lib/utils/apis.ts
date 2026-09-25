@@ -5,6 +5,7 @@ export const apiUrls: ApiUrls = {
   events: 'events',
   favorites: 'favorites',
   folders: 'folders',
+  governance: 'governance',
   groups: 'groups',
   home: 'home', // deprecated
   imageUrls: 'imageurls',
