@@ -10,7 +10,7 @@ export interface DataClassificationApi {
   /**
    * Sets the data classification on a sheet.
    *
-   * @param options - {@link SetDataClassificationOptions} - Configuration options for the request
+   * @param options - {@link SetSheetDataClassificationOptions} - Configuration options for the request
    * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
    * @returns Promise\<{@link BaseResponseStatus}\>
    *
@@ -32,7 +32,7 @@ export interface DataClassificationApi {
    * ```
    */
   setDataClassification: (
-    options: SetDataClassificationOptions,
+    options: SetSheetDataClassificationOptions,
     callback?: RequestCallback<BaseResponseStatus>
   ) => Promise<BaseResponseStatus>;
 }
@@ -41,7 +41,7 @@ export interface DataClassificationApi {
 // Set Data Classification
 // ============================================================================
 
-export interface SetDataClassificationBody {
+export interface SetSheetDataClassificationBody {
   /**
    * The data classification of a sheet. This is a free-form label chosen from
    * the classification labels published by a plan admin in Admin Center
@@ -54,7 +54,7 @@ export interface SetDataClassificationBody {
   justification: string;
 }
 
-export interface SetDataClassificationOptions extends RequestOptions<undefined, SetDataClassificationBody> {
+export interface SetSheetDataClassificationOptions extends RequestOptions<undefined, SetSheetDataClassificationBody> {
   /**
    * Sheet Id.
    */
