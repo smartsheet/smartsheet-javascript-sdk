@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Added `governance.getDataClassificationSettings` to retrieve data classification settings for a plan. Accepts either `planId` or `assetType` + `assetId` as query parameters.
-- Added TypeScript types `DataClassificationSettings`, `ClassificationLabel`, `DowngradeApprovalSettings`, `ClassificationLabelApproverEntry`, and `ApproverEntry`.
+- Added TypeScript types `DataClassificationSettings`, `ClassificationLabel`, `DowngradeApprovalSettings`, `ApproverEntry`, and `LabelApproverEntry`, and the `DowngradeApprovalMode` and `ApproverType` enums.
 
 ### Security
 

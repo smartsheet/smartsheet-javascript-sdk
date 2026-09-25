@@ -152,3 +152,4 @@ export { CreateClientOptions } from './lib/types/CreateClientOptions';
 export { SmartsheetClient } from './lib/types/SmartsheetClient';
 export * from './lib/events/types';
 export * from './lib/sharing/index';
+export * from './lib/governance/types';

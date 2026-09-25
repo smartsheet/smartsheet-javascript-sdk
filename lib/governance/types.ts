@@ -1,15 +1,16 @@
 import type { RequestOptions } from '../types/RequestOptions';
 import type { RequestCallback } from '../types/RequestCallback';
+import type { AssetType } from '../sharing';
 
 // === Get Data Classification Settings ===
 
 /**
  * Requires either planId, or both assetType + assetId.
- * assetType accepted values: 'sheet', 'report', 'sight' (dashboard).
+ * assetType accepted values: AssetType.SHEET, AssetType.REPORT, AssetType.SIGHT (dashboard).
  */
 export type GetDataClassificationSettingsQueryParameters =
   | { planId: number; assetType?: never; assetId?: never }
-  | { planId?: never; assetType: 'sheet' | 'report' | 'sight'; assetId: number };
+  | { planId?: never; assetType: AssetType; assetId: number };
 
 export enum ApproverType {
   GROUPS = 'GROUPS',
