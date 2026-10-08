@@ -34,6 +34,11 @@ export interface FoldersApi {
   /**
    * Gets a page of the folder's children of the specified type(s).
    *
+   * This method largely mirrors the REST API operation, except that the data items in the response are deserialized into `Folder`, `Sheet`, `Report`, `Sight`, or `Template` objects.
+   *
+   * HTTP Method: `GET`
+   * REST API path: `/2.0/workspaces/{workspaceId}/children` 
+   *
    * @param options - {@link GetFolderChildrenOptions} - Configuration options for the request
    * @param callback - {@link RequestCallback}\<{@link GetFolderChildrenResponse}\> - Optional callback function
    * @returns Promise\<{@link GetFolderChildrenResponse}\>
