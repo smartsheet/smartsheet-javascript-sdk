@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
 
+### Removed
+
+- ⚠️ **BREAKING**: Removed `VIEWER` from `SeatTypes`, and removed the `displayContributorSeatType` option from `listAllUsers` and `listUserPlans`. The `VIEWER` seat type was [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#deprecated-viewer-seat-type-in-favor-of-contributor-new) in favor of `CONTRIBUTOR` (sunset Nov-15-2026). Use `CONTRIBUTOR` instead of `VIEWER` and drop the `displayContributorSeatType` option.
+
 ### Security
 
 - Updated transitive development dependencies via lockfile refresh to resolve three advisories across two packages: `js-yaml` 3.15.0 → 3.15.1 and 4.3.0 → 4.3.1 (GHSA-5p4m-2wfm-xmqj, quadratic CPU consumption in `!!omap` resolution, now backported to both legacy lines) and `brace-expansion` 1.1.16 → 1.1.18, 2.1.2 → 2.1.4, 5.0.7 → 5.0.9 (GHSA-mh99-v99m-4gvg, GHSA-rgw5-rvv9-x895). Both are dev-only dependencies reached through `eslint` and `ts-jest`, and are not shipped in the published `dist/`, so runtime consumers were never exposed.
