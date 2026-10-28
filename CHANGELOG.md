@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
+### Added
+- Support for PUT /sheets/{sheetId}/dataclassification endpoint (Set Data Classification)
+- The `GET /sheets/{sheetId}` response now includes a `dataClassification` field
 
 ### Security
 

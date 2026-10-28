@@ -9,6 +9,9 @@ export const TEST_SHEET_ID = 9876543210987654;
 export const TEST_SHEET_CREATED_AT = '2024-01-01T00:00:00Z';
 export const TEST_SHEET_MODIFIED_AT = '2024-06-01T00:00:00Z';
 
+export const TEST_SUCCESS_MESSAGE = 'SUCCESS';
+export const TEST_SUCCESS_RESULT_CODE = 0;
+
 // Common Error Status Codes
 export const ERROR_500_STATUS_CODE = 500;
 export const ERROR_500_MESSAGE = 'Internal Server Error';
