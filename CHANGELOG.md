@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 
-- ⚠️ **BREAKING**: Removed `VIEWER` from `SeatTypes`, and removed the `displayContributorSeatType` option from `listAllUsers` and `listUserPlans`. The `VIEWER` seat type was [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#deprecated-viewer-seat-type-in-favor-of-contributor-new) in favor of `CONTRIBUTOR` (sunset Nov-15-2026). Use `CONTRIBUTOR` instead of `VIEWER` and drop the `displayContributorSeatType` option.
+- ⚠️ **BREAKING**: Removed `VIEWER` from `SeatTypes`, and removed `displayContributorSeatType` from `ListUsersQueryParameters` and `ListUserPlansQueryParameters` (`listAllUsers` and `listUserPlans`). The `VIEWER` seat type was [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#deprecated-viewer-seat-type-in-favor-of-contributor-new) in favor of `CONTRIBUTOR` (sunset Nov-15-2026). Use `CONTRIBUTOR` instead of `VIEWER` and drop the `displayContributorSeatType` option. In plain JavaScript `SeatTypes.VIEWER` is now `undefined`, so a `seatType: SeatTypes.VIEWER` filter is dropped and `listAllUsers` returns all users.
 
 ### Security
 
