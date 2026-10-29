@@ -276,7 +276,7 @@ describe('Method Unit Tests', () => {
                 { name: 'deactivateUser', stub: 'post', options: {userId: 123}, expectedRequest: {url: "users/123/deactivate"}},
                 { name: 'reactivateUser', stub: 'post', options: {userId: 123}, expectedRequest: {url: "users/123/reactivate"}},
                 { name: 'upgradeUser', stub: 'post', options: {userId: 123, planId: 456, body: {seatType: 'MEMBER'}}, expectedRequest: {url: "users/123/plans/456/upgrade", body: {seatType: 'MEMBER'}}},
-                { name: 'downgradeUser', stub: 'post', options: {userId: 123, planId: 456, body: {seatType: 'VIEWER'}}, expectedRequest: {url: "users/123/plans/456/downgrade", body: {seatType: 'VIEWER'}}},
+                { name: 'downgradeUser', stub: 'post', options: {userId: 123, planId: 456, body: {seatType: 'CONTRIBUTOR'}}, expectedRequest: {url: "users/123/plans/456/downgrade", body: {seatType: 'CONTRIBUTOR'}}},
                 { name: 'listUserPlans', stub: 'get', options: { userId: 123 }, expectedRequest: { url: "users/123/plans" }},
                 { name: 'removeUserFromPlan', stub: 'delete', options: { userId: 123, planId: 456 }, expectedRequest: { url: "users/123/plans/456" }},
                 // alternate emails
