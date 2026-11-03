@@ -328,7 +328,7 @@ export interface UsersApi {
    *
    * A user can be downgraded to the following seat types:
    * - GUEST - only external users can be downgraded to this seat type
-   * - VIEWER
+   * - CONTRIBUTOR
    *
    * @param options - {@link DowngradeUserOptions} - Configuration options for the request
    * @param callback - {@link RequestCallback}\<{@link BaseResponseStatus}\> - Optional callback function
@@ -348,7 +348,7 @@ export interface UsersApi {
    *   userId: 123456789012345,
    *   planId: 456789012345678,
    *   body: {
-   *     seatType: 'VIEWER'
+   *     seatType: 'CONTRIBUTOR'
    *   }
    * });
    * ```
@@ -433,7 +433,6 @@ export enum SeatTypes {
   MEMBER = 'MEMBER',
   PROVISIONAL_MEMBER = 'PROVISIONAL_MEMBER',
   GUEST = 'GUEST',
-  VIEWER = 'VIEWER',
   CONTRIBUTOR = 'CONTRIBUTOR',
 }
 
@@ -739,14 +738,6 @@ export interface ListUsersQueryParameters extends PaginationQueryParameters {
    * @defaultValue false
    */
   numericDates?: boolean;
-
-  /**
-   * Controls whether CONTRIBUTOR seat types are displayed in the response.
-   * - If true: VIEWER seat types are re-written to CONTRIBUTOR
-   * - If false: CONTRIBUTOR seat types are re-written to VIEWER (default behavior)
-   * @defaultValue false
-   */
-  displayContributorSeatType?: boolean;
 }
 
 export interface ListUsersData {
@@ -1399,7 +1390,7 @@ export interface UpgradeUserOptions extends RequestOptions<undefined, UpgradeUse
 
 export interface DowngradeUserBody {
   /**
-   * User's seat type to downgrade to. Can be 'GUEST' (only for external users) or 'VIEWER' (required).
+   * User's seat type to downgrade to. Can be 'GUEST' (only for external users) or 'CONTRIBUTOR' (required).
    * @see SeatTypes
    */
   seatType: SeatTypes;
@@ -1434,13 +1425,6 @@ export interface ListUserPlansQueryParameters {
    * The maximum amount of items to return in the response.
    */
   maxItems?: number;
-  /**
-   * Controls whether CONTRIBUTOR seat types are displayed in the response.
-   * - If true: VIEWER seat types are re-written to CONTRIBUTOR
-   * - If false: CONTRIBUTOR seat types are re-written to VIEWER (default behavior)
-   * @defaultValue false
-   */
-  displayContributorSeatType?: boolean;
   /**
    * The elements to include in the response, either as an array of
    * {@link ListUserPlansInclusion} values or as an already comma-separated

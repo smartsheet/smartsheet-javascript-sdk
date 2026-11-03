@@ -39,8 +39,7 @@ describe('Users - listAllUsers endpoint tests', () => {
                 seatType: SeatTypes.MEMBER,
                 includeAll: TEST_INCLUDE_ALL,
                 page: TEST_PAGE_NUMBER,
-                pageSize: TEST_PAGE_SIZE,
-                displayContributorSeatType: true
+                pageSize: TEST_PAGE_SIZE
             },
             customProperties: {
                 'x-request-id': requestId,
@@ -59,8 +58,7 @@ describe('Users - listAllUsers endpoint tests', () => {
             seatType: SeatTypes.MEMBER,
             includeAll: TEST_INCLUDE_ALL.toString(),
             page: TEST_PAGE_NUMBER.toString(),
-            pageSize: TEST_PAGE_SIZE.toString(),
-            displayContributorSeatType: 'true'
+            pageSize: TEST_PAGE_SIZE.toString()
         });
     });
 
