@@ -1,6 +1,12 @@
 import _ from 'underscore';
+import type { Folder } from '../folders/types';
+import type { CreateOptions } from '../types/CreateOptions';
+import type { PaginationResponse } from '../types/PaginationResponse';
+import type { RequestCallback } from '../types/RequestCallback';
+import type { RequestOptions } from '../types/RequestOptions';
+import type { CreateHomeFolderResponse, HomeApi, ListHomeFoldersQueryParameters } from './types';
 
-export function create(options) {
+export function create(options: CreateOptions): HomeApi {
   const requestor = options.requestor;
 
   const optionsToSend = {
@@ -11,7 +17,10 @@ export function create(options) {
   /**
    * @deprecated See: https://developers.smartsheet.com/api/smartsheet/guides/updating-code/migrate-from-using-the-sheets-folder
    */
-  const listContents = (getOptions, callback) => {
+  const listContents = <R = Record<string, unknown>>(
+    getOptions?: RequestOptions<unknown, undefined>,
+    callback?: RequestCallback<R>
+  ): Promise<R> => {
     console.warn('DEPRECATED: Home.listContents is deprecated.');
     return requestor.get(_.extend({}, optionsToSend, getOptions), callback);
   };
@@ -19,7 +28,10 @@ export function create(options) {
   /**
    * @deprecated See: https://developers.smartsheet.com/api/smartsheet/guides/updating-code/migrate-from-using-the-sheets-folder
    */
-  const listFolders = (getOptions, callback) => {
+  const listFolders = (
+    getOptions?: RequestOptions<ListHomeFoldersQueryParameters, undefined>,
+    callback?: RequestCallback<PaginationResponse<Folder>>
+  ): Promise<PaginationResponse<Folder>> => {
     console.warn('DEPRECATED: Home.listFolders is deprecated.');
     return listContents(_.extend({ url: options.apiUrls.home + '/' + 'folders' }, getOptions), callback);
   };
@@ -27,7 +39,10 @@ export function create(options) {
   /**
    * @deprecated See: https://developers.smartsheet.com/api/smartsheet/guides/updating-code/migrate-from-using-the-sheets-folder
    */
-  const createFolder = (postOptions, callback) => {
+  const createFolder = (
+    postOptions: RequestOptions<undefined, { name: string }>,
+    callback?: RequestCallback<CreateHomeFolderResponse>
+  ): Promise<CreateHomeFolderResponse> => {
     console.warn('DEPRECATED: Home.createFolder is deprecated.');
     const urlOptions = { url: options.apiUrls.home + '/' + 'folders' };
     return requestor.post(_.extend({}, optionsToSend, urlOptions, postOptions), callback);
