@@ -15,7 +15,7 @@ The scripts are plain CommonJS on purpose, so the same script can `require()` ei
 | `SMARTSHEET_OAUTH_CODE` | no | Authorization code for `getAccessToken`. Single use: each run needs a fresh one |
 | `SMARTSHEET_OAUTH_REFRESH_TOKEN` | no | Refresh token for `refreshAccessToken`. Single use: each run needs a fresh one |
 
-Steps whose optional variables are missing are printed as `skipped`. Credentials are only read from the environment; never commit them.
+Steps whose optional variables are missing are printed as `skipped`. Tokens minted by `getAccessToken` / `refreshAccessToken` are revoked by the script before it finishes. The script refuses to run if the spare revoke token equals the main token. Credentials are only read from the environment; never commit them.
 
 ## Procedure (batch 1)
 
@@ -43,4 +43,5 @@ git worktree remove ../sdk-baseline
 - One JSON line per step: `step`, `ok`, and either `result` or `error` (`statusCode`, `errorCode`, `message`), plus any `warnings` the SDK logged.
 - IDs, permalinks, tokens, `refId`, timestamps, and the run's unique resource name are replaced with placeholders, so two runs are directly comparable.
 - The script creates a throwaway workspace (with a sheet and an attachment) and deletes it at the end, even if a step fails.
+- Output includes the staging user's name and email (e.g. from `users/me`); trim those before pasting output into a PR.
 - The `home` endpoints are deprecated and may return errors on staging. Identical errors on both runs count as a pass.

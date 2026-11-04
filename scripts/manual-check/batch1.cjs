@@ -22,6 +22,11 @@ if (!sdkPath || !SMARTSHEET_ACCESS_TOKEN || !SMARTSHEET_API_HOST) {
   process.exit(2);
 }
 
+if (process.env.SMARTSHEET_REVOKE_TEST_TOKEN && process.env.SMARTSHEET_REVOKE_TEST_TOKEN === SMARTSHEET_ACCESS_TOKEN) {
+  console.error('SMARTSHEET_REVOKE_TEST_TOKEN must be a spare token, not the same as SMARTSHEET_ACCESS_TOKEN.');
+  process.exit(2);
+}
+
 const smartsheet = require(path.resolve(sdkPath));
 const client = smartsheet.createClient({ accessToken: SMARTSHEET_ACCESS_TOKEN });
 
@@ -133,18 +138,22 @@ async function main() {
   const { SMARTSHEET_OAUTH_CLIENT_ID: clientId, SMARTSHEET_OAUTH_APP_SECRET: secret } = process.env;
   const { SMARTSHEET_OAUTH_CODE: code, SMARTSHEET_OAUTH_REFRESH_TOKEN: refreshToken } = process.env;
 
+  // Tokens minted by this run; revoked below so none are left alive.
+  const minted = [];
+
   if (clientId && secret && code) {
-    await step('tokens.getAccessToken', () =>
+    const token = await step('tokens.getAccessToken', () =>
       client.tokens.getAccessToken({
         queryParameters: { client_id: clientId, code, hash: sha256(`${secret}|${code}`) },
       })
     );
+    if (token && token.access_token) minted.push(token.access_token);
   } else {
     skip('tokens.getAccessToken', 'no OAuth env vars');
   }
 
   if (clientId && secret && refreshToken) {
-    await step('tokens.refreshAccessToken', () =>
+    const token = await step('tokens.refreshAccessToken', () =>
       client.tokens.refreshAccessToken({
         queryParameters: {
           client_id: clientId,
@@ -153,8 +162,13 @@ async function main() {
         },
       })
     );
+    if (token && token.access_token) minted.push(token.access_token);
   } else {
     skip('tokens.refreshAccessToken', 'no OAuth env vars');
+  }
+
+  for (const accessToken of minted) {
+    await step('cleanup: tokens.revokeAccessToken (minted)', () => client.tokens.revokeAccessToken({ accessToken }));
   }
 
   // Always last: revokes the spare token, never the main one.
