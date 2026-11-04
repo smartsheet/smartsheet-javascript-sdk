@@ -64,35 +64,48 @@ export interface TokensApi {
   ) => Promise<RevokeAccessTokenResponse>;
 }
 
-export interface GetAccessTokenQueryParameters {
+/**
+ * Proves the request comes from your app: send either `hash` (recommended) or `client_secret`, not both.
+ */
+export type OAuthAppVerification =
+  | {
+      /** SHA-256 hash of your app secret, a pipe, and the authorization code or refresh token. */
+      hash: string;
+      client_secret?: never;
+    }
+  | {
+      /** Your app secret; use instead of `hash`. */
+      client_secret: string;
+      hash?: never;
+    };
+
+export type GetAccessTokenQueryParameters = {
   /** The client Id for your app. */
   client_id: string;
   /** Authorization code returned during the authorization flow. */
   code: string;
-  /** SHA-256 hash of your app secret concatenated with a pipe and the authorization code. */
-  hash: string;
-  /** Must be set if you want to bypass the hash requirement. */
-  client_secret?: string;
   /** Redirect URL registered for your app. */
   redirect_url?: string;
-}
+} & OAuthAppVerification;
 
-export interface RefreshAccessTokenQueryParameters {
+export type RefreshAccessTokenQueryParameters = {
   /** The client Id for your app. */
   client_id: string;
   /** Refresh token previously obtained. */
   refresh_token: string;
-  /** SHA-256 hash of your app secret concatenated with a pipe and the refresh token. */
-  hash: string;
-  /** Must be set if you want to bypass the hash requirement. */
-  client_secret?: string;
   /** Redirect URL registered for your app. */
   redirect_url?: string;
-}
+} & OAuthAppVerification;
 
-export type GetAccessTokenOptions = RequestOptions<GetAccessTokenQueryParameters, undefined>;
+export type GetAccessTokenOptions = RequestOptions<GetAccessTokenQueryParameters, undefined> & {
+  /** `Content-Type` header, e.g. `application/x-www-form-urlencoded`. */
+  contentType?: string;
+};
 
-export type RefreshAccessTokenOptions = RequestOptions<RefreshAccessTokenQueryParameters, undefined>;
+export type RefreshAccessTokenOptions = RequestOptions<RefreshAccessTokenQueryParameters, undefined> & {
+  /** `Content-Type` header, e.g. `application/x-www-form-urlencoded`. */
+  contentType?: string;
+};
 
 export type RevokeAccessTokenOptions = RequestOptions<{ deleteAllForApiClient?: boolean }, undefined> & {
   /** Token to revoke; defaults to the client's access token. */

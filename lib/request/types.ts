@@ -4,7 +4,7 @@ import type { RequestOptions } from '../types/RequestOptions';
 /**
  * Options for a raw request. Covers every option the SDK's HTTP requestor reads.
  */
-export interface RawRequestOptions extends RequestOptions<Record<string, unknown>, unknown> {
+export interface RawRequestOptions extends RequestOptions<object, unknown> {
   /** Path relative to the API base URL, e.g. `users/me`. */
   url: string;
   /** Optional id appended to the URL as `<url>/<id>`. */
