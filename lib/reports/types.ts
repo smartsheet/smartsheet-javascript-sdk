@@ -1006,7 +1006,8 @@ export interface GetReportQueryParameters {
    */
   accessApiLevel?: number;
   /**
-   * A comma-separated list of optional elements to include in the response
+   * A comma-separated list of optional elements to include in the response.
+   * Valid values: attachments, discussions, proofs, format, objectValue, scope, source, sourceSheets.
    */
   include?: string;
   /**
