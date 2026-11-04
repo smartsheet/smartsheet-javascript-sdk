@@ -8,6 +8,7 @@ export enum ParentResultType {
 }
 
 export enum SearchResultType {
+  // Legacy lowercase values (app-core path)
   Row = 'row',
   Dashboard = 'dashboard',
   Discussion = 'discussion',
@@ -17,6 +18,16 @@ export enum SearchResultType {
   SummaryField = 'summaryField',
   Template = 'template',
   Workspace = 'workspace',
+  // New UPPER_SNAKE_CASE values (search-service path)
+  GridRow = 'GRID_ROW',
+  Attachment = 'ATTACHMENT',
+  SheetV2 = 'SHEET',
+  WorkspaceV2 = 'WORKSPACE',
+  Form = 'FORM',
+  CollectionTitle = 'COLLECTION_TITLE',
+  PortfolioTitle = 'PORTFOLIO_TITLE',
+  ProjectTitle = 'PROJECT_TITLE',
+  ScenarioPlanTitle = 'SCENARIO_PLAN_TITLE',
 }
 
 export interface SearchResult {
@@ -38,11 +49,30 @@ export interface SearchResult {
   parentObjectName: string;
   // search result parent object type.
   parentObjectType: ParentResultType;
+  // ID of the workspace containing this result.
+  workspaceId?: string;
+  // ID of the direct container (sheet or folder) for this result.
+  containerId?: string;
+  // last-modified timestamp in milliseconds since the Unix epoch (UTC).
+  modifyDateTime?: number;
+  // primary-column cell text. Only populated for GRID_ROW results.
+  primaryColumnCellText?: string;
+  // object type the attachment belongs to (e.g., GRIDROW, DISCUSSION). Only populated for ATTACHMENT results.
+  attachmentSource?: string;
+  // user-provided attachment description. Only populated for ATTACHMENT results.
+  attachmentDescription?: string;
+  // true if this sheet result is a template. Only populated for SHEET results.
+  isTemplate?: boolean;
 }
 
 export interface SearchResponse {
   totalCount: number;
-  results: SearchResult[];
+  // Unified search-service response field (new API path).
+  searchResults?: SearchResult[];
+  // Legacy field name (app-core path). Use searchResults when available.
+  results?: SearchResult[];
+  workspaces?: object[];
+  personalWorkspaceId?: string | null;
 }
 
 export interface SearchQueryParameters {

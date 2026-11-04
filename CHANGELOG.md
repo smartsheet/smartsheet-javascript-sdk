@@ -14,6 +14,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Updated transitive development dependencies via lockfile refresh to resolve three advisories across two packages: `js-yaml` 3.15.0 → 3.15.1 and 4.3.0 → 4.3.1 (GHSA-5p4m-2wfm-xmqj, quadratic CPU consumption in `!!omap` resolution, now backported to both legacy lines) and `brace-expansion` 1.1.16 → 1.1.18, 2.1.2 → 2.1.4, 5.0.7 → 5.0.9 (GHSA-mh99-v99m-4gvg, GHSA-rgw5-rvv9-x895). Both are dev-only dependencies reached through `eslint` and `ts-jest`, and are not shipped in the published `dist/`, so runtime consumers were never exposed.
 
+### Added
+
+- `SearchResultType` enum: added 9 new values for the search-service API path — `GridRow` (`GRID_ROW`), `Attachment` (`ATTACHMENT`), `SheetV2` (`SHEET`), `WorkspaceV2` (`WORKSPACE`), `Form` (`FORM`), `CollectionTitle` (`COLLECTION_TITLE`), `PortfolioTitle` (`PORTFOLIO_TITLE`), `ProjectTitle` (`PROJECT_TITLE`), `ScenarioPlanTitle` (`SCENARIO_PLAN_TITLE`).
+- New optional fields on `SearchResult`: `workspaceId`, `containerId`, `modifyDateTime`, `primaryColumnCellText` (GRID_ROW only), `attachmentSource` (ATTACHMENT only), `attachmentDescription` (ATTACHMENT only), `isTemplate` (SHEET only).
+- `SearchResponse` now includes `searchResults` (new API field), `workspaces`, and `personalWorkspaceId`. The legacy `results` field is kept for backward compatibility.
+
 ## [5.3.0] - 2026-08-12
 
 ### Added
