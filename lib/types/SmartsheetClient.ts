@@ -10,6 +10,7 @@ import type { UsersApi } from '../users/types';
 import type { WebhooksApi } from '../webhooks/types';
 import type { ImagesApi } from '../images/types';
 import type { ReportsApi } from '../reports/types';
+import type { RequestApi } from '../request/types';
 import type { ServerApi } from '../server/types';
 
 export interface SmartsheetClient {
@@ -22,7 +23,7 @@ export interface SmartsheetClient {
   home: any;
   images: ImagesApi;
   reports: ReportsApi;
-  request: any;
+  request: RequestApi;
   search: SearchApi;
   server: ServerApi;
   sharing: SharingApi;
