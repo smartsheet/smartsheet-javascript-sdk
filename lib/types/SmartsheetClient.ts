@@ -13,6 +13,7 @@ import type { ReportsApi } from '../reports/types';
 import type { HomeApi } from '../home/types';
 import type { RequestApi } from '../request/types';
 import type { ServerApi } from '../server/types';
+import type { TokensApi } from '../tokens/types';
 
 export interface SmartsheetClient {
   constants: any;
@@ -30,7 +31,7 @@ export interface SmartsheetClient {
   sharing: SharingApi;
   sheets: any;
   sights: SightsApi;
-  tokens: any;
+  tokens: TokensApi;
   users: UsersApi & AlternateEmailsApi;
   webhooks: WebhooksApi;
   workspaces: any;

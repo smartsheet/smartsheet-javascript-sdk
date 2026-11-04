@@ -1,15 +1,25 @@
 import _ from 'underscore';
+import type { ClientOptions, CreateOptions } from '../types/CreateOptions';
+import type { RequestCallback } from '../types/RequestCallback';
+import type {
+  GetAccessTokenOptions,
+  RefreshAccessTokenOptions,
+  RevokeAccessTokenOptions,
+  RevokeAccessTokenResponse,
+  Token,
+  TokensApi,
+} from './types';
 
-export function create(options) {
+export function create(options: CreateOptions): TokensApi {
   const requestor = options.requestor;
 
-  const optionsToSend = {
+  const optionsToSend: { url: string } & ClientOptions = {
     url: options.apiUrls.token,
   };
   _.extend(optionsToSend, options.clientOptions);
   delete optionsToSend.accessToken;
 
-  const getAccessToken = (postOptions, callback) => {
+  const getAccessToken = (postOptions: GetAccessTokenOptions, callback?: RequestCallback<Token>): Promise<Token> => {
     const getTokenQueryStrings = {
       grant_type: 'authorization_code',
     };
@@ -19,7 +29,10 @@ export function create(options) {
     return requestor.post(_.extend({}, optionsToSend, postOptions, combinedQueryParams), callback);
   };
 
-  const refreshAccessToken = (postOptions, callback) => {
+  const refreshAccessToken = (
+    postOptions: RefreshAccessTokenOptions,
+    callback?: RequestCallback<Token>
+  ): Promise<Token> => {
     const getTokenQueryStrings = {
       grant_type: 'refresh_token',
     };
@@ -29,9 +42,13 @@ export function create(options) {
     return requestor.post(_.extend({}, optionsToSend, postOptions, combinedQueryParams), callback);
   };
 
-  const revokeAccessToken = (deleteOptions, callback) => {
+  const revokeAccessToken = (
+    deleteOptions?: RevokeAccessTokenOptions,
+    callback?: RequestCallback<RevokeAccessTokenResponse>
+  ): Promise<RevokeAccessTokenResponse> => {
     const accessTokenOptions = {
-      accessToken: options.clientOptions.accessToken,
+      // Type assertion only: keeps the original runtime behavior (throws if clientOptions is missing).
+      accessToken: (options.clientOptions as ClientOptions).accessToken,
     };
     return requestor.delete(_.extend({}, optionsToSend, accessTokenOptions, deleteOptions), callback);
   };
