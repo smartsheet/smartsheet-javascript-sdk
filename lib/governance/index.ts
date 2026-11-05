@@ -1,4 +1,8 @@
-import type { GovernanceApi, GetDataClassificationSettingsQueryParameters, GetDataClassificationSettingsResponse } from './types';
+import type {
+  GovernanceApi,
+  GetDataClassificationSettingsQueryParameters,
+  GetDataClassificationSettingsResponse,
+} from './types';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 import type { ClientOptions, CreateOptions } from '../types/CreateOptions';
