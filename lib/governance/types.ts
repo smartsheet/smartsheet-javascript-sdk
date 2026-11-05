@@ -5,8 +5,12 @@ import type { AssetType } from '../sharing';
 // === Get Data Classification Settings ===
 
 /**
- * Requires either planId, or both assetType + assetId.
- * assetType accepted values: AssetType.SHEET, AssetType.REPORT, AssetType.SIGHT (dashboard).
+ * Provide either `planId`, or both `assetType` and `assetId`:
+ * - To get the settings for a plan, send `planId`.
+ * - When your request relates to a specific sheet, report, or dashboard, send `assetType` and `assetId`.
+ *
+ * `assetType` accepted values: AssetType.SHEET, AssetType.REPORT, AssetType.SIGHT (dashboard).
+ * `assetType` and `assetId` must be provided together.
  */
 export type GetDataClassificationSettingsQueryParameters =
   | { planId: number; assetType?: never; assetId?: never }
