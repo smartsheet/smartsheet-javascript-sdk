@@ -16,35 +16,35 @@ export type GetDataClassificationSettingsQueryParameters =
   | { planId: number; assetType?: never; assetId?: never }
   | { planId?: never; assetType: AssetType; assetId: number };
 
-export enum ApproverType {
+export enum DataClassificationApproverType {
   GROUPS = 'GROUPS',
   USERS = 'USERS',
   WORKSPACE_ADMINS = 'WORKSPACE_ADMINS',
 }
 
-export enum DowngradeApprovalMode {
+export enum DataClassificationDowngradeApprovalMode {
   NONE = 'NONE',
   APPROVAL_NEEDED = 'APPROVAL_NEEDED',
   CUSTOM = 'CUSTOM',
 }
 
-export interface ApproverEntry {
-  type: ApproverType;
+export interface DataClassificationApproverEntry {
+  type: DataClassificationApproverType;
   ids: number[];
 }
 
-export interface LabelApproverEntry {
+export interface DataClassificationLabelApproverEntry {
   labelId: string;
-  approvers: ApproverEntry[];
+  approvers: DataClassificationApproverEntry[];
 }
 
-export interface DowngradeApprovalSettings {
-  mode: DowngradeApprovalMode;
-  approvers?: ApproverEntry[];
-  labelApprovers?: LabelApproverEntry[];
+export interface DataClassificationDowngradeApprovalSettings {
+  mode: DataClassificationDowngradeApprovalMode;
+  approvers?: DataClassificationApproverEntry[];
+  labelApprovers?: DataClassificationLabelApproverEntry[];
 }
 
-export interface ClassificationLabel {
+export interface DataClassificationLabel {
   id: string;
   name: string;
   description?: string;
@@ -59,8 +59,8 @@ export interface DataClassificationSettings {
   isDisabled: boolean;
   guidelinesUrl?: string;
   allowManualChange?: boolean;
-  labels: ClassificationLabel[];
-  downgradeApprovalSettings?: DowngradeApprovalSettings;
+  labels: DataClassificationLabel[];
+  downgradeApprovalSettings?: DataClassificationDowngradeApprovalSettings;
 }
 
 export type GetDataClassificationSettingsResponse = DataClassificationSettings;

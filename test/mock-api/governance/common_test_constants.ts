@@ -1,4 +1,4 @@
-import { ApproverType, DowngradeApprovalMode } from '@smartsheet/governance/types';
+import { DataClassificationApproverType, DataClassificationDowngradeApprovalMode } from '@smartsheet/governance/types';
 
 // Plan / organization identifiers (match governance WireMock mappings)
 export const TEST_PLAN_ID = 1148023251199876;
@@ -56,13 +56,13 @@ export const EXPECTED_SETTINGS_ALL_PROPERTIES = {
     },
   ],
   downgradeApprovalSettings: {
-    mode: DowngradeApprovalMode.CUSTOM,
+    mode: DataClassificationDowngradeApprovalMode.CUSTOM,
     labelApprovers: [
       {
         labelId: TEST_LABEL_ID_2,
         approvers: [
-          { type: ApproverType.USERS, ids: [TEST_USER_ID] },
-          { type: ApproverType.WORKSPACE_ADMINS, ids: [] },
+          { type: DataClassificationApproverType.USERS, ids: [TEST_USER_ID] },
+          { type: DataClassificationApproverType.WORKSPACE_ADMINS, ids: [] },
         ],
       },
     ],
@@ -75,7 +75,7 @@ export const EXPECTED_SETTINGS_REQUIRED_PROPERTIES = {
   planId: TEST_PLAN_ID,
   isDisabled: false,
   labels: [CONFIDENTIAL_LABEL_REQUIRED_PROPERTIES],
-  downgradeApprovalSettings: { mode: DowngradeApprovalMode.NONE },
+  downgradeApprovalSettings: { mode: DataClassificationDowngradeApprovalMode.NONE },
 };
 
 // Settings for a plan with data classification disabled
@@ -84,7 +84,7 @@ export const EXPECTED_SETTINGS_DISABLED_PLAN = {
   planId: TEST_PLAN_ID,
   isDisabled: true,
   labels: [],
-  downgradeApprovalSettings: { mode: DowngradeApprovalMode.NONE },
+  downgradeApprovalSettings: { mode: DataClassificationDowngradeApprovalMode.NONE },
 };
 
 // Settings in APPROVAL_NEEDED mode (top-level approvers, no labelApprovers)
@@ -95,10 +95,10 @@ export const EXPECTED_SETTINGS_APPROVAL_NEEDED = {
   allowManualChange: true,
   labels: [CONFIDENTIAL_LABEL_REQUIRED_PROPERTIES],
   downgradeApprovalSettings: {
-    mode: DowngradeApprovalMode.APPROVAL_NEEDED,
+    mode: DataClassificationDowngradeApprovalMode.APPROVAL_NEEDED,
     approvers: [
-      { type: ApproverType.GROUPS, ids: [TEST_GROUP_ID_1, TEST_GROUP_ID_2] },
-      { type: ApproverType.USERS, ids: [TEST_USER_ID] },
+      { type: DataClassificationApproverType.GROUPS, ids: [TEST_GROUP_ID_1, TEST_GROUP_ID_2] },
+      { type: DataClassificationApproverType.USERS, ids: [TEST_USER_ID] },
     ],
   },
 };
