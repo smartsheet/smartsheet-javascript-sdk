@@ -3,8 +3,7 @@ import { create } from '../../../lib/server/index';
 import { apiUrls } from '../../../lib/utils/apis';
 import { makeFakeRequestor, makeOptions } from './fakeRequestor';
 
-// Pins the behavior of the server module as it was in JavaScript,
-// before the TypeScript migration. These tests must pass unedited after conversion.
+// Pins current behavior, including known quirks.
 describe('server module behavior', () => {
   let fake: ReturnType<typeof makeFakeRequestor>;
   let api: ReturnType<typeof create>;

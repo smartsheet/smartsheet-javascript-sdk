@@ -2,8 +2,7 @@ import { expect, jest, describe, beforeEach, it } from '@jest/globals';
 import { create } from '../../../lib/request/index';
 import { makeFakeRequestor, makeOptions } from './fakeRequestor';
 
-// Pins the behavior of the generic request module as it was in JavaScript,
-// before the TypeScript migration. These tests must pass unedited after conversion.
+// Pins current behavior, including known quirks.
 describe('request module behavior', () => {
   let fake: ReturnType<typeof makeFakeRequestor>;
   let api: ReturnType<typeof create>;

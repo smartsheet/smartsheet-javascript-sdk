@@ -2,8 +2,7 @@ import { expect, jest, describe, beforeEach, afterEach, it } from '@jest/globals
 import { create } from '../../../lib/home/index';
 import { makeFakeRequestor, makeOptions } from './fakeRequestor';
 
-// Pins the behavior of the (deprecated) home module as it was in JavaScript,
-// before the TypeScript migration. These tests must pass unedited after conversion.
+// Pins current behavior, including known quirks.
 describe('home module behavior', () => {
   let fake: ReturnType<typeof makeFakeRequestor>;
   let api: ReturnType<typeof create>;

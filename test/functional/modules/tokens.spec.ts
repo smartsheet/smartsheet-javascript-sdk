@@ -2,8 +2,7 @@ import { expect, jest, describe, beforeEach, it } from '@jest/globals';
 import { create } from '../../../lib/tokens/index';
 import { defaultClientOptions, makeFakeRequestor, makeOptions } from './fakeRequestor';
 
-// Pins the behavior of the tokens module as it was in JavaScript,
-// before the TypeScript migration. These tests must pass unedited after conversion.
+// Pins current behavior, including known quirks.
 describe('tokens module behavior', () => {
   let fake: ReturnType<typeof makeFakeRequestor>;
   let clientOptions: ReturnType<typeof defaultClientOptions>;
@@ -31,13 +30,13 @@ describe('tokens module behavior', () => {
       expect(ret).toBe(fake.result);
     });
 
-    // Quirk: a caller-supplied grant_type replaces the one the SDK sets.
+    // A caller-supplied grant_type wins over the SDK's.
     it('caller grant_type wins', () => {
       api.getAccessToken({ queryParameters: { grant_type: 'x' } } as any);
       expect((fake.requestor.post.mock.calls[0][0] as any).queryParameters.grant_type).toBe('x');
     });
 
-    // Quirk: called without options it throws synchronously instead of rejecting.
+    // Without options it throws synchronously, like other methods that read options directly.
     it('throws a TypeError synchronously without options', () => {
       expect(() => api.getAccessToken(undefined as any)).toThrow(TypeError);
       expect(fake.requestor.post).not.toHaveBeenCalled();

@@ -3,8 +3,7 @@ import * as path from 'path';
 import * as smartsheet from '@smartsheet';
 import { expect, describe, it } from '@jest/globals';
 
-// Recorded from the JavaScript build before the TypeScript migration.
-// Guards against a conversion silently dropping or renaming a public method.
+// Fails if a public client method is dropped or renamed.
 const fixture: Record<string, string[]> = JSON.parse(
   fs.readFileSync(path.join(process.cwd(), 'test/functional/fixtures/client-surface.json'), 'utf8')
 );
