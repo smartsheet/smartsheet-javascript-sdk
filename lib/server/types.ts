@@ -25,47 +25,57 @@ export type GetServerInfoOptions = RequestOptions<undefined, undefined>;
 
 export interface ServerInfo {
   /** Lookup tables that cell format descriptor indexes refer to. */
-  formats: FormatTables;
+  formats?: FormatTables;
   /** All Smartsheet-supported locales. */
-  supportedLocales: string[];
+  supportedLocales?: string[];
+  /** Feature flags for the API. */
+  featureInfo?: FeatureInfo;
 }
 
 /**
  * Lookup tables that format descriptor indexes refer to.
  * New values may be appended to any table over time.
+ *
+ * @remarks
+ * Follows the real API response and the Java/C# SDKs: the API returns a single `color` table,
+ * while the OpenAPI spec lists `colorForeground`, `colorBackground`, and `colorTaskBar`, which the API does not return.
  */
 export interface FormatTables {
   /** Format descriptor describing the formats displayed for values that have not been set. */
-  defaults: string;
-  fontFamily: FontFamily[];
-  fontSize: string[];
-  bold: string[];
-  italic: string[];
-  underline: string[];
-  strikethrough: string[];
-  horizontalAlign: string[];
-  verticalAlign: string[];
-  colorForeground: string[];
-  colorBackground: string[];
-  colorTaskBar: string[];
-  currency: Currency[];
-  decimalCount: string[];
-  thousandsSeparator: string[];
-  numberFormat: string[];
-  textWrap: string[];
-  dateFormat: string[];
+  defaults?: string;
+  fontFamily?: FontFamily[];
+  fontSize?: string[];
+  bold?: string[];
+  italic?: string[];
+  underline?: string[];
+  strikethrough?: string[];
+  horizontalAlign?: string[];
+  verticalAlign?: string[];
+  /** Colors used for text, background, and task bar formats. */
+  color?: string[];
+  currency?: Currency[];
+  decimalCount?: string[];
+  thousandsSeparator?: string[];
+  numberFormat?: string[];
+  textWrap?: string[];
+  dateFormat?: string[];
+}
+
+export interface FeatureInfo {
+  /** Version of the symbols set available for symbol columns. */
+  symbolsVersion?: number;
 }
 
 export interface FontFamily {
   /** Name of the font family, e.g. `Arial`. */
-  name: string;
+  name?: string;
   /** Platform-independent traits of the font family, e.g. `sans-serif`. */
-  traits: string[];
+  traits?: string[];
 }
 
 export interface Currency {
   /** The ISO 4217 currency code, e.g. `EUR`. */
-  code: string;
+  code?: string;
   /** The currency symbol, e.g. `€`. */
-  symbol: string;
+  symbol?: string;
 }

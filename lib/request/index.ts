@@ -8,20 +8,26 @@ export function create(options: CreateOptions): RequestApi {
 
   const optionsToSend = _.extend({}, options.clientOptions);
 
-  const get = <R = unknown>(getOptions: RawRequestOptions, callback?: RequestCallback<R>): Promise<R> =>
+  const get = <R = unknown, B = unknown>(getOptions: RawRequestOptions<B>, callback?: RequestCallback<R>): Promise<R> =>
     requestor.get(_.extend({}, optionsToSend, getOptions), callback);
 
-  const post = <R = unknown>(postOptions: RawRequestOptions, callback?: RequestCallback<R>): Promise<R> =>
-    requestor.post(_.extend({}, optionsToSend, postOptions), callback);
+  const post = <R = unknown, B = unknown>(
+    postOptions: RawRequestOptions<B>,
+    callback?: RequestCallback<R>
+  ): Promise<R> => requestor.post(_.extend({}, optionsToSend, postOptions), callback);
 
-  const put = <R = unknown>(putOptions: RawRequestOptions, callback?: RequestCallback<R>): Promise<R> =>
+  const put = <R = unknown, B = unknown>(putOptions: RawRequestOptions<B>, callback?: RequestCallback<R>): Promise<R> =>
     requestor.put(_.extend({}, optionsToSend, putOptions), callback);
 
-  const postFile = <R = unknown>(postOptions: RawRequestOptions, callback?: RequestCallback<R>): Promise<R> =>
-    requestor.postFile(_.extend({}, optionsToSend, postOptions), callback);
+  const postFile = <R = unknown, B = unknown>(
+    postOptions: RawRequestOptions<B>,
+    callback?: RequestCallback<R>
+  ): Promise<R> => requestor.postFile(_.extend({}, optionsToSend, postOptions), callback);
 
-  const deleteRequest = <R = unknown>(deleteOptions: RawRequestOptions, callback?: RequestCallback<R>): Promise<R> =>
-    requestor.delete(_.extend({}, optionsToSend, deleteOptions), callback);
+  const deleteRequest = <R = unknown, B = unknown>(
+    deleteOptions: RawRequestOptions<B>,
+    callback?: RequestCallback<R>
+  ): Promise<R> => requestor.delete(_.extend({}, optionsToSend, deleteOptions), callback);
 
   return {
     get: get,

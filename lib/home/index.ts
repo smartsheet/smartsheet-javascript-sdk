@@ -4,7 +4,12 @@ import type { CreateOptions } from '../types/CreateOptions';
 import type { PaginationResponse } from '../types/PaginationResponse';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
-import type { CreateHomeFolderResponse, HomeApi, ListHomeFoldersQueryParameters } from './types';
+import type {
+  CreateHomeFolderOptions,
+  CreateHomeFolderResponse,
+  HomeApi,
+  ListHomeFoldersQueryParameters,
+} from './types';
 
 export function create(options: CreateOptions): HomeApi {
   const requestor = options.requestor;
@@ -18,7 +23,7 @@ export function create(options: CreateOptions): HomeApi {
    * @deprecated See: https://developers.smartsheet.com/api/smartsheet/guides/updating-code/migrate-from-using-the-sheets-folder
    */
   const listContents = <R = Record<string, unknown>>(
-    getOptions?: RequestOptions<unknown, undefined>,
+    getOptions?: RequestOptions<object, undefined>,
     callback?: RequestCallback<R>
   ): Promise<R> => {
     console.warn('DEPRECATED: Home.listContents is deprecated.');
@@ -40,7 +45,7 @@ export function create(options: CreateOptions): HomeApi {
    * @deprecated See: https://developers.smartsheet.com/api/smartsheet/guides/updating-code/migrate-from-using-the-sheets-folder
    */
   const createFolder = (
-    postOptions: RequestOptions<undefined, { name: string }>,
+    postOptions: CreateHomeFolderOptions,
     callback?: RequestCallback<CreateHomeFolderResponse>
   ): Promise<CreateHomeFolderResponse> => {
     console.warn('DEPRECATED: Home.createFolder is deprecated.');

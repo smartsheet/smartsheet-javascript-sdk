@@ -4,7 +4,7 @@ import type { RequestOptions } from '../types/RequestOptions';
 /**
  * Options for a raw request. Covers every option the SDK's HTTP requestor reads.
  */
-export interface RawRequestOptions extends RequestOptions<object, unknown> {
+export interface RawRequestOptions<B = unknown> extends RequestOptions<object, B> {
   /** Path relative to the API base URL, e.g. `users/me`. */
   url: string;
   /** Optional id appended to the URL as `<url>/<id>`. */
@@ -43,8 +43,11 @@ export interface RawRequestOptions extends RequestOptions<object, unknown> {
   calcRetryBackoff?: (retryCount: number, error?: unknown) => number;
 }
 
-/** A raw request method. `R` is the expected response type. */
-export type RawRequestMethod = <R = unknown>(options: RawRequestOptions, callback?: RequestCallback<R>) => Promise<R>;
+/** A raw request method. `R` is the expected response type; `B` is the request body type. */
+export type RawRequestMethod = <R = unknown, B = unknown>(
+  options: RawRequestOptions<B>,
+  callback?: RequestCallback<R>
+) => Promise<R>;
 
 /**
  * Low-level access to any Smartsheet API endpoint, for endpoints the SDK does not wrap yet.

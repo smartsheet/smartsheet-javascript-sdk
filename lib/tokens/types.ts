@@ -1,4 +1,5 @@
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
+import type { FailedItem } from '../types/FailedItem';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
 
@@ -92,17 +93,19 @@ export type RefreshAccessTokenQueryParameters = {
   /** The client Id for your app. */
   client_id: string;
   /** Refresh token previously obtained. */
-  refresh_token: string;
+  refresh_token?: string;
   /** Redirect URL registered for your app. */
   redirect_url?: string;
 } & OAuthAppVerification;
 
 export type GetAccessTokenOptions = RequestOptions<GetAccessTokenQueryParameters, undefined> & {
+  queryParameters: GetAccessTokenQueryParameters;
   /** `Content-Type` header, e.g. `application/x-www-form-urlencoded`. */
   contentType?: string;
 };
 
 export type RefreshAccessTokenOptions = RequestOptions<RefreshAccessTokenQueryParameters, undefined> & {
+  queryParameters: RefreshAccessTokenQueryParameters;
   /** `Content-Type` header, e.g. `application/x-www-form-urlencoded`. */
   contentType?: string;
 };
@@ -112,15 +115,19 @@ export type RevokeAccessTokenOptions = RequestOptions<{ deleteAllForApiClient?: 
   accessToken?: string;
 };
 
-export type RevokeAccessTokenResponse = BaseResponseStatus;
+/** The spec's `Result`: generic status plus optional `version` and `failedItems`. */
+export type RevokeAccessTokenResponse = BaseResponseStatus & {
+  version?: number | null;
+  failedItems?: FailedItem[];
+};
 
 export interface Token {
   /** A credential that can be used by a client to access the Smartsheet API. */
-  access_token: string;
+  access_token?: string;
   /** How the access token is presented; Smartsheet uses `bearer`. */
-  token_type: string;
+  token_type?: string;
   /** Number of seconds the token is valid once issued. */
-  expires_in: number;
+  expires_in?: number;
   /** Credential used to obtain a fresh access token with the same permissions. */
-  refresh_token: string;
+  refresh_token?: string;
 }

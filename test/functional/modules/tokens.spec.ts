@@ -88,6 +88,13 @@ describe('tokens module behavior', () => {
     });
   });
 
+  it('revokeAccessToken throws a TypeError when the client has no clientOptions', () => {
+    const fake2 = makeFakeRequestor();
+    const api2 = create({ ...makeOptions(fake2.requestor), clientOptions: undefined });
+    expect(() => api2.revokeAccessToken()).toThrow(TypeError);
+    expect(fake2.requestor.delete).not.toHaveBeenCalled();
+  });
+
   it('create does not mutate clientOptions', () => {
     expect(clientOptions.accessToken).toBe('tok');
   });

@@ -47,8 +47,7 @@ export function create(options: CreateOptions): TokensApi {
     callback?: RequestCallback<RevokeAccessTokenResponse>
   ): Promise<RevokeAccessTokenResponse> => {
     const accessTokenOptions = {
-      // Type assertion only: keeps the original runtime behavior (throws if clientOptions is missing).
-      accessToken: (options.clientOptions as ClientOptions).accessToken,
+      accessToken: options.clientOptions.accessToken,
     };
     return requestor.delete(_.extend({}, optionsToSend, accessTokenOptions, deleteOptions), callback);
   };

@@ -1,4 +1,4 @@
-import type { Folder } from '../folders/types';
+import type { CreateFolderBody, Folder } from '../folders/types';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { PaginationResponse } from '../types/PaginationResponse';
 import type { RequestCallback } from '../types/RequestCallback';
@@ -13,8 +13,8 @@ export interface HomeApi {
    * Lists the contents of the user's Home.
    *
    * @param options - Optional configuration options for the request
-   * @param callback - {@link RequestCallback} - Optional callback function
-   * @returns Promise with the Home contents
+   * @param callback - {@link RequestCallback}\<R\> - Optional callback function
+   * @returns Promise\<R\>, the Home contents (pass a type for `R` to type the result)
    *
    * @remarks
    * It mirrors to the following Smartsheet REST API method: `GET /home`.
@@ -22,10 +22,10 @@ export interface HomeApi {
    *
    * @deprecated See: https://developers.smartsheet.com/api/smartsheet/guides/updating-code/migrate-from-using-the-sheets-folder
    */
-  listContents: (
-    options?: RequestOptions<undefined, undefined>,
-    callback?: RequestCallback<Record<string, unknown>>
-  ) => Promise<Record<string, unknown>>;
+  listContents: <R = Record<string, unknown>>(
+    options?: RequestOptions<object, undefined>,
+    callback?: RequestCallback<R>
+  ) => Promise<R>;
 
   /**
    * Lists the folders in the user's Home.
@@ -47,7 +47,7 @@ export interface HomeApi {
   /**
    * Creates a folder in the user's Home.
    *
-   * @param options - Configuration options for the request; `body.name` is the folder name
+   * @param options - {@link CreateHomeFolderOptions} - Configuration options for the request
    * @param callback - {@link RequestCallback}\<{@link CreateHomeFolderResponse}\> - Optional callback function
    * @returns Promise\<{@link CreateHomeFolderResponse}\>
    *
@@ -57,7 +57,7 @@ export interface HomeApi {
    * @deprecated See: https://developers.smartsheet.com/api/smartsheet/guides/updating-code/migrate-from-using-the-sheets-folder
    */
   createFolder: (
-    options: RequestOptions<undefined, { name: string }>,
+    options: CreateHomeFolderOptions,
     callback?: RequestCallback<CreateHomeFolderResponse>
   ) => Promise<CreateHomeFolderResponse>;
 }
@@ -69,6 +69,11 @@ export interface ListHomeFoldersQueryParameters {
   page?: number;
   /** Maximum number of items to return per page. */
   pageSize?: number;
+}
+
+export interface CreateHomeFolderOptions extends RequestOptions<undefined, CreateFolderBody & { name: string }> {
+  /** The folder to create; `name` is required. */
+  body: CreateFolderBody & { name: string };
 }
 
 export interface CreateHomeFolderResponse extends BaseResponseStatus {
