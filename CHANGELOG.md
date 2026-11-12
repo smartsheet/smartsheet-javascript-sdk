@@ -17,7 +17,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - ⚠️ **BREAKING** (TypeScript only): `client.request.get/post/put/postFile/delete` return `Promise<unknown>` by default. Pass the expected type to read fields from the result, e.g. `client.request.get<User>({ url: 'users/me' })`.
 - ⚠️ **BREAKING** (TypeScript only): `tokens.getAccessToken` and `tokens.refreshAccessToken` require `queryParameters` with `client_id`, the `code` or `refresh_token`, and exactly one of `hash` or `client_secret`. `grant_type` is set by the SDK and is no longer part of the type.
 - ⚠️ **BREAKING** (TypeScript only): `home.createFolder` requires a `body` with a `name`.
-- `server.getInfo` result fields are optional, and `FormatTables` exposes the single `color` table the API returns (the OpenAPI spec's `colorForeground`, `colorBackground`, and `colorTaskBar` are not returned by the API).
+- ⚠️ **BREAKING** (TypeScript only): `server.getInfo` result fields are optional, so with `strict` (or `strictNullChecks`) reading them requires a check, e.g. `info.supportedLocales?.length`. `FormatTables` exposes the single `color` table the API returns; the OpenAPI spec's `colorForeground`, `colorBackground`, and `colorTaskBar` are not returned by the API and are not typed.
+- ⚠️ **BREAKING** (TypeScript only): `Token` fields (`access_token`, `token_type`, `expires_in`, `refresh_token`) returned by `tokens.getAccessToken` and `tokens.refreshAccessToken` are optional, so with `strict` (or `strictNullChecks`) reading them requires a check.
+- ⚠️ **BREAKING** (TypeScript only): deprecated `home.listContents` returns `Record<string, unknown>` by default. Pass the expected type to read fields, e.g. `client.home.listContents<{ sheets: Sheet[] }>()`.
 
 ### Security
 
