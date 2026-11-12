@@ -93,7 +93,7 @@ export type RefreshAccessTokenQueryParameters = {
   /** The client Id for your app. */
   client_id: string;
   /** Refresh token previously obtained. */
-  refresh_token?: string;
+  refresh_token: string;
   /** Redirect URL registered for your app. */
   redirect_url?: string;
 } & OAuthAppVerification;

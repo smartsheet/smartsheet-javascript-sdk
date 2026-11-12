@@ -100,3 +100,23 @@ describe('batch 1 public types match the API', () => {
     requestApi.post<{ id: number }, Body>({ url: 'workspaces', body: { title: 'W' } });
   });
 });
+
+describe('shared request options and token parameters', () => {
+  const tokensApi = createTokens(makeOptions(makeFakeRequestor().requestor));
+
+  it('refreshAccessToken requires refresh_token', () => {
+    // @ts-expect-error refresh_token is required
+    tokensApi.refreshAccessToken({ queryParameters: { client_id: 'c', client_secret: 's' } });
+  });
+
+  it('typed methods accept assumeUser, changeAgent and apiScenario and pass them to the requestor', () => {
+    const fake = makeFakeRequestor();
+    const serverApi = createServer(makeOptions(fake.requestor));
+    serverApi.getInfo({ assumeUser: 'u@example.com', changeAgent: 'agent', apiScenario: 'scenario' });
+    expect(fake.requestor.get.mock.calls[0][0]).toMatchObject({
+      assumeUser: 'u@example.com',
+      changeAgent: 'agent',
+      apiScenario: 'scenario',
+    });
+  });
+});

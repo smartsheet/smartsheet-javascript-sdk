@@ -15,12 +15,6 @@ export interface RawRequestOptions<B = unknown> extends RequestOptions<object, B
   accessToken?: string;
   /** Appended to the SDK's `User-Agent` header. */
   userAgent?: string;
-  /** Sent as the `Assume-User` header (URL-encoded). */
-  assumeUser?: string;
-  /** Sent as the `Smartsheet-Change-Agent` header. */
-  changeAgent?: string;
-  /** Sent as the `Api-Scenario` header. */
-  apiScenario?: string;
   /** `Accept` header; defaults to `application/json`. */
   accept?: string;
   /** `Content-Type` header; defaults to the type inferred from `fileName`, then `application/json`. */
