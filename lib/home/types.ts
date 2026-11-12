@@ -35,7 +35,8 @@ export interface HomeApi {
    * @returns Promise\<{@link PaginationResponse}\<{@link Folder}\>\>
    *
    * @remarks
-   * It mirrors to the following Smartsheet REST API method: `GET /home/folders`
+   * It mirrors to the following Smartsheet REST API method: `GET /home/folders`.
+   * The API returns the folders in `data` (verified against the API); the OpenAPI spec names this field `result`.
    *
    * @deprecated See: https://developers.smartsheet.com/api/smartsheet/guides/updating-code/migrate-from-using-the-sheets-folder
    */

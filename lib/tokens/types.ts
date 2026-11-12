@@ -118,7 +118,7 @@ export type RevokeAccessTokenOptions = RequestOptions<{ deleteAllForApiClient?: 
 /** The spec's `Result`: generic status plus optional `version` and `failedItems`. */
 export type RevokeAccessTokenResponse = BaseResponseStatus & {
   version?: number | null;
-  failedItems?: FailedItem[];
+  failedItems?: FailedItem[] | null;
 };
 
 export interface Token {

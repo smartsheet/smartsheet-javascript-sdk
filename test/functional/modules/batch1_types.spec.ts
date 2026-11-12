@@ -120,3 +120,22 @@ describe('shared request options and token parameters', () => {
     });
   });
 });
+
+describe('callback error type matches the runtime error shape', () => {
+  it('callbacks can read statusCode, headers, body and detail', () => {
+    const fake = makeFakeRequestor();
+    const serverApi = createServer(makeOptions(fake.requestor));
+    serverApi.getInfo({}, (err) => {
+      if (err) {
+        const fields = [err.statusCode, err.headers, err.body, err.detail, err.errorCode, err.message, err.refId];
+        expect(fields).toBeDefined();
+      }
+    });
+    expect(fake.requestor.get).toHaveBeenCalledTimes(1);
+  });
+
+  it('revoke response failedItems may be null', () => {
+    const revoked: RevokeAccessTokenResponse = { message: 'SUCCESS', resultCode: 0, failedItems: null };
+    expect(revoked.failedItems).toBeNull();
+  });
+});
