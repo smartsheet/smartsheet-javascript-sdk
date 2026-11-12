@@ -85,7 +85,10 @@ export type GetAccessTokenQueryParameters = {
   client_id: string;
   /** Authorization code returned during the authorization flow. */
   code: string;
-  /** Redirect URL registered for your app. */
+  /**
+   * Redirect URL registered for your app.
+   * @deprecated Deprecated by the Smartsheet API.
+   */
   redirect_url?: string;
 } & OAuthAppVerification;
 
@@ -94,7 +97,10 @@ export type RefreshAccessTokenQueryParameters = {
   client_id: string;
   /** Refresh token previously obtained. */
   refresh_token: string;
-  /** Redirect URL registered for your app. */
+  /**
+   * Redirect URL registered for your app.
+   * @deprecated Deprecated by the Smartsheet API.
+   */
   redirect_url?: string;
 } & OAuthAppVerification;
 

@@ -42,7 +42,6 @@ describe('batch 1 public types accept valid calls', () => {
   });
 });
 
-// Review fixes for PR #218: shapes that must or must not compile.
 describe('batch 1 public types match the API', () => {
   const homeApi = createHome(makeOptions(makeFakeRequestor().requestor));
   const tokensApi = createTokens(makeOptions(makeFakeRequestor().requestor));
@@ -125,13 +124,13 @@ describe('callback error type matches the runtime error shape', () => {
   it('callbacks can read statusCode, headers, body and detail', () => {
     const fake = makeFakeRequestor();
     const serverApi = createServer(makeOptions(fake.requestor));
+    const seen: unknown[] = [];
     serverApi.getInfo({}, (err) => {
-      if (err) {
-        const fields = [err.statusCode, err.headers, err.body, err.detail, err.errorCode, err.message, err.refId];
-        expect(fields).toBeDefined();
-      }
+      if (err) seen.push(err.statusCode, err.headers, err.body, err.detail, err.errorCode, err.message, err.refId);
     });
-    expect(fake.requestor.get).toHaveBeenCalledTimes(1);
+    const callback = fake.requestor.get.mock.calls[0][1] as (error: unknown) => void;
+    callback({ statusCode: 404, headers: {}, body: {}, detail: {}, errorCode: 1006, message: 'Not Found', refId: 'r' });
+    expect(seen).toEqual([404, {}, {}, {}, 1006, 'Not Found', 'r']);
   });
 
   it('revoke response failedItems may be null', () => {
