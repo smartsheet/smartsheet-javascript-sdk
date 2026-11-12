@@ -29,7 +29,6 @@ describe('Users - listUserPlans endpoint tests', () => {
             queryParameters: {
                 lastKey: TEST_LAST_KEY,
                 maxItems: TEST_MAX_ITEMS,
-                displayContributorSeatType: true,
                 include: TEST_INCLUDE_PLAN_NAME
             },
             customProperties: {
@@ -46,7 +45,6 @@ describe('Users - listUserPlans endpoint tests', () => {
         expect(queryParamsObject).toEqual({
             lastKey: TEST_LAST_KEY,
             maxItems: TEST_MAX_ITEMS.toString(),
-            displayContributorSeatType: 'true',
             // The inclusion array is joined into a single comma-separated
             // value rather than repeated as include[]=.
             include: ListUserPlansInclusion.PLAN_NAME
