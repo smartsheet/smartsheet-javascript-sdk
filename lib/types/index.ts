@@ -10,6 +10,7 @@ export * from './ObjectValue';
 export * from './PathLeaf';
 export * from './PathNode';
 export * from './RequestCallback';
+export * from './RequestError';
 export * from './RequestOptions';
 export * from './SmartsheetClient';
 export * from './TokenPaginationQueryParameters';

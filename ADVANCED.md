@@ -287,7 +287,7 @@ module.exports = createSheets;
 
 ### Passthrough Internals
 
-Passthrough operations are implemented via a dedicated request module (`lib/request/index.js`) that exposes low-level requestor methods directly to user code. The passthrough API surface includes `get()`, `post()`, `postFile()`, `put()`, and `deleteRequest()` methods that accept options objects with a required `url` property (relative path) plus standard options like `body`, `queryParameters`, and `headers`. Unlike resource methods that construct URLs internally, passthrough requires explicit URL specification by the caller. This allows access to API endpoints not yet wrapped by resource modules or experimental endpoints. URL construction follows the same `buildUrl()` logic as resource methods, resolving baseUrl and appending the provided relative path. Header injection, retry logic, and response handling use the same infrastructure as wrapped endpoints - no special-casing exists at the requestor level. File uploads via `postFile()` handle Content-Type and Content-Disposition headers manually, supporting both file paths and streams. The passthrough is the escape hatch for advanced users needing API features ahead of SDK support, with the tradeoff being less type safety and more verbose call sites. TypeScript definitions for passthrough options are minimal, requiring type assertions for endpoint-specific body structures. Logging includes passthrough calls at the same level as wrapped endpoints. Error handling and response structure are identical to resource methods, maintaining consistency across the SDK surface area.
+Passthrough operations are implemented via a dedicated request module (`lib/request/index.ts`) that exposes low-level requestor methods directly to user code. The passthrough API surface includes `get()`, `post()`, `postFile()`, `put()`, and `delete()` methods that accept options objects with a required `url` property (relative path) plus standard options like `body`, `queryParameters`, and header options such as `assumeUser` and `changeAgent`. Unlike resource methods that construct URLs internally, passthrough requires explicit URL specification by the caller. This allows access to API endpoints not yet wrapped by resource modules or experimental endpoints. URL construction follows the same `buildUrl()` logic as resource methods, resolving baseUrl and appending the provided relative path. Header injection, retry logic, and response handling use the same infrastructure as wrapped endpoints - no special-casing exists at the requestor level. File uploads via `postFile()` handle Content-Type and Content-Disposition headers manually, supporting both file paths and streams. The passthrough is the escape hatch for advanced users needing API features ahead of SDK support, with the tradeoff being less type safety and more verbose call sites. Passthrough methods take `<R, B>` generics for the result and body types, e.g. `client.request.post<Result, Body>(...)`; both default to `unknown`. Logging includes passthrough calls at the same level as wrapped endpoints. Error handling and response structure are identical to resource methods, maintaining consistency across the SDK surface area.
 
 **Passthrough example:**
 ```javascript
@@ -303,7 +303,7 @@ const result = await client.request.post({
 ```
 
 **Implementation locations:**
-- `lib/request/index.js` - Passthrough request module
+- `lib/request/index.ts` - Passthrough request module
 - `lib/utils/httpRequestor.js:81-114` - Underlying requestor methods
 - `index.ts:132` - Passthrough module instantiation
 
@@ -462,7 +462,7 @@ To invoke the passthrough, your code can call one of the following methods:
 
 `response = smartsheet.request.put(putOptions, callback)`
 
-`response = smartsheet.request.deleteRequest(deleteOptions, callback)`
+`response = smartsheet.request.delete(deleteOptions, callback)`
 
 The `...Options` parameter takes the normal set of parameters taken by other similar SDK calls, but also requires a `url` parameter that tells it the relative path of the endpoint to call.
 
