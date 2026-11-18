@@ -79,3 +79,15 @@ describe('workspaces public types', () => {
     expect([listing, metadata, result, folder]).toHaveLength(4);
   });
 });
+
+describe('workspace metadata include=source', () => {
+  it('exposes source when include=source is requested', async () => {
+    const fake = makeFakeRequestor();
+    (fake.requestor.get as any).mockReturnValue(
+      Promise.resolve({ id: 1, name: 'W', permalink: 'p', createdAt: 'c', modifiedAt: 'm', source: { id: 999, type: 'workspace' } })
+    );
+    const api = create(makeOptions(fake.requestor));
+    const m = await api.getWorkspaceMetadata({ workspaceId: 1, queryParameters: { include: 'source' } });
+    expect(m.source?.type).toBe('workspace');
+  });
+});

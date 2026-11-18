@@ -11,9 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - TypeScript types for the `workspaces` resource, which is now written in TypeScript. Runtime behavior is unchanged.
 
 ### Changed
-- ⚠️ **BREAKING** (TypeScript only): `client.workspaces` is typed instead of `any`. `workspaceId` is required for `getWorkspaceMetadata`, `getWorkspaceChildren`, `createFolder`, `updateWorkspace`, `deleteWorkspace`, and `copyWorkspace`, and incorrectly shaped arguments no longer compile. JavaScript users and runtime behavior are unaffected.
+- ⚠️ **BREAKING** (TypeScript only): `client.workspaces` is typed instead of `any`. `workspaceId` is required for `getWorkspaceMetadata`, `getWorkspaceChildren`, `createFolder`, `updateWorkspace`, `deleteWorkspace`, and `copyWorkspace`, and incorrectly shaped arguments no longer compile. Callbacks are typed as `RequestCallback<T>`, so a callback annotated as `(err: Error | null, data: any) => void` no longer compiles; leave the callback parameters unannotated so they are inferred. JavaScript users and runtime behavior are unaffected.
 - ⚠️ **BREAKING** (TypeScript only): `workspaces.createWorkspace` and `workspaces.createFolder` require a `body` with a `name`, and `workspaces.copyWorkspace` requires a `body` with a `newName`.
-- ⚠️ **BREAKING** (TypeScript only): `WorkspaceListing` fields (`id`, `name`, `accessLevel`, `permalink`) are optional, as in the OpenAPI spec. This also applies to the report scope types in `reports` (`workspace` and `workspaces`). With `strict` (or `strictNullChecks`), reading them requires a check.
+- ⚠️ **BREAKING** (TypeScript only): `WorkspaceListing` fields (`id`, `name`, `accessLevel`, `permalink`) are optional, as in the OpenAPI spec. This also applies to the report scope types in `reports` (`workspace` and `workspaces`). The `result` returned by `createWorkspace`, `updateWorkspace`, `copyWorkspace`, and `createFolder` is optional as well. With `strict` (or `strictNullChecks`), reading them requires a check, e.g. `created.result?.id`.
 - ⚠️ **BREAKING** (TypeScript only): `paginationType` is set by the SDK and is not part of the `workspaces.listWorkspaces` query parameter type.
 
 ## [6.0.0] - 2026-11-16

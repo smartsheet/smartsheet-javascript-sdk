@@ -4,6 +4,7 @@ import type {
   GetFolderChildrenQueryParameters,
   GetFolderChildrenResponse,
 } from '../folders/types';
+import type { Source } from '../reports/types';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { RequestCallback } from '../types/RequestCallback';
 import type { RequestOptions } from '../types/RequestOptions';
@@ -231,9 +232,16 @@ export interface WorkspaceMetadata {
    * The user's access level.
    *
    * @remarks
-   * Optional, unlike the OpenAPI spec, which lists it as required: the API does not always return it.
+   * Optional, unlike the OpenAPI spec, which lists it as required: the WireMock mappings omit it.
    */
   accessLevel?: string;
+  /**
+   * The workspace this one was copied from; returned when `include=source` is requested.
+   *
+   * @remarks
+   * Not in the OpenAPI spec; returned by the API and present in the Java and C# SDK models.
+   */
+  source?: Source;
 }
 
 export interface GetWorkspaceChildrenOptions extends RequestOptions<GetFolderChildrenQueryParameters, undefined> {
