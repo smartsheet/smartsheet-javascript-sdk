@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [X.X.X] - Unreleased
 
+### Added
+- `governance.getDataClassificationSettings` to get the data classification settings for a plan, by `planId` or by `assetType` and `assetId`.
+- TypeScript types `DataClassificationSettings`, `DataClassificationLabel`, `DataClassificationDowngradeApprovalSettings`, `DataClassificationApproverEntry`, `DataClassificationLabelApproverEntry` and `GetDataClassificationSettingsOptions`, and the `DataClassificationDowngradeApprovalMode` and `DataClassificationApproverType` enums.
+
 ## [6.0.0] - 2026-11-16
 
 ### Added
@@ -28,11 +32,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 
 - ⚠️ **BREAKING**: Removed `VIEWER` from `SeatTypes`, and removed `displayContributorSeatType` from `ListUsersQueryParameters` and `ListUserPlansQueryParameters` (`listAllUsers` and `listUserPlans`). The `VIEWER` seat type was [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#deprecated-viewer-seat-type-in-favor-of-contributor-new) in favor of `CONTRIBUTOR` (sunset Nov-15-2026). Use `CONTRIBUTOR` instead of `VIEWER` and drop the `displayContributorSeatType` option. In plain JavaScript `SeatTypes.VIEWER` is now `undefined`, so a `seatType: SeatTypes.VIEWER` filter is dropped and `listAllUsers` returns all users.
-
-### Added
-
-- Added `governance.getDataClassificationSettings` to retrieve data classification settings for a plan. Accepts either `planId` or `assetType` + `assetId` as query parameters.
-- Added TypeScript types `DataClassificationSettings`, `DataClassificationLabel`, `DataClassificationDowngradeApprovalSettings`, `DataClassificationApproverEntry`, and `DataClassificationLabelApproverEntry`, and the `DataClassificationDowngradeApprovalMode` and `DataClassificationApproverType` enums.
 
 ### Security
 

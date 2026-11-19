@@ -1,10 +1,9 @@
 import type {
   GovernanceApi,
-  GetDataClassificationSettingsQueryParameters,
+  GetDataClassificationSettingsOptions,
   GetDataClassificationSettingsResponse,
 } from './types';
 import type { RequestCallback } from '../types/RequestCallback';
-import type { RequestOptions } from '../types/RequestOptions';
 import type { ClientOptions, CreateOptions } from '../types/CreateOptions';
 
 type OptionsToSend = Partial<ClientOptions> & {
@@ -27,7 +26,7 @@ export const createGovernance = (options: CreateOptions): GovernanceApi => {
 
   return {
     getDataClassificationSettings: (
-      getOptions: RequestOptions<GetDataClassificationSettingsQueryParameters, undefined>,
+      getOptions: GetDataClassificationSettingsOptions,
       callback?: RequestCallback<GetDataClassificationSettingsResponse>
     ): Promise<GetDataClassificationSettingsResponse> => {
       return requester.get({ ...optionsToSend, ...getOptions }, callback);
