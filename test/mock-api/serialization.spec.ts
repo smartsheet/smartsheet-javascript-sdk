@@ -525,7 +525,7 @@ describe("Mock API SDK Tests", () => {
                 options: {
                     userId: 123,
                     planId: 456,
-                    body: { seatType: "VIEWER" }
+                    body: { seatType: "CONTRIBUTOR" }
                 }
             },
             {

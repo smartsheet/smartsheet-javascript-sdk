@@ -1,3 +1,3 @@
-import type { ApiError } from './ApiError';
+import type { RequestError } from './RequestError';
 
-export type RequestCallback<R> = (error?: ApiError, response?: R, body?: any) => void;
+export type RequestCallback<R> = (error?: RequestError, response?: R, body?: any) => void;
