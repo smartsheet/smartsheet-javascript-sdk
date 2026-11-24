@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - ⚠️ **BREAKING** (TypeScript only): `client.workspaces` is typed instead of `any`. `workspaceId` is required for `getWorkspaceMetadata`, `getWorkspaceChildren`, `createFolder`, `updateWorkspace`, `deleteWorkspace`, and `copyWorkspace`, and incorrectly shaped arguments no longer compile. Callbacks are typed as `RequestCallback<T>`, so a callback annotated as `(err: Error | null, data: any) => void` no longer compiles; leave the callback parameters unannotated so they are inferred. JavaScript users and runtime behavior are unaffected.
-- ⚠️ **BREAKING** (TypeScript only): `workspaces.createWorkspace` and `workspaces.createFolder` require a `body` with a `name`, and `workspaces.copyWorkspace` requires a `body` with a `newName`.
+- ⚠️ **BREAKING** (TypeScript only): `workspaces.createWorkspace` and `workspaces.createFolder` require a `body` with a `name`, `workspaces.copyWorkspace` requires a `body` with a `newName`, and `workspaces.updateWorkspace` requires a `body` (the API rejects a request without one, although the OpenAPI spec marks it optional).
 - ⚠️ **BREAKING** (TypeScript only): `WorkspaceListing` fields (`id`, `name`, `accessLevel`, `permalink`) are optional, as in the OpenAPI spec. This also applies to the report scope types in `reports` (`workspace` and `workspaces`). The `result` returned by `createWorkspace`, `updateWorkspace`, `copyWorkspace`, and `createFolder` is optional as well. With `strict` (or `strictNullChecks`), reading them requires a check, e.g. `created.result?.id`.
 - ⚠️ **BREAKING** (TypeScript only): `paginationType` is set by the SDK and is not part of the `workspaces.listWorkspaces` query parameter type.
 

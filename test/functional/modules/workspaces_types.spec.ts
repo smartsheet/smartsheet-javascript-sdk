@@ -73,6 +73,7 @@ describe('workspaces public types', () => {
       permalink: 'p',
       createdAt: '2026-01-01T00:00:00Z',
       modifiedAt: 1,
+      accessLevel: 'OWNER',
     };
     const result: WorkspaceResult = { message: 'SUCCESS', resultCode: 0 };
     const folder: CreateWorkspaceFolderResponse = { message: 'SUCCESS', resultCode: 0, result: { id: 1, name: 'F' } };
@@ -89,5 +90,22 @@ describe('workspace metadata include=source', () => {
     const api = create(makeOptions(fake.requestor));
     const m = await api.getWorkspaceMetadata({ workspaceId: 1, queryParameters: { include: 'source' } });
     expect(m.source?.type).toBe('workspace');
+  });
+});
+
+describe('types confirmed against staging', () => {
+  const fake = makeFakeRequestor();
+  const api = create(makeOptions(fake.requestor));
+
+  it('updateWorkspace requires a body (the API rejects a missing body with 400)', () => {
+    // @ts-expect-error body is required
+    api.updateWorkspace({ workspaceId: 1 });
+    expect(fake.requestor.put).toHaveBeenCalledTimes(1);
+  });
+
+  it('WorkspaceMetadata.accessLevel is required (always returned by the API)', () => {
+    // @ts-expect-error accessLevel is required
+    const metadata: WorkspaceMetadata = { id: 1, name: 'W', permalink: 'p', createdAt: 'c', modifiedAt: 'm' };
+    expect(metadata.id).toBe(1);
   });
 });

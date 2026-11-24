@@ -228,18 +228,13 @@ export interface WorkspaceMetadata {
   createdAt: string | number;
   /** Time the workspace was last modified (ISO-8601 string, or a number with `numericDates`). */
   modifiedAt: string | number;
-  /**
-   * The user's access level.
-   *
-   * @remarks
-   * Optional, unlike the OpenAPI spec, which lists it as required: the WireMock mappings omit it.
-   */
-  accessLevel?: string;
+  /** The user's access level, e.g. `OWNER`, `ADMIN`, `EDITOR_SHARE`, `EDITOR`, `COMMENTER`, `VIEWER`. */
+  accessLevel: string;
   /**
    * The workspace this one was copied from; returned when `include=source` is requested.
    *
    * @remarks
-   * Not in the OpenAPI spec; returned by the API and present in the Java and C# SDK models.
+   * Not in the OpenAPI spec; present in the WireMock mappings and the Java and C# SDK models.
    */
   source?: Source;
 }
@@ -281,6 +276,13 @@ export interface UpdateWorkspaceBody {
 export interface UpdateWorkspaceOptions extends RequestOptions<undefined, UpdateWorkspaceBody> {
   /** Workspace Id. */
   workspaceId: number;
+  /**
+   * The workspace changes.
+   *
+   * @remarks
+   * Required, unlike the OpenAPI spec, which marks the request body optional: the API rejects a request without one (400, error code 2233).
+   */
+  body: UpdateWorkspaceBody;
 }
 
 export interface DeleteWorkspaceOptions extends RequestOptions<undefined, undefined> {
