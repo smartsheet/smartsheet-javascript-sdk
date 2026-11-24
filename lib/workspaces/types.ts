@@ -25,8 +25,12 @@ export interface WorkspacesApi {
    *
    * @example
    * ```typescript
-   * const page = await client.workspaces.listWorkspaces({ queryParameters: { maxItems: 100 } });
-   * const next = await client.workspaces.listWorkspaces({ queryParameters: { lastKey: page.lastKey } });
+   * let page = await client.workspaces.listWorkspaces({ queryParameters: { maxItems: 100 } });
+   * const workspaces = [...page.data];
+   * while (page.lastKey) {
+   *   page = await client.workspaces.listWorkspaces({ queryParameters: { maxItems: 100, lastKey: page.lastKey } });
+   *   workspaces.push(...page.data);
+   * }
    * ```
    */
   listWorkspaces: (
