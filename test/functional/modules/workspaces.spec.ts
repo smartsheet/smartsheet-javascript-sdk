@@ -140,6 +140,11 @@ describe('workspaces module behavior', () => {
     expect((fake.requestor.get.mock.calls[0][0] as any).url).toBe('workspaces/metadata');
   });
 
+  it.each(cases)('$name lets a caller-supplied url override the SDK url', ({ name, method }) => {
+    (api as any)[name]({ workspaceId: 7, body: { name: 'n', newName: 'n' }, url: 'custom' }, jest.fn());
+    expect((fake.requestor[method].mock.calls[0][0] as any).url).toBe('custom');
+  });
+
   it('caller url overrides', () => {
     api.getWorkspaceMetadata({ workspaceId: 7, url: 'x' } as any, jest.fn());
     expect((fake.requestor.get.mock.calls[0][0] as any).url).toBe('x');
