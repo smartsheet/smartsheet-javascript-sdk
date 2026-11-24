@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 - TypeScript types for the `workspaces` resource, which is now written in TypeScript. Runtime behavior is unchanged.
+- `governance.getDataClassificationSettings` to get the data classification settings for a plan, by `planId` or by `assetType` and `assetId`.
+- TypeScript types `DataClassificationSettings`, `DataClassificationLabel`, `DataClassificationDowngradeApprovalSettings`, `DataClassificationApproverEntry`, `DataClassificationLabelApproverEntry` and `GetDataClassificationSettingsOptions`, and the `DataClassificationDowngradeApprovalMode` and `DataClassificationApproverType` enums.
 
 ### Changed
 - ⚠️ **BREAKING** (TypeScript only): `client.workspaces` is typed instead of `any`. `workspaceId` is required for `getWorkspaceMetadata`, `getWorkspaceChildren`, `createFolder`, `updateWorkspace`, `deleteWorkspace`, and `copyWorkspace`, and incorrectly shaped arguments no longer compile. Callbacks are typed as `RequestCallback<T>`, so a callback annotated as `(err: Error | null, data: any) => void` no longer compiles; leave the callback parameters unannotated so they are inferred. JavaScript users and runtime behavior are unaffected.

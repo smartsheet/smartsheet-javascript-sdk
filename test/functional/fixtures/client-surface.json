@@ -48,6 +48,9 @@
     "moveFolder",
     "updateFolder"
   ],
+  "governance": [
+    "getDataClassificationSettings"
+  ],
   "groups": [
     "addGroupMembers",
     "createGroup",
