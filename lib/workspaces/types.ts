@@ -1,5 +1,5 @@
 import type {
-  CreateFolderBody,
+  CreateFolderBodyWithName,
   Folder,
   GetFolderChildrenQueryParameters,
   GetFolderChildrenResponse,
@@ -191,7 +191,7 @@ export interface WorkspaceListing {
    */
   name?: string;
   /**
-   * The user's access level, e.g. `OWNER`, `ADMIN`, `EDITOR_SHARE`, `EDITOR`, `COMMENTER`, `VIEWER`.
+   * The user's access level; one of the {@link APIAccessLevel} values.
    */
   accessLevel?: string;
   /**
@@ -232,7 +232,7 @@ export interface WorkspaceMetadata {
   createdAt: string | number;
   /** Time the workspace was last modified (ISO-8601 string, or a number with `numericDates`). */
   modifiedAt: string | number;
-  /** The user's access level, e.g. `OWNER`, `ADMIN`, `EDITOR_SHARE`, `EDITOR`, `COMMENTER`, `VIEWER`. */
+  /** The user's access level; one of the {@link APIAccessLevel} values. */
   accessLevel: string;
   /**
    * The workspace this one was copied from; returned when `include=source` is requested.
@@ -260,21 +260,26 @@ export interface CreateWorkspaceOptions extends RequestOptions<undefined, Create
   body: CreateWorkspaceBody;
 }
 
-export interface CreateWorkspaceFolderOptions extends RequestOptions<undefined, CreateFolderBody & { name: string }> {
+export interface CreateWorkspaceFolderOptions extends RequestOptions<undefined, CreateFolderBodyWithName> {
   /** Workspace Id. */
   workspaceId: number;
   /** The folder to create; `name` is required. */
-  body: CreateFolderBody & { name: string };
+  body: CreateFolderBodyWithName;
 }
 
 export interface CreateWorkspaceFolderResponse extends BaseResponseStatus {
   /** The created folder. */
-  result?: Folder;
+  result: Folder;
 }
 
 export interface UpdateWorkspaceBody {
-  /** The new workspace name (max 50 characters). */
-  name?: string;
+  /**
+   * The new workspace name (max 50 characters).
+   *
+   * @remarks
+   * Required, unlike the OpenAPI spec: the API rejects a body without it (400, error code 1012).
+   */
+  name: string;
 }
 
 export interface UpdateWorkspaceOptions extends RequestOptions<undefined, UpdateWorkspaceBody> {
@@ -313,7 +318,14 @@ export interface CopyWorkspaceOptions extends RequestOptions<CopyWorkspaceQueryP
   body: CopyWorkspaceBody;
 }
 
+/**
+ * Response of create, update, and copy.
+ *
+ * @remarks
+ * `result` is required, unlike the OpenAPI spec, which has no `required` list: the API always returns it on success.
+ * This matches `CreateFolderResponse` and `CreateHomeFolderResponse`.
+ */
 export interface WorkspaceResult extends BaseResponseStatus {
   /** The created, updated, or copied workspace. */
-  result?: WorkspaceListing;
+  result: WorkspaceListing;
 }

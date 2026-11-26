@@ -94,10 +94,10 @@ export function create(options: CreateOptions): WorkspacesApi {
     return requestor.get(_.extend({}, optionsToSend, urlOptions, getOptions), callback);
   };
 
-  const buildUrl = (urlOptions?: object) => {
+  const buildUrl = (urlOptions?: object & { workspaceId?: number }) => {
     let id = '';
-    if (urlOptions && (urlOptions as { workspaceId?: number }).workspaceId) {
-      id = '/' + (urlOptions as { workspaceId?: number }).workspaceId;
+    if (urlOptions && urlOptions.workspaceId) {
+      id = '/' + urlOptions.workspaceId;
     }
     return options.apiUrls.workspaces + id;
   };

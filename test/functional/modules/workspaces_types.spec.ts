@@ -105,22 +105,11 @@ describe('workspaces public types', () => {
       createdAt: '2026-01-01T00:00:00Z',
       modifiedAt: 1,
       accessLevel: 'OWNER',
+      source: { id: 999, type: 'workspace' },
     };
-    const result: WorkspaceResult = { message: 'SUCCESS', resultCode: 0 };
+    const result: WorkspaceResult = { message: 'SUCCESS', resultCode: 0, result: { id: 1, name: 'W' } };
     const folder: CreateWorkspaceFolderResponse = { message: 'SUCCESS', resultCode: 0, result: { id: 1, name: 'F' } };
     expect([listing, metadata, result, folder]).toHaveLength(4);
-  });
-});
-
-describe('workspace metadata include=source', () => {
-  it('exposes source when include=source is requested', async () => {
-    const fake = makeFakeRequestor();
-    (fake.requestor.get as any).mockReturnValue(
-      Promise.resolve({ id: 1, name: 'W', permalink: 'p', createdAt: 'c', modifiedAt: 'm', source: { id: 999, type: 'workspace' } })
-    );
-    const api = create(makeOptions(fake.requestor));
-    const m = await api.getWorkspaceMetadata({ workspaceId: 1, queryParameters: { include: 'source' } });
-    expect(m.source?.type).toBe('workspace');
   });
 });
 
@@ -133,6 +122,22 @@ describe('types confirmed against staging', () => {
     const sent = fake.requestor.put.mock.calls[0][0] as { url: string; body?: unknown };
     expect(sent.url).toBe('workspaces/1');
     expect('body' in sent).toBe(false);
+  });
+
+  it('updateWorkspace requires body.name (the API rejects an empty body with 400)', () => {
+    const fake = makeFakeRequestor();
+    const api = create(makeOptions(fake.requestor));
+    // @ts-expect-error name is required
+    api.updateWorkspace({ workspaceId: 1, body: {} });
+    expect((fake.requestor.put.mock.calls[0][0] as { body: unknown }).body).toEqual({});
+  });
+
+  it('result is required on create, update, copy and createFolder responses (always returned by the API)', () => {
+    // @ts-expect-error result is required
+    const result: WorkspaceResult = { message: 'SUCCESS', resultCode: 0 };
+    // @ts-expect-error result is required
+    const folder: CreateWorkspaceFolderResponse = { message: 'SUCCESS', resultCode: 0 };
+    expect([result, folder]).toHaveLength(2);
   });
 
   it('WorkspaceMetadata.accessLevel is required (always returned by the API)', () => {
