@@ -9,6 +9,7 @@ import type { SightsApi } from '../sights/types';
 import type { AlternateEmailsApi } from '../users/alternateemails_types';
 import type { UsersApi } from '../users/types';
 import type { WebhooksApi } from '../webhooks/types';
+import type { WorkspacesApi } from '../workspaces/types';
 import type { ImagesApi } from '../images/types';
 import type { ReportsApi } from '../reports/types';
 import type { HomeApi } from '../home/types';
@@ -36,5 +37,5 @@ export interface SmartsheetClient {
   tokens: TokensApi;
   users: UsersApi & AlternateEmailsApi;
   webhooks: WebhooksApi;
-  workspaces: any;
+  workspaces: WorkspacesApi;
 }

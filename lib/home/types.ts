@@ -1,4 +1,4 @@
-import type { CreateFolderBody, Folder } from '../folders/types';
+import type { CreateFolderBodyWithName, Folder } from '../folders/types';
 import type { BaseResponseStatus } from '../types/BaseResponseStatus';
 import type { PaginationResponse } from '../types/PaginationResponse';
 import type { RequestCallback } from '../types/RequestCallback';
@@ -72,9 +72,9 @@ export interface ListHomeFoldersQueryParameters {
   pageSize?: number;
 }
 
-export interface CreateHomeFolderOptions extends RequestOptions<undefined, CreateFolderBody & { name: string }> {
+export interface CreateHomeFolderOptions extends RequestOptions<undefined, CreateFolderBodyWithName> {
   /** The folder to create; `name` is required. */
-  body: CreateFolderBody & { name: string };
+  body: CreateFolderBodyWithName;
 }
 
 export interface CreateHomeFolderResponse extends BaseResponseStatus {

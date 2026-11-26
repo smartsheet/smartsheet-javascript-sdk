@@ -562,6 +562,11 @@ export interface CreateFolderBody {
   templates?: FolderTemplate[];
 }
 
+/**
+ * A folder to create, with `name` required (the API rejects a folder without one).
+ */
+export type CreateFolderBodyWithName = CreateFolderBody & { name: string };
+
 export interface CreateChildFolderOptions extends RequestOptions<undefined, CreateFolderBody> {
   /**
    * Parent Folder Id.
